@@ -20,7 +20,7 @@ namespace MemBus.Tests
         [Test]
         public void returns_single_subscription_for_msg_b()
         {
-            var subs = resolver.GetRelevantSubscriptions(new MessageB());
+            var subs = resolver.GetSubscriptionsFor(new MessageB());
             subs.ShouldHaveCount(1);
             subs.Single().Handles.ShouldBeEqualTo(typeof(MessageB));
         }
@@ -28,14 +28,14 @@ namespace MemBus.Tests
         [Test]
         public void returns_none_for_msg_c()
         {
-            var subs = resolver.GetRelevantSubscriptions(new MessageC());
+            var subs = resolver.GetSubscriptionsFor(new MessageC());
             subs.ShouldHaveCount(0);
         }
 
         [Test]
         public void returns_both_msg_a_subscriptions()
         {
-            var subs = resolver.GetRelevantSubscriptions(new MessageA());
+            var subs = resolver.GetSubscriptionsFor(new MessageA());
             subs.ShouldHaveCount(2);
         }
     }

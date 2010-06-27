@@ -13,9 +13,10 @@ namespace MemBus
             this.resolvers.AddRange(resolvers);
         }
 
-        public IEnumerable<ISubscription> GetRelevantSubscriptions(object message)
+        public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
-            return resolvers.Select(r => r.GetRelevantSubscriptions(message)).SelectMany(s => s);
+            
+            return resolvers.Select(r => r.GetSubscriptionsFor(message)).SelectMany(s => s);
         }
     }
 }

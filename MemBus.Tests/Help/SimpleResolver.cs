@@ -9,7 +9,7 @@ namespace MemBus.Tests.Help
     {
         private readonly List<ISubscription> subscriptions = new List<ISubscription>();
 
-        public IEnumerable<ISubscription> GetRelevantSubscriptions(object message)
+        public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
            if (message == null)
                throw new ArgumentNullException("message");

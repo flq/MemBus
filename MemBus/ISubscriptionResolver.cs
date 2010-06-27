@@ -7,6 +7,6 @@ namespace MemBus
     /// </summary>
     public interface ISubscriptionResolver
     {
-        IEnumerable<ISubscription> GetRelevantSubscriptions(object message);
+        IEnumerable<ISubscription> GetSubscriptionsFor(object message);
     }
 }
