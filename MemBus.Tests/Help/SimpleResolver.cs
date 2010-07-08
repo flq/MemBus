@@ -17,9 +17,10 @@ namespace MemBus.Tests.Help
             return subscriptions.Where(s => message.GetType().Equals(s.Handles));
         }
 
-        public void Add(ISubscription s)
+        public bool Add(ISubscription s)
         {
             subscriptions.Add(s);
+            return true;
         }
 
         public IEnumerator<ISubscription> GetEnumerator()

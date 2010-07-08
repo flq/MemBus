@@ -3,6 +3,7 @@
     public interface IConfigurableBus
     {
         void InsertResolver(ISubscriptionResolver resolver);
-        void InsertPublishPipeline(IPublishPipelineMember publishPipelineMember);
+        void InsertPublishPipelineMember(IPublishPipelineMember publishPipelineMember);
+        void AddSubscription(ISubscription subscription);
     }
 }

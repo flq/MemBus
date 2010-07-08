@@ -4,7 +4,7 @@
     {
         public void Accept(IConfigurableBus setup)
         {
-            setup.InsertPublishPipeline(new SequentialPublisher());
+            setup.InsertPublishPipelineMember(new SequentialPublisher());
             setup.InsertResolver(new TableBasedResolver());
         }
     }

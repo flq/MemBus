@@ -18,5 +18,21 @@ namespace MemBus
             
             return resolvers.Select(r => r.GetSubscriptionsFor(message)).SelectMany(s => s);
         }
+
+        public void Add(ISubscriptionResolver resolver)
+        {
+            resolvers.Add(resolver);
+        }
+
+        public bool Add(ISubscription subscription)
+        {
+            var wasAdded = false;
+            foreach (var resolver in resolvers)
+            {
+                wasAdded = resolver.Add(subscription);
+                if (wasAdded) break;
+            }
+            return wasAdded;
+        }
     }
 }

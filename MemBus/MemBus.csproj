@@ -42,14 +42,17 @@
     <Compile Include="Bus.cs" />
     <Compile Include="CompositeResolver.cs" />
     <Compile Include="CompositeSubscription.cs" />
+    <Compile Include="IBus.cs" />
     <Compile Include="PublishPipeline\FireAndForgetPublisher.cs" />
     <Compile Include="PublishPipeline\IPublishPipelineMember.cs" />
     <Compile Include="ISubscription.cs" />
     <Compile Include="ISubscriptionResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishPipeline\ParallelPublisher.cs" />
+    <Compile Include="PublishPipeline\PublishPipeline.cs" />
     <Compile Include="PublishPipeline\PublishToken.cs" />
     <Compile Include="PublishPipeline\SequentialPublisher.cs" />
+    <Compile Include="Setup\AdHocConfigurator.cs" />
     <Compile Include="Setup\BusSetup.cs" />
     <Compile Include="Setup\DefaultSetup.cs" />
     <Compile Include="Setup\IBusSetupConfigurator.cs" />

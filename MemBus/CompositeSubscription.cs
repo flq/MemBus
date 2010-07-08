@@ -9,6 +9,7 @@ namespace MemBus
         private Type handledType;
         private readonly List<ISubscription> subscriptions = new List<ISubscription>();
 
+
         public void Push(object message)
         {
             foreach (var s in subscriptions)

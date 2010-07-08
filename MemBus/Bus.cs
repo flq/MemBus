@@ -3,19 +3,31 @@ using System.Collections.Generic;
 
 namespace MemBus
 {
-    public class Bus : IConfigurableBus
+    public class Bus : IConfigurableBus, IBus
     {
-        private readonly List<ISubscriptionResolver> resolvers = new List<ISubscriptionResolver>();
-        private readonly List<IPublishPipelineMember> pipelineMembers = new List<IPublishPipelineMember>();
+        private readonly CompositeResolver resolvers = new CompositeResolver();
+        private readonly PublishPipeline pipeline = new PublishPipeline();
 
         void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
         {
             resolvers.Add(resolver);
         }
 
-        void IConfigurableBus.InsertPublishPipeline(IPublishPipelineMember publishPipelineMember)
+        void IConfigurableBus.InsertPublishPipelineMember(IPublishPipelineMember publishPipelineMember)
         {
-            pipelineMembers.Add(publishPipelineMember);
+            pipeline.Add(publishPipelineMember);
+        }
+
+        void IConfigurableBus.AddSubscription(ISubscription subscription)
+        {
+            resolvers.Add(subscription);
+        }
+
+        public void Publish(object message)
+        {
+            var subs = resolvers.GetSubscriptionsFor(message);
+            var t = new PublishToken(message, subs);
+            pipeline.LookAt(t);
         }
     }
 }

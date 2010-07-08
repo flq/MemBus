@@ -1,4 +1,5 @@
 using MemBus.Tests.Help;
+using Moq;
 using NUnit.Framework;
 using System.Linq;
 using MemBus.Tests.Frame;
@@ -37,6 +38,17 @@ namespace MemBus.Tests
         {
             var subs = resolver.GetSubscriptionsFor(new MessageA());
             subs.ShouldHaveCount(2);
+        }
+
+        [Test]
+        public void Table_based_resolver_accepts_and_returns_subscriptions()
+        {
+            var sub = Helpers.MockSubscriptionThatHandles<MessageA>();
+            var r = new TableBasedResolver();
+            r.Add(sub.Object);
+            var subs = r.GetSubscriptionsFor(new MessageA()).ToList();
+            subs.ShouldHaveCount(1);
+            subs[0].ShouldBeEqualTo(sub.Object);
         }
     }
 

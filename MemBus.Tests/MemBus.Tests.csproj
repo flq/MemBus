@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\lib\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -42,14 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Frame\AssertExtensions.cs" />
-    <Compile Include="Help\MockConfigurableBus.cs" />
+    <Compile Include="Frame\Helpers.cs" />
     <Compile Include="Help\MockSubscription.cs" />
     <Compile Include="Help\SimpleResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Using_Composite_Subscription.cs" />
-    <Compile Include="Using_Configurations.cs" />
-    <Compile Include="Using_Publish_Pipeline_Members.cs" />
+    <Compile Include="Using_Publish_Pipeline.cs" />
     <Compile Include="When_Resolving_Subscriptions.cs" />
+    <Compile Include="When_using_the_bus.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MemBus\MemBus.csproj">
