@@ -5,16 +5,27 @@ namespace MemBus
 {
     public class TableBasedResolver : ISubscriptionResolver
     {
-        private Dictionary<Type, CompositeSubscription> subscriptions = new Dictionary<Type, CompositeSubscription>();
+        private readonly Dictionary<Type, CompositeSubscription> subscriptions = new Dictionary<Type, CompositeSubscription>();
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
-            throw new NotImplementedException();
+            if (!subscriptions.ContainsKey(message.GetType()))
+                return new ISubscription[] {};
+            return subscriptions[message.GetType()];
         }
 
         public bool Add(ISubscription subscription)
         {
-            throw new NotImplementedException();
+            var cs = getRelevantComposite(subscription.Handles);
+            cs.Add(subscription);
+            return true;
+        }
+
+        private CompositeSubscription getRelevantComposite(Type messageType)
+        {
+            CompositeSubscription cs;
+            subscriptions.TryGetValue(messageType, out cs);
+            return cs ?? (subscriptions[messageType] = new CompositeSubscription());
         }
     }
 }

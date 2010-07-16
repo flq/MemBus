@@ -10,6 +10,7 @@ namespace MemBus
 
         void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
         {
+            resolver.TryInvoke(r => r.AcceptPipeline(pipeline));
             resolvers.Add(resolver);
         }
 

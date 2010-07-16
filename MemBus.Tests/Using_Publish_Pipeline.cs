@@ -35,6 +35,7 @@ namespace MemBus.Tests
         [Test]
         public void publishes_message_fire_and_forget()
         {
+            //TODO: Not happy with this test
             var p = new FireAndForgetPublisher();
             var resetEvt1 = new ManualResetEvent(false);
             var lockingSub = new MockSubscription<MessageA>(resetEvt1);
