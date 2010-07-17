@@ -1,4 +1,7 @@
+using System;
+using MemBus.Support;
 using Moq;
+using Moq.Protected;
 
 namespace MemBus.Tests.Frame
 {

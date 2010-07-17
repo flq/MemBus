@@ -1,7 +1,6 @@
 using System;
 using System.Dynamic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 
 namespace MemBus
@@ -49,7 +48,10 @@ namespace MemBus
                     from mi in instance.GetType().GetMember(binder.Name).OfType<MethodInfo>()
                     let parms = mi.GetParameters()
                     where parms.Length == args.Length
-                    let correlates = parms.Zip(args, (pi, o) => (o == null && pi.ParameterType.IsClass) || ( o != null && pi.ParameterType.Equals(o.GetType()))).All(truth => truth)
+                    let correlates = parms.Zip(args, 
+                      (pi, o) => (o == null && pi.ParameterType.IsClass) || 
+                                 ( o != null && pi.ParameterType.Equals(o.GetType())))
+                                 .All(truth => truth)
                     where correlates
                     select mi;
 

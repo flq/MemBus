@@ -44,6 +44,7 @@
     <Compile Include="CompositeResolver.cs" />
     <Compile Include="CompositeSubscription.cs" />
     <Compile Include="IBus.cs" />
+    <Compile Include="Messages\PeriodPassed.cs" />
     <Compile Include="PublishPipeline\FireAndForgetPublisher.cs" />
     <Compile Include="PublishPipeline\IPublishPipelineMember.cs" />
     <Compile Include="ISubscription.cs" />
@@ -59,6 +60,13 @@
     <Compile Include="Setup\DefaultSetup.cs" />
     <Compile Include="Setup\IBusSetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
+    <Compile Include="Support\AbstractAutomaton.cs" />
+    <Compile Include="Support\AdHocAutomaton.cs" />
+    <Compile Include="Support\InvalidAutomatonException.cs" />
+    <Compile Include="Support\ManualTrigger.cs" />
+    <Compile Include="Support\PeriodAutomaton.cs" />
+    <Compile Include="Support\PeriodicTrigger.cs" />
+    <Compile Include="Support\Trigger.cs" />
     <Compile Include="TableBasedResolver.cs" />
   </ItemGroup>
   <ItemGroup />

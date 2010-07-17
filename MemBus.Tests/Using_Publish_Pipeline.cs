@@ -35,10 +35,10 @@ namespace MemBus.Tests
         [Test]
         public void publishes_message_fire_and_forget()
         {
-            //TODO: Not happy with this test
             var p = new FireAndForgetPublisher();
-            var resetEvt1 = new ManualResetEvent(false);
-            var lockingSub = new MockSubscription<MessageA>(resetEvt1);
+            var evtBlock = new ManualResetEvent(false);
+            var evtSignal = new ManualResetEvent(false);
+            var lockingSub = new MockSubscription<MessageA>(evtBlock, evtSignal);
             var runThroughSub = new MockSubscription<MessageA>();
 
             var token = new PublishToken(new MessageA(), new[] { lockingSub, runThroughSub });
@@ -46,8 +46,8 @@ namespace MemBus.Tests
             
             lockingSub.Received.ShouldBeEqualTo(0);
             runThroughSub.Received.ShouldBeEqualTo(1);
-            resetEvt1.Set();
-            Thread.Sleep(500);
+            evtBlock.Set();
+            evtSignal.WaitOne();
             lockingSub.Received.ShouldBeEqualTo(1);
         }
 
