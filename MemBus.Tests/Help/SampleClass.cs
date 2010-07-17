@@ -4,6 +4,9 @@ namespace MemBus.Tests.Help
 {
     public class SampleClass
     {
+
+        public event EventHandler MyEvent;
+
         public string HelloEntry;
 
         public string Name { get; set; }

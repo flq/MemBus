@@ -7,10 +7,10 @@ namespace MemBus
     {
         private readonly CompositeResolver resolvers = new CompositeResolver();
         private readonly PublishPipeline pipeline = new PublishPipeline();
+        private readonly List<object> automatons = new List<object>();
 
         void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
         {
-            resolver.TryInvoke(r => r.AcceptPipeline(pipeline));
             resolvers.Add(resolver);
         }
 
@@ -22,6 +22,12 @@ namespace MemBus
         void IConfigurableBus.AddSubscription(ISubscription subscription)
         {
             resolvers.Add(subscription);
+        }
+
+        void IConfigurableBus.AddAutomaton(object automaton)
+        {
+            automatons.Add(automaton);
+            automaton.TryInvoke(a => a.AcceptBus(this));
         }
 
         public void Publish(object message)

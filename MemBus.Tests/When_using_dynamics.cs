@@ -26,6 +26,13 @@ namespace MemBus.Tests
         }
 
         [Test]
+        public void Existence_of_events_can_be_checked()
+        {
+            s.RespondsTo(d => d.MyEvent += null).ShouldBeTrue();
+            s.RespondsTo(d => d.MyOtherEvent += null).ShouldBeFalse();
+        }
+
+        [Test]
         public void Existence_of_methods_also_consider_param_types()
         {
             s.RespondsTo(d => d.Hello(1)).ShouldBeFalse();
