@@ -44,6 +44,8 @@
     <Compile Include="CompositeResolver.cs" />
     <Compile Include="CompositeSubscription.cs" />
     <Compile Include="IBus.cs" />
+    <Compile Include="ISubscriptionShape.cs" />
+    <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\PeriodPassed.cs" />
     <Compile Include="PublishPipeline\FireAndForgetPublisher.cs" />
     <Compile Include="PublishPipeline\IPublishPipelineMember.cs" />
@@ -54,18 +56,22 @@
     <Compile Include="PublishPipeline\PublishPipeline.cs" />
     <Compile Include="PublishPipeline\PublishToken.cs" />
     <Compile Include="PublishPipeline\SequentialPublisher.cs" />
-    <Compile Include="RespondExtension.cs" />
     <Compile Include="Setup\AdHocConfigurator.cs" />
     <Compile Include="Setup\BusSetup.cs" />
     <Compile Include="Setup\DefaultSetup.cs" />
     <Compile Include="Setup\IBusSetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
     <Compile Include="Support\AbstractAutomaton.cs" />
+    <Compile Include="Support\AbstractServices.cs" />
     <Compile Include="Support\AdHocAutomaton.cs" />
-    <Compile Include="Support\InvalidAutomatonException.cs" />
+    <Compile Include="Support\CompositeDisposer.cs" />
+    <Compile Include="Support\MemBusException.cs" />
+    <Compile Include="Support\IServices.cs" />
     <Compile Include="Support\ManualTrigger.cs" />
     <Compile Include="Support\PeriodAutomaton.cs" />
     <Compile Include="Support\PeriodicTrigger.cs" />
+    <Compile Include="Support\ReflectionExtensions.cs" />
+    <Compile Include="Support\RespondExtension.cs" />
     <Compile Include="Support\Trigger.cs" />
     <Compile Include="TableBasedResolver.cs" />
   </ItemGroup>

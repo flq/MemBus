@@ -3,7 +3,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
-namespace MemBus
+namespace MemBus.Support
 {
     public static class RespondExtension
     {

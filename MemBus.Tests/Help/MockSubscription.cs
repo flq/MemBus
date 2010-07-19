@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace MemBus.Tests.Help
 {
-    public class MockSubscription<T> : ISubscription
+    public class MockSubscription<T> : ISubscription, IDisposable
     {
         private readonly ManualResetEvent evtBlock;
         private readonly ManualResetEvent evtSignal;
@@ -28,9 +28,16 @@ namespace MemBus.Tests.Help
               evtSignal.Set();
         }
 
+        public IDisposable GetDisposer()
+        {
+            return this;
+        }
+
         public Type Handles
         {
             get { return typeof(T); }
         }
+
+        public void Dispose() { }
     }
 }

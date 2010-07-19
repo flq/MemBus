@@ -15,7 +15,7 @@ namespace MemBus.Support
         {
             trigger = triggerCreator();
             if (trigger == null)
-                throw new InvalidAutomatonException(string.Format("No trigger was defined for {0} automaton", typeof (M).Name));
+                throw new MemBusException(string.Format("No trigger was defined for {0} automaton", typeof (M).Name));
             trigger.Fire += onTriggerFire;
         }
 

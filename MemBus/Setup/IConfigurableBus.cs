@@ -1,4 +1,6 @@
-﻿namespace MemBus
+﻿using System;
+
+namespace MemBus
 {
     public interface IConfigurableBus
     {

@@ -1,5 +1,6 @@
 using Moq;
 using NUnit.Framework;
+using MemBus.Tests.Frame;
 
 namespace MemBus.Tests
 {
@@ -17,6 +18,16 @@ namespace MemBus.Tests
             var messageA = new MessageA();
             b.Publish(messageA);
             sub.Verify(s=>s.Push(messageA));
+        }
+
+        [Test]
+        public void Default_setup_provides_subscription_shape()
+        {
+            var received = 0;
+            var b = BusSetup.StartWith<DefaultSetup>().Construct();
+            var d = b.Subscribe<MessageA>(msg => received++);
+            d.Dispose();
+            received.ShouldBeEqualTo(1);
         }
         
     }

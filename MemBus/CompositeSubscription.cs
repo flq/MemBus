@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MemBus.Support;
+using System.Linq;
 
 namespace MemBus
 {
@@ -14,6 +16,11 @@ namespace MemBus
         {
             foreach (var s in subscriptions)
                 s.Push(message);
+        }
+
+        public IDisposable GetDisposer()
+        {
+            return new CompositeDisposer(subscriptions.Select(s => s.GetDisposer()));
         }
 
         public Type Handles
