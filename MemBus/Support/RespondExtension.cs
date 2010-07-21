@@ -50,7 +50,7 @@ namespace MemBus.Support
                     where parms.Length == args.Length
                     let correlates = parms.Zip(args, 
                       (pi, o) => (o == null && pi.ParameterType.IsClass) || 
-                                 ( o != null && pi.ParameterType.Equals(o.GetType())))
+                                 ( o != null && pi.ParameterType.IsAssignableFrom(o.GetType())))
                                  .All(truth => truth)
                     where correlates
                     select mi;

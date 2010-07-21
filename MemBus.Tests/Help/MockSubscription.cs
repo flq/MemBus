@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using MemBus.Support;
 
 namespace MemBus.Tests.Help
 {
@@ -33,11 +34,16 @@ namespace MemBus.Tests.Help
             return this;
         }
 
+        public event EventHandler Disposed;
+
         public Type Handles
         {
             get { return typeof(T); }
         }
 
-        public void Dispose() { }
+        public void Dispose()
+        {
+            Disposed.Raise(this);
+        }
     }
 }

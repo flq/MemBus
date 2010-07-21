@@ -46,6 +46,12 @@ namespace MemBus.Tests
         }
 
         [Test]
+        public void Sufficient_that_params_are_assignable()
+        {
+            s.RespondsTo(d => d.SetFoo(new Foo())).ShouldBeTrue();
+        }
+
+        [Test]
         public void Passing_null_as_param_is_ok_for_classes()
         {
             s.RespondsTo(d => d.Hello(null)).ShouldBeTrue();

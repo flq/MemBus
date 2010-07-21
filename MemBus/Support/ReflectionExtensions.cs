@@ -57,5 +57,11 @@ namespace MemBus.Support
     {
       return Array.Exists(type.GetInterfaces(), t => t == typeof(T));
     }
+
+      public static void Raise(this EventHandler @event, object sender)
+      {
+          if (@event != null)
+              @event(sender, EventArgs.Empty);
+      }
   }
 }

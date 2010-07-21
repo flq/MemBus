@@ -6,6 +6,7 @@ namespace MemBus
     {
         void Push(object message);
         IDisposable GetDisposer();
+        event EventHandler Disposed;
         Type Handles { get; }
     }
 }

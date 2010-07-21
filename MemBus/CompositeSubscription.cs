@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using MemBus.Support;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace MemBus
     public class CompositeSubscription : ISubscription, IEnumerable<ISubscription>
     {
         private Type handledType;
+        //TODO: This should be some thread-safe construct.
         private readonly List<ISubscription> subscriptions = new List<ISubscription>();
 
 
@@ -22,6 +24,8 @@ namespace MemBus
         {
             return new CompositeDisposer(subscriptions.Select(s => s.GetDisposer()));
         }
+
+        public event EventHandler Disposed;
 
         public Type Handles
         {
@@ -38,7 +42,14 @@ namespace MemBus
             if (handledType != null && !handledType.Equals(subscription.Handles))
                 throw new InvalidOperationException(string.Format("Subscription does not handle {0}", handledType.Name));
             handledType = subscription.Handles;
+            subscription.Disposed += onSubscriptionDisposed;
             subscriptions.Add(subscription);
+        }
+
+        private void onSubscriptionDisposed(object sender, EventArgs e)
+        {
+            subscriptions.Remove((ISubscription)sender);
+            Disposed.Raise(sender);
         }
 
         public IEnumerator<ISubscription> GetEnumerator()

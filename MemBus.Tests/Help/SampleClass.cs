@@ -25,5 +25,18 @@ namespace MemBus.Tests.Help
         {
             
         }
+
+        public void SetFoo(IFoo foo)
+        {
+            
+        }
+    }
+
+    public interface IFoo
+    {
+    }
+
+    class Foo : IFoo
+    {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using MemBus.Subscribing;
 
 namespace MemBus
 {
@@ -8,5 +9,6 @@ namespace MemBus
         void InsertPublishPipelineMember(IPublishPipelineMember publishPipelineMember);
         void AddSubscription(ISubscription subscription);
         void AddAutomaton(object automaton);
+        void AddService<T>(T service);
     }
 }

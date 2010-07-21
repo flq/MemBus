@@ -14,6 +14,7 @@ namespace MemBus
 
         void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
         {
+            resolver.TryInvoke(r => r.AcceptServices((IServices)services));
             resolvers.Add(resolver);
         }
 
@@ -34,6 +35,11 @@ namespace MemBus
             automaton.TryInvoke(a => a.AcceptServices(services));
         }
 
+        void IConfigurableBus.AddService<T>(T service)
+        {
+            services.Add(service);
+        }
+
         public void Publish(object message)
         {
             var subs = resolvers.GetSubscriptionsFor(message);
@@ -52,7 +58,9 @@ namespace MemBus
 
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShape customization)
         {
-            var sub = customization.ConstructSubscription(subscription);
+            var parms = new StandardServices();
+            parms.Add(subscription);
+            var sub = customization.ConstructSubscription<M>(parms);
             resolvers.Add(sub);
             return sub.GetDisposer();
         }

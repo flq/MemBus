@@ -58,9 +58,11 @@
     <Compile Include="PublishPipeline\SequentialPublisher.cs" />
     <Compile Include="Setup\AdHocConfigurator.cs" />
     <Compile Include="Setup\BusSetup.cs" />
-    <Compile Include="Setup\DefaultSetup.cs" />
+    <Compile Include="Setup\Default.cs" />
     <Compile Include="Setup\IBusSetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
+    <Compile Include="Subscribing\DisposableMethodSubscription.cs" />
+    <Compile Include="Subscribing\Standardshape.cs" />
     <Compile Include="Support\AbstractAutomaton.cs" />
     <Compile Include="Support\AbstractServices.cs" />
     <Compile Include="Support\AdHocAutomaton.cs" />

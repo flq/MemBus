@@ -38,7 +38,11 @@ namespace MemBus
         public static BusSetup StartWith<T>(params IBusSetupConfigurator[] configurators) where T : IBusSetupConfigurator, new()
         {
             return new BusSetup().Apply<T>(configurators);
-            
+        }
+
+        public static BusSetup StartWith<T>(Action<IConfigurableBus> configure) where T : IBusSetupConfigurator, new()
+        {
+            return StartWith<T>(new AdHocConfigurator(configure));
         }
 
         public static BusSetup StartWith<T1, T2>(params IBusSetupConfigurator[] configurators)

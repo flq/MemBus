@@ -1,9 +1,10 @@
 ﻿using System;
+using Rf.Common;
 
 namespace MemBus
 {
     public interface ISubscriptionShape
     {
-        ISubscription ConstructSubscription<T>(Action<T> subscription);
+        ISubscription ConstructSubscription<T>(IServices parameters);
     }
 }

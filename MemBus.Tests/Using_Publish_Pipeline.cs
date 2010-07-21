@@ -38,13 +38,14 @@ namespace MemBus.Tests
             var p = new FireAndForgetPublisher();
             var evtBlock = new ManualResetEvent(false);
             var evtSignal = new ManualResetEvent(false);
+            var evtSignal2 = new ManualResetEvent(false);
             var lockingSub = new MockSubscription<MessageA>(evtBlock, evtSignal);
-            var runThroughSub = new MockSubscription<MessageA>();
+            var runThroughSub = new MockSubscription<MessageA>(evtSignal:evtSignal2);
 
             var token = new PublishToken(new MessageA(), new[] { lockingSub, runThroughSub });
             p.LookAt(token);
-            
             lockingSub.Received.ShouldBeEqualTo(0);
+            evtSignal2.WaitOne();
             runThroughSub.Received.ShouldBeEqualTo(1);
             evtBlock.Set();
             evtSignal.WaitOne();
