@@ -27,9 +27,9 @@ namespace MemBus.Support
 
         protected abstract M constructMessage(object sender);
 
-        public void AcceptBus(IBus bus)
+        public IBus Bus
         {
-            this.bus = bus;
+            set { bus = value; }
         }
     }
 }

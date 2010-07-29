@@ -9,12 +9,8 @@ namespace MemBus.Tests.Help
     public class SimpleResolver : ISubscriptionResolver, IEnumerable<ISubscription>
     {
         private readonly List<ISubscription> subscriptions = new List<ISubscription>();
-        private IServices services;
 
-        public IServices Services
-        {
-            get { return services; }
-        }
+        public IServices Services { get; set; }
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
@@ -28,11 +24,6 @@ namespace MemBus.Tests.Help
         {
             subscriptions.Add(s);
             return true;
-        }
-
-        public void AcceptServices(IServices services)
-        {
-            this.services = services;
         }
 
         public IEnumerator<ISubscription> GetEnumerator()

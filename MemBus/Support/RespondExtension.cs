@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
@@ -34,6 +35,8 @@ namespace MemBus.Support
         {
             private readonly object instance;
             private bool workingWithEvent;
+
+            private static readonly ConcurrentDictionary<string,bool> cache = new ConcurrentDictionary<string, bool>();
 
             public DynamicExists(object instance)
             {
@@ -87,14 +90,19 @@ namespace MemBus.Support
 
             private void workWithSetter(SetMemberBinder binder, object value)
             {
-                var possibleMembers = from pi in instance.GetType().GetMember(binder.Name).OfType<PropertyInfo>()
-                                      where pi.GetSetMethod() != null && 
-                                            (
-                                                (pi.PropertyType.IsClass && value == null) || 
-                                                (value != null && pi.PropertyType.Equals(value.GetType()))
-                                            )
-                                      select pi;
-                OperationExists = possibleMembers.Count() == 1;
+                OperationExists = cache.GetOrAdd(instance.GetType().FullName + binder.Name + (value != null ? value.GetType().FullName : "null"),
+                               _ =>
+                                   {
+                                       var possibleMembers = from pi in instance.GetType().GetMember(binder.Name).OfType<PropertyInfo>()
+                                                             where pi.GetSetMethod() != null &&
+                                                                   (
+                                                                       (pi.PropertyType.IsClass && value == null) ||
+                                                                       (value != null && pi.PropertyType.IsAssignableFrom(value.GetType()))
+                                                                   )
+                                                             select pi;
+                                       return possibleMembers.Count() == 1;
+                                   });
+                
             }
         }
     }

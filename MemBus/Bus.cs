@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MemBus.Subscribing;
 using MemBus.Support;
 using Rf.Common;
 
@@ -14,7 +15,7 @@ namespace MemBus
 
         void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
         {
-            resolver.TryInvoke(r => r.AcceptServices((IServices)services));
+            resolver.TryInvoke(r => r.Services = services);
             resolvers.Add(resolver);
         }
 
@@ -31,8 +32,8 @@ namespace MemBus
         void IConfigurableBus.AddAutomaton(object automaton)
         {
             automatons.Add(automaton);
-            automaton.TryInvoke(a => a.AcceptBus(this));
-            automaton.TryInvoke(a => a.AcceptServices(services));
+            automaton.TryInvoke(a => a.Bus = this);
+            automaton.TryInvoke(a => a.Services = services);
         }
 
         void IConfigurableBus.AddService<T>(T service)
@@ -52,17 +53,22 @@ namespace MemBus
             var shape = services.Get<ISubscriptionShape>();
             if (shape == null)
                 throw new MemBusException("Did not find a default subscription shape for a subscription. Please specify one at setup, or when subscribing.");
-            shape.TryInvoke(s => s.AcceptServices(services));
+            shape.TryInvoke(s => s.Services = services);
             return Subscribe(subscription, shape);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShape customization)
         {
-            var parms = new StandardServices();
-            parms.Add(subscription);
-            var sub = customization.ConstructSubscription<M>(parms);
+            var sub = customization.ConstructSubscription(subscription);
             resolvers.Add(sub);
             return sub.GetDisposer();
+        }
+
+        public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)
+        {
+            var subC = new SubscriptionCustomizer<M>();
+            customization(subC);
+            return Subscribe(subscription, subC);
         }
 
         public IObservable<M> Observe<M>()

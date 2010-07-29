@@ -1,4 +1,5 @@
 using MemBus.Support;
+using MemBus.Tests.Help;
 using Moq;
 using NUnit.Framework;
 
@@ -14,7 +15,7 @@ namespace MemBus.Tests
             var manualTrigger = new ManualTrigger();
             var messageA = new MessageA();
             var a = new AdHocAutomaton<MessageA>(() => manualTrigger, () => messageA);
-            a.AcceptBus(busMock.Object);
+            a.Bus = busMock.Object;
             manualTrigger.Trigger();
 
             busMock.Verify(b=>b.Publish(messageA));

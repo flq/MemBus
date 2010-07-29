@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
@@ -21,7 +22,7 @@ namespace MemBus.Support
   /// <typeparam name="TARGET">The class that is inheriting from Context</typeparam>
   [DebuggerDisplay("{WhatDoIHave}")]
   public abstract class AbstractServices<TARGET> 
-    : IServices<TARGET>, ICloneable, IDisposable where TARGET : AbstractServices<TARGET>
+    : IServices<TARGET>, ICloneable, IDisposable, IEnumerable<object> where TARGET : AbstractServices<TARGET>
   {
 
     /// <summary>
@@ -251,5 +252,15 @@ namespace MemBus.Support
         return new AttachedObject<T> { CanBeDisposed = true, TheObject = theObject };
       }
     }
+
+      public IEnumerator<object> GetEnumerator()
+      {
+          return attachedObjects.Values.Select(a => a.TheObject).GetEnumerator();
+      }
+
+      IEnumerator IEnumerable.GetEnumerator()
+      {
+          return GetEnumerator();
+      }
   }
 }

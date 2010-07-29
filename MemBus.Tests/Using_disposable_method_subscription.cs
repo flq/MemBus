@@ -1,5 +1,6 @@
 using System;
 using MemBus.Subscribing;
+using MemBus.Tests.Help;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
 

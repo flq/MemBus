@@ -39,6 +39,17 @@ namespace MemBus.Tests
             var b = BusSetup.StartWith<Default>(cb=> cb.InsertResolver(simpleResolver)).Construct();
             simpleResolver.Services.ShouldNotBeNull();
         }
+
+        [Test]
+        public void Subscription_with_filtering_works()
+        {
+            var received = 0;
+            var b = BusSetup.StartWith<Default>().Construct();
+            b.Subscribe<MessageB>(msg => received++, c=>c.SetFilter(msg=>msg.Id == "A"));
+            b.Publish(new MessageB { Id = "A" });
+            b.Publish(new MessageB { Id = "B" });
+            received.ShouldBeEqualTo(1);
+        }
         
     }
 }

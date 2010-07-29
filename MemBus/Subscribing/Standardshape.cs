@@ -5,9 +5,9 @@ namespace MemBus.Subscribing
 {
     public class StandardShape : ISubscriptionShape
     {
-        public ISubscription ConstructSubscription<T>(IServices parameters)
+        public ISubscription ConstructSubscription<T>(Action<T> action)
         {
-            return new DisposableMethodSubscription<T>(parameters.Get<Action<T>>());
+            return new DisposableMethodSubscription<T>(action);
         }
     }
 }

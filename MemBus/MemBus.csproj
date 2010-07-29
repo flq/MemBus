@@ -44,8 +44,8 @@
     <Compile Include="CompositeResolver.cs" />
     <Compile Include="CompositeSubscription.cs" />
     <Compile Include="IBus.cs" />
-    <Compile Include="ISubscriptionShape.cs" />
     <Compile Include="MessageObservable.cs" />
+    <Compile Include="Messages\ExceptionOccurred.cs" />
     <Compile Include="Messages\PeriodPassed.cs" />
     <Compile Include="PublishPipeline\FireAndForgetPublisher.cs" />
     <Compile Include="PublishPipeline\IPublishPipelineMember.cs" />
@@ -62,7 +62,10 @@
     <Compile Include="Setup\IBusSetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
     <Compile Include="Subscribing\DisposableMethodSubscription.cs" />
+    <Compile Include="Subscribing\ISubscriptionCustomizer.cs" />
+    <Compile Include="Subscribing\ISubscriptionShape.cs" />
     <Compile Include="Subscribing\Standardshape.cs" />
+    <Compile Include="Subscribing\SubscriptionCustomizer.cs" />
     <Compile Include="Support\AbstractAutomaton.cs" />
     <Compile Include="Support\AbstractServices.cs" />
     <Compile Include="Support\AdHocAutomaton.cs" />

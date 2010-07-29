@@ -52,15 +52,4 @@ namespace MemBus.Tests
         }
     }
 
-    public class MessageA
-    {
-    }
-
-    public class MessageB   
-    {
-    }
-
-    public class MessageC
-    {
-    }
 }

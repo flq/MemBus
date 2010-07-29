@@ -1,4 +1,5 @@
 using System;
+using MemBus.Subscribing;
 
 namespace MemBus
 {
@@ -7,6 +8,7 @@ namespace MemBus
         void Publish(object message);
         IDisposable Subscribe<M>(Action<M> subscription);
         IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShape customization);
+        IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization);
         IObservable<M> Observe<M>();
     }
 }
