@@ -13,8 +13,7 @@ namespace MemBus.Tests
         public void handle_type_derived_from_Action()
         {
             int callCount = 0;
-            Action<MessageA> a = msg => callCount++;
-            var sub = new DisposableMethodSubscription<MessageA>(a);
+            var sub = new DisposableSubscription(new MethodInvocation<MessageA>(msg => callCount++));
             sub.Handles.ShouldBeEqualTo(typeof(MessageA));
         }
 
@@ -22,8 +21,7 @@ namespace MemBus.Tests
         public void passed_in_action_is_called()
         {
             int callCount = 0;
-            Action<MessageA> a = msg => callCount++;
-            var sub = new DisposableMethodSubscription<MessageA>(a);
+            var sub = new DisposableSubscription(new MethodInvocation<MessageA>(msg => callCount++));
             sub.Push(new MessageA());
             callCount.ShouldBeEqualTo(1);
         }
@@ -32,7 +30,7 @@ namespace MemBus.Tests
         public void calling_disposer_raises_disposed_evt()
         {
             var disposeCalled = false;
-            ISubscription sub = new DisposableMethodSubscription<MessageA>(null);
+            IDisposableSubscription sub = new DisposableSubscription(null);
             sub.Disposed += (s, e) => disposeCalled = true;
             sub.GetDisposer().Dispose();
             disposeCalled.ShouldBeTrue();

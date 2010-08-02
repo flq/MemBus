@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using MemBus.Subscribing;
 using MemBus.Support;
 using System.Linq;
 
@@ -11,7 +11,7 @@ namespace MemBus
     {
         private Type handledType;
         //TODO: This should be some thread-safe construct.
-        private readonly List<ISubscription> subscriptions = new List<ISubscription>();
+        private readonly List<IDisposableSubscription> subscriptions = new List<IDisposableSubscription>();
 
 
         public void Push(object message)
@@ -42,13 +42,16 @@ namespace MemBus
             if (handledType != null && !handledType.Equals(subscription.Handles))
                 throw new InvalidOperationException(string.Format("Subscription does not handle {0}", handledType.Name));
             handledType = subscription.Handles;
-            subscription.Disposed += onSubscriptionDisposed;
-            subscriptions.Add(subscription);
+
+            var disposableSub = subscription is IDisposableSubscription ? 
+                (IDisposableSubscription)subscription : new DisposableSubscription(subscription);
+            disposableSub.Disposed += onSubscriptionDisposed;
+            subscriptions.Add(disposableSub);
         }
 
         private void onSubscriptionDisposed(object sender, EventArgs e)
         {
-            subscriptions.Remove((ISubscription)sender);
+            subscriptions.Remove((IDisposableSubscription)sender);
             Disposed.Raise(sender);
         }
 

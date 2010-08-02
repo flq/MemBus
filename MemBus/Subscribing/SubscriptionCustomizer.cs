@@ -5,19 +5,22 @@ namespace MemBus.Subscribing
 {
     public class SubscriptionCustomizer<M> : ISubscriptionCustomizer<M>
     {
+        private readonly SubscriptionMatroschkaFactory subscriptionMatroschka;
+
+        public SubscriptionCustomizer(SubscriptionMatroschkaFactory subscriptionMatroschka)
+        {
+            this.subscriptionMatroschka = subscriptionMatroschka;
+        }
+
         public ISubscriptionCustomizer<M> SetFilter(Func<M, bool> filter)
         {
-            throw new NotImplementedException();
+            subscriptionMatroschka.AddNextToInner(new ShapeToFilter<M>(filter));
+            return this;
         }
 
-        public ISubscriptionShape AsShape()
+        public ISubscription EnhanceSubscription(ISubscription subscription)
         {
-            throw new NotImplementedException();
-        }
-
-        public ISubscription ConstructSubscription<M>(Action<M> parameters)
-        {
-            throw new NotImplementedException();
+            return subscriptionMatroschka.EnhanceSubscription(subscription);
         }
     }
 }

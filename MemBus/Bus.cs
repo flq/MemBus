@@ -50,25 +50,31 @@ namespace MemBus
 
         public IDisposable Subscribe<M>(Action<M> subscription)
         {
-            var shape = services.Get<ISubscriptionShape>();
-            if (shape == null)
-                throw new MemBusException("Did not find a default subscription shape for a subscription. Please specify one at setup, or when subscribing.");
+            var shape = getSubscriptionMatroschka();
             shape.TryInvoke(s => s.Services = services);
-            return Subscribe(subscription, shape);
+            return Subscribe(subscription, shape.Clone());
         }
 
-        public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShape customization)
+        public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization)
         {
-            var sub = customization.ConstructSubscription(subscription);
+            var sub = customization.EnhanceSubscription(new MethodInvocation<M>(subscription));
             resolvers.Add(sub);
-            return sub.GetDisposer();
+            return sub is IDisposableSubscription ? ((IDisposableSubscription)sub).GetDisposer() : null;
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)
         {
-            var subC = new SubscriptionCustomizer<M>();
+            var subC = new SubscriptionCustomizer<M>(getSubscriptionMatroschka());
             customization(subC);
             return Subscribe(subscription, subC);
+        }
+
+        private SubscriptionMatroschkaFactory getSubscriptionMatroschka()
+        {
+            var shape = services.Get<SubscriptionMatroschkaFactory>();
+            if (shape == null)
+                throw new MemBusException("Did not find a default subscription shape for a subscription. Please specify one at setup, or when subscribing.");
+            return shape;
         }
 
         public IObservable<M> Observe<M>()

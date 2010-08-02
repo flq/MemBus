@@ -48,7 +48,6 @@ namespace MemBus.Tests
             r.Add(sub.Object);
             var subs = r.GetSubscriptionsFor(new MessageA()).ToList();
             subs.ShouldHaveCount(1);
-            subs[0].ShouldBeEqualTo(sub.Object);
         }
     }
 

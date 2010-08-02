@@ -13,7 +13,7 @@ namespace MemBus
         {
             setup.InsertPublishPipelineMember(new SequentialPublisher());
             setup.InsertResolver(new TableBasedResolver());
-            setup.AddService<ISubscriptionShape>(new StandardShape());
+            setup.AddService(new SubscriptionMatroschkaFactory { new ShapeToDispose() });
         }
     }
 }

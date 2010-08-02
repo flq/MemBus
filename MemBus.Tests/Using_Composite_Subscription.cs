@@ -26,8 +26,8 @@ namespace MemBus.Tests
         [Test]
         public void composite_enumerator_works()
         {
-            var c = new CompositeSubscription() { new MockSubscription<MessageA>(), new MockSubscription<MessageA>() };
-            c.OfType<MockSubscription<MessageA>>().ShouldHaveCount(2);
+            var c = new CompositeSubscription { new MockSubscription<MessageA>(), new MockSubscription<MessageA>() };
+            c.Where(s=>s.Handles.Equals(typeof(MessageA))).ShouldHaveCount(2);
         }
 
         [Test]

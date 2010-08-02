@@ -61,10 +61,14 @@
     <Compile Include="Setup\Default.cs" />
     <Compile Include="Setup\IBusSetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
-    <Compile Include="Subscribing\DisposableMethodSubscription.cs" />
+    <Compile Include="Subscribing\DisposableSubscription.cs" />
+    <Compile Include="Subscribing\FilteredSubscription.cs" />
     <Compile Include="Subscribing\ISubscriptionCustomizer.cs" />
-    <Compile Include="Subscribing\ISubscriptionShape.cs" />
-    <Compile Include="Subscribing\Standardshape.cs" />
+    <Compile Include="Subscribing\ISubscriptionShaper.cs" />
+    <Compile Include="Subscribing\MethodInvocation.cs" />
+    <Compile Include="Subscribing\ShapeToDispose.cs" />
+    <Compile Include="Subscribing\ShapeToFilter.cs" />
+    <Compile Include="Subscribing\SubscriptionMatroschkaFactory.cs" />
     <Compile Include="Subscribing\SubscriptionCustomizer.cs" />
     <Compile Include="Support\AbstractAutomaton.cs" />
     <Compile Include="Support\AbstractServices.cs" />
