@@ -25,9 +25,13 @@ namespace MemBus.Subscribing
             shapers.Add(shaper);
         }
 
+        /// <summary>
+        /// Add a shape next to the inner one. It is allowed to pass null. In this case, nothing is added
+        /// </summary>
         public void AddNextToInner(ISubscriptionShaper shaper)
         {
-            addAsFirst(shaper);
+            if (shaper != null)
+              addAsFirst(shaper);
         }
 
 

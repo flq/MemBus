@@ -14,7 +14,7 @@ namespace MemBus.Tests
         [Test]
         public void publishes_message_parallel()
         {
-            var p = new ParallelPublisher();
+            var p = new ParallelBlockingPublisher();
             publisherCheck(p);
         }
 
@@ -35,7 +35,7 @@ namespace MemBus.Tests
         [Test]
         public void publishes_message_fire_and_forget()
         {
-            var p = new FireAndForgetPublisher();
+            var p = new ParallelNonBlockingPublisher();
             var evtBlock = new ManualResetEvent(false);
             var evtSignal = new ManualResetEvent(false);
             var evtSignal2 = new ManualResetEvent(false);

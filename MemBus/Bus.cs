@@ -64,7 +64,7 @@ namespace MemBus
 
         public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)
         {
-            var subC = new SubscriptionCustomizer<M>(getSubscriptionMatroschka());
+            var subC = new SubscriptionCustomizer<M>(getSubscriptionMatroschka(), services);
             customization(subC);
             return Subscribe(subscription, subC);
         }

@@ -8,7 +8,7 @@ namespace MemBus
     /// <summary>
     /// Calls subscribers in parallel but blocks until all subscriptions return.
     /// </summary>
-    public class ParallelPublisher : IPublishPipelineMember
+    public class ParallelBlockingPublisher : IPublishPipelineMember
     {
         private readonly TaskFactory taskMaker = new TaskFactory();
         private IBus bus;
@@ -20,13 +20,9 @@ namespace MemBus
 
         public void LookAt(PublishToken token)
         {
-            var tasks = (token.Subscriptions.Select(s => taskMaker.StartNew(() => s.Push(token.Message)))).ToArray();
+            var tasks = token.Subscriptions.Select(s => taskMaker.StartNew(() => s.Push(token.Message))).ToArray();
             Task.WaitAll(tasks);
-
-            tasks
-                .Where(t => t.Exception != null)
-                .Select(t => t.Exception)
-                .Each(e => bus.Publish(new ExceptionOccurred(e)));
+            tasks.ConvertToExceptionMessages().Each(e=>bus.Publish(e));
         }
     }
 }
