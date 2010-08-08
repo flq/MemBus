@@ -27,13 +27,11 @@ namespace MemBus
     /// Exceptions will become available once all subscriptions are done processing the message as <see cref="ExceptionOccurred"/> message.
     /// This setup allows you to call <see cref="ISubscriptionCustomizer{M}.DispatchOnUiThread"/> when doing a subscription.
     /// </summary>
-    public class AsyncRichClientFrontend : IBusSetupConfigurator
+    public class AsyncRichClientFrontend : AsyncConfiguration
     {
-        public void Accept(IConfigurableBus setup)
+        public override void Accept(IConfigurableBus setup)
         {
-            setup.InsertPublishPipelineMember(new ParallelNonBlockingPublisher());
-            setup.InsertResolver(new TableBasedResolver());
-            setup.AddService(new SubscriptionMatroschkaFactory { new ShapeToDispose() });
+            base.Accept(setup);
             setup.AddService(TaskScheduler.FromCurrentSynchronizationContext());
         }
     }

@@ -55,6 +55,7 @@
     <Compile Include="PublishPipeline\PublishToken.cs" />
     <Compile Include="PublishPipeline\SequentialPublisher.cs" />
     <Compile Include="Setup\AdHocConfigurator.cs" />
+    <Compile Include="Setup\AsyncConfiguration.cs" />
     <Compile Include="Setup\BusSetup.cs" />
     <Compile Include="Setup\Conservative.cs" />
     <Compile Include="Setup\RichClientFrontend.cs" />

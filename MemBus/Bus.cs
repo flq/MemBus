@@ -9,9 +9,14 @@ namespace MemBus
     public class Bus : IConfigurableBus, IBus
     {
         private readonly CompositeResolver resolvers = new CompositeResolver();
-        private readonly PublishPipeline pipeline = new PublishPipeline();
+        private readonly PublishPipeline pipeline;
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
+
+        internal Bus()
+        {
+            pipeline = new PublishPipeline(this);
+        }
 
         void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
         {

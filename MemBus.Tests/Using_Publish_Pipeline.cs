@@ -58,7 +58,7 @@ namespace MemBus.Tests
             var m1 = new Mock<IPublishPipelineMember>(MockBehavior.Loose);
             var m2 = new Mock<IPublishPipelineMember>(MockBehavior.Loose);
 
-            var p = new PublishPipeline { m1.Object, m2.Object };
+            var p = new PublishPipeline(null) { m1.Object, m2.Object };
             var token = new PublishToken(new MessageA(), new ISubscription[] {  });
             p.LookAt(token);
             m1.Verify(m=>m.LookAt(token));

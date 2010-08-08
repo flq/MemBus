@@ -1,8 +1,6 @@
 using System;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using MemBus.Subscribing;
+using MemBus.Messages;
 using MemBus.Tests.Help;
 using Moq;
 using NUnit.Framework;
@@ -56,57 +54,30 @@ namespace MemBus.Tests
         }
 
         [Test]
-        public void Subscription_push_can_be_dispatched_on_designated_thread_blocking_scenario()
+        public void Exceptions_are_made_available_as_messages()
         {
-            var threadId = -2;
-            var threadIdFromTest = -1;
-            IBus bus = null;
-
-            var resetEvent = new ManualResetEvent(false);
-
-            var uiThread = new Thread(
-                () =>
-                    {
-                        Helpers.CreateDispatchContext();
-                        var frame = new DispatcherFrame();
-                        threadId = Thread.CurrentThread.ManagedThreadId;
-                        bus = BusSetup.StartWith<RichClientFrontend>().Construct();
-                        bus.Subscribe<MessageB>(
-                            msg =>
-                                {
-                                    threadIdFromTest = Thread.CurrentThread.ManagedThreadId;
-                                    frame.Continue = false;
-                                },
-                            c => c.DispatchOnUiThread());
-                        resetEvent.Set();
-                        Dispatcher.PushFrame(frame);
-                    });
-            uiThread.Start();
-            resetEvent.WaitOne();
+            var evt = new ManualResetEvent(false);
+            ExceptionOccurred capturedMessage = null;
+            var bus = BusSetup.StartWith<AsyncConfiguration>().Construct();
+            bus.Subscribe<MessageB>(msg =>
+                                        {
+                                            throw new ArgumentException("Bad message");
+                                        });
+            bus.Subscribe<ExceptionOccurred>(x =>
+                                                 {
+                                                     capturedMessage = x;
+                                                     evt.Set();
+                                                 });
+            
             bus.Publish(new MessageB());
-            uiThread.Join();
-            threadIdFromTest.ShouldBeEqualTo(threadId);
-        }
+            var signaled = evt.WaitOne(TimeSpan.FromSeconds(2));
+            if (!signaled)
+                Assert.Fail("Exception was never captured!");
 
-        [Test]
-        public void Subscription_push_can_be_dispatched_on_designated_thread_async_scenario()
-        {
-            var threadId = Thread.CurrentThread.ManagedThreadId;
-            var threadIdFromTest = -1;
-            Helpers.CreateDispatchContext();
-
-            var frame = new DispatcherFrame();
-            var bus = BusSetup.StartWith<AsyncRichClientFrontend>().Construct();
-            bus.Subscribe<MessageB>(
-                msg =>
-                    {
-                        threadIdFromTest = Thread.CurrentThread.ManagedThreadId;
-                        frame.Continue = false;
-                    },
-                c => c.DispatchOnUiThread());
-            bus.Publish(new MessageB());
-            Dispatcher.PushFrame(frame);
-            threadIdFromTest.ShouldBeEqualTo(threadId);
+            capturedMessage.Exception.ShouldBeOfType<AggregateException>();
+            var xes = ((AggregateException) capturedMessage.Exception).InnerExceptions;
+            xes[0].ShouldBeOfType<ArgumentException>();
+            xes[0].Message.ShouldBeEqualTo("Bad message");
         }
 
     }

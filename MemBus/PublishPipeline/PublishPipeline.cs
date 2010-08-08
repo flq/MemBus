@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MemBus.Support;
 
 namespace MemBus
 {
     public class PublishPipeline : IEnumerable<IPublishPipelineMember>
     {
         private readonly List<IPublishPipelineMember> members = new List<IPublishPipelineMember>();
+        private readonly IBus bus;
+
+        public PublishPipeline(IBus bus)
+        {
+            this.bus = bus;
+        }
 
         public IEnumerator<IPublishPipelineMember> GetEnumerator()
         {
@@ -19,6 +26,7 @@ namespace MemBus
 
         public void Add(IPublishPipelineMember publishPipelineMember)
         {
+            publishPipelineMember.TryInvoke(p => p.Bus = bus);
             members.Add(publishPipelineMember);
         }
 
