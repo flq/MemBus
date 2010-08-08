@@ -12,7 +12,7 @@ namespace MemBus
     {
         public void Accept(IConfigurableBus setup)
         {
-            setup.InsertPublishPipelineMember(new SequentialPublisher());
+            setup.ConfigurePublishPipeline(p => p.InsertPublishPipelineMember(new SequentialPublisher()));
             setup.InsertResolver(new TableBasedResolver());
             setup.AddService(new SubscriptionMatroschkaFactory { new ShapeToDispose() });
         }

@@ -11,7 +11,7 @@ namespace MemBus
     {
         public virtual void Accept(IConfigurableBus setup)
         {
-            setup.InsertPublishPipelineMember(new ParallelNonBlockingPublisher());
+            setup.ConfigurePublishPipeline(p => p.InsertPublishPipelineMember(new ParallelNonBlockingPublisher()));
             setup.InsertResolver(new TableBasedResolver());
             setup.AddService(new SubscriptionMatroschkaFactory { new ShapeToDispose() });
         }

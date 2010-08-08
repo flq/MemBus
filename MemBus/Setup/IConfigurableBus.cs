@@ -6,9 +6,14 @@ namespace MemBus
     public interface IConfigurableBus
     {
         void InsertResolver(ISubscriptionResolver resolver);
-        void InsertPublishPipelineMember(IPublishPipelineMember publishPipelineMember);
+        void ConfigurePublishPipeline(Action<IConfigurablePublishPipeline> configurePipeline);
         void AddSubscription(ISubscription subscription);
         void AddAutomaton(object automaton);
         void AddService<T>(T service);
+    }
+
+    public interface IConfigurablePublishPipeline
+    {
+        void InsertPublishPipelineMember(IPublishPipelineMember publishPipelineMember);
     }
 }
