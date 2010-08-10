@@ -5,9 +5,9 @@ namespace MemBus
 {
     public class BusSetup
     {
-        private readonly List<IBusSetupConfigurator> configurators = new List<IBusSetupConfigurator>();
+        private readonly List<ISetupConfigurator<IConfigurableBus>> configurators = new List<ISetupConfigurator<IConfigurableBus>>();
 
-        public BusSetup Apply<T>(params IBusSetupConfigurator[] configurators) where T : IBusSetupConfigurator, new()
+        public BusSetup Apply<T>(params ISetupConfigurator<IConfigurableBus>[] configurators) where T : ISetupConfigurator<IConfigurableBus>, new()
         {
             this.configurators.Add(new T());
             this.configurators.AddRange(configurators);
@@ -35,19 +35,19 @@ namespace MemBus
         /// <summary>
         /// Start with a configuration setup
         /// </summary>
-        public static BusSetup StartWith<T>(params IBusSetupConfigurator[] configurators) where T : IBusSetupConfigurator, new()
+        public static BusSetup StartWith<T>(params ISetupConfigurator<IConfigurableBus>[] configurators) where T : ISetupConfigurator<IConfigurableBus>, new()
         {
             return new BusSetup().Apply<T>(configurators);
         }
 
-        public static BusSetup StartWith<T>(Action<IConfigurableBus> configure) where T : IBusSetupConfigurator, new()
+        public static BusSetup StartWith<T>(Action<IConfigurableBus> configure) where T : ISetupConfigurator<IConfigurableBus>, new()
         {
-            return StartWith<T>(new AdHocConfigurator(configure));
+            return StartWith<T>(new AdHocConfigurator<IConfigurableBus>(configure));
         }
 
-        public static BusSetup StartWith<T1, T2>(params IBusSetupConfigurator[] configurators)
-            where T1 : IBusSetupConfigurator, new()
-            where T2 : IBusSetupConfigurator, new()
+        public static BusSetup StartWith<T1, T2>(params ISetupConfigurator<IConfigurableBus>[] configurators)
+            where T1 : ISetupConfigurator<IConfigurableBus>, new()
+            where T2 : ISetupConfigurator<IConfigurableBus>, new()
         {
             return new BusSetup().Apply<T1>().Apply<T2>(configurators);
         }

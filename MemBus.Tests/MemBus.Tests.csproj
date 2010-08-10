@@ -46,6 +46,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Frame\PublishPipelineTester.cs" />
     <Compile Include="When_using_the_bus_in_the_ui.cs" />
     <Compile Include="Frame\AssertExtensions.cs" />
     <Compile Include="Frame\Helpers.cs" />

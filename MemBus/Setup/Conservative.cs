@@ -8,11 +8,11 @@ namespace MemBus
     /// The message push process is interrupted when an exception is raised by a subscription.
     /// Subscriptions need to be managed yourself with the IDisposable return value.
     /// </summary>
-    public class Conservative : IBusSetupConfigurator
+    public class Conservative : ISetupConfigurator<IConfigurableBus>
     {
         public void Accept(IConfigurableBus setup)
         {
-            setup.ConfigurePublishPipeline(p => p.InsertPublishPipelineMember(new SequentialPublisher()));
+            setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new SequentialPublisher()));
             setup.InsertResolver(new TableBasedResolver());
             setup.AddService(new SubscriptionMatroschkaFactory { new ShapeToDispose() });
         }

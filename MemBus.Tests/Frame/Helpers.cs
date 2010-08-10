@@ -7,7 +7,7 @@ using Moq.Protected;
 
 namespace MemBus.Tests.Frame
 {
-    public class Helpers
+    public static class Helpers
     {
         public static Mock<ISubscription> MockSubscriptionThatHandles<T>()
         {
@@ -16,10 +16,21 @@ namespace MemBus.Tests.Frame
             return mock;
         }
 
+        public static Mock<T> MockOf<T>() where T : class
+        {
+            return new Mock<T>(MockBehavior.Loose);
+        }
+
         public static void CreateDispatchContext()
         {
             SynchronizationContext.SetSynchronizationContext(
                 new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
+        }
+
+        public static PublishPipeline Configure(this PublishPipeline pipeline, Action<IConfigurablePublishing> configure)
+        {
+            configure((IConfigurablePublishing) pipeline);
+            return pipeline;
         }
     }
 }

@@ -24,9 +24,14 @@ namespace MemBus
             resolvers.Add(resolver);
         }
 
-        void IConfigurableBus.ConfigurePublishPipeline(Action<IConfigurablePublishPipeline> configurePipeline)
+        void IConfigurableBus.ConfigurePublishing(Action<IConfigurablePublishing> configurePipeline)
         {
             configurePipeline(pipeline);
+        }
+
+        public void ConfigureSubscribing(Action<IConfigurableSubscribing> configure)
+        {
+            throw new NotImplementedException();
         }
 
         void IConfigurableBus.AddSubscription(ISubscription subscription)

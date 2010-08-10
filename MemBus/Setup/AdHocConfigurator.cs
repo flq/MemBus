@@ -2,18 +2,18 @@ using System;
 
 namespace MemBus
 {
-    public class AdHocConfigurator : IBusSetupConfigurator
+    public class AdHocConfigurator<T> : ISetupConfigurator<T>
     {
-        private readonly Action<IConfigurableBus> busAction;
+        private readonly Action<T> action;
 
-        public AdHocConfigurator(Action<IConfigurableBus> busAction)
+        public AdHocConfigurator(Action<T> action)
         {
-            this.busAction = busAction;
+            this.action = action;
         }
 
-        public void Accept(IConfigurableBus setup)
+        public void Accept(T setup)
         {
-            busAction(setup);
+            action(setup);
         }
     }
 }

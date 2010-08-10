@@ -55,14 +55,46 @@ namespace MemBus.Tests
         [Test]
         public void publish_pipeline_is_extensible()
         {
-            var m1 = new Mock<IPublishPipelineMember>(MockBehavior.Loose);
-            var m2 = new Mock<IPublishPipelineMember>(MockBehavior.Loose);
+            var t = new PublishPipelineTester<MessageB>();
+            t.TestWith(pp => pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object));
 
-            var p = new PublishPipeline(null) { m1.Object, m2.Object };
-            var token = new PublishToken(new MessageA(), new ISubscription[] {  });
-            p.LookAt(token);
-            m1.Verify(m=>m.LookAt(token));
-            m2.Verify(m => m.LookAt(token));
+            t.VerifyCalled(t.Mock1);
+            t.VerifyCalled(t.Mock2);
         }
+
+        [Test]
+        public void non_default_publish_pipeline_takes_precedence()
+        {
+            var t = new PublishPipelineTester<MessageA>();
+            t.TestWith(
+                pp =>
+                    {
+                        pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object);
+                        pp.ForMessageMatching(mi => mi.IsType<MessageA>(), cp => cp.PublishPipeline(t.Mock2Object));
+                    });
+
+
+            t.VerifyNotCalled(t.Mock1);
+            t.VerifyCalled(t.Mock2);
+        }
+
+        [Test]
+        public void default_publish_pipeline_is_fallback()
+        {
+            var t = new PublishPipelineTester<MessageA>();
+            t.TestWith(pp =>
+                           {
+                               pp.DefaultPublishPipeline(t.Mock1Object, t.Mock3Object);
+                               pp.ForMessageMatching(mi => mi.IsType<MessageB>(),
+                                                     cp => cp.PublishPipeline(t.Mock2Object));
+                           });
+
+
+            t.VerifyCalled(t.Mock1);
+            t.VerifyNotCalled(t.Mock2);
+            t.VerifyCalled(t.Mock3);
+        }
+
+
     }
 }
