@@ -16,7 +16,7 @@ namespace MemBus
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new ParallelBlockingPublisher()));
             setup.InsertResolver(new TableBasedResolver());
-            setup.AddService(new SubscriptionMatroschkaFactory { new ShapeToDispose() });
+            setup.AddService(new SubscriptionMatroschka { new ShapeToDispose() });
             setup.AddService(TaskScheduler.FromCurrentSynchronizationContext());
         }
     }

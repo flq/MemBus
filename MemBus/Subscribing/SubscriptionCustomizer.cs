@@ -6,13 +6,13 @@ namespace MemBus.Subscribing
 {
     public class SubscriptionCustomizer<M> : ISubscriptionCustomizer<M>
     {
-        private readonly SubscriptionMatroschkaFactory subscriptionMatroschka;
+        private readonly SubscriptionMatroschka subscriptionMatroschka;
         private readonly IServices services;
 
         private ISubscriptionShaper filterShape;
         private ISubscriptionShaper uiInvokeshape;
 
-        public SubscriptionCustomizer(SubscriptionMatroschkaFactory subscriptionMatroschka, IServices services)
+        public SubscriptionCustomizer(SubscriptionMatroschka subscriptionMatroschka, IServices services)
         {
             this.subscriptionMatroschka = subscriptionMatroschka;
             this.services = services;

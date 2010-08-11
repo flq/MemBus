@@ -2,7 +2,7 @@ using System;
 
 namespace MemBus
 {
-    public class MessageObservable<M> : IObservable<M>
+    internal class MessageObservable<M> : IObservable<M>
     {
         private readonly IDisposable disposer;
         private IObserver<M> observer;

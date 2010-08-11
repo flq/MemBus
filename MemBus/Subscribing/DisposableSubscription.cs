@@ -3,7 +3,7 @@ using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    public class DisposableSubscription : IDisposableSubscription, IDisposable
+    public class DisposableSubscription : IDisposableSubscription, IDenyShaper, IDisposable
     {
         private ISubscription action;
 
@@ -38,6 +38,11 @@ namespace MemBus.Subscribing
         void IDisposable.Dispose()
         {
             raiseDispose();
+        }
+
+        public bool Deny
+        {
+            get { return action.CheckDenyOrAllIsGood(); }
         }
     }
 }

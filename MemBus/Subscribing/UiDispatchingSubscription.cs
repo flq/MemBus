@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    public class UiDispatchingSubscription : ISubscription
+    public class UiDispatchingSubscription : ISubscription, IDenyShaper
     {
         private readonly TaskScheduler taskScheduler;
         private readonly ISubscription subscription;
@@ -25,6 +26,11 @@ namespace MemBus.Subscribing
         public Type Handles
         {
             get { return subscription.Handles; }
+        }
+
+        public bool Deny
+        {
+            get { return subscription.CheckDenyOrAllIsGood(); }
         }
     }
 }

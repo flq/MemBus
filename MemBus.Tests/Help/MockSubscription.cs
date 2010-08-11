@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using MemBus.Subscribing;
 using MemBus.Support;
 
 namespace MemBus.Tests.Help
@@ -44,6 +45,24 @@ namespace MemBus.Tests.Help
         public void Dispose()
         {
             Disposed.Raise(this);
+        }
+    }
+
+    public class DenyingSubscription : ISubscription, IDenyShaper
+    {
+        public void Push(object message)
+        {
+            
+        }
+
+        public Type Handles
+        {
+            get { return typeof(MessageA); }
+        }
+
+        public bool Deny
+        {
+            get { return true; }
         }
     }
 }

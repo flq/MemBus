@@ -10,8 +10,10 @@ namespace MemBus
     {
         private readonly CompositeResolver resolvers = new CompositeResolver();
         private readonly PublishPipeline pipeline;
+        private readonly ShapeProvider shapeProvider = new ShapeProvider();
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
+        
 
         internal Bus()
         {
@@ -31,6 +33,7 @@ namespace MemBus
 
         public void ConfigureSubscribing(Action<IConfigurableSubscribing> configure)
         {
+            //TODO: Allow configuration of subscribing
             throw new NotImplementedException();
         }
 
@@ -54,6 +57,7 @@ namespace MemBus
         public void Publish(object message)
         {
             var subs = resolvers.GetSubscriptionsFor(message);
+            subs = shapeProvider.Shape(subs, message);
             var t = new PublishToken(message, subs);
             pipeline.LookAt(t);
         }
@@ -79,9 +83,9 @@ namespace MemBus
             return Subscribe(subscription, subC);
         }
 
-        private SubscriptionMatroschkaFactory getSubscriptionMatroschka()
+        private SubscriptionMatroschka getSubscriptionMatroschka()
         {
-            var shape = services.Get<SubscriptionMatroschkaFactory>();
+            var shape = services.Get<SubscriptionMatroschka>();
             if (shape == null)
                 throw new MemBusException("Did not find a default subscription shape for a subscription. Please specify one at setup, or when subscribing.");
             return shape;

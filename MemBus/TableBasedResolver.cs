@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MemBus
 {
-    public class TableBasedResolver : ISubscriptionResolver
+    internal class TableBasedResolver : ISubscriptionResolver
     {
         private readonly Dictionary<Type, CompositeSubscription> subscriptions = new Dictionary<Type, CompositeSubscription>();
 

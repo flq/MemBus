@@ -69,13 +69,5 @@ namespace MemBus.Support
                 @event(sender, EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Perform an action with every item of an enumerable
-        /// </summary>
-        public static void Each<T>(this IEnumerable<T> items, Action<T> action)
-        {
-            foreach (var i in items)
-                action(i);
-        }
     }
 }

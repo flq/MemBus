@@ -1,8 +1,9 @@
 ﻿using System;
+using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    public class FilteredSubscription<M> : ISubscription
+    public class FilteredSubscription<M> : ISubscription, IDenyShaper
     {
         private readonly Func<M, bool> filter;
         private readonly ISubscription subscription;
@@ -22,6 +23,11 @@ namespace MemBus.Subscribing
         public Type Handles
         {
             get { return subscription.Handles; }
+        }
+
+        public bool Deny
+        {
+            get { return subscription.CheckDenyOrAllIsGood(); }
         }
     }
 }

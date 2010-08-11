@@ -2,7 +2,7 @@
 
 namespace MemBus.Tests.Help
 {
-    public class TestShaper : ISubscriptionShaper
+    internal class TestShaper : ISubscriptionShaper
     {
         private readonly string name;
 
