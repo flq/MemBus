@@ -5,12 +5,18 @@ namespace MemBus.Tests.Help
     public class NamedSubscription : ISubscription
     {
         private readonly string name;
+        private readonly Action action;
         private readonly ISubscription inner;
 
-        public NamedSubscription(string name, ISubscription inner)
+        public NamedSubscription(string name, Action action, ISubscription inner)
         {
             this.name = name;
+            this.action = action;
             this.inner = inner;
+        }
+
+        public NamedSubscription(string name, ISubscription inner) : this(name, null, inner)
+        {
         }
 
         public ISubscription Inner
@@ -25,6 +31,9 @@ namespace MemBus.Tests.Help
 
         public void Push(object message)
         {
+            if (action != null)
+                action();
+            inner.Push(message);
             Pushed++;
         }
 
@@ -32,7 +41,7 @@ namespace MemBus.Tests.Help
 
         public Type Handles
         {
-            get { return typeof(object); }
+            get { return inner.Handles; }
         }
     }
 }

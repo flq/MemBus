@@ -64,7 +64,7 @@
     <Compile Include="Setup\RichClientFrontend.cs" />
     <Compile Include="Setup\ISetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
-    <Compile Include="Subscribing\ShapeProvider.cs" />
+    <Compile Include="Subscribing\SubscriptionPipeline.cs" />
     <Compile Include="Subscribing\DisposableSubscription.cs" />
     <Compile Include="Subscribing\FilteredSubscription.cs" />
     <Compile Include="Subscribing\IDenyShaper.cs" />

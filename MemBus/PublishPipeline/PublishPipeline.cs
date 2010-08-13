@@ -33,7 +33,7 @@ namespace MemBus
             pipelines.Insert(0, new PipelineProvider(info=>true, publishPipelineMembers));
         }
 
-        void IConfigurablePublishing.ForMessageMatching(Func<MessageInfo, bool> match, Action<IConfigurePipeline> configure)
+        void IConfigurablePublishing.MessageMatch(Func<MessageInfo, bool> match, Action<IConfigurePipeline> configure)
         {
             var cP = new ConfigurePipeline(match);
             configure(cP);

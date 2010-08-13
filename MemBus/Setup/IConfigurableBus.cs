@@ -15,5 +15,11 @@ namespace MemBus
 
     public interface IConfigurableSubscribing
     {
+      void MessageMatch(Func<MessageInfo, bool> match, Action<IConfigureSubscription> configure);
     }
+
+  public interface IConfigureSubscription
+  {
+    void ShapeOutwards(params ISubscriptionShaper[] shapers);
+  }
 }

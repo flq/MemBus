@@ -70,7 +70,7 @@ namespace MemBus.Tests
                 pp =>
                     {
                         pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object);
-                        pp.ForMessageMatching(mi => mi.IsType<MessageA>(), cp => cp.PublishPipeline(t.Mock2Object));
+                        pp.MessageMatch(mi => mi.IsType<MessageA>(), cp => cp.PublishPipeline(t.Mock2Object));
                     });
 
 
@@ -85,7 +85,7 @@ namespace MemBus.Tests
             t.TestWith(pp =>
                            {
                                pp.DefaultPublishPipeline(t.Mock1Object, t.Mock3Object);
-                               pp.ForMessageMatching(mi => mi.IsType<MessageB>(),
+                               pp.MessageMatch(mi => mi.IsType<MessageB>(),
                                                      cp => cp.PublishPipeline(t.Mock2Object));
                            });
 

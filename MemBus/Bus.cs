@@ -10,7 +10,7 @@ namespace MemBus
     {
         private readonly CompositeResolver resolvers = new CompositeResolver();
         private readonly PublishPipeline pipeline;
-        private readonly ShapeProvider shapeProvider = new ShapeProvider();
+        private readonly SubscriptionPipeline subscriptionPipeline = new SubscriptionPipeline();
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
         
@@ -33,8 +33,7 @@ namespace MemBus
 
         public void ConfigureSubscribing(Action<IConfigurableSubscribing> configure)
         {
-            //TODO: Allow configuration of subscribing
-            throw new NotImplementedException();
+            configure(subscriptionPipeline);
         }
 
         void IConfigurableBus.AddSubscription(ISubscription subscription)
@@ -57,7 +56,7 @@ namespace MemBus
         public void Publish(object message)
         {
             var subs = resolvers.GetSubscriptionsFor(message);
-            subs = shapeProvider.Shape(subs, message);
+            subs = subscriptionPipeline.Shape(subs, message);
             var t = new PublishToken(message, subs);
             pipeline.LookAt(t);
         }

@@ -6,7 +6,7 @@ namespace MemBus
     {
         void ConfigureWith<T>() where T : ISetupConfigurator<IConfigurablePublishing>, new();
         void DefaultPublishPipeline(params IPublishPipelineMember[] publishPipelineMembers);
-        void ForMessageMatching(Func<MessageInfo, bool> match, Action<IConfigurePipeline> configure);
+        void MessageMatch(Func<MessageInfo, bool> match, Action<IConfigurePipeline> configure);
     }
 
     public interface IConfigurePipeline
