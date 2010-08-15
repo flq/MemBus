@@ -56,13 +56,13 @@
     <Compile Include="PublishPipeline\PublishToken.cs" />
     <Compile Include="PublishPipeline\SequentialPublisher.cs" />
     <Compile Include="Setup\AdHocConfigurator.cs" />
-    <Compile Include="Setup\AsyncConfiguration.cs" />
+    <Compile Include="Configurators\AsyncConfiguration.cs" />
     <Compile Include="Setup\BusSetup.cs" />
-    <Compile Include="Setup\Conservative.cs" />
+    <Compile Include="Configurators\Conservative.cs" />
     <Compile Include="Setup\IConfigurablePublishing.cs" />
     <Compile Include="Setup\IConfigurableSubscribing.cs" />
     <Compile Include="Setup\MessageInfo.cs" />
-    <Compile Include="Setup\RichClientFrontend.cs" />
+    <Compile Include="Configurators\RichClientFrontend.cs" />
     <Compile Include="Setup\ISetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
     <Compile Include="Subscribing\SubscriptionPipeline.cs" />
@@ -93,9 +93,7 @@
     <Compile Include="Support\UsefulExtensions.cs" />
     <Compile Include="TableBasedResolver.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configurators\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
