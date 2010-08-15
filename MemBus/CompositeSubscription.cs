@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MemBus
 {
-    public class CompositeSubscription : ISubscription, IEnumerable<ISubscription>
+    internal class CompositeSubscription : ISubscription, IEnumerable<ISubscription>
     {
         private Type handledType;
         //TODO: This should be some thread-safe construct.

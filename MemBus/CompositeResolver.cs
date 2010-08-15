@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MemBus
 {
-    public class CompositeResolver : ISubscriptionResolver
+    internal class CompositeResolver : ISubscriptionResolver
     {
         readonly List<ISubscriptionResolver> resolvers = new List<ISubscriptionResolver>();
 

@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using MemBus.Configurators;
 using MemBus.Messages;
 using MemBus.Tests.Help;
 using Moq;

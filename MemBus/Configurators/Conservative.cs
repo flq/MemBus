@@ -1,7 +1,6 @@
-﻿using System;
-using MemBus.Subscribing;
+﻿using MemBus.Subscribing;
 
-namespace MemBus
+namespace MemBus.Configurators
 {
     /// <summary>
     /// Sets up a SequentialPublisher, and a table based resolver.

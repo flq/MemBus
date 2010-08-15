@@ -1,7 +1,7 @@
 ﻿using MemBus.Messages;
 using MemBus.Subscribing;
 
-namespace MemBus
+namespace MemBus.Configurators
 {
     /// <summary>
     /// A parallel publisher is used that publishes messages in parallel. With this setup <see cref="IBus.Publish"/> does NOT block.

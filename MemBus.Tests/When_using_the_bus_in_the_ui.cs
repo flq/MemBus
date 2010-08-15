@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using Moq;

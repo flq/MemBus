@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using MemBus;
+using MemBus.Configurators;
 
 namespace Membus.Tests.WpfClient
 {

@@ -2,7 +2,7 @@
 using MemBus.Messages;
 using MemBus.Subscribing;
 
-namespace MemBus
+namespace MemBus.Configurators
 {
     /// <summary>
     /// Setup the Bus with this on the UI thread (Important!).

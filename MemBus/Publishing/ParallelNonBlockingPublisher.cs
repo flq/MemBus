@@ -6,6 +6,9 @@ using MemBus.Support;
 
 namespace MemBus
 {
+    /// <summary>
+    /// Publisher of messages that publishes in parallel and does not wait for all handlers to return.
+    /// </summary>
     public class ParallelNonBlockingPublisher : IPublishPipelineMember
     {
         private readonly TaskFactory taskMaker = new TaskFactory();
