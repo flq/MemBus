@@ -1,6 +1,4 @@
-using System;
-
-namespace MemBus
+namespace MemBus.Publishing
 {
     /// <summary>
     /// This is the most simple publisher that works like event handlers: All subscriptions are called in sequence.

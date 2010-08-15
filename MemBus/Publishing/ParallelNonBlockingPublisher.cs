@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MemBus.Messages;
 using MemBus.Support;
 
-namespace MemBus
+namespace MemBus.Publishing
 {
     /// <summary>
     /// Publisher of messages that publishes in parallel and does not wait for all handlers to return.

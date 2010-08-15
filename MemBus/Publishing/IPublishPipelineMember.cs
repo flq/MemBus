@@ -1,4 +1,4 @@
-namespace MemBus
+namespace MemBus.Publishing
 {
     public interface IPublishPipelineMember
     {

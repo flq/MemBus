@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using System.Linq;
-using MemBus.Messages;
 using MemBus.Support;
 
-namespace MemBus
+namespace MemBus.Publishing
 {
     /// <summary>
     /// Calls subscribers in parallel but blocks until all subscriptions return.

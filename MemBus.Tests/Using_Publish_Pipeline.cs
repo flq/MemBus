@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using MemBus.Publishing;
 using MemBus.Tests.Help;
 using Moq;
 using NUnit.Framework;

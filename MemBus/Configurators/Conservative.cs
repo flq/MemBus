@@ -1,4 +1,5 @@
-﻿using MemBus.Subscribing;
+﻿using MemBus.Publishing;
+using MemBus.Subscribing;
 
 namespace MemBus.Configurators
 {

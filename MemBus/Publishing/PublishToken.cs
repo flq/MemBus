@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MemBus
+namespace MemBus.Publishing
 {
     public class PublishToken
     {

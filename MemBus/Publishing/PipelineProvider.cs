@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MemBus
+namespace MemBus.Publishing
 {
     internal class PipelineProvider
     {

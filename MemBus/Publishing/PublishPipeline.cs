@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MemBus.Support;
 
-namespace MemBus
+namespace MemBus.Publishing
 {
     public class PublishPipeline : IConfigurablePublishing
     {
