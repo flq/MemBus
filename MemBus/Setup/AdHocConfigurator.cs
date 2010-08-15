@@ -1,6 +1,6 @@
 using System;
 
-namespace MemBus
+namespace MemBus.Setup
 {
     public class AdHocConfigurator<T> : ISetupConfigurator<T>
     {

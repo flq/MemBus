@@ -1,7 +1,7 @@
 ﻿using System;
 using MemBus.Subscribing;
 
-namespace MemBus
+namespace MemBus.Setup
 {
     public interface IConfigurableSubscribing
     {

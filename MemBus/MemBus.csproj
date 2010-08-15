@@ -61,7 +61,7 @@
     <Compile Include="Configurators\Conservative.cs" />
     <Compile Include="Setup\IConfigurablePublishing.cs" />
     <Compile Include="Setup\IConfigurableSubscribing.cs" />
-    <Compile Include="Setup\MessageInfo.cs" />
+    <Compile Include="MessageInfo.cs" />
     <Compile Include="Configurators\RichClientFrontend.cs" />
     <Compile Include="Setup\ISetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />

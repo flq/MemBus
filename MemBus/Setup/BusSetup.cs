@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using MemBus.Setup;
 
+// ReSharper disable CheckNamespace
 namespace MemBus
 {
     public class BusSetup
@@ -53,3 +55,4 @@ namespace MemBus
         }
     }
 }
+// ReSharper restore CheckNamespace

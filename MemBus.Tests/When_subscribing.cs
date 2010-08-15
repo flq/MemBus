@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using MemBus.Configurators;
+using MemBus.Setup;
 using MemBus.Tests.Help;
 using NUnit.Framework;
 using MemBus.Tests.Frame;

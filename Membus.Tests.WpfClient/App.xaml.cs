@@ -18,6 +18,7 @@ namespace Membus.Tests.WpfClient
 
         private void getStarted(object sender, StartupEventArgs e)
         {
+
             bus = BusSetup.StartWith<RichClientFrontend>().Construct();
         }
 

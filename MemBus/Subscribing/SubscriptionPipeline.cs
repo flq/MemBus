@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MemBus.Setup;
 using MemBus.Subscribing;
 using System.Linq;
 

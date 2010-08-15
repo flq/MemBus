@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MemBus.Publishing;
+using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
 using Rf.Common;

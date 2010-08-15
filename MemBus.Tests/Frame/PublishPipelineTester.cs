@@ -1,5 +1,6 @@
 using System;
 using MemBus.Publishing;
+using MemBus.Setup;
 using Moq;
 
 namespace MemBus.Tests.Frame

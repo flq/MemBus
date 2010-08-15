@@ -1,7 +1,7 @@
 ﻿using System;
 using MemBus.Publishing;
 
-namespace MemBus
+namespace MemBus.Setup
 {
     public interface IConfigurablePublishing
     {

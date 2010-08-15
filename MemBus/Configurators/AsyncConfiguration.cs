@@ -1,5 +1,6 @@
 ﻿using MemBus.Messages;
 using MemBus.Publishing;
+using MemBus.Setup;
 using MemBus.Subscribing;
 
 namespace MemBus.Configurators
