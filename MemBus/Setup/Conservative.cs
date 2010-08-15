@@ -14,7 +14,7 @@ namespace MemBus
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new SequentialPublisher()));
             setup.InsertResolver(new TableBasedResolver());
-            setup.AddService(new SubscriptionMatroschka { new ShapeToDispose() });
+            setup.AddService(new SubscriptionShaperAggregate { new ShapeToDispose() });
         }
     }
 }

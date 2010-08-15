@@ -34,7 +34,7 @@ namespace MemBus
     internal class ShapeProvider : IConfigureSubscription
     {
         private readonly Func<MessageInfo, bool> match;
-        private readonly SubscriptionMatroschka matroschka = new SubscriptionMatroschka();
+        private readonly SubscriptionShaperAggregate shaperAggregate = new SubscriptionShaperAggregate();
 
         public ShapeProvider(Func<MessageInfo,bool> match)
         {
@@ -51,12 +51,12 @@ namespace MemBus
         void IConfigureSubscription.ShapeOutwards(params ISubscriptionShaper[] shapers)
         {
             foreach (var s in shapers)
-                matroschka.Add(s);
+                shaperAggregate.Add(s);
         }
 
         public IEnumerable<ISubscription> Enhance(IEnumerable<ISubscription> subscriptions)
         {
-            return subscriptions.Select(matroschka.EnhanceSubscription);
+            return subscriptions.Select(shaperAggregate.EnhanceSubscription);
         }
     }
 }

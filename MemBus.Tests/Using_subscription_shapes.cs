@@ -6,12 +6,12 @@ using MemBus.Tests.Frame;
 namespace MemBus.Tests
 {
     [TestFixture]
-    public class Using_the_matroschka
+    public class Using_subscription_shapes
     {
         [Test]
         public void Correct_Sequence_Of_Matroschka()
         {
-            var m = new SubscriptionMatroschka {new TestShaper("A"), new TestShaper("B")};
+            var m = new SubscriptionShaperAggregate {new TestShaper("A"), new TestShaper("B")};
             var s = (NamedSubscription)m.EnhanceSubscription(new NamedSubscription("First", null));
             s.Name.ShouldBeEqualTo("B");
             ((NamedSubscription)s.Inner).Name.ShouldBeEqualTo("A");
@@ -20,7 +20,7 @@ namespace MemBus.Tests
         [Test]
         public void Next_to_inner_produces_correct_sequence()
         {
-            var m = new SubscriptionMatroschka { new TestShaper("A") };
+            var m = new SubscriptionShaperAggregate { new TestShaper("A") };
             m.AddNextToInner(new TestShaper("B"));
             var s = (NamedSubscription)m.EnhanceSubscription(new NamedSubscription("First", null));
             s.Name.ShouldBeEqualTo("A");

@@ -74,7 +74,7 @@
     <Compile Include="Subscribing\ShapeToDispose.cs" />
     <Compile Include="Subscribing\ShapeToFilter.cs" />
     <Compile Include="Subscribing\ShapeToUIDispatch.cs" />
-    <Compile Include="Subscribing\SubscriptionMatroschka.cs" />
+    <Compile Include="Subscribing\SubscriptionShaperAggregate.cs" />
     <Compile Include="Subscribing\SubscriptionCustomizer.cs" />
     <Compile Include="Subscribing\UiDispatchingSubscription.cs" />
     <Compile Include="Support\AbstractAutomaton.cs" />

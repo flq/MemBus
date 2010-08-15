@@ -82,9 +82,9 @@ namespace MemBus
             return Subscribe(subscription, subC);
         }
 
-        private SubscriptionMatroschka getSubscriptionMatroschka()
+        private SubscriptionShaperAggregate getSubscriptionMatroschka()
         {
-            var shape = services.Get<SubscriptionMatroschka>();
+            var shape = services.Get<SubscriptionShaperAggregate>();
             if (shape == null)
                 throw new MemBusException("Did not find a default subscription shape for a subscription. Please specify one at setup, or when subscribing.");
             return shape;

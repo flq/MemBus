@@ -6,15 +6,15 @@ namespace MemBus.Subscribing
 {
     public class SubscriptionCustomizer<M> : ISubscriptionCustomizer<M>
     {
-        private readonly SubscriptionMatroschka subscriptionMatroschka;
+        private readonly SubscriptionShaperAggregate subscriptionShaperAggregate;
         private readonly IServices services;
 
         private ISubscriptionShaper filterShape;
         private ISubscriptionShaper uiInvokeshape;
 
-        public SubscriptionCustomizer(SubscriptionMatroschka subscriptionMatroschka, IServices services)
+        public SubscriptionCustomizer(SubscriptionShaperAggregate subscriptionShaperAggregate, IServices services)
         {
-            this.subscriptionMatroschka = subscriptionMatroschka;
+            this.subscriptionShaperAggregate = subscriptionShaperAggregate;
             this.services = services;
         }
 
@@ -34,9 +34,9 @@ namespace MemBus.Subscribing
 
         public ISubscription EnhanceSubscription(ISubscription subscription)
         {
-            subscriptionMatroschka.AddNextToInner(filterShape);
-            subscriptionMatroschka.AddNextToInner(uiInvokeshape);
-            return subscriptionMatroschka.EnhanceSubscription(subscription);
+            subscriptionShaperAggregate.AddNextToInner(filterShape);
+            subscriptionShaperAggregate.AddNextToInner(uiInvokeshape);
+            return subscriptionShaperAggregate.EnhanceSubscription(subscription);
         }
     }
 }

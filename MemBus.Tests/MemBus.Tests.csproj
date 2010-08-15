@@ -62,7 +62,7 @@
     <Compile Include="Using_Composite_Subscription.cs" />
     <Compile Include="Using_disposable_method_subscription.cs" />
     <Compile Include="Using_Publish_Pipeline.cs" />
-    <Compile Include="Using_the_matroschka.cs" />
+    <Compile Include="Using_subscription_shapes.cs" />
     <Compile Include="When_Resolving_Subscriptions.cs" />
     <Compile Include="When_using_dynamics.cs" />
     <Compile Include="When_using_the_bus.cs" />

@@ -9,16 +9,16 @@ namespace MemBus.Subscribing
     /// <summary>
     /// Subsequent adds form a matroschka from inner to outer
     /// </summary>
-    public class SubscriptionMatroschka : ISubscriptionShaper, IEnumerable<ISubscriptionShaper>
+    public class SubscriptionShaperAggregate : ISubscriptionShaper, IEnumerable<ISubscriptionShaper>
     {
         readonly List<ISubscriptionShaper> shapers = new List<ISubscriptionShaper>();
 
-        private SubscriptionMatroschka(IEnumerable<ISubscriptionShaper> shapers)
+        private SubscriptionShaperAggregate(IEnumerable<ISubscriptionShaper> shapers)
         {
             this.shapers = new List<ISubscriptionShaper>(shapers);
         }
 
-        public SubscriptionMatroschka() { }
+        public SubscriptionShaperAggregate() { }
 
         public void Add(ISubscriptionShaper shaper)
         {
@@ -50,9 +50,9 @@ namespace MemBus.Subscribing
                 shapers.Insert(0, shaper);
         }
 
-        public SubscriptionMatroschka Clone()
+        public SubscriptionShaperAggregate Clone()
         {
-            return new SubscriptionMatroschka(shapers);
+            return new SubscriptionShaperAggregate(shapers);
         }
 
         public IEnumerator<ISubscriptionShaper> GetEnumerator()
