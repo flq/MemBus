@@ -9,6 +9,16 @@ namespace MemBus
     internal class SubscriptionPipeline : IConfigurableSubscribing
     {
         private readonly List<ShapeProvider> shapeProviders = new List<ShapeProvider>();
+        private SubscriptionShaperAggregate introductionShape;
+
+        /// <summary>
+        /// Return a shaper aggregate that is applied directly to a newly introduced subscription.
+        /// The returned instance can be further modified without affecting the infrastructure
+        /// </summary>
+        public SubscriptionShaperAggregate GetIntroductionShape()
+        {
+            return introductionShape != null ? introductionShape.Clone() : new SubscriptionShaperAggregate(new [] {new ShapeToPassthrough()});
+        }
 
         public IEnumerable<ISubscription> Shape(IEnumerable<ISubscription> subscriptions, object message)
         {
@@ -31,15 +41,22 @@ namespace MemBus
             shapeProviders.Insert(0, sp);
         }
 
+        
+
         void IConfigurableSubscribing.MessageMatch(Func<MessageInfo, bool> match, Action<IConfigureSubscription> configure)
         {
             var sp = new ShapeProvider(match);
             configure(sp);
             shapeProviders.Add(sp);
         }
+
+        void IConfigurableSubscribing.ShapeToApplyWhenIntroducingSubscription(params ISubscriptionShaper[] shapers)
+        {
+            introductionShape = new SubscriptionShaperAggregate(shapers);
+        }
     }
 
-    internal class ShapeProvider : IConfigureSubscription
+    internal class ShapeProvider : IConfigureSubscription, ISubscriptionShaper
     {
         private readonly Func<MessageInfo, bool> match;
         private readonly SubscriptionShaperAggregate shaperAggregate = new SubscriptionShaperAggregate();
@@ -63,7 +80,12 @@ namespace MemBus
 
         public IEnumerable<ISubscription> Enhance(IEnumerable<ISubscription> subscriptions)
         {
-            return subscriptions.Select(shaperAggregate.EnhanceSubscription);
+            return subscriptions.Select(EnhanceSubscription);
+        }
+
+        public ISubscription EnhanceSubscription(ISubscription subscription)
+        {
+            return shaperAggregate.EnhanceSubscription(subscription);
         }
     }
 }

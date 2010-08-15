@@ -1,4 +1,4 @@
-namespace Rf.Common
+namespace MemBus.Support
 {
   public interface IServices
   {

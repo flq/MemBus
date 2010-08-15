@@ -30,5 +30,10 @@ namespace MemBus.Support
             return obj is IDenyShaper ? ((IDenyShaper)obj).Deny : false;
         }
 
+        public static IDisposable TryReturnDisposerOfSubscription(this ISubscription sub)
+        {
+            return sub is IDisposableSubscription ? ((IDisposableSubscription)sub).GetDisposer() : null;
+        }
+
     }
 }

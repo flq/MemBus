@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Rf.Common;
+using MemBus.Support;
 
 namespace MemBus.Tests.Help
 {
@@ -17,7 +17,7 @@ namespace MemBus.Tests.Help
            if (message == null)
                throw new ArgumentNullException("message");
 
-            return subscriptions.Where(s => message.GetType().Equals(s.Handles));
+            return subscriptions.Where(s => s.Handles.IsAssignableFrom(message.GetType()));
         }
 
         public bool Add(ISubscription s)

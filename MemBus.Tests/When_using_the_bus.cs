@@ -81,5 +81,19 @@ namespace MemBus.Tests
             xes[0].Message.ShouldBeEqualTo("Bad message");
         }
 
+        [Test]
+        public void Publishing_Messages_is_contravariant()
+        {
+            int received = 0;
+
+            var bus = BusSetup.StartWith<Conservative>().Construct();
+            using (bus.Subscribe<MessageA>(msg=>received++))
+            {
+                bus.Publish(new MessageD());
+            }
+
+            received.ShouldBeEqualTo(1);
+        }
+
     }
 }

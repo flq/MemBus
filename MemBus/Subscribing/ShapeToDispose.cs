@@ -4,7 +4,7 @@ namespace MemBus.Subscribing
     {
         public ISubscription EnhanceSubscription(ISubscription subscription)
         {
-            return new DisposableSubscription(subscription);
+            return subscription is IDisposableSubscription ? subscription : new DisposableSubscription(subscription);
         }
     }
 }

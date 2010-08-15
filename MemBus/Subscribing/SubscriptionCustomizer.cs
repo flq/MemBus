@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Rf.Common;
+using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    public class SubscriptionCustomizer<M> : ISubscriptionCustomizer<M>
+    internal class SubscriptionCustomizer<M> : ISubscriptionCustomizer<M>
     {
         private readonly SubscriptionShaperAggregate subscriptionShaperAggregate;
         private readonly IServices services;

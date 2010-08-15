@@ -9,9 +9,17 @@ namespace MemBus
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
-            if (!subscriptions.ContainsKey(message.GetType()))
-                return new ISubscription[] {};
-            return subscriptions[message.GetType()];
+            var a = new SubscriptionAggregation();
+            return aggregateSubscriptions(a, message.GetType());
+        }
+
+        private IEnumerable<ISubscription> aggregateSubscriptions(SubscriptionAggregation subscriptionAggregation, Type lookupType)
+        {
+            if (lookupType == null)
+                return subscriptionAggregation;
+            if (subscriptions.ContainsKey(lookupType))
+                subscriptionAggregation.Add(subscriptions[lookupType]);
+            return aggregateSubscriptions(subscriptionAggregation, lookupType.BaseType);
         }
 
         public bool Add(ISubscription subscription)

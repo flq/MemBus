@@ -12,4 +12,8 @@ namespace MemBus.Tests.Help
     public class MessageC
     {
     }
+
+    public class MessageD : MessageA
+    {
+    }
 }

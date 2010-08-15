@@ -9,11 +9,11 @@ namespace MemBus.Subscribing
     /// <summary>
     /// Subsequent adds form a matroschka from inner to outer
     /// </summary>
-    public class SubscriptionShaperAggregate : ISubscriptionShaper, IEnumerable<ISubscriptionShaper>
+    internal class SubscriptionShaperAggregate : ISubscriptionShaper, IEnumerable<ISubscriptionShaper>
     {
         readonly List<ISubscriptionShaper> shapers = new List<ISubscriptionShaper>();
 
-        private SubscriptionShaperAggregate(IEnumerable<ISubscriptionShaper> shapers)
+        public SubscriptionShaperAggregate(IEnumerable<ISubscriptionShaper> shapers)
         {
             this.shapers = new List<ISubscriptionShaper>(shapers);
         }

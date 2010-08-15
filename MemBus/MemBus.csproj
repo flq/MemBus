@@ -42,6 +42,7 @@
     <Compile Include="CompositeResolver.cs" />
     <Compile Include="CompositeSubscription.cs" />
     <Compile Include="IBus.cs" />
+    <Compile Include="IHandles.cs" />
     <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\ExceptionOccurred.cs" />
     <Compile Include="Messages\PeriodPassed.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Configurators\RichClientFrontend.cs" />
     <Compile Include="Setup\ISetupConfigurator.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
+    <Compile Include="Subscribing\ShapeToPassthrough.cs" />
     <Compile Include="Subscribing\SubscriptionPipeline.cs" />
     <Compile Include="Subscribing\DisposableSubscription.cs" />
     <Compile Include="Subscribing\FilteredSubscription.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Subscribing\SubscriptionShaperAggregate.cs" />
     <Compile Include="Subscribing\SubscriptionCustomizer.cs" />
     <Compile Include="Subscribing\UiDispatchingSubscription.cs" />
+    <Compile Include="SubscriptionAggregation.cs" />
     <Compile Include="Support\AbstractAutomaton.cs" />
     <Compile Include="Support\AbstractServices.cs" />
     <Compile Include="Support\AdHocAutomaton.cs" />

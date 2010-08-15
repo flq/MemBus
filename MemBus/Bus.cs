@@ -4,14 +4,13 @@ using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
-using Rf.Common;
 
 namespace MemBus
 {
     public class Bus : IConfigurableBus, IBus
     {
         private readonly CompositeResolver resolvers = new CompositeResolver();
-        private readonly PublishPipeline pipeline;
+        private readonly PublishPipeline publishPipeline;
         private readonly SubscriptionPipeline subscriptionPipeline = new SubscriptionPipeline();
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
@@ -19,7 +18,7 @@ namespace MemBus
 
         internal Bus()
         {
-            pipeline = new PublishPipeline(this);
+            publishPipeline = new PublishPipeline(this);
         }
 
         void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
@@ -30,7 +29,7 @@ namespace MemBus
 
         void IConfigurableBus.ConfigurePublishing(Action<IConfigurablePublishing> configurePipeline)
         {
-            configurePipeline(pipeline);
+            configurePipeline(publishPipeline);
         }
 
         public void ConfigureSubscribing(Action<IConfigurableSubscribing> configure)
@@ -60,36 +59,26 @@ namespace MemBus
             var subs = resolvers.GetSubscriptionsFor(message);
             subs = subscriptionPipeline.Shape(subs, message);
             var t = new PublishToken(message, subs);
-            pipeline.LookAt(t);
+            publishPipeline.LookAt(t);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription)
         {
-            var shape = getSubscriptionMatroschka();
-            shape.TryInvoke(s => s.Services = services);
-            return Subscribe(subscription, shape.Clone());
+            return Subscribe(subscription, subscriptionPipeline.GetIntroductionShape());
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization)
         {
             var sub = customization.EnhanceSubscription(new MethodInvocation<M>(subscription));
             resolvers.Add(sub);
-            return sub is IDisposableSubscription ? ((IDisposableSubscription)sub).GetDisposer() : null;
+            return sub.TryReturnDisposerOfSubscription();
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)
         {
-            var subC = new SubscriptionCustomizer<M>(getSubscriptionMatroschka(), services);
+            var subC = new SubscriptionCustomizer<M>(subscriptionPipeline.GetIntroductionShape(), services);
             customization(subC);
             return Subscribe(subscription, subC);
-        }
-
-        private SubscriptionShaperAggregate getSubscriptionMatroschka()
-        {
-            var shape = services.Get<SubscriptionShaperAggregate>();
-            if (shape == null)
-                throw new MemBusException("Did not find a default subscription shape for a subscription. Please specify one at setup, or when subscribing.");
-            return shape;
         }
 
         public IObservable<M> Observe<M>()
