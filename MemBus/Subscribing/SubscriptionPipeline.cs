@@ -23,6 +23,13 @@ namespace MemBus
             return resultingSubscriptions;
         }
 
+        void IConfigurableSubscribing.DefaultShapeOutwards(params ISubscriptionShaper[] shapers)
+        {
+            var sp = new ShapeProvider(msg => true);
+            ((IConfigureSubscription)sp).ShapeOutwards(shapers);
+            shapeProviders.Insert(0, sp);
+        }
+
         void IConfigurableSubscribing.MessageMatch(Func<MessageInfo, bool> match, Action<IConfigureSubscription> configure)
         {
             var sp = new ShapeProvider(match);
@@ -46,7 +53,6 @@ namespace MemBus
         {
             return match(info);
         }
-
 
         void IConfigureSubscription.ShapeOutwards(params ISubscriptionShaper[] shapers)
         {
