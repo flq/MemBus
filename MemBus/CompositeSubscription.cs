@@ -22,7 +22,7 @@ namespace MemBus
 
         public IDisposable GetDisposer()
         {
-            return new CompositeDisposer(subscriptions.Select(s => s.GetDisposer()));
+            return new DisposeContainer(subscriptions.Select(s => s.GetDisposer()));
         }
 
         public event EventHandler Disposed;

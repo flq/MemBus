@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MemBus
 {
-    internal class SubscriptionPipeline : IConfigurableSubscribing
+    internal class SubscriptionPipeline : IConfigurableSubscribing, IDisposable
     {
         private readonly List<ShapeProvider> shapeProviders = new List<ShapeProvider>();
         private SubscriptionShaperAggregate introductionShape;
@@ -53,6 +53,11 @@ namespace MemBus
         void IConfigurableSubscribing.ShapeToApplyWhenIntroducingSubscription(params ISubscriptionShaper[] shapers)
         {
             introductionShape = new SubscriptionShaperAggregate(shapers);
+        }
+
+        public void Dispose()
+        {
+            shapeProviders.Clear();
         }
     }
 

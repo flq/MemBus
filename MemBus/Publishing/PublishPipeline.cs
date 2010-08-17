@@ -5,7 +5,7 @@ using MemBus.Support;
 
 namespace MemBus.Publishing
 {
-    public class PublishPipeline : IConfigurablePublishing
+    public class PublishPipeline : IConfigurablePublishing, IDisposable
     {
         private readonly List<PipelineProvider> pipelines = new List<PipelineProvider>();
         private readonly IBus bus;
@@ -69,6 +69,11 @@ namespace MemBus.Publishing
             {
                 members.AddRange(publishPipelineMembers);
             }
+        }
+
+        public void Dispose()
+        {
+            pipelines.Clear();
         }
     }
 }

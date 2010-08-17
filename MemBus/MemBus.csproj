@@ -46,6 +46,7 @@
     <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\ExceptionOccurred.cs" />
     <Compile Include="Messages\PeriodPassed.cs" />
+    <Compile Include="NullBus.cs" />
     <Compile Include="Publishing\ParallelNonBlockingPublisher.cs" />
     <Compile Include="Publishing\IPublishPipelineMember.cs" />
     <Compile Include="ISubscription.cs" />
@@ -84,10 +85,11 @@
     <Compile Include="Support\AbstractAutomaton.cs" />
     <Compile Include="Support\AbstractServices.cs" />
     <Compile Include="Support\AdHocAutomaton.cs" />
-    <Compile Include="Support\CompositeDisposer.cs" />
+    <Compile Include="Support\DisposeContainer.cs" />
     <Compile Include="Support\MemBusException.cs" />
     <Compile Include="Support\IServices.cs" />
     <Compile Include="Support\ManualTrigger.cs" />
+    <Compile Include="Support\MessageBubbling.cs" />
     <Compile Include="Support\PeriodAutomaton.cs" />
     <Compile Include="Support\PeriodicTrigger.cs" />
     <Compile Include="Support\ReflectionExtensions.cs" />

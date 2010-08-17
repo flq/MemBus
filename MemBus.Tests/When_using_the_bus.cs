@@ -82,7 +82,21 @@ namespace MemBus.Tests
         }
 
         [Test]
-        public void Publishing_Messages_is_contravariant()
+        public void A_disposed_subscription_is_gone()
+        {
+
+            int received = 0;
+            var b = BusSetup.StartWith<Conservative>().Construct();
+            var d = b.Subscribe<MessageA>(msg => received++);
+            b.Publish(new MessageA());
+            received.ShouldBeEqualTo(1);
+            d.Dispose();
+            b.Publish(new MessageA());
+            received.ShouldBeEqualTo(1);
+        }
+
+        [Test]
+        public void Publishing_messages_is_contravariant()
         {
             int received = 0;
 

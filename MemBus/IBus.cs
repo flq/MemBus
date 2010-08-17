@@ -3,12 +3,19 @@ using MemBus.Subscribing;
 
 namespace MemBus
 {
-    public interface IBus
+    public interface IBus : IDisposable
     {
         void Publish(object message);
         IDisposable Subscribe<M>(Action<M> subscription);
         IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization);
         IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization);
         IObservable<M> Observe<M>();
+        IBus SpawnChild();
+    }
+
+    internal interface IInternalBus : IBus
+    {
+        void ScratchFromChilds(IInternalBus bus);
+        void UpwardsPublish(object message);
     }
 }

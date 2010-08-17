@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MemBus
 {
-    internal class CompositeResolver : ISubscriptionResolver
+    internal class CompositeResolver : ISubscriptionResolver, IDisposable
     {
         readonly List<ISubscriptionResolver> resolvers = new List<ISubscriptionResolver>();
 
@@ -15,7 +15,6 @@ namespace MemBus
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
-            
             return resolvers.Select(r => r.GetSubscriptionsFor(message)).SelectMany(s => s);
         }
 
@@ -33,6 +32,11 @@ namespace MemBus
                 if (wasAdded) break;
             }
             return wasAdded;
+        }
+
+        public void Dispose()
+        {
+            resolvers.Clear();
         }
     }
 }
