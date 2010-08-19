@@ -9,11 +9,16 @@ namespace MemBus
     {
         private readonly List<ISetupConfigurator<IConfigurableBus>> configurators = new List<ISetupConfigurator<IConfigurableBus>>();
 
+        public BusSetup Apply(params ISetupConfigurator<IConfigurableBus>[] configurators)
+        {
+            this.configurators.AddRange(configurators);
+            return this;
+        }
+
         public BusSetup Apply<T>(params ISetupConfigurator<IConfigurableBus>[] configurators) where T : ISetupConfigurator<IConfigurableBus>, new()
         {
             this.configurators.Add(new T());
-            this.configurators.AddRange(configurators);
-            return this;
+            return Apply(configurators);
         }
 
         public void Accept(IConfigurableBus configurableBus)
