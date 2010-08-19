@@ -67,6 +67,7 @@
     <Compile Include="Configurators\AsyncConfiguration.cs" />
     <Compile Include="Setup\BusSetup.cs" />
     <Compile Include="Configurators\Conservative.cs" />
+    <Compile Include="Setup\IConfigurableBubbling.cs" />
     <Compile Include="Setup\IConfigurablePublishing.cs" />
     <Compile Include="Setup\IConfigurableSubscribing.cs" />
     <Compile Include="MessageInfo.cs" />

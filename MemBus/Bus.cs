@@ -49,11 +49,9 @@ namespace MemBus
             }
         }
 
-        void IConfigurableBus.AddResolver(ISubscriptionResolver resolver)
+        void IConfigurableBus.ConfigureBubbling(Action<IConfigurableBubbling> configure)
         {
-            checkDisposed();
-            resolver.TryInvoke(r => r.Services = services);
-            resolvers.Add(resolver);
+            configure(messageBubbling);
         }
 
         void IConfigurableBus.ConfigurePublishing(Action<IConfigurablePublishing> configurePipeline)
@@ -66,6 +64,13 @@ namespace MemBus
         {
             checkDisposed();
             configure(subscriptionPipeline);
+        }
+
+        void IConfigurableBus.AddResolver(ISubscriptionResolver resolver)
+        {
+            checkDisposed();
+            resolver.TryInvoke(r => r.Services = services);
+            resolvers.Add(resolver);
         }
 
         void IConfigurableBus.AddSubscription(ISubscription subscription)
@@ -82,11 +87,6 @@ namespace MemBus
             automaton.TryInvoke(a => a.Services = services);
         }
 
-        void IConfigurableBus.AddBubblingForMessageType<T>()
-        {
-            messageBubbling.AddAllowanceForMessageType<T>();
-        }
-
         void IConfigurableBus.AddService<T>(T service)
         {
             checkDisposed();
@@ -96,7 +96,7 @@ namespace MemBus
         public void Publish(object message)
         {
             checkDisposed();
-            if (!childBuses.IsEmpty)
+            if (!childBuses.IsEmpty && messageBubbling.DescentAllowed(message.GetType()))
                 publishToChilds(message);
             UpwardsPublish(message);
         }

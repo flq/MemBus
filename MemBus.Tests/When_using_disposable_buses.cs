@@ -52,13 +52,13 @@ namespace MemBus.Tests
         }
 
         [Test]
-        public void Child_bus_asymetric_publish_can_be_softened_with_exception()
+        public void Child_bus_asymetric_publish_bubbling_can_be_softened()
         {
             int receivedA = 0;
             int receivedB = 0;
             int receivedChildA = 0;
             int receivedChildB = 0;
-            var bus = BusSetup.StartWith<Conservative>(b => b.AddBubblingForMessageType<MessageB>()).Construct();
+            var bus = BusSetup.StartWith<Conservative>(b => b.ConfigureBubbling(c=>c.BubblingForMessage<MessageB>())).Construct();
             bus.Subscribe<MessageA>(msg => receivedA++);
             bus.Subscribe<MessageB>(msg => receivedB++);
 
@@ -73,6 +73,30 @@ namespace MemBus.Tests
             receivedChildA.ShouldBeEqualTo(1);
             receivedChildB.ShouldBeEqualTo(1);
             
+        }
+
+        [Test]
+        public void Child_bus_asymetric_publish_descent_can_be_softened()
+        {
+            int receivedA = 0;
+            int receivedB = 0;
+            int receivedChildA = 0;
+            int receivedChildB = 0;
+            var parent = BusSetup.StartWith<Conservative>(b => b.ConfigureBubbling(c => c.BlockDescentOfMessage<MessageB>())).Construct();
+            parent.Subscribe<MessageA>(msg => receivedA++);
+            parent.Subscribe<MessageB>(msg => receivedB++);
+
+            var child = parent.SpawnChild();
+            child.Subscribe<MessageA>(msg => receivedChildA++);
+            child.Subscribe<MessageB>(msg => receivedChildB++);
+
+            parent.Publish(new MessageA());
+            parent.Publish(new MessageB());
+            receivedA.ShouldBeEqualTo(1);
+            receivedB.ShouldBeEqualTo(1);
+            receivedChildA.ShouldBeEqualTo(1);
+            receivedChildB.ShouldBeEqualTo(0);
+
         }
     }
 }
