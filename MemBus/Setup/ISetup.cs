@@ -1,6 +1,6 @@
 ﻿namespace MemBus.Setup
 {
-    public interface ISetupConfigurator<T>
+    public interface ISetup<T>
     {
         void Accept(T setup);
     }

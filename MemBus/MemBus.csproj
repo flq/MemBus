@@ -71,7 +71,7 @@
     <Compile Include="Setup\IConfigurableSubscribing.cs" />
     <Compile Include="MessageInfo.cs" />
     <Compile Include="Configurators\RichClientFrontend.cs" />
-    <Compile Include="Setup\ISetupConfigurator.cs" />
+    <Compile Include="Setup\ISetup.cs" />
     <Compile Include="Setup\IConfigurableBus.cs" />
     <Compile Include="Subscribing\ShapeToPassthrough.cs" />
     <Compile Include="Subscribing\SubscriptionPipeline.cs" />

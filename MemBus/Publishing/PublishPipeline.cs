@@ -59,7 +59,7 @@ namespace MemBus.Publishing
 
             public PipelineProvider Provider { get { return new PipelineProvider(match, members); } }
 
-            public void ConfigureWith<T>() where T : ISetupConfigurator<IConfigurePipeline>, new()
+            public void ConfigureWith<T>() where T : ISetup<IConfigurePipeline>, new()
             {
                 var t = new T();
                 t.Accept(this);

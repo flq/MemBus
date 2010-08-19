@@ -6,7 +6,7 @@ namespace MemBus.Configurators
     /// <summary>
     /// Add ServiceLocator Support
     /// </summary>
-    public class ServiceLocatorSupport : ISetupConfigurator<IConfigurableBus>
+    public class ServiceLocatorSupport : ISetup<IConfigurableBus>
     {
         private readonly IServiceLocator locator;
 
@@ -18,7 +18,7 @@ namespace MemBus.Configurators
         public void Accept(IConfigurableBus setup)
         {
             setup.AddService(locator);
-            setup.InsertResolver(new ServiceLocationBasedResolver());
+            setup.AddResolver(new ServiceLocationBasedResolver());
         }
     }
 }

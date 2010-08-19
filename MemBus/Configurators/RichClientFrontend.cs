@@ -12,12 +12,12 @@ namespace MemBus.Configurators
     /// Exceptions will not stop the publishing and become available on the bus as <see cref="ExceptionOccurred"/> message.
     /// The setup allows you to call <see cref="ISubscriptionCustomizer{M}.DispatchOnUiThread"/> when doing a subscription.
     /// </summary>
-    public class RichClientFrontend : ISetupConfigurator<IConfigurableBus>
+    public class RichClientFrontend : ISetup<IConfigurableBus>
     {
         public void Accept(IConfigurableBus setup)
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new ParallelBlockingPublisher()));
-            setup.InsertResolver(new TableBasedResolver());
+            setup.AddResolver(new TableBasedResolver());
             setup.ConfigureSubscribing(cs => cs.ShapeToApplyWhenIntroducingSubscription(new ShapeToDispose()));
             setup.AddService(TaskScheduler.FromCurrentSynchronizationContext());
         }

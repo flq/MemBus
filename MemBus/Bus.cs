@@ -49,7 +49,7 @@ namespace MemBus
             }
         }
 
-        void IConfigurableBus.InsertResolver(ISubscriptionResolver resolver)
+        void IConfigurableBus.AddResolver(ISubscriptionResolver resolver)
         {
             checkDisposed();
             resolver.TryInvoke(r => r.Services = services);

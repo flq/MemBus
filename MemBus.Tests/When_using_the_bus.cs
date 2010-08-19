@@ -39,7 +39,7 @@ namespace MemBus.Tests
         public void Resolvers_will_get_access_to_services()
         {
             var simpleResolver = new SimpleResolver();
-            var b = BusSetup.StartWith<Conservative>(cb=> cb.InsertResolver(simpleResolver)).Construct();
+            var b = BusSetup.StartWith<Conservative>(cb=> cb.AddResolver(simpleResolver)).Construct();
             simpleResolver.Services.ShouldNotBeNull();
         }
 

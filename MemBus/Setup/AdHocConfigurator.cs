@@ -2,7 +2,7 @@ using System;
 
 namespace MemBus.Setup
 {
-    public class AdHocConfigurator<T> : ISetupConfigurator<T>
+    public class AdHocConfigurator<T> : ISetup<T>
     {
         private readonly Action<T> action;
 

@@ -4,9 +4,9 @@ namespace MemBus.Setup
 {
     public interface IConfigurableBus
     {
-        void InsertResolver(ISubscriptionResolver resolver);
         void ConfigurePublishing(Action<IConfigurablePublishing> configure);
         void ConfigureSubscribing(Action<IConfigurableSubscribing> configure);
+        void AddResolver(ISubscriptionResolver resolver);
         void AddSubscription(ISubscription subscription);
         void AddAutomaton(object automaton);
         /// <summary>
