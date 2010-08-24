@@ -1,6 +1,7 @@
 obj
 bin
 out
+NDependOut
 
 db data
 _ReSharper.*

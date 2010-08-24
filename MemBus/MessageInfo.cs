@@ -2,7 +2,7 @@
 
 namespace MemBus
 {
-    public class MessageInfo
+    public struct MessageInfo
     {
         private readonly object message;
 

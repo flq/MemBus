@@ -28,7 +28,7 @@ namespace MemBus.Support
     /// The list of objects attached to this context. These may be context extensions
     /// or other objects
     /// </summary>
-    protected Dictionary<Type,IAttachedObject> attachedObjects =
+    private Dictionary<Type,IAttachedObject> attachedObjects =
       new Dictionary<Type, IAttachedObject>();
 
     /// <summary>
@@ -98,7 +98,7 @@ namespace MemBus.Support
     {
       if (attachedObjects.ContainsKey(typeof(T)))
         throw new ArgumentException(string.Format("An object of Type {0} is already attached to this context", typeof(T).Name));
-      attachedObjects.Add(typeof(T), new AttachedObject<T> { CanBeDisposed = disposable, TheObject = @object });
+      attachedObjects.Add(typeof(T), new AttachedObject<T>(disposable, @object));
     }
 
     ///<summary>
@@ -200,39 +200,44 @@ namespace MemBus.Support
     ///<summary>
     /// IAttachedObject interface.
     ///</summary>
-    protected interface IAttachedObject
+    private interface IAttachedObject
     {
       ///<summary>
       /// Can be disposed.
       ///</summary>
-      bool CanBeDisposed { get; set; }
+      bool CanBeDisposed { get; }
 
       ///<summary>
       /// The object.
       ///</summary>
-      object TheObject { get; set; }
+      object TheObject { get; }
     }
 
     ///<summary>
     /// Attached object.
     ///</summary>
     ///<typeparam name="T"></typeparam>
-    protected class AttachedObject<T> : IAttachedObject
+    private class AttachedObject<T> : IAttachedObject
     {
       ///<summary>
       /// The object.
       ///</summary>
-      public T TheObject;
+      private readonly T theObject;
 
-      ///<summary>
+      public AttachedObject(bool canBeDisposed, T theObject)
+      {
+          CanBeDisposed = canBeDisposed;
+          this.theObject = theObject;
+      }
+
+        ///<summary>
       /// Can be disposed.
       ///</summary>
-      public bool CanBeDisposed { get; set; }
+      public bool CanBeDisposed { get; private set; }
 
       object IAttachedObject.TheObject
       {
-        get { return TheObject; }
-        set { TheObject = (T)value; }
+        get { return theObject; }
       }
 
       ///<summary>
@@ -240,7 +245,7 @@ namespace MemBus.Support
       ///</summary>
       public static implicit operator T(AttachedObject<T> attachedObject)
       {
-        return attachedObject.TheObject;
+        return attachedObject.theObject;
       }
 
       ///<summary>
@@ -248,7 +253,7 @@ namespace MemBus.Support
       ///</summary>
       public static implicit operator AttachedObject<T>(T theObject)
       {
-        return new AttachedObject<T> { CanBeDisposed = true, TheObject = theObject };
+        return new AttachedObject<T>(true,theObject);
       }
     }
 

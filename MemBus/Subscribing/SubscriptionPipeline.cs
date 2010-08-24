@@ -50,7 +50,7 @@ namespace MemBus
             shapeProviders.Add(sp);
         }
 
-        void IConfigurableSubscribing.ShapeToApplyWhenIntroducingSubscription(params ISubscriptionShaper[] shapers)
+        void IConfigurableSubscribing.ApplyOnNewSubscription(params ISubscriptionShaper[] shapers)
         {
             introductionShape = new SubscriptionShaperAggregate(shapers);
         }

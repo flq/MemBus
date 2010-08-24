@@ -15,7 +15,7 @@ namespace MemBus.Configurators
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new SequentialPublisher()));
             setup.AddResolver(new TableBasedResolver());
-            setup.ConfigureSubscribing(cs => cs.ShapeToApplyWhenIntroducingSubscription(new ShapeToDispose()));
+            setup.ConfigureSubscribing(cs => cs.ApplyOnNewSubscription(new ShapeToDispose()));
         }
     }
 }

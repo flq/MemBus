@@ -18,7 +18,7 @@ namespace MemBus.Setup
         /// <summary>
         /// These shapes are applied directly when introducing a subscription to the Bus
         /// </summary>
-        void ShapeToApplyWhenIntroducingSubscription(params ISubscriptionShaper[] shapers);
+        void ApplyOnNewSubscription(params ISubscriptionShaper[] shapers);
     }
 
     public interface IConfigureSubscription
