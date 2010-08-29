@@ -22,6 +22,11 @@ namespace MemBus.Support
             this.disposables.AddRange(from d in disposables let realD = d as IDisposable where realD != null select realD);
         }
 
+        public void Add(IDisposable disposable)
+        {
+            disposables.Add(disposable);
+        }
+
         public void Dispose()
         {
             if (disposed) return;

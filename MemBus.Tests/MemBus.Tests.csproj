@@ -49,6 +49,7 @@
     <Compile Include="..\TestAids\AssertExtensions.cs">
       <Link>Frame\AssertExtensions.cs</Link>
     </Compile>
+    <Compile Include="Documentation_tests.cs" />
     <Compile Include="Frame\PublishPipelineTester.cs" />
     <Compile Include="When_subscribing.cs" />
     <Compile Include="When_using_disposable_buses.cs" />

@@ -1,9 +1,10 @@
 ﻿using System;
 using MemBus.Subscribing;
+using MemBus.Support;
 
 namespace MemBus.Tests.Help
 {
-    internal class TestShaper : ISubscriptionShaper
+    public class TestShaper : ISubscriptionShaper
     {
         private readonly string name;
         private readonly Action action;
@@ -19,6 +20,8 @@ namespace MemBus.Tests.Help
         {
             this.name = name;
         }
+
+        public IServices Services { get; set; }
 
         public ISubscription EnhanceSubscription(ISubscription subscription)
         {

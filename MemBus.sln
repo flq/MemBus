@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestAids", "TestAids", "{65
 		TestAids\AssertExtensions.cs = TestAids\AssertExtensions.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemBus.Tests.Performance", "MemBus.Tests.Performance\MemBus.Tests.Performance.csproj", "{F3A4F168-8958-430A-94DD-7689EB12553F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,16 @@ Global
 		{C20EBE21-CC17-4A53-ADAF-6C4EE8D09A37}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C20EBE21-CC17-4A53-ADAF-6C4EE8D09A37}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C20EBE21-CC17-4A53-ADAF-6C4EE8D09A37}.Release|x86.ActiveCfg = Release|Any CPU
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Debug|x86.ActiveCfg = Debug|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Debug|x86.Build.0 = Debug|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|Any CPU.ActiveCfg = Release|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|x86.ActiveCfg = Release|x86
+		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

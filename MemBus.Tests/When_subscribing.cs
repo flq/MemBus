@@ -55,5 +55,19 @@ namespace MemBus.Tests
             }
             sb.ToString().ShouldBeEqualTo("Bar"); 
         }
+
+        [Test]
+        public void A_shape_gets_access_to_services()
+        {
+            var testShaper = new TestShaper("Test");
+            var b = BusSetup.StartWith<Conservative>(
+                cb =>
+                    {
+                        cb.AddService(new StringBuilder());
+                        cb.ConfigureSubscribing(
+                            s => s.MessageMatch(mi => mi.IsType<MessageA>(), c => c.ShapeOutwards(testShaper)));
+                    }).Construct();
+            testShaper.Services.ShouldNotBeNull();
+        }
     }
 }

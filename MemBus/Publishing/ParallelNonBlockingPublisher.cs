@@ -27,6 +27,8 @@ namespace MemBus.Publishing
         public void LookAt(PublishToken token)
         {
             var tasks = token.Subscriptions.Select(s => taskMaker.StartNew(() => s.Push(token.Message))).ToArray();
+            if (tasks.Length == 0)
+                return;
             taskMaker.ContinueWhenAll(tasks,
                                       ts =>
                                           {

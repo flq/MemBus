@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using System.Linq;
+using MemBus.Support;
 
 namespace MemBus
 {
     internal class SubscriptionPipeline : IConfigurableSubscribing, IDisposable
     {
+        private readonly IServices services;
         private readonly List<ShapeProvider> shapeProviders = new List<ShapeProvider>();
         private SubscriptionShaperAggregate introductionShape;
+
+        public SubscriptionPipeline(IServices services)
+        {
+            this.services = services;
+        }
 
         /// <summary>
         /// Return a shaper aggregate that is applied directly to a newly introduced subscription.
@@ -36,7 +43,7 @@ namespace MemBus
 
         void IConfigurableSubscribing.DefaultShapeOutwards(params ISubscriptionShaper[] shapers)
         {
-            var sp = new ShapeProvider(msg => true);
+            var sp = new ShapeProvider(msg => true, services);
             ((IConfigureSubscription)sp).ShapeOutwards(shapers);
             shapeProviders.Insert(0, sp);
         }
@@ -45,7 +52,7 @@ namespace MemBus
 
         void IConfigurableSubscribing.MessageMatch(Func<MessageInfo, bool> match, Action<IConfigureSubscription> configure)
         {
-            var sp = new ShapeProvider(match);
+            var sp = new ShapeProvider(match, services);
             configure(sp);
             shapeProviders.Add(sp);
         }
@@ -64,12 +71,14 @@ namespace MemBus
     internal class ShapeProvider : IConfigureSubscription, ISubscriptionShaper
     {
         private readonly Func<MessageInfo, bool> match;
+        private readonly IServices services;
         private readonly SubscriptionShaperAggregate shaperAggregate = new SubscriptionShaperAggregate();
 
-        public ShapeProvider(Func<MessageInfo,bool> match)
+        public ShapeProvider(Func<MessageInfo,bool> match, IServices services)
         {
             if (match == null) throw new ArgumentNullException("match");
             this.match = match;
+            this.services = services;
         }
 
         public bool Handles(MessageInfo info)
@@ -80,7 +89,10 @@ namespace MemBus
         void IConfigureSubscription.ShapeOutwards(params ISubscriptionShaper[] shapers)
         {
             foreach (var s in shapers)
+            {
+                s.TryInvoke(d => d.Services = services);
                 shaperAggregate.Add(s);
+            }
         }
 
         public IEnumerable<ISubscription> Enhance(IEnumerable<ISubscription> subscriptions)

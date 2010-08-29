@@ -13,7 +13,7 @@ namespace MemBus
         private readonly IInternalBus parent;
         private readonly CompositeResolver resolvers = new CompositeResolver();
         private readonly PublishPipeline publishPipeline;
-        private readonly SubscriptionPipeline subscriptionPipeline = new SubscriptionPipeline();
+        private readonly SubscriptionPipeline subscriptionPipeline;
         private readonly MessageBubbling messageBubbling = new MessageBubbling();
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
@@ -33,6 +33,7 @@ namespace MemBus
             {
                 //This is the root!
                 publishPipeline = new PublishPipeline(this);
+                subscriptionPipeline = new SubscriptionPipeline(services);
                 disposer = new DisposeContainer(resolvers, publishPipeline, subscriptionPipeline, services);
             }
             else

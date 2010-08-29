@@ -99,6 +99,7 @@
     <Compile Include="Support\MessageBubbling.cs" />
     <Compile Include="Support\PeriodAutomaton.cs" />
     <Compile Include="Support\PeriodicTrigger.cs" />
+    <Compile Include="Support\Publish.cs" />
     <Compile Include="Support\ReflectionExtensions.cs" />
     <Compile Include="Support\RespondExtension.cs" />
     <Compile Include="Support\Trigger.cs" />

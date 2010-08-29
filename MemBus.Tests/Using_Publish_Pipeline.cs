@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
+using MemBus.Configurators;
 using MemBus.Publishing;
+using MemBus.Support;
 using MemBus.Tests.Help;
 using Moq;
 using NUnit.Framework;
@@ -94,6 +96,25 @@ namespace MemBus.Tests
             t.VerifyCalled(t.Mock1);
             t.VerifyNotCalled(t.Mock2);
             t.VerifyCalled(t.Mock3);
+        }
+
+        [Test]
+        public void use_send_this_to_send_message_while_publishing()
+        {
+            var b = BusSetup.StartWith<Conservative>(cb=> cb.ConfigurePublishing(
+                p=> p.MessageMatch(
+                    m => m.IsType<MessageA>(),
+                    c => c.PublishPipeline(Publish.This(new MessageB()), new SequentialPublisher()))))
+                .Construct();
+
+            int bCount = 0;
+            int aCount = 0;
+            b.Subscribe<MessageB>(msg => bCount++);
+            b.Subscribe<MessageA>(msg => aCount++);
+
+            b.Publish(new MessageA());
+            bCount.ShouldBeEqualTo(1);
+            aCount.ShouldBeEqualTo(1);
         }
 
 
