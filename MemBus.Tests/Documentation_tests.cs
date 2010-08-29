@@ -34,16 +34,20 @@ namespace MemBus.Tests
                     p =>
                         {
                             p.MessageMatch(
+                                m => m.IsType<Transport>(),
+                                l => l.PublishPipeline(new SequentialPublisher())
+                                );
+                            p.MessageMatch(
                                 m => m.Name.EndsWith("Request"),
-                                l => l.PublishPipeline(Publish.This(new Transport { On = true}), new SequentialPublisher())
+                                l => l.PublishPipeline(Publish.This(new Transport { On = true}), new ParallelNonBlockingPublisher())
                                 );
                             p.MessageMatch(
                                 m => m.Name.EndsWith("Response"),
-                                l => l.PublishPipeline(new SequentialPublisher(), Publish.This(new Transport { On = false}))
+                                l => l.PublishPipeline(new ParallelBlockingPublisher(), Publish.This(new Transport { On = false}))
                                 );
                         });
                 setup.ConfigureSubscribing(s => s.MessageMatch(
-                    m => m.Name.EndsWith("Response") || m.IsType<Transport>(t => t.On = false),
+                    m => m.Name.EndsWith("Response") || m.IsType<Transport>(),
                     c => c.ShapeOutwards(new ShapeToUiDispatch(), new ShapeToDispose())));
             }
         }
