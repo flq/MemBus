@@ -21,7 +21,7 @@ namespace MemBus.Publishing
         {
             var tasks = token.Subscriptions.Select(s => taskMaker.StartNew(() => s.Push(token.Message))).ToArray();
             Task.WaitAll(tasks);
-            tasks.ConvertToExceptionMessages().Each(e=>bus.Publish(e));
+            tasks.PublishExceptionMessages(bus);
         }
     }
 }

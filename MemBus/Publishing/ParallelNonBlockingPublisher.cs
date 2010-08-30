@@ -33,9 +33,9 @@ namespace MemBus.Publishing
                                       ts =>
                                           {
                                               //TODO: How to catch this exception? Seems to go to Nirvana...
-                                              if (ts.Any(t=>t.IsFaulted) && token.Message is ExceptionOccurred)
+                                              if (token.Message is ExceptionOccurred && ts.Any(t=>t.IsFaulted))
                                                   throw new MemBusException("Possible infinite messaging cycle since handling ExceptionOccurred has produced unhandled exceptions!");
-                                              ts.ConvertToExceptionMessages().Each(e => bus.Publish(e));
+                                              ts.PublishExceptionMessages(bus);
                                           });
         }
     }

@@ -9,11 +9,11 @@ namespace MemBus.Support
 {
     public static class UsefulExtensions
     {
-        public static IEnumerable<ExceptionOccurred> ConvertToExceptionMessages(this IEnumerable<Task> tasks)
+        public static void PublishExceptionMessages(this Task[] tasks, IBus bus)
         {
-            return tasks
-                .Where(t => t.Exception != null)
-                .Select(t => new ExceptionOccurred(t.Exception));
+            for (int i = 0; i < tasks.Length; i++)
+                if (tasks[i].IsFaulted)
+                    bus.Publish(new ExceptionOccurred(tasks[i].Exception));
         }
 
         /// <summary>

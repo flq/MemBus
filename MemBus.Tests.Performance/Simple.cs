@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using MemBus.Messages;
 using MemBus.Support;
 
 namespace MemBus.Tests.Performance
@@ -30,7 +31,7 @@ namespace MemBus.Tests.Performance
                            };
             int count = 0;
             var sw = Stopwatch.StartNew();
-            while (count < 1000)
+            while (count < 100000)
             {
                 bus.Publish(dict[r.Next(0, 3)]());
                 count++;
@@ -39,7 +40,7 @@ namespace MemBus.Tests.Performance
             w.WriteLine("Through {0}", sw.ElapsedMilliseconds);
 
             count = 0;
-            while (count < 10)
+            while (count < 4)
             {
                 w.WriteLine("From MsgA:{0}({1}), B:{2}({3}), C:{4}({5})", aCount, MessageA.Count, bCount,
                             MessageB.Count, cCount, MessageC.Count);
@@ -62,19 +63,22 @@ namespace MemBus.Tests.Performance
         private void onMessageC(MessageC obj)
         {
             cCount++;
-            Thread.Sleep(10);
         }
 
         private void onMessageB(MessageB obj)
         {
             bCount++;
-            Thread.Sleep(10);
         }
 
         private void onMessageA(MessageA obj)
         {
             aCount++;
-            Thread.Sleep(10);
         }
+
+        private void onException(ExceptionOccurred o)
+        {
+            Console.WriteLine(o);
+        }
+
     }
 }
