@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using MemBus.Configurators;
 
 namespace MemBus.Tests.Performance
@@ -9,7 +10,7 @@ namespace MemBus.Tests.Performance
         {
             while (true)
             {
-                var bus = BusSetup.StartWith<AsyncConfiguration>().Construct();
+                var bus = BusSetup.StartWith<Fast>().Construct();
                 var s = new Simple();
                 s.Run(bus, Console.Out);
                 Console.ReadLine();
@@ -29,7 +30,7 @@ namespace MemBus.Tests.Performance
 
         public MessageA()
         {
-            Count++;
+            Interlocked.Increment(ref Count);
         }
     }
 
@@ -44,7 +45,7 @@ namespace MemBus.Tests.Performance
 
         public MessageB()
         {
-            Count++;
+            Interlocked.Increment(ref Count);
         }
     }
 
@@ -59,7 +60,7 @@ namespace MemBus.Tests.Performance
 
         public MessageC()
         {
-            Count++;
+            Interlocked.Increment(ref Count);
         }
     }
     

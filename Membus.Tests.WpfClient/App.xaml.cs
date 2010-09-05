@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using MemBus;
 using MemBus.Configurators;
+using StructureMap;
 
 namespace Membus.Tests.WpfClient
 {
@@ -14,20 +15,11 @@ namespace Membus.Tests.WpfClient
     /// </summary>
     public partial class App : Application
     {
-        private static IBus bus;
-
+        
         private void getStarted(object sender, StartupEventArgs e)
         {
-
-            bus = BusSetup.StartWith<RichClientFrontend>().Construct();
-        }
-
-        public static IBus Bus
-        {
-            get
-            {
-                return bus;
-            }
+            ObjectFactory.Initialize(i=>i.AddRegistry<ClientRegistry>());
+            
         }
     }
 }

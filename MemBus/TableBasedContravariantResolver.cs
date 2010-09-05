@@ -3,13 +3,23 @@ using System.Collections.Generic;
 
 namespace MemBus
 {
-    internal class TableBasedResolver : ISubscriptionResolver
+    internal class TableBasedContravariantResolver : ISubscriptionResolver
     {
         private readonly Dictionary<Type, CompositeSubscription> subscriptions = new Dictionary<Type, CompositeSubscription>();
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
-            return getRelevantComposite(message.GetType());
+            var a = new SubscriptionAggregation();
+            return aggregateSubscriptions(a, message.GetType());
+        }
+
+        private IEnumerable<ISubscription> aggregateSubscriptions(SubscriptionAggregation subscriptionAggregation, Type lookupType)
+        {
+            if (lookupType == null)
+                return subscriptionAggregation;
+            if (subscriptions.ContainsKey(lookupType))
+                subscriptionAggregation.Add(subscriptions[lookupType]);
+            return aggregateSubscriptions(subscriptionAggregation, lookupType.BaseType);
         }
 
         public bool Add(ISubscription subscription)

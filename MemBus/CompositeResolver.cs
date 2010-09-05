@@ -15,7 +15,7 @@ namespace MemBus
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
-            return resolvers.Select(r => r.GetSubscriptionsFor(message)).SelectMany(s => s);
+            return resolvers.SelectMany(r => r.GetSubscriptionsFor(message));
         }
 
         public void Add(ISubscriptionResolver resolver)

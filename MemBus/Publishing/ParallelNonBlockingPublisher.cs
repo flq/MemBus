@@ -8,6 +8,8 @@ namespace MemBus.Publishing
 {
     /// <summary>
     /// Publisher of messages that publishes in parallel and does not wait for all handlers to return.
+    /// When all subscriptions have done their work, any exceptions will be collected and put on the bus
+    /// as <see cref="ExceptionOccurred"/> messages.
     /// </summary>
     public class ParallelNonBlockingPublisher : IPublishPipelineMember
     {

@@ -40,11 +40,11 @@ namespace MemBus.Tests.Performance
             w.WriteLine("Through {0}", sw.ElapsedMilliseconds);
 
             count = 0;
-            while (count < 4)
+            while (count < 10)
             {
                 w.WriteLine("From MsgA:{0}({1}), B:{2}({3}), C:{4}({5})", aCount, MessageA.Count, bCount,
                             MessageB.Count, cCount, MessageC.Count);
-                Thread.Sleep(200);
+                Thread.Sleep(1000);
                 count++;
             }
         }
@@ -62,17 +62,18 @@ namespace MemBus.Tests.Performance
 
         private void onMessageC(MessageC obj)
         {
-            cCount++;
+            Interlocked.Increment(ref cCount);
         }
 
         private void onMessageB(MessageB obj)
         {
-            bCount++;
+            Thread.Sleep(1);
+            Interlocked.Increment(ref bCount);
         }
 
         private void onMessageA(MessageA obj)
         {
-            aCount++;
+            Interlocked.Increment(ref aCount);
         }
 
         private void onException(ExceptionOccurred o)
