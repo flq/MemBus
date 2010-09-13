@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using MemBus;
 using MemBus.Configurators;
 using StructureMap;
@@ -12,7 +13,6 @@ namespace Membus.Tests.WpfClient
         {
             ForSingletonOf<IBus>().Use(constructBus);
             For(typeof (IObservable<>)).Use(typeof (MessageObservable<>));
-
         }
 
         private static IBus constructBus()
