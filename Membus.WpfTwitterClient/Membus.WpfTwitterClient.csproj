@@ -91,6 +91,7 @@
     <Compile Include="ClientRegistry.cs" />
     <Compile Include="Messages\Transport.cs" />
     <Compile Include="ServiceLocator.cs" />
+    <Compile Include="Twitter\TwitterFacade.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

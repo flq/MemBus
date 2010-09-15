@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemBus", "MemBus\MemBus.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemBus.Tests", "MemBus.Tests\MemBus.Tests.csproj", "{1EC6C146-3F52-4BFB-8123-999743BEC991}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membus.Tests.WpfClient", "Membus.Tests.WpfClient\Membus.Tests.WpfClient.csproj", "{3F778423-7761-4BF3-8A0D-241374FDE18C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membus.Reactive.Tests", "Membus.Reactive.Tests\Membus.Reactive.Tests.csproj", "{C20EBE21-CC17-4A53-ADAF-6C4EE8D09A37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestAids", "TestAids", "{6541003E-F772-4B40-AE75-37580AC83714}"
@@ -15,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestAids", "TestAids", "{65
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemBus.Tests.Performance", "MemBus.Tests.Performance\MemBus.Tests.Performance.csproj", "{F3A4F168-8958-430A-94DD-7689EB12553F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membus.WpfTwitterClient", "Membus.WpfTwitterClient\Membus.WpfTwitterClient.csproj", "{3F778423-7761-4BF3-8A0D-241374FDE18C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,17 +46,6 @@ Global
 		{1EC6C146-3F52-4BFB-8123-999743BEC991}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1EC6C146-3F52-4BFB-8123-999743BEC991}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1EC6C146-3F52-4BFB-8123-999743BEC991}.Release|x86.ActiveCfg = Release|Any CPU
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|x86.ActiveCfg = Debug|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|x86.Build.0 = Debug|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|Any CPU.ActiveCfg = Release|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|Mixed Platforms.Build.0 = Release|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|x86.ActiveCfg = Release|x86
-		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|x86.Build.0 = Release|x86
 		{C20EBE21-CC17-4A53-ADAF-6C4EE8D09A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C20EBE21-CC17-4A53-ADAF-6C4EE8D09A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C20EBE21-CC17-4A53-ADAF-6C4EE8D09A37}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -78,6 +67,18 @@ Global
 		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|x86.ActiveCfg = Release|x86
 		{F3A4F168-8958-430A-94DD-7689EB12553F}.Release|x86.Build.0 = Release|x86
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|x86.ActiveCfg = Debug|x86
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Debug|x86.Build.0 = Debug|x86
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|x86.ActiveCfg = Release|x86
+		{3F778423-7761-4BF3-8A0D-241374FDE18C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
