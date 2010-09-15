@@ -13,23 +13,23 @@ namespace Membus.Reactive.Tests
     [TestFixture]
     public class When_MemBus_is_used_as_Observable
     {
-        IBus mb = BusSetup.StartWith<Conservative>().Construct();
+        IBus bus = BusSetup.StartWith<Conservative>().Construct();
 
         [Test]
         public void Apply_extension_method_where()
         {
             var msgCount = 0;
             
-            var msgs = 
-                from msg in mb.Observe<MessageA>() 
+            var messages = 
+                from msg in bus.Observe<MessageA>() 
                 where msg.Name == "A" 
                 select msg;
 
-            using (msgs.Subscribe(msg => msgCount++))
+            using (messages.Subscribe(msg => msgCount++))
             {
-                mb.Publish(new MessageA {Name = "A"});
-                mb.Publish(new MessageA {Name = "B"});
-                mb.Publish(new MessageA {Name = "A"});
+                bus.Publish(new MessageA {Name = "A"});
+                bus.Publish(new MessageA {Name = "B"});
+                bus.Publish(new MessageA {Name = "A"});
                 msgCount.ShouldBeEqualTo(2);
             }
         }
@@ -37,17 +37,17 @@ namespace Membus.Reactive.Tests
         [Test]
         public void Apply_extension_method_distinct()
         {
-            var msgs = mb.Observe<MessageA>().DistinctUntilChanged(m => m.Name);
+            var msgs = bus.Observe<MessageA>().DistinctUntilChanged(m => m.Name);
             var sb = new StringBuilder();
 
             using (msgs.Subscribe(msg => sb.Append(msg.Name)))
             {
-                mb.Publish(new MessageA { Name = "A" });
-                mb.Publish(new MessageA { Name = "A" });
-                mb.Publish(new MessageA { Name = "B" });
-                mb.Publish(new MessageA { Name = "B" });
-                mb.Publish(new MessageA { Name = "A" });
-                mb.Publish(new MessageA { Name = "A" });
+                bus.Publish(new MessageA { Name = "A" });
+                bus.Publish(new MessageA { Name = "A" });
+                bus.Publish(new MessageA { Name = "B" });
+                bus.Publish(new MessageA { Name = "B" });
+                bus.Publish(new MessageA { Name = "A" });
+                bus.Publish(new MessageA { Name = "A" });
                 sb.ToString().ShouldBeEqualTo("ABA");
             }
         }

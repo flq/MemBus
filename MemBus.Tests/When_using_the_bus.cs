@@ -86,12 +86,12 @@ namespace MemBus.Tests
         {
 
             int received = 0;
-            var b = BusSetup.StartWith<Conservative>().Construct();
-            var d = b.Subscribe<MessageA>(msg => received++);
-            b.Publish(new MessageA());
+            var bus = BusSetup.StartWith<Conservative>().Construct();
+            var d = bus.Subscribe<MessageA>(msg => received++);
+            bus.Publish(new MessageA());
             received.ShouldBeEqualTo(1);
             d.Dispose();
-            b.Publish(new MessageA());
+            bus.Publish(new MessageA());
             received.ShouldBeEqualTo(1);
         }
 
