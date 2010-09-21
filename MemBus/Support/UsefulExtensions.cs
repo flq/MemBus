@@ -25,6 +25,12 @@ namespace MemBus.Support
                 action(i);
         }
 
+        public static string Fmt(this string @string, params object[] args)
+        {
+            if (@string == null) throw new ArgumentNullException("string");
+            return string.Format(@string, args);
+        }
+
         public static bool CheckDenyOrAllIsGood(this object obj)
         {
             return obj is IDenyShaper ? ((IDenyShaper)obj).Deny : false;

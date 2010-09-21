@@ -2,6 +2,7 @@
 using System.Threading;
 using MemBus;
 using MemBus.Configurators;
+using Membus.Tests.WpfClient.Frame;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
@@ -13,6 +14,8 @@ namespace Membus.Tests.WpfClient
         {
             ForSingletonOf<IBus>().Use(constructBus);
             For(typeof (IObservable<>)).Use(typeof (MessageObservable<>));
+            For<IConfigReader>().Use<AppConfigReader>();
+            For<TwitterKeys>().Use(ctx => ctx.GetInstance<IConfigReader>().GetSection<TwitterKeys>());
         }
 
         private static IBus constructBus()

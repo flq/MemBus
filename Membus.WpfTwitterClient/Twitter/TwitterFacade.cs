@@ -4,7 +4,7 @@ namespace Membus.Tests.WpfClient.Twitter
     {
         public TwitterFacade()
         {
-            Twitterizer.
+            //Twitterizer.
         }
     }
 }
