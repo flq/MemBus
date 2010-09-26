@@ -95,19 +95,5 @@ namespace MemBus.Tests
             received.ShouldBeEqualTo(1);
         }
 
-        [Test]
-        public void Publishing_messages_is_contravariant()
-        {
-            int received = 0;
-
-            var bus = BusSetup.StartWith<Conservative>().Construct();
-            using (bus.Subscribe<MessageA>(msg=>received++))
-            {
-                bus.Publish(new MessageD());
-            }
-
-            received.ShouldBeEqualTo(1);
-        }
-
     }
 }

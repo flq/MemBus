@@ -3,7 +3,7 @@ using MemBus.Subscribing;
 
 namespace MemBus
 {
-    internal class NullBus : IInternalBus
+    internal class NullBus : IBus
     {
         public void Dispose()
         {
@@ -31,16 +31,6 @@ namespace MemBus
         public IObservable<M> Observe<M>()
         {
             throw new InvalidOperationException("Not meant to be called");
-        }
-
-        public IBus SpawnChild()
-        {
-            throw new InvalidOperationException("Not meant to be called");
-        }
-
-        public void ScratchFromChilds(IInternalBus bus)
-        {
-            
         }
     }
 }

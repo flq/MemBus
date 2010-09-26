@@ -8,17 +8,13 @@ using MemBus.Support;
 
 namespace MemBus
 {
-    internal class Bus : IConfigurableBus, IInternalBus
+    internal class Bus : IConfigurableBus, IBus
     {
-        private readonly IInternalBus parent;
         private readonly CompositeResolver resolvers = new CompositeResolver();
         private readonly PublishPipeline publishPipeline;
         private readonly SubscriptionPipeline subscriptionPipeline;
-        private readonly MessageBubbling messageBubbling = new MessageBubbling();
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
-
-        private readonly ConcurrentDictionary<int,IInternalBus> childBuses = new ConcurrentDictionary<int,IInternalBus>();
 
         private readonly DisposeContainer disposer;
 
@@ -26,10 +22,9 @@ namespace MemBus
 
         internal Bus():this(null) { }
         
-        internal Bus(Bus parent)
+        internal Bus(Bus template)
         {
-            this.parent = (IInternalBus)parent ?? new NullBus();
-            if (parent == null)
+            if (template == null)
             {
                 //This is the root!
                 publishPipeline = new PublishPipeline(this);
@@ -40,20 +35,14 @@ namespace MemBus
             {
                 //Take over pipelines
                 //TODO: More correct is to clone the pipelines, and then properly dispose them
-                publishPipeline = parent.publishPipeline;
-                subscriptionPipeline = parent.subscriptionPipeline;
-                //bubbling rules
-                messageBubbling = parent.messageBubbling;
+                publishPipeline = template.publishPipeline;
+                subscriptionPipeline = template.subscriptionPipeline;
                 //New subscribers!
                 resolvers = new CompositeResolver(new TableBasedResolver());
                 disposer = new DisposeContainer();
             }
         }
 
-        void IConfigurableBus.ConfigureBubbling(Action<IConfigurableBubbling> configure)
-        {
-            configure(messageBubbling);
-        }
 
         void IConfigurableBus.ConfigurePublishing(Action<IConfigurablePublishing> configurePipeline)
         {
@@ -97,8 +86,6 @@ namespace MemBus
         public void Publish(object message)
         {
             checkDisposed();
-            if (!childBuses.IsEmpty && messageBubbling.DescentAllowed(message.GetType()))
-                publishToChilds(message);
             UpwardsPublish(message);
         }
 
@@ -108,8 +95,6 @@ namespace MemBus
             subs = subscriptionPipeline.Shape(subs, message);
             var t = new PublishToken(message, subs);
             publishPipeline.LookAt(t);
-            if (messageBubbling.BubblingAllowed(message.GetType()))
-                parent.UpwardsPublish(message);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription)
@@ -139,29 +124,10 @@ namespace MemBus
             return new MessageObservable<M>(this);
         }
 
-        public IBus SpawnChild()
-        {
-            var spawnChild = new Bus(this);
-            childBuses.TryAdd(spawnChild.GetHashCode(), spawnChild);
-            return spawnChild;
-        }
-
-        public void ScratchFromChilds(IInternalBus bus)
-        {
-            IInternalBus b;
-            childBuses.TryRemove(bus.GetHashCode(), out b);
-        }
-
         public void Dispose()
         {
             disposer.Dispose();
-            parent.ScratchFromChilds(this);
             isDisposed = true;
-        }
-
-        private void publishToChilds(object message)
-        {
-            childBuses.Values.Each(b=>b.Publish(message));
         }
 
         private void checkDisposed()

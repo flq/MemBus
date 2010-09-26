@@ -68,7 +68,6 @@
     <Compile Include="Configurators\AsyncConfiguration.cs" />
     <Compile Include="Setup\BusSetup.cs" />
     <Compile Include="Configurators\Conservative.cs" />
-    <Compile Include="Setup\IConfigurableBubbling.cs" />
     <Compile Include="Setup\IConfigurablePublishing.cs" />
     <Compile Include="Setup\IConfigurableSubscribing.cs" />
     <Compile Include="MessageInfo.cs" />
@@ -97,7 +96,6 @@
     <Compile Include="Support\MemBusException.cs" />
     <Compile Include="Support\IServices.cs" />
     <Compile Include="Support\ManualTrigger.cs" />
-    <Compile Include="Support\MessageBubbling.cs" />
     <Compile Include="Support\PeriodAutomaton.cs" />
     <Compile Include="Support\PeriodicTrigger.cs" />
     <Compile Include="Support\Publish.cs" />
