@@ -12,6 +12,11 @@ namespace Membus.Tests.WpfClient
     {
         public ClientRegistry()
         {
+            Scan(s =>
+                     {
+                         s.AssembliesFromApplicationBaseDirectory();
+                         s.AddAllTypesOf(typeof (IHandles<>));
+                     });
             ForSingletonOf<IBus>().Use(constructBus);
             For(typeof (IObservable<>)).Use(typeof (MessageObservable<>));
             For<IConfigReader>().Use<AppConfigReader>();
