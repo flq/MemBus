@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Xml.Serialization;
 using MemBus.Support;
 
-namespace Membus.Tests.WpfClient.Frame
+namespace Membus.WpfTwitterClient.Frame
 {
     public interface IConfigReader
     {

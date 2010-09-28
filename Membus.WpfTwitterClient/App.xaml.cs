@@ -6,10 +6,11 @@ using System.Linq;
 using System.Windows;
 using MemBus;
 using MemBus.Configurators;
-using Membus.Tests.WpfClient.Messages;
+using Membus.WpfTwitterClient.Frame;
+using Membus.WpfTwitterClient.Messages;
 using StructureMap;
 
-namespace Membus.Tests.WpfClient
+namespace Membus.WpfTwitterClient
 {
     /// <summary>
     /// Interaction logic for App.xaml

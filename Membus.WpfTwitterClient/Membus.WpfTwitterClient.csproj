@@ -93,7 +93,7 @@
     <Compile Include="Frame\ClientRegistry.cs" />
     <Compile Include="Frame\BaseConfigurationSection.cs" />
     <Compile Include="Frame\ConfigReader.cs" />
-    <Compile Include="Frame\TwitterKeys.cs" />
+    <Compile Include="Frame\Twitter\TwitterKeys.cs" />
     <Compile Include="Handler\TwitterBootstrapHandler.cs" />
     <Compile Include="Messages\Bootstrap.cs" />
     <Compile Include="Frame\TransportMessage.cs" />

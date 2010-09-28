@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Membus.Tests.WpfClient.Frame
+namespace Membus.WpfTwitterClient.Frame.Twitter
 {
     [XmlRoot]
     public class TwitterKeys

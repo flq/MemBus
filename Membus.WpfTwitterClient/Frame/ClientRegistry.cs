@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Threading;
 using MemBus;
 using MemBus.Configurators;
-using Membus.Tests.WpfClient.Frame;
+using Membus.WpfTwitterClient;
 using Membus.WpfTwitterClient.Frame;
+using Membus.WpfTwitterClient.Frame.Twitter;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
-namespace Membus.Tests.WpfClient
+namespace Membus.WpfTwitterClient.Frame
 {
     internal class ClientRegistry : Registry
     {

@@ -3,8 +3,9 @@ using System.Configuration;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using Membus.WpfTwitterClient.Frame.Twitter;
 
-namespace Membus.Tests.WpfClient.Frame
+namespace Membus.WpfTwitterClient.Frame
 {
 
     public class XmlSerializedConfigurationSection<T>

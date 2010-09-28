@@ -1,4 +1,4 @@
-namespace Membus.Tests.WpfClient.Messages
+namespace Membus.WpfTwitterClient.Messages
 {
     /// <summary>
     /// Marker message for bootstrapping

@@ -1,8 +1,9 @@
 using MemBus;
-using Membus.Tests.WpfClient.Frame;
-using Membus.Tests.WpfClient.Messages;
+using Membus.WpfTwitterClient.Frame;
+using Membus.WpfTwitterClient.Frame.Twitter;
+using Membus.WpfTwitterClient.Messages;
 
-namespace Membus.Tests.WpfClient.Handler
+namespace Membus.WpfTwitterClient.Handler
 {
     public class TwitterBootstrapHandler : Handles<Bootstrap>
     {

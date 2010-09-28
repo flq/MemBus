@@ -2,10 +2,9 @@ using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
-using Membus.Tests.WpfClient.Messages;
-using Membus.WpfTwitterClient.Frame;
+using Membus.WpfTwitterClient.Messages;
 
-namespace Membus.Tests.WpfClient
+namespace Membus.WpfTwitterClient.Frame
 {
     public class ClientPublishingConventions : ISetup<IConfigurableBus>
     {
