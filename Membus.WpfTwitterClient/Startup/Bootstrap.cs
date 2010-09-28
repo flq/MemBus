@@ -1,4 +1,4 @@
-namespace Membus.WpfTwitterClient.Messages
+namespace Membus.WpfTwitterClient.Startup
 {
     /// <summary>
     /// Marker message for bootstrapping

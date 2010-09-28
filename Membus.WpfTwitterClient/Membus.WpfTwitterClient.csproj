@@ -70,6 +70,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\System.Reactive.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\WpfApp\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -93,9 +97,13 @@
     <Compile Include="Frame\ClientRegistry.cs" />
     <Compile Include="Frame\BaseConfigurationSection.cs" />
     <Compile Include="Frame\ConfigReader.cs" />
+    <Compile Include="Frame\IUserSettings.cs" />
+    <Compile Include="Frame\TwitterKeysConfiguration.cs" />
+    <Compile Include="GatherAccessToken\RequestToGatherAccessToken.cs" />
+    <Compile Include="Properties\Settings.cs" />
     <Compile Include="Frame\Twitter\TwitterKeys.cs" />
-    <Compile Include="Handler\TwitterBootstrapHandler.cs" />
-    <Compile Include="Messages\Bootstrap.cs" />
+    <Compile Include="Startup\TwitterBootstrap.cs" />
+    <Compile Include="Startup\Bootstrap.cs" />
     <Compile Include="Frame\TransportMessage.cs" />
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />

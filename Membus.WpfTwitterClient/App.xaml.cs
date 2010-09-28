@@ -7,7 +7,7 @@ using System.Windows;
 using MemBus;
 using MemBus.Configurators;
 using Membus.WpfTwitterClient.Frame;
-using Membus.WpfTwitterClient.Messages;
+using Membus.WpfTwitterClient.Startup;
 using StructureMap;
 
 namespace Membus.WpfTwitterClient

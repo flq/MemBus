@@ -10,18 +10,15 @@ namespace MemBus
     internal class ServiceLocationBasedResolver : ISubscriptionResolver
     {
 
-        private IServiceLocator locator;
+        private readonly IServiceLocator locator;
+
         private readonly ConcurrentDictionary<Type, Type> typeCache = new ConcurrentDictionary<Type, Type>();
 
-        public IServices Service
+        public ServiceLocationBasedResolver(IServiceLocator serviceLocator)
         {
-            set
-            {
-                locator = value.Get<IServiceLocator>();
-                if (locator == null)
-                    throw new MemBusException("ServiceLocationBasedResolver requires a service locator");
-            }
+            locator = serviceLocator;
         }
+
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {

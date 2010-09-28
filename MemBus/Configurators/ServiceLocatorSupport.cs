@@ -18,7 +18,7 @@ namespace MemBus.Configurators
         public void Accept(IConfigurableBus setup)
         {
             setup.AddService(locator);
-            setup.AddResolver(new ServiceLocationBasedResolver());
+            setup.AddResolver(new ServiceLocationBasedResolver(locator));
         }
     }
 }

@@ -2,7 +2,7 @@ using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
-using Membus.WpfTwitterClient.Messages;
+using Membus.WpfTwitterClient.Startup;
 
 namespace Membus.WpfTwitterClient.Frame
 {
