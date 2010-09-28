@@ -4,7 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 using System.Linq;
 
-namespace Membus.Tests.WpfClient
+namespace Membus.WpfTwitterClient.Frame
 {
     public class ServiceLocator : ServiceLocatorImplBase
     {

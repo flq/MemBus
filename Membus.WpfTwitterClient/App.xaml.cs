@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using MemBus;
 using MemBus.Configurators;
+using Membus.Tests.WpfClient.Messages;
 using StructureMap;
 
 namespace Membus.Tests.WpfClient
@@ -19,7 +20,7 @@ namespace Membus.Tests.WpfClient
         private void getStarted(object sender, StartupEventArgs e)
         {
             ObjectFactory.Initialize(i=>i.AddRegistry<ClientRegistry>());
-            
+            ObjectFactory.Container.GetInstance<IBus>().Publish(new Bootstrap());
         }
     }
 }

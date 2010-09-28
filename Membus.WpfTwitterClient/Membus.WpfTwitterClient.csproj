@@ -89,14 +89,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClientPublishingConventions.cs" />
-    <Compile Include="ClientRegistry.cs" />
+    <Compile Include="Frame\ClientPublishingConventions.cs" />
+    <Compile Include="Frame\ClientRegistry.cs" />
     <Compile Include="Frame\BaseConfigurationSection.cs" />
     <Compile Include="Frame\ConfigReader.cs" />
     <Compile Include="Frame\TwitterKeys.cs" />
-    <Compile Include="Messages\Transport.cs" />
-    <Compile Include="ServiceLocator.cs" />
-    <Compile Include="Twitter\TwitterFacade.cs" />
+    <Compile Include="Handler\TwitterBootstrapHandler.cs" />
+    <Compile Include="Messages\Bootstrap.cs" />
+    <Compile Include="Frame\TransportMessage.cs" />
+    <Compile Include="Frame\ServiceLocator.cs" />
+    <Compile Include="Frame\Twitter\TwitterFacade.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

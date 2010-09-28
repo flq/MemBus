@@ -3,6 +3,7 @@ using System.Threading;
 using MemBus;
 using MemBus.Configurators;
 using Membus.Tests.WpfClient.Frame;
+using Membus.WpfTwitterClient.Frame;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
