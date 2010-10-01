@@ -16,10 +16,12 @@ namespace Membus.WpfTwitterClient
                 .SubscribeOnDispatcher()
                 .Where(msg=>msg.ScreenAvailable)
                 .Subscribe(onNextScreenRequest);
+            DisplayName = "MemBus OnTweet!";
         }
 
         private void onNextScreenRequest(RequestToActivateScreen request)
         {
+            DisplayName = request.Screen.DisplayName;
             ActivateItem(request.Screen);
         }
 
