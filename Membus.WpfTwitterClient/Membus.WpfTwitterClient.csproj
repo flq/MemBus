@@ -93,21 +93,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Frame\ClientPublishingConventions.cs" />
-    <Compile Include="Frame\ClientRegistry.cs" />
-    <Compile Include="Frame\BaseConfigurationSection.cs" />
-    <Compile Include="Frame\ConfigReader.cs" />
-    <Compile Include="Frame\IUserSettings.cs" />
-    <Compile Include="Frame\TwitterKeysConfiguration.cs" />
+    <Compile Include="Frame\Config\ClientPublishingConventions.cs" />
+    <Compile Include="Frame\Config\ClientRegistry.cs" />
+    <Compile Include="Frame\Config\BaseConfigurationSection.cs" />
+    <Compile Include="Frame\Config\ConfigReader.cs" />
+    <Compile Include="Frame\Config\IUserSettings.cs" />
+    <Compile Include="Frame\Config\TwitterKeysConfiguration.cs" />
     <Compile Include="GatherAccessToken\RequestToGatherAccessToken.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Frame\Twitter\TwitterKeys.cs" />
+    <Compile Include="ShellViewModel.cs" />
+    <Compile Include="Startup\AppBootstrap.cs" />
     <Compile Include="Startup\TwitterBootstrap.cs" />
-    <Compile Include="Startup\Bootstrap.cs" />
+    <Compile Include="Startup\RequestToStartup.cs" />
     <Compile Include="Frame\TransportMessage.cs" />
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -115,8 +117,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -14,7 +14,7 @@ namespace Membus.WpfTwitterClient.Frame
                     p =>
                     {
                         p.MessageMatch(
-                            m => m.IsType<TransportMessage>() || m.IsType<Bootstrap>(),
+                            m => m.IsType<TransportMessage>() || m.IsType<RequestToStartup>(),
                             l => l.PublishPipeline(new SequentialPublisher())
                             );
                         p.MessageMatch(

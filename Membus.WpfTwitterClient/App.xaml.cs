@@ -18,10 +18,5 @@ namespace Membus.WpfTwitterClient
     public partial class App : Application
     {
         
-        private void getStarted(object sender, StartupEventArgs e)
-        {
-            ObjectFactory.Initialize(i=>i.AddRegistry<ClientRegistry>());
-            ObjectFactory.Container.GetInstance<IBus>().Publish(new Bootstrap());
-        }
     }
 }

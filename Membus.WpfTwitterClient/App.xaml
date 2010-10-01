@@ -1,8 +1,15 @@
 ﻿<Application x:Class="Membus.WpfTwitterClient.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml" Startup="getStarted">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:Startup="clr-namespace:Membus.WpfTwitterClient.Startup"
+             >
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Startup:AppBootstrap x:Key="bootstrap" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

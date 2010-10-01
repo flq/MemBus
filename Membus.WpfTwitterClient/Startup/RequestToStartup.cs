@@ -3,5 +3,5 @@ namespace Membus.WpfTwitterClient.Startup
     /// <summary>
     /// Marker message for bootstrapping
     /// </summary>
-    public class Bootstrap { }
+    public class RequestToStartup { }
 }

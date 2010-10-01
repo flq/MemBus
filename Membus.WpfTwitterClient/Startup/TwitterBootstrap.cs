@@ -7,7 +7,7 @@ using Membus.WpfTwitterClient.Properties;
 
 namespace Membus.WpfTwitterClient.Startup
 {
-    public class TwitterBootstrap : Handles<Bootstrap>
+    public class TwitterBootstrap : Handles<RequestToStartup>
     {
         private readonly TwitterKeys keys;
         private readonly IUserSettings settings;
@@ -20,7 +20,7 @@ namespace Membus.WpfTwitterClient.Startup
             this.bus = bus;
         }
 
-        protected override void push(Bootstrap message)
+        protected override void push(RequestToStartup message)
         {
             if (string.IsNullOrEmpty(settings.AccessToken))
                 bus.Publish(new RequestToGatherAccessToken(keys));
