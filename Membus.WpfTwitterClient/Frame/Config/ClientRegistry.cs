@@ -1,14 +1,15 @@
 ﻿using System;
 using MemBus;
 using MemBus.Configurators;
-using Membus.WpfTwitterClient;
-using Membus.WpfTwitterClient.Frame;
 using Membus.WpfTwitterClient.Frame.Twitter;
+using Membus.WpfTwitterClient.Frame.UI;
 using Membus.WpfTwitterClient.Properties;
 using StructureMap;
 using StructureMap.Configuration.DSL;
+using StructureMap.Graph;
+using MemBus.Support;
 
-namespace Membus.WpfTwitterClient.Frame
+namespace Membus.WpfTwitterClient.Frame.Config
 {
     internal class ClientRegistry : Registry
     {
@@ -18,6 +19,7 @@ namespace Membus.WpfTwitterClient.Frame
                      {
                          s.AssembliesFromApplicationBaseDirectory();
                          s.AddAllTypesOf(typeof (IHandles<>));
+                         s.Convention<ThingsToBeSingletonsConvention>();
                      });
             ForSingletonOf<IBus>().Use(constructBus);
             For(typeof (IObservable<>)).Use(typeof (MessageObservable<>));
@@ -32,6 +34,15 @@ namespace Membus.WpfTwitterClient.Frame
             return BusSetup.StartWith<AsyncRichClientFrontend, ClientPublishingConventions>(
                 new ServiceLocatorSupport(new ServiceLocator(() => ObjectFactory.Container)))
                 .Construct();
+        }
+    }
+
+    internal class ThingsToBeSingletonsConvention : IRegistrationConvention
+    {
+        public void Process(Type type, Registry registry)
+        {
+            if (type.HasAttribute<SingleAttribute>())
+                registry.For(type).LifecycleIs(InstanceScope.Singleton);
         }
     }
 }

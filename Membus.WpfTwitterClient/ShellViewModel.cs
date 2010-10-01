@@ -1,22 +1,32 @@
+using System;
 using Caliburn.Micro;
+using Membus.WpfTwitterClient.Frame.UI;
+using System.Linq;
 
 namespace Membus.WpfTwitterClient
 {
-    public class ShellViewModel : PropertyChangedBase
+    [Single]
+    public class ShellViewModel : Conductor<Screen>
     {
-        private string test = "bla";
+        private readonly IDisposable screenStreamDispose;
 
-        public string Test
+        public ShellViewModel(IObservable<RequestToActivateScreen> screenStream)
         {
-            get
-            {
-                return test;
-            }
-            set
-            {
-                test = value;
-                NotifyOfPropertyChange(() => Test);
-            }
+            screenStreamDispose = screenStream
+                .SubscribeOnDispatcher()
+                .Where(msg=>msg.ScreenAvailable)
+                .Subscribe(onNextScreenRequest);
+        }
+
+        private void onNextScreenRequest(RequestToActivateScreen request)
+        {
+            ActivateItem(request.Screen);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            screenStreamDispose.Dispose();
+            base.OnDeactivate(close);
         }
     }
 }

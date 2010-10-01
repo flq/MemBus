@@ -99,7 +99,13 @@
     <Compile Include="Frame\Config\ConfigReader.cs" />
     <Compile Include="Frame\Config\IUserSettings.cs" />
     <Compile Include="Frame\Config\TwitterKeysConfiguration.cs" />
-    <Compile Include="GatherAccessToken\RequestToGatherAccessToken.cs" />
+    <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
+    <Compile Include="Frame\UI\ScreenConstructor.cs" />
+    <Compile Include="Frame\UI\SingleAttribute.cs" />
+    <Compile Include="GatherAccessToken\GetAccessTokenView.xaml.cs">
+      <DependentUpon>GetAccessTokenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GatherAccessToken\GetAccessTokenViewModel.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Frame\Twitter\TwitterKeys.cs" />
     <Compile Include="ShellViewModel.cs" />
@@ -109,6 +115,10 @@
     <Compile Include="Frame\TransportMessage.cs" />
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />
+    <Page Include="GatherAccessToken\GetAccessTokenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

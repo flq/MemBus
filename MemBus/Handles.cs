@@ -14,7 +14,17 @@ namespace MemBus
 
         void ISubscription.Push(object message)
         {
-            Push((T)message);
+            var typedMsg = (T)message;
+            if (matches(typedMsg))
+              Push(typedMsg);
+        }
+
+        /// <summary>
+        /// return true to handle this message
+        /// </summary>
+        protected virtual bool matches(T message)
+        {
+            return true;
         }
 
         protected abstract void push(T message);

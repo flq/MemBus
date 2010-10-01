@@ -4,6 +4,7 @@ using System.Reflection;
 using Caliburn.Micro;
 using MemBus;
 using Membus.WpfTwitterClient.Frame;
+using Membus.WpfTwitterClient.Frame.Config;
 using StructureMap;
 using System.Linq;
 
@@ -12,11 +13,6 @@ namespace Membus.WpfTwitterClient.Startup
     public class AppBootstrap : Bootstrapper<ShellViewModel>
     {
         private IContainer container;
-
-        public AppBootstrap()
-        {
-            
-        }
 
         protected override void Configure()
         {
@@ -53,13 +49,7 @@ namespace Membus.WpfTwitterClient.Startup
         {
             var shell = container.GetInstance<ShellViewModel>();
             container.GetInstance<IWindowManager>().Show(shell);
-
-        }
-
-        protected override void PrepareApplication()
-        {
-            base.PrepareApplication();
-            //container.GetInstance<IBus>().Publish(new RequestToStartup());
+            container.GetInstance<IBus>().Publish(new RequestToStartup());
         }
     }
 }
