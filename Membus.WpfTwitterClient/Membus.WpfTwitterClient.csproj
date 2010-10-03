@@ -99,6 +99,8 @@
     <Compile Include="Frame\Config\ConfigReader.cs" />
     <Compile Include="Frame\Config\IUserSettings.cs" />
     <Compile Include="Frame\Config\TwitterKeysConfiguration.cs" />
+    <Compile Include="Frame\ActionOnDispatcher.cs" />
+    <Compile Include="Frame\Twitter\ITwitterSession.cs" />
     <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />
