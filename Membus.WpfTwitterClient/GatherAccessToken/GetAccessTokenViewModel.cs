@@ -20,7 +20,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
             session.GetAuthorizationUrl(new ActionOnDispatcher<Uri>(onAuthorizationuriAvailable));
         }
 
-        public void TwitterLoginloaded()
+        public void TwitterLoginLoaded()
         {
             
         }

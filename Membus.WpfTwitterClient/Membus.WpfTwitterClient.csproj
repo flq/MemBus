@@ -101,6 +101,8 @@
     <Compile Include="Frame\Config\TwitterKeysConfiguration.cs" />
     <Compile Include="Frame\ActionOnDispatcher.cs" />
     <Compile Include="Frame\Twitter\ITwitterSession.cs" />
+    <Compile Include="Frame\UI\ApplicationBusyMessage.cs" />
+    <Compile Include="Frame\UI\BusyAdorner.cs" />
     <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />

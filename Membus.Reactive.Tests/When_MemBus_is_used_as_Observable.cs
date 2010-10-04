@@ -52,5 +52,26 @@ namespace Membus.Reactive.Tests
             }
         }
 
+        [Test]
+        public void Single_observable_supports_multiple_subscriptions()
+        {
+            var sb1 = new StringBuilder();
+            var sb2 = new StringBuilder();
+            var o = bus.Observe<MessageA>();
+            var d1 = o.Subscribe(msg => sb1.Append("A"));
+            var d2 = o.Subscribe(msg => sb2.Append("B"));
+            bus.Publish(new MessageA());
+            sb1.ToString().ShouldBeEqualTo("A");
+            sb2.ToString().ShouldBeEqualTo("B");
+            d1.Dispose();
+            bus.Publish(new MessageA());
+            sb1.ToString().ShouldBeEqualTo("A");
+            sb2.ToString().ShouldBeEqualTo("BB");
+            d2.Dispose();
+            bus.Publish(new MessageA());
+            sb1.ToString().ShouldBeEqualTo("A");
+            sb2.ToString().ShouldBeEqualTo("BB");
+        }
+
     }
 }

@@ -15,7 +15,7 @@
         <Frame Source="{Binding SourceUrl}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Navigated">
-                    <cal:ActionMessage MethodName="TwitterLoginloaded" />
+                    <cal:ActionMessage MethodName="TwitterLoginLoaded" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Frame>
