@@ -84,7 +84,6 @@ namespace MemBus.Tests
         [Test]
         public void A_disposed_subscription_is_gone()
         {
-
             int received = 0;
             var bus = BusSetup.StartWith<Conservative>().Construct();
             var d = bus.Subscribe<MessageA>(msg => received++);
@@ -93,6 +92,11 @@ namespace MemBus.Tests
             d.Dispose();
             bus.Publish(new MessageA());
             received.ShouldBeEqualTo(1);
+        }
+
+        public void A_Bus_is_cloneable_and_works_as_parent()
+        {
+            
         }
 
     }

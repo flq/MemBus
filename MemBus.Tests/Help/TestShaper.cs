@@ -7,12 +7,12 @@ namespace MemBus.Tests.Help
     public class TestShaper : ISubscriptionShaper
     {
         private readonly string name;
-        private readonly Action action;
+        private readonly Action actionCalledOnPublish;
 
-        public TestShaper(string name, Action action)
+        public TestShaper(string name, Action actionCalledOnPublish)
         {
             this.name = name;
-            this.action = action;
+            this.actionCalledOnPublish = actionCalledOnPublish;
         }
 
         public TestShaper(string name)
@@ -25,7 +25,7 @@ namespace MemBus.Tests.Help
 
         public ISubscription EnhanceSubscription(ISubscription subscription)
         {
-            return new NamedSubscription(name, action, subscription);
+            return new NamedSubscription(name, actionCalledOnPublish, subscription);
         }
     }
 }

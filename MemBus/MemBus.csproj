@@ -51,7 +51,6 @@
     <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\ExceptionOccurred.cs" />
     <Compile Include="Messages\PeriodPassed.cs" />
-    <Compile Include="NullBus.cs" />
     <Compile Include="Publishing\FireAndForgetPublisher.cs" />
     <Compile Include="Publishing\ParallelNonBlockingPublisher.cs" />
     <Compile Include="Publishing\IPublishPipelineMember.cs" />

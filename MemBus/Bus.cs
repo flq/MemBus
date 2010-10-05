@@ -10,6 +10,7 @@ namespace MemBus
 {
     internal class Bus : IConfigurableBus, IBus
     {
+        private readonly BusSetup busSetup;
         private readonly CompositeResolver resolvers = new CompositeResolver();
         private readonly PublishPipeline publishPipeline;
         private readonly SubscriptionPipeline subscriptionPipeline;
@@ -20,27 +21,16 @@ namespace MemBus
 
         private volatile bool isDisposed;
 
-        internal Bus():this(null) { }
-        
-        internal Bus(Bus template)
+        internal Bus()
         {
-            if (template == null)
-            {
-                //This is the root!
-                publishPipeline = new PublishPipeline(this);
-                subscriptionPipeline = new SubscriptionPipeline(services);
-                disposer = new DisposeContainer(resolvers, publishPipeline, subscriptionPipeline, services);
-            }
-            else
-            {
-                //Take over pipelines
-                //TODO: More correct is to clone the pipelines, and then properly dispose them
-                publishPipeline = template.publishPipeline;
-                subscriptionPipeline = template.subscriptionPipeline;
-                //New subscribers!
-                resolvers = new CompositeResolver(new TableBasedResolver());
-                disposer = new DisposeContainer();
-            }
+            publishPipeline = new PublishPipeline(this);
+            subscriptionPipeline = new SubscriptionPipeline(services);
+            disposer = new DisposeContainer(resolvers, publishPipeline, subscriptionPipeline, services);
+        }
+
+        public Bus(BusSetup busSetup) : this()
+        {
+            this.busSetup = busSetup;
         }
 
 
@@ -122,6 +112,15 @@ namespace MemBus
         {
             checkDisposed();
             return new MessageObservable<M>(this);
+        }
+
+        public IBus Clone()
+        {
+            if (busSetup == null)
+              throw new InvalidOperationException("This bus was not constructed as cloneable");
+            var b = new Bus();
+            busSetup.Accept(b);
+            return b;
         }
 
         public void Dispose()
