@@ -2,22 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-        xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" Title="MainWindow" Height="350" Width="525">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <cal:ActionMessage MethodName="AquaintWithAdornerLayer">
-                <cal:Parameter Value="{Binding ElementName=ActiveItem}" />
-            </cal:ActionMessage>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+        xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" 
+        Title="MainWindow" Height="400" Width="1010">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10" />
+            <RowDefinition Height="1" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"></TextBlock>
+        
         <AdornerDecorator Grid.Row="1">
-          <ContentControl x:Name="ActiveItem" />
+            <ContentControl x:Name="ActiveItem" cal:Message.Attach="[Event Loaded] = [Action AquaintWithAdornerLayer($source)]" />
         </AdornerDecorator>
     </Grid>
 </Window>

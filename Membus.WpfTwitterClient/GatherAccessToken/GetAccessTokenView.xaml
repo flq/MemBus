@@ -3,21 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <cal:ActionMessage MethodName="Start" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+             mc:Ignorable="d" xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" 
+             cal:Message.Attach="[Event Loaded] = [Action Start()]">
     <Grid>
-        <Frame Source="{Binding SourceUrl}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Navigated">
-                    <cal:ActionMessage MethodName="TwitterLoginLoaded" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Frame>
+        <Frame 
+            Source="{Binding SourceUrl}" 
+            cal:Message.Attach="[Event Navigated] = [Action TwitterLoginLoaded()]" />
     </Grid>
 </UserControl>

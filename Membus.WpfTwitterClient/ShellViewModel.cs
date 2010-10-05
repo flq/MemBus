@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Media;
 using Caliburn.Micro;
 using Membus.WpfTwitterClient.Frame.UI;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Membus.WpfTwitterClient
             DisplayName = "MemBus OnTweet!";
         }
 
-        public void AquaintWithAdornerLayer(FrameworkElement adornedElement)
+        public void AquaintWithAdornerLayer(UIElement adornedElement)
         {
             var l = AdornerLayer.GetAdornerLayer(adornedElement);
             if (l == null)

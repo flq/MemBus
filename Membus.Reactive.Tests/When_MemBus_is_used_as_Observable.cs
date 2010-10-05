@@ -73,5 +73,6 @@ namespace Membus.Reactive.Tests
             sb2.ToString().ShouldBeEqualTo("BB");
         }
 
+        
     }
 }
