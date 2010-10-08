@@ -103,6 +103,7 @@
     <Compile Include="Frame\Twitter\ITwitterSession.cs" />
     <Compile Include="Frame\UI\ApplicationBusyMessage.cs" />
     <Compile Include="Frame\UI\BusyAdorner.cs" />
+    <Compile Include="Frame\UI\GifImage.cs" />
     <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />
@@ -122,6 +123,10 @@
     <Page Include="GatherAccessToken\GetAccessTokenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ExpressionDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -160,6 +165,9 @@
       <Project>{708D3958-76FA-42F9-A2A7-2926F2734E0E}</Project>
       <Name>MemBus</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\wait.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
