@@ -10,6 +10,7 @@
                     <Startup:AppBootstrap x:Key="bootstrap" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="Resources/ExpressionDark.xaml" />
+                <ResourceDictionary Source="Resources/Local.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

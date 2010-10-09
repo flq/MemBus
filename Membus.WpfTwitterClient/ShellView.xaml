@@ -11,14 +11,13 @@
         
         <ContentControl Grid.Row="1" x:Name="ActiveItem" />
         
-        <StatusBar Grid.Row="2" Style="{StaticResource ResourceKey=StatusbarStyle}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <UI:GifImage Grid.Column="1" GifUri="pack://application:,,,/Resources/wait.gif" FramesPerSecond="5" />
-            </Grid>
+        <StatusBar Grid.Row="2" Style="{StaticResource ResourceKey=StatusbarStyle}" HorizontalAlignment="Stretch">
+            <StatusBarItem HorizontalContentAlignment="Right">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsBusy, Converter={StaticResource ResourceKey=BoolToVisibility}, ConverterParameter=Collapsed}">
+                    <Label Margin="5 0" x:Name="BusyMessage" />
+                    <UI:GifImage Grid.Column="1" GifUri="pack://application:,,,/Resources/wait.gif" FramesPerSecond="5" DockPanel.Dock="Right" />
+                </StackPanel>
+            </StatusBarItem>            
         </StatusBar>
     </Grid>
 </Window>

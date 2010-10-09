@@ -31,7 +31,7 @@ namespace MemBus.Support
             return string.Format(@string, args);
         }
 
-        public static bool CheckDenyOrAllIsGood(this object obj)
+        internal static bool CheckDenyOrAllIsGood(this object obj)
         {
             return obj is IDenyShaper ? ((IDenyShaper)obj).Deny : false;
         }

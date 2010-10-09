@@ -1,8 +1,6 @@
 using System;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
 using Caliburn.Micro;
+using MemBus.Support;
 using Membus.WpfTwitterClient.Frame.UI;
 using System.Linq;
 using MessageStreams = System.Tuple<
@@ -16,31 +14,73 @@ namespace Membus.WpfTwitterClient
     [Single]
     public class ShellViewModel : Conductor<Screen>
     {
-        private readonly MessageStreams messageStreams;
-        private readonly IDisposable screenStreamDispose;
+        private readonly DisposeContainer disposeContainer = new DisposeContainer();
 
         public ShellViewModel(MessageStreams messageStreams)
         {
-            this.messageStreams = messageStreams;
-            screenStreamDispose = messageStreams.Item1
+            var screenStreamDispose = messageStreams.Item1
                 .Where(msg => msg.ScreenAvailable)
                 .SubscribeOnDispatcher()
                 .Subscribe(onNextScreenRequest);
+            var busyStream1 = messageStreams.Item2
+                .Where(msg=>msg.GettingBusy)
+                .SubscribeOnDispatcher()
+                .Subscribe(onGettingBusy);
+            var busyStream2 = messageStreams.Item2
+                .Where(msg => !msg.GettingCalm)
+                .SubscribeOnDispatcher()
+                .Subscribe(onGettingCalm);
 
+            disposeContainer.Add(screenStreamDispose, busyStream1, busyStream2);
 
             DisplayName = "MemBus OnTweet!";
         }
 
         private void onNextScreenRequest(RequestToActivateScreen request)
         {
-            return;
             DisplayName = request.Screen.DisplayName;
             ActivateItem(request.Screen);
         }
 
+        private void onGettingBusy(ApplicationBusyMessage msg)
+        {
+            
+        }
+
+        private void onGettingCalm(ApplicationBusyMessage msg)
+        {
+
+        }
+
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                if (value.Equals(isBusy))
+                    return;
+                isBusy = value;
+                NotifyOfPropertyChange(()=>IsBusy);
+            }
+        }
+
+        private string busyMessage;
+        public string BusyMessage
+        {
+            get { return busyMessage; }
+            set
+            {
+                if (value == null || value.Equals(busyMessage))
+                    return;
+                busyMessage = value;
+                NotifyOfPropertyChange(()=>BusyMessage);
+            }
+        }
+
         protected override void OnDeactivate(bool close)
         {
-            screenStreamDispose.Dispose();
+            disposeContainer.Dispose();
             base.OnDeactivate(close);
         }
     }

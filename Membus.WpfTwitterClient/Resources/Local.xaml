@@ -1,0 +1,4 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:UI="clr-namespace:Membus.WpfTwitterClient.Frame.UI">
+    <UI:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+</ResourceDictionary>

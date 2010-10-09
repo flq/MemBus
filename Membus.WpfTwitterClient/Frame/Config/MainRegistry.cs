@@ -11,9 +11,9 @@ using MemBus.Support;
 
 namespace Membus.WpfTwitterClient.Frame.Config
 {
-    internal class ClientRegistry : Registry
+    internal class MainRegistry : Registry
     {
-        public ClientRegistry()
+        public MainRegistry()
         {
             Scan(s =>
                      {

@@ -11,7 +11,8 @@ namespace MemBus.Support
     public class DisposeContainer : IDisposable
     {
         private readonly List<IDisposable> disposables = new List<IDisposable>();
-        private bool disposed;
+        private readonly object disposeLock = new object();
+        private volatile bool disposed;
 
         public DisposeContainer(params object[] disposables) : this(disposables.AsEnumerable())
         {    
@@ -27,12 +28,21 @@ namespace MemBus.Support
             disposables.Add(disposable);
         }
 
+        public void Add(params IDisposable[] disposables)
+        {
+            this.disposables.AddRange(disposables);
+        }
+
         public void Dispose()
         {
             if (disposed) return;
-            disposables.ForEach(d=>d.Dispose());
-            disposables.Clear();
-            disposed = true;
+            lock (disposeLock)
+            {
+                if (disposed) return;
+                disposables.ForEach(d => d.Dispose());
+                disposables.Clear();
+                disposed = true;
+            }
         }
     }
 }

@@ -94,7 +94,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Frame\Config\ClientPublishingConventions.cs" />
-    <Compile Include="Frame\Config\ClientRegistry.cs" />
+    <Compile Include="Frame\Config\MainRegistry.cs" />
     <Compile Include="Frame\Config\BaseConfigurationSection.cs" />
     <Compile Include="Frame\Config\ConfigReader.cs" />
     <Compile Include="Frame\Config\IUserSettings.cs" />
@@ -102,6 +102,7 @@
     <Compile Include="Frame\ActionOnDispatcher.cs" />
     <Compile Include="Frame\Twitter\ITwitterSession.cs" />
     <Compile Include="Frame\UI\ApplicationBusyMessage.cs" />
+    <Compile Include="Frame\UI\BoolToVisibilityConverter.cs" />
     <Compile Include="Frame\UI\BusyAdorner.cs" />
     <Compile Include="Frame\UI\GifImage.cs" />
     <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
@@ -127,6 +128,10 @@
     <Page Include="Resources\ExpressionDark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Local.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>

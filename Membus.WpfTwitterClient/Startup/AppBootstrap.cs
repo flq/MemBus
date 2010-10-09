@@ -16,7 +16,7 @@ namespace Membus.WpfTwitterClient.Startup
 
         protected override void Configure()
         {
-            ObjectFactory.Initialize(i => i.AddRegistry<ClientRegistry>());
+            ObjectFactory.Initialize(i => i.AddRegistry<MainRegistry>());
             ObjectFactory.Configure(c =>
                                         {
                                             c.ForSingletonOf<IWindowManager>().Use(new WindowManager());
