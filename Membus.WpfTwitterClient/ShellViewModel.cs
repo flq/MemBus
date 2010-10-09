@@ -7,7 +7,7 @@ using MessageStreams = System.Tuple<
   System.IObservable<
     Membus.WpfTwitterClient.Frame.UI.RequestToActivateScreen>, 
   System.IObservable<
-    Membus.WpfTwitterClient.Frame.UI.ApplicationBusyMessage>>;
+    Membus.WpfTwitterClient.Frame.UI.ApplicationActivityMessage>>;
 
 namespace Membus.WpfTwitterClient
 {
@@ -42,14 +42,16 @@ namespace Membus.WpfTwitterClient
             ActivateItem(request.Screen);
         }
 
-        private void onGettingBusy(ApplicationBusyMessage msg)
+        private void onGettingBusy(ApplicationActivityMessage msg)
         {
-            
+            IsBusy = true;
+            BusyMessage = msg.BusyText;
         }
 
-        private void onGettingCalm(ApplicationBusyMessage msg)
+        private void onGettingCalm(ApplicationActivityMessage msg)
         {
-
+            IsBusy = false;
+            BusyMessage = string.Empty;
         }
 
         private bool isBusy;

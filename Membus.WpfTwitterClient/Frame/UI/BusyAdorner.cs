@@ -6,7 +6,7 @@ namespace Membus.WpfTwitterClient.Frame.UI
 {
     public class BusyAdorner : Adorner
     {
-        public BusyAdorner(UIElement adornedElement, IObservable<ApplicationBusyMessage> appBusyMessageStream) : base(adornedElement)
+        public BusyAdorner(UIElement adornedElement, IObservable<ApplicationActivityMessage> appBusyMessageStream) : base(adornedElement)
         {
             //app
         }
