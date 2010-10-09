@@ -27,7 +27,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
 
         public void TwitterLoginLoaded()
         {
-            bus.Publish(new ApplicationActivityMessage("Loading login screen"));
+            bus.Publish(new ApplicationActivityMessage());
         }
 
         private void onAuthorizationuriAvailable(Uri uri)

@@ -27,7 +27,7 @@ namespace Membus.WpfTwitterClient
                 .SubscribeOnDispatcher()
                 .Subscribe(onGettingBusy);
             var busyStream2 = messageStreams.Item2
-                .Where(msg => !msg.GettingCalm)
+                .Where(msg => msg.GettingCalm)
                 .SubscribeOnDispatcher()
                 .Subscribe(onGettingCalm);
 
