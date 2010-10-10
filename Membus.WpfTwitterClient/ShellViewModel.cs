@@ -44,6 +44,7 @@ namespace Membus.WpfTwitterClient
 
         private void onGettingBusy(ApplicationActivityMessage msg)
         {
+            BusyMessage = string.Empty;
             IsBusy = true;
             BusyMessage = msg.BusyText;
         }
@@ -51,7 +52,6 @@ namespace Membus.WpfTwitterClient
         private void onGettingCalm(ApplicationActivityMessage msg)
         {
             IsBusy = false;
-            BusyMessage = string.Empty;
         }
 
         private bool isBusy;

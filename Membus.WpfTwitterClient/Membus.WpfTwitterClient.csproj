@@ -39,6 +39,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -103,12 +104,11 @@
     <Compile Include="Frame\Twitter\ITwitterSession.cs" />
     <Compile Include="Frame\UI\ApplicationActivityMessage.cs" />
     <Compile Include="Frame\UI\BoolToVisibilityConverter.cs" />
-    <Compile Include="Frame\UI\FadeInOutBehaviour.cs" />
+    <Compile Include="Frame\UI\FadeOnVisibilityBehaviour.cs" />
     <Compile Include="Frame\UI\GifImage.cs" />
     <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />
-    <Compile Include="Frame\UI\Visibl.cs" />
     <Compile Include="GatherAccessToken\GetAccessTokenView.xaml.cs">
       <DependentUpon>GetAccessTokenView.xaml</DependentUpon>
     </Compile>

@@ -15,9 +15,9 @@
         
         <StatusBar Grid.Row="2" Style="{StaticResource ResourceKey=StatusbarStyle}" HorizontalAlignment="Stretch">
             <StatusBarItem HorizontalContentAlignment="Right">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding IsBusy, Mode=OneWay, Converter={StaticResource ResourceKey=BoolToVisibility}, ConverterParameter=Collapsed}">
+                <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                     <i:Interaction.Behaviors>
-                        <UI:FadeInOutBehaviour />
+                        <UI:FadeOnVisibilityBehaviour Visible="{Binding IsBusy, Mode=OneWay}" />
                     </i:Interaction.Behaviors>
                     <Label Margin="5 0" x:Name="BusyMessage">Negotiating with Twitter</Label>
                     <UI:GifImage Margin="0 3" Grid.Column="1" GifUri="pack://application:,,,/Resources/wait.gif" FramesPerSecond="5" DockPanel.Dock="Right" />
