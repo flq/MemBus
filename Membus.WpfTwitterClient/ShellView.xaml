@@ -19,7 +19,7 @@
                     <i:Interaction.Behaviors>
                         <UI:FadeOnVisibilityBehaviour Visible="{Binding IsBusy, Mode=OneWay}" />
                     </i:Interaction.Behaviors>
-                    <Label Margin="5 0" x:Name="BusyMessage">Negotiating with Twitter</Label>
+                    <Label Margin="5 0" x:Name="BusyMessage"></Label>
                     <UI:GifImage Margin="0 3" Grid.Column="1" GifUri="pack://application:,,,/Resources/wait.gif" FramesPerSecond="5" DockPanel.Dock="Right" />
                 </StackPanel>
             </StatusBarItem>

@@ -94,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Frame\Config\CheapUserSettings.cs" />
     <Compile Include="Frame\Config\ClientPublishingConventions.cs" />
     <Compile Include="Frame\Config\MainRegistry.cs" />
     <Compile Include="Frame\Config\BaseConfigurationSection.cs" />
@@ -113,6 +114,8 @@
       <DependentUpon>GetAccessTokenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GatherAccessToken\GetAccessTokenViewModel.cs" />
+    <Compile Include="GatherAccessToken\RequestToScanContentForVerifier.cs" />
+    <Compile Include="GatherAccessToken\ScanContentForVerifierHandler.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Frame\Twitter\TwitterKeys.cs" />
     <Compile Include="ShellViewModel.cs" />

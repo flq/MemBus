@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Membus.WpfTwitterClient.Frame.UI;
 using Twitterizer;
 
 namespace Membus.WpfTwitterClient.Frame.Twitter
@@ -8,21 +7,36 @@ namespace Membus.WpfTwitterClient.Frame.Twitter
     public class TwitterSession : ITwitterSession
     {
         private readonly TwitterKeys keys;
+        private string requestToken;
+        private string accessToken;
 
         public TwitterSession(TwitterKeys keys)
         {
             this.keys = keys;
         }
 
-        public void GetAuthorizationUrl(Action<Uri> callback)
+        public void GetAuthorizationUrl(Action<Uri> authorizationUriAvailable)
         {
             var t = new Task(
                 () =>
                     {
                         var response = OAuthUtility.GetRequestToken(keys.ConsumerKey, keys.ConsumerSecret, "oob");
-                        var uri = OAuthUtility.BuildAuthorizationUri(response.Token);
-                        callback(uri);
+                        requestToken = response.Token;
+                        var uri = OAuthUtility.BuildAuthorizationUri(requestToken);
+                        authorizationUriAvailable(uri);
                     });
+            t.Start();
+        }
+
+        public void GetAccessToken(string verifyCode, Action<string> accessTokenAvailable)
+        {
+            var t = new Task(
+                () =>
+                {
+                    var response = OAuthUtility.GetAccessToken(keys.ConsumerKey, keys.ConsumerSecret, requestToken, verifyCode);
+                    accessToken = response.Token;
+                    accessTokenAvailable(accessToken);
+                });
             t.Start();
         }
     }

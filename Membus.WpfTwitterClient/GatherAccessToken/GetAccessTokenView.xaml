@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" 
-             cal:Message.Attach="[Event Loaded] = [Action Start()]">
+             mc:Ignorable="d" xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro">
     <Grid>
-        <Frame 
-            Source="{Binding SourceUrl}" 
-            cal:Message.Attach="[Event Navigated] = [Action TwitterLoginLoaded()]" />
+        <WebBrowser x:Name="browser"
+            cal:Message.Attach="[Event Loaded] = [Action BrowserLoaded($source)];
+                                [Event LoadCompleted] = [Action TwitterLoadCompleted($eventArgs)];
+                                [Event Navigating] = [Action TwitterWebsiteNavigating($eventArgs)]" />
     </Grid>
 </UserControl>

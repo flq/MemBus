@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace Membus.WpfTwitterClient.Frame
@@ -17,7 +18,7 @@ namespace Membus.WpfTwitterClient.Frame
 
         public static implicit operator Action<T>(ActionOnDispatcher<T> actionOnDispatcher)
         {
-            return t => Dispatcher.CurrentDispatcher.Invoke(actionOnDispatcher.lambda, t);
+            return t => Application.Current.Dispatcher.Invoke(actionOnDispatcher.lambda, t);
         }
     }
 }

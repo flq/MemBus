@@ -1,4 +1,6 @@
 using System;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 using Caliburn.Micro;
 using MemBus;
 using Membus.WpfTwitterClient.Frame;
@@ -11,6 +13,8 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
     {
         private readonly ITwitterSession session;
         private readonly IBus bus;
+        private Action<Uri> loadUri;
+        private Func<string> loadedContents;
 
         public GetAccessTokenViewModel(ITwitterSession session, IBus bus)
         {
@@ -19,25 +23,35 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
             this.bus = bus;
         }
 
-        public void Start()
+        public void TwitterLoadCompleted(NavigationEventArgs e)
         {
+            var s = loadedContents();
+            bus.Publish(new ApplicationActivityMessage());
+            bus.Publish(new RequestToScanContentForVerifier(s));
+        }
+
+        public void BrowserLoaded(WebBrowser browser)
+        {
+            // Source property ocannot be bound, which is why we have to do silly things here
+            loadUri = uri => browser.Source = uri;
+            loadedContents = () =>
+                                 {
+                                     var b = browser.Document as dynamic;
+                                     return (string) b.documentElement.innerText;
+                                 };
             bus.Publish(new ApplicationActivityMessage("Negotiating with Twitter"));
             session.GetAuthorizationUrl(new ActionOnDispatcher<Uri>(onAuthorizationuriAvailable));
         }
 
-        public void TwitterLoginLoaded()
+        public void TwitterWebsiteNavigating(NavigatingCancelEventArgs args)
         {
-            bus.Publish(new ApplicationActivityMessage());
+            bus.Publish(new ApplicationActivityMessage("Loading Twitter screen"));
         }
 
         private void onAuthorizationuriAvailable(Uri uri)
         {
-            bus.Publish(new ApplicationActivityMessage("Loading login screen"));
-            SourceUrl = uri;
-            NotifyOfPropertyChange(()=>SourceUrl);
+            loadUri(uri);
         }
-
-        public Uri SourceUrl { get; private set; }
         
     }
 }
