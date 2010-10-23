@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Pen Brush="Black" Thickness="1" x:Key="attentionbutton_pen" />
+
+    <RadialGradientBrush x:Key="attentionbutton_info">
+        <GradientStop Color="LightBlue" Offset="0.0" />
+        <GradientStop Color="Blue" Offset="0.3" />
+        <GradientStop Color="Indigo" Offset="0.9" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="attentionbutton_warning">
+        <GradientStop Color="LightGreen" Offset="0.0" />
+        <GradientStop Color="LightGreen" Offset="0.3" />
+        <GradientStop Color="Green" Offset="0.9" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="attentionbutton_error">
+        <GradientStop Color="Orange" Offset="0.0" />
+        <GradientStop Color="DarkMagenta" Offset="0.3" />
+        <GradientStop Color="DarkRed" Offset="0.9" />
+    </RadialGradientBrush>
+    <LinearGradientBrush StartPoint="0.3,0.1" EndPoint="0.8,0.8" x:Key="steel_brush">
+        <GradientStop Offset="0" Color="White" />
+        <GradientStop Offset="0.6" Color="LightGray" />
+        <GradientStop Offset="0.9" Color="DarkGray" />
+    </LinearGradientBrush>
+
+    <EllipseGeometry Center="150,150" RadiusX="100" RadiusY="100" x:Key="attentionbutton_outer" />
+    <EllipseGeometry Center="150,150" RadiusX="80" RadiusY="80" x:Key="attention_ellipse"/>
+
+    <DrawingGroup x:Key="simple_info">
+        <GeometryDrawing 
+                            Pen="{StaticResource ResourceKey=attentionbutton_pen}" 
+                            Brush="{StaticResource ResourceKey=steel_brush}"
+                            Geometry="{StaticResource ResourceKey=attentionbutton_outer}" />
+        <GeometryDrawing 
+                            Pen="{StaticResource ResourceKey=attentionbutton_pen}" 
+                            Brush="{StaticResource ResourceKey=attentionbutton_error}"
+                            Geometry="{StaticResource ResourceKey=attention_ellipse}" />
+    </DrawingGroup>
+</ResourceDictionary>

@@ -37,6 +37,6 @@ The additional WPF Application dependencies are contained in the **WpfApp subfol
 See [here](http://blog.httpwatch.com/2009/04/23/fixing-the-ie-8-warning-do-you-want-to-view-only-the-webpage-content-that-was-delivered-securely/):
 
 * Going  to Tools->Internet Options->Security
-* Select the ‘Security’ tab
-* Click the ‘Custom Level’ button
-* In the ‘Miscellaneous’ section change “Display mixed content” to Enable
+* Select the "Security" tab
+* Click the "Custom Level" button
+* In the "Miscellaneous" section change “Display mixed content” to Enable

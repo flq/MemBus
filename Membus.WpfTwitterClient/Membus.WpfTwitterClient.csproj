@@ -107,9 +107,13 @@
     <Compile Include="Frame\UI\BoolToVisibilityConverter.cs" />
     <Compile Include="Frame\UI\FadeOnVisibilityBehaviour.cs" />
     <Compile Include="Frame\UI\GifImage.cs" />
+    <Compile Include="Frame\UI\InteractionButton.xaml.cs">
+      <DependentUpon>InteractionButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />
+    <Compile Include="Frame\UI\WpfExtensions.cs" />
     <Compile Include="GatherAccessToken\GetAccessTokenView.xaml.cs">
       <DependentUpon>GetAccessTokenView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +129,14 @@
     <Compile Include="Frame\TransportMessage.cs" />
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />
+    <Page Include="Frame\UI\InteractionButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\InteractionButtonResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GatherAccessToken\GetAccessTokenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

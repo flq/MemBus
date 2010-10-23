@@ -28,6 +28,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
             var s = loadedContents();
             bus.Publish(new ApplicationActivityMessage());
             bus.Publish(new RequestToScanContentForVerifier(s));
+            
         }
 
         public void BrowserLoaded(WebBrowser browser)
