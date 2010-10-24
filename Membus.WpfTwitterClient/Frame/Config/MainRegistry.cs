@@ -26,7 +26,8 @@ namespace Membus.WpfTwitterClient.Frame.Config
             For<IConfigReader>().Use<AppConfigReader>();
             For<TwitterKeys>().Use(ctx => ctx.GetInstance<IConfigReader>().GetSection<TwitterKeys>());
             ForSingletonOf<ITwitterSession>().Use<TwitterSession>();
-            For<IUserSettings>().Use(Settings.Default);
+            //For<IUserSettings>().Use(Settings.Default);
+            For<IUserSettings>().Use(new CheapUserSettings());
             Forward<Settings,IUserSettings>();
         }
 

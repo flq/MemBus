@@ -1,4 +1,4 @@
-﻿<Window x:Class="Membus.WpfTwitterClient.ShellView"
+﻿<Window x:Class="Membus.WpfTwitterClient.ShellOfApp.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:UI="clr-namespace:Membus.WpfTwitterClient.Frame.UI" 
@@ -15,11 +15,11 @@
         
         <StatusBar Grid.Row="2" Style="{StaticResource ResourceKey=StatusbarStyle}" HorizontalAlignment="Stretch">
             <StatusBarItem HorizontalContentAlignment="Right">
-                <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" Visibility="Collapsed" DataContext="{Binding Path=ActivityViewModel, Mode=OneWay}">
                     <i:Interaction.Behaviors>
                         <UI:FadeOnVisibilityBehaviour Visible="{Binding IsBusy, Mode=OneWay}" />
                     </i:Interaction.Behaviors>
-                    <Label Margin="5 0" x:Name="BusyMessage"></Label>
+                    <Label Margin="5 0" x:Name="BusyMessage" Content="{Binding Path=BusyMessage}"></Label>
                     <UI:GifImage Margin="0 3" Grid.Column="1" GifUri="pack://application:,,,/Resources/wait.gif" FramesPerSecond="5" DockPanel.Dock="Right" />
                 </StackPanel>
             </StatusBarItem>

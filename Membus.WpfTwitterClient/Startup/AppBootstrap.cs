@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using Caliburn.Micro;
 using MemBus;
-using Membus.WpfTwitterClient.Frame;
 using Membus.WpfTwitterClient.Frame.Config;
+using Membus.WpfTwitterClient.ShellOfApp;
 using StructureMap;
 using System.Linq;
 

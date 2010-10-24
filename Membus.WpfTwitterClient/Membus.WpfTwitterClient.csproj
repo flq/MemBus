@@ -110,6 +110,7 @@
     <Compile Include="Frame\UI\InteractionButton.xaml.cs">
       <DependentUpon>InteractionButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Frame\UI\RequestForAttention.cs" />
     <Compile Include="Frame\UI\RequestToActivateMainScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />
@@ -120,13 +121,14 @@
     <Compile Include="GatherAccessToken\GetAccessTokenViewModel.cs" />
     <Compile Include="GatherAccessToken\RequestToScanContentForVerifier.cs" />
     <Compile Include="GatherAccessToken\ScanContentForVerifierHandler.cs" />
+    <Compile Include="GatherAccessToken\VerifyPinViewModel.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Frame\Twitter\TwitterKeys.cs" />
-    <Compile Include="ShellViewModel.cs" />
+    <Compile Include="ShellOfApp\ActivityViewModel.cs" />
+    <Compile Include="ShellOfApp\ShellViewModel.cs" />
     <Compile Include="Startup\AppBootstrap.cs" />
     <Compile Include="Startup\TwitterBootstrap.cs" />
     <Compile Include="Startup\RequestToStartup.cs" />
-    <Compile Include="Frame\TransportMessage.cs" />
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />
     <Page Include="Frame\UI\InteractionButton.xaml">
@@ -149,7 +151,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShellView.xaml">
+    <Page Include="ShellOfApp\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
