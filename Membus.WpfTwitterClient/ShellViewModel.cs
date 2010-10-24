@@ -5,7 +5,7 @@ using Membus.WpfTwitterClient.Frame.UI;
 using System.Linq;
 using MessageStreams = System.Tuple<
   System.IObservable<
-    Membus.WpfTwitterClient.Frame.UI.RequestToActivateScreen>, 
+    Membus.WpfTwitterClient.Frame.UI.RequestToActivateMainScreen>, 
   System.IObservable<
     Membus.WpfTwitterClient.Frame.UI.ApplicationActivityMessage>>;
 
@@ -36,7 +36,7 @@ namespace Membus.WpfTwitterClient
             DisplayName = "MemBus OnTweet!";
         }
 
-        private void onNextScreenRequest(RequestToActivateScreen request)
+        private void onNextScreenRequest(RequestToActivateMainScreen request)
         {
             DisplayName = request.Screen.DisplayName;
             ActivateItem(request.Screen);

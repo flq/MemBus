@@ -62,6 +62,7 @@
     <Compile Include="Publishing\PublishPipeline.cs" />
     <Compile Include="Publishing\PublishToken.cs" />
     <Compile Include="Publishing\SequentialPublisher.cs" />
+    <Compile Include="RxEnabledObservable.cs" />
     <Compile Include="ServiceLocationBasedResolver.cs" />
     <Compile Include="Setup\AdHocConfigurator.cs" />
     <Compile Include="Configurators\AsyncConfiguration.cs" />

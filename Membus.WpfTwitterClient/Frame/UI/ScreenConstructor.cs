@@ -7,7 +7,7 @@ using StructureMap;
 namespace Membus.WpfTwitterClient.Frame.UI
 {
     [Single]
-    public class ScreenConstructor : Handles<RequestToActivateScreen>
+    public class ScreenConstructor : Handles<RequestToActivateMainScreen>
     {
         private readonly IContainer container;
         private readonly IBus bus;
@@ -18,12 +18,12 @@ namespace Membus.WpfTwitterClient.Frame.UI
             this.bus = bus;
         }
 
-        protected override bool matches(RequestToActivateScreen message)
+        protected override bool matches(RequestToActivateMainScreen message)
         {
             return !message.ScreenAvailable;
         }
 
-        protected override void push(RequestToActivateScreen message)
+        protected override void push(RequestToActivateMainScreen message)
         {
             var scr = container.GetInstance(message.TypeOfScreen) as Screen;
             if (scr == null)

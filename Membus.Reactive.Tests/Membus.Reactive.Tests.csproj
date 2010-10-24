@@ -51,6 +51,7 @@
     <Compile Include="..\TestAids\AssertExtensions.cs">
       <Link>Help\AssertExtensions.cs</Link>
     </Compile>
+    <Compile Include="RxBasedFooObservable.cs" />
     <Compile Include="When_MemBus_is_used_as_Observable.cs" />
     <Compile Include="Help\MessageA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

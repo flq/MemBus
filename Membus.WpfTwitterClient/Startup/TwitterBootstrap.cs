@@ -19,7 +19,7 @@ namespace Membus.WpfTwitterClient.Startup
         protected override void push(RequestToStartup message)
         {
             if (string.IsNullOrEmpty(settings.AccessToken))
-                bus.Publish(new RequestToActivateScreen(typeof(GetAccessTokenViewModel)));
+                bus.Publish(new RequestToActivateMainScreen(typeof(GetAccessTokenViewModel)));
         }
     }
 }

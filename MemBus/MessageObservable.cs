@@ -16,5 +16,6 @@ namespace MemBus
             if (observer == null) throw new ArgumentNullException("observer");
             return bus.Subscribe<M>(observer.OnNext);
         }
+
     }
 }

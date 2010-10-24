@@ -110,7 +110,7 @@
     <Compile Include="Frame\UI\InteractionButton.xaml.cs">
       <DependentUpon>InteractionButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Frame\UI\RequestToActivateScreen.cs" />
+    <Compile Include="Frame\UI\RequestToActivateMainScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />
     <Compile Include="Frame\UI\WpfExtensions.cs" />

@@ -4,9 +4,9 @@ using MemBus.Support;
 
 namespace Membus.WpfTwitterClient.Frame.UI
 {
-    public class RequestToActivateScreen
+    public class RequestToActivateMainScreen
     {
-        public RequestToActivateScreen(Type typeOfScreen)
+        public RequestToActivateMainScreen(Type typeOfScreen)
         {
             TypeOfScreen = typeOfScreen;
         }

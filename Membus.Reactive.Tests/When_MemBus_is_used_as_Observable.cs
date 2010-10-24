@@ -53,6 +53,20 @@ namespace Membus.Reactive.Tests
         }
 
         [Test]
+        public void Class_can_work_as_specialized_observable()
+        {
+            var messages = new RxBasedFooObservable(bus);
+            int msgCount = 0;
+            using (messages.Subscribe(msg => msgCount++))
+            {
+                bus.Publish(new MessageA { Name = "Foo" });
+                bus.Publish(new MessageA { Name = "Bar" });
+                bus.Publish(new MessageA { Name = "Foo" });
+            }
+            msgCount.ShouldBeEqualTo(2);
+        }
+
+        [Test]
         public void Single_observable_supports_multiple_subscriptions()
         {
             var sb1 = new StringBuilder();
