@@ -10,16 +10,19 @@ namespace Membus.WpfTwitterClient.ShellOfApp
     public class ShellViewModel : Conductor<Screen>
     {
         public ActivityViewModel ActivityViewModel { get; private set; }
+        public AttentionViewModel AttentionViewModel { get; private set; }
+
         private readonly DisposeContainer disposeContainer = new DisposeContainer();
 
-        public ShellViewModel(IObservable<RequestToActivateMainScreen> activationStream, ActivityViewModel activityVm)
+        public ShellViewModel(IObservable<RequestToActivateMainScreen> activationStream, ActivityViewModel activityVm, AttentionViewModel attentionVm)
         {
             ActivityViewModel = activityVm;
+            AttentionViewModel = attentionVm;
             var screenStreamDispose = activationStream
                 .Where(msg => msg.ScreenAvailable)
-                .SubscribeOnDispatcher().Subscribe(onNextScreenRequest);
+                .ObserveOnDispatcher().Subscribe(onNextScreenRequest);
 
-            disposeContainer.Add(screenStreamDispose, activityVm);
+            disposeContainer.Add(screenStreamDispose, activityVm, attentionVm);
 
             DisplayName = "MemBus OnTweet!";
         }

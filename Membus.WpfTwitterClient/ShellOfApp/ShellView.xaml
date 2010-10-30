@@ -3,24 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:UI="clr-namespace:Membus.WpfTwitterClient.Frame.UI" 
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-        Title="MainWindow" Height="495" Width="1010" Background="{StaticResource ResourceKey=WindowBackgroundBrush}">
+        Title="MainWindow" Height="505" Width="1010" Background="{StaticResource ResourceKey=WindowBackgroundBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1" />
             <RowDefinition />
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
         
         <ContentControl Grid.Row="1" x:Name="ActiveItem" />
         
         <StatusBar Grid.Row="2" Style="{StaticResource ResourceKey=StatusbarStyle}" HorizontalAlignment="Stretch">
+            <StatusBarItem HorizontalAlignment="Left">
+                <ItemsControl ItemsSource="{Binding Path=AttentionViewModel.CurrentAttentions}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <UI:InteractionButton DataContext="{Binding}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StatusBarItem>
             <StatusBarItem HorizontalContentAlignment="Right">
                 <StackPanel Orientation="Horizontal" Visibility="Collapsed" DataContext="{Binding Path=ActivityViewModel, Mode=OneWay}">
                     <i:Interaction.Behaviors>
                         <UI:FadeOnVisibilityBehaviour Visible="{Binding IsBusy, Mode=OneWay}" />
                     </i:Interaction.Behaviors>
-                    <Label Margin="5 0" x:Name="BusyMessage" Content="{Binding Path=BusyMessage}"></Label>
-                    <UI:GifImage Margin="0 3" Grid.Column="1" GifUri="pack://application:,,,/Resources/wait.gif" FramesPerSecond="5" DockPanel.Dock="Right" />
+                    <Label Margin="5 5" x:Name="BusyMessage" Content="{Binding Path=BusyMessage}"></Label>
+                    <UI:GifImage Margin="0 12" Grid.Column="1" GifUri="pack://application:,,,/Resources/wait.gif" FramesPerSecond="5" DockPanel.Dock="Right" />
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>

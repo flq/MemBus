@@ -14,10 +14,10 @@ namespace Membus.WpfTwitterClient.ShellOfApp
         {
             var busyStream1 = activityMessages
                 .Where(msg => msg.GettingBusy)
-                .SubscribeOnDispatcher().Subscribe(onGettingBusy);
+                .ObserveOnDispatcher().Subscribe(onGettingBusy);
             var busyStream2 = activityMessages
                 .Where(msg => msg.GettingCalm)
-                .SubscribeOnDispatcher().Subscribe(onGettingCalm);
+                .ObserveOnDispatcher().Subscribe(onGettingCalm);
             disposer.Add(busyStream1, busyStream2);
         }
 

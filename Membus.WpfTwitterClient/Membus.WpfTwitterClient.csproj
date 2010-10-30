@@ -125,7 +125,9 @@
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Frame\Twitter\TwitterKeys.cs" />
     <Compile Include="ShellOfApp\ActivityViewModel.cs" />
+    <Compile Include="ShellOfApp\AttentionViewModel.cs" />
     <Compile Include="ShellOfApp\ShellViewModel.cs" />
+    <Compile Include="ShellOfApp\StreamOfAttentions.cs" />
     <Compile Include="Startup\AppBootstrap.cs" />
     <Compile Include="Startup\TwitterBootstrap.cs" />
     <Compile Include="Startup\RequestToStartup.cs" />

@@ -4,6 +4,7 @@ using System.Reflection;
 using Caliburn.Micro;
 using MemBus;
 using Membus.WpfTwitterClient.Frame.Config;
+using Membus.WpfTwitterClient.Frame.UI;
 using Membus.WpfTwitterClient.ShellOfApp;
 using StructureMap;
 using System.Linq;
@@ -49,7 +50,8 @@ namespace Membus.WpfTwitterClient.Startup
         {
             var shell = container.GetInstance<ShellViewModel>();
             container.GetInstance<IWindowManager>().Show(shell);
-            container.GetInstance<IBus>().Publish(new RequestToStartup());
+            var bus = container.GetInstance<IBus>();
+            bus.Publish(new RequestToStartup());
         }
     }
 }

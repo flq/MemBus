@@ -8,7 +8,7 @@ namespace Membus.WpfTwitterClient.Frame.Config
         public CheapUserSettings()
         {
             if (!File.Exists("user.txt"))
-                File.CreateText("user.txt");
+                File.CreateText("user.txt").Dispose();
             using (var r = File.OpenText("user.txt"))
                 AccessToken = r.ReadToEnd();
         }

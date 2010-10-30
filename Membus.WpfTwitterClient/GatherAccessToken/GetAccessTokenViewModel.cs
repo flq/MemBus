@@ -52,6 +52,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
         private void onAuthorizationuriAvailable(Uri uri)
         {
             loadUri(uri);
+            bus.Publish(new RequestForAttention("Test"));
         }
         
     }
