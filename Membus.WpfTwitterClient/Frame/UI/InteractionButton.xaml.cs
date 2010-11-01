@@ -39,7 +39,7 @@ namespace Membus.WpfTwitterClient.Frame.UI
 
         private GeometryDrawing unfreezeGeometry()
         {
-            var b = (Brush)TryFindResource("attentionbutton_info");
+            var b = (Brush)TryFindResource("attentionbutton_error");
             var drawingGroup = (DrawingGroup) img.Drawing;
             var dgUnfrozen = drawingGroup.Clone();
             var geometryDrawing = ((GeometryDrawing)dgUnfrozen.Children[1]);

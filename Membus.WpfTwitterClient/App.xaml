@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Resources/ExpressionDark.xaml" />
                 <ResourceDictionary Source="Resources/Local.xaml" />
                 <ResourceDictionary Source="Resources/InteractionButtonResources.xaml" />
+                <ResourceDictionary Source="Resources/StringForAttention.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

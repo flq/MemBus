@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="StringForAttention">
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding}" Style="{StaticResource ResourceKey=AttentionLabel}" />
+            <Image Source="pack://application:,,,/Resources/check.png" />
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

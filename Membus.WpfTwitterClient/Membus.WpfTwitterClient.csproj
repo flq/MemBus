@@ -110,6 +110,7 @@
     <Compile Include="Frame\UI\InteractionButton.xaml.cs">
       <DependentUpon>InteractionButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Frame\UI\InteractionButtonTemplateSelector.cs" />
     <Compile Include="Frame\UI\RequestForAttention.cs" />
     <Compile Include="Frame\UI\RequestToActivateMainScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
@@ -134,6 +135,10 @@
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />
     <Page Include="Frame\UI\InteractionButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StringForAttention.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -193,6 +198,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\wait.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\check.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
