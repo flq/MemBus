@@ -7,10 +7,9 @@ namespace Membus.WpfTwitterClient.Frame.UI
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is string)
-                return tryFindResource("StringForAttention");
-            return base.SelectTemplate(item, container);
-
+            if (item == null) // No, it's not! if there is no data context, it is null
+                return base.SelectTemplate(item, container);
+            return tryFindResource(item.GetType().Name);
         }
 
         private static DataTemplate tryFindResource(string resourceKey)

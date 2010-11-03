@@ -2,14 +2,14 @@
 {
     public class RequestForAttention
     {
-        private readonly object viewModel;
+        private readonly AbstractInteractionButtonViewModel viewModel;
 
-        public RequestForAttention(object viewModel)
+        public RequestForAttention(AbstractInteractionButtonViewModel viewModel)
         {
             this.viewModel = viewModel;
         }
 
-        public object ViewModel
+        public AbstractInteractionButtonViewModel ViewModel
         {
             get { return viewModel; }
         }

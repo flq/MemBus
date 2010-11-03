@@ -23,7 +23,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
                 return;
             var possibleVerifier = match.Captures[0].Value;
 
-            bus.Publish(new RequestForAttention(new VerifyPinViewModel(possibleVerifier)));
+            bus.Publish(new RequestForAttention(new VerifyPin(possibleVerifier)));
         }
     }
 }

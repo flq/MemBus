@@ -22,7 +22,9 @@ namespace Membus.WpfTwitterClient.ShellOfApp
 
         private void onAttentionRequested(RequestForAttention attention)
         {
-            CurrentAttentions.Add(attention.ViewModel);
+            var viewModel = attention.ViewModel;
+            viewModel.CloseRequested += (s, e) => CurrentAttentions.Remove(viewModel);
+            CurrentAttentions.Add(viewModel);
         }
 
         public void Dispose()

@@ -1,12 +1,13 @@
 ﻿using Caliburn.Micro;
+using Membus.WpfTwitterClient.Frame.UI;
 
 namespace Membus.WpfTwitterClient.GatherAccessToken
 {
-    public class VerifyPinViewModel : PropertyChangedBase
+    public class VerifyPin : AbstractInteractionButtonViewModel
     {
         private readonly string possibleVerifier;
 
-        public VerifyPinViewModel(string possibleVerifier)
+        public VerifyPin(string possibleVerifier)
         {
             this.possibleVerifier = possibleVerifier;
         }
@@ -23,7 +24,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
             set
             {
                 verifierOverride = value;
-                NotifyOfPropertyChange(()=>VerifierOverride);
+                //NotifyOfPropertyChange(()=>VerifierOverride);
             }
         }
     }

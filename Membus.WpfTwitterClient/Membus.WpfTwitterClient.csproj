@@ -103,15 +103,17 @@
     <Compile Include="Frame\Config\TwitterKeysConfiguration.cs" />
     <Compile Include="Frame\ActionOnDispatcher.cs" />
     <Compile Include="Frame\Twitter\ITwitterSession.cs" />
+    <Compile Include="Frame\UI\InteractionButton\AbstractInteractionButtonViewModel.cs" />
     <Compile Include="Frame\UI\ApplicationActivityMessage.cs" />
     <Compile Include="Frame\UI\BoolToVisibilityConverter.cs" />
     <Compile Include="Frame\UI\FadeOnVisibilityBehaviour.cs" />
     <Compile Include="Frame\UI\GifImage.cs" />
-    <Compile Include="Frame\UI\InteractionButton.xaml.cs">
+    <Compile Include="Frame\UI\InteractionButton\InteractionButton.xaml.cs">
       <DependentUpon>InteractionButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Frame\UI\InteractionButtonTemplateSelector.cs" />
-    <Compile Include="Frame\UI\RequestForAttention.cs" />
+    <Compile Include="Frame\UI\InteractionButton\InteractionButtonTemplateSelector.cs" />
+    <Compile Include="Frame\UI\InteractionButton\ConfirmationMessage.cs" />
+    <Compile Include="Frame\UI\InteractionButton\RequestForAttention.cs" />
     <Compile Include="Frame\UI\RequestToActivateMainScreen.cs" />
     <Compile Include="Frame\UI\ScreenConstructor.cs" />
     <Compile Include="Frame\UI\SingleAttribute.cs" />
@@ -122,7 +124,7 @@
     <Compile Include="GatherAccessToken\GetAccessTokenViewModel.cs" />
     <Compile Include="GatherAccessToken\RequestToScanContentForVerifier.cs" />
     <Compile Include="GatherAccessToken\ScanContentForVerifierHandler.cs" />
-    <Compile Include="GatherAccessToken\VerifyPinViewModel.cs" />
+    <Compile Include="GatherAccessToken\VerifyPin.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Frame\Twitter\TwitterKeys.cs" />
     <Compile Include="ShellOfApp\ActivityViewModel.cs" />
@@ -134,7 +136,7 @@
     <Compile Include="Startup\RequestToStartup.cs" />
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />
-    <Page Include="Frame\UI\InteractionButton.xaml">
+    <Page Include="Frame\UI\InteractionButton\InteractionButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

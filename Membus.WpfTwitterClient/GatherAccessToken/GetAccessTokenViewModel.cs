@@ -33,6 +33,8 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
 
         public void BrowserLoaded(WebBrowser browser)
         {
+            bus.Publish(new RequestForAttention(new ConfirmationMessage("Test")));
+            return;
             // Source property ocannot be bound, which is why we have to do silly things here
             loadUri = uri => browser.Source = uri;
             loadedContents = () =>
@@ -52,7 +54,6 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
         private void onAuthorizationuriAvailable(Uri uri)
         {
             loadUri(uri);
-            bus.Publish(new RequestForAttention("Test"));
         }
         
     }

@@ -2,8 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:UI="clr-namespace:Membus.WpfTwitterClient.Frame.UI" 
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-        Title="MainWindow" Height="515" Width="1010" Background="{StaticResource ResourceKey=WindowBackgroundBrush}">
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" Title="MainWindow" Height="515" Width="1010" Background="{StaticResource ResourceKey=WindowBackgroundBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1" />
@@ -23,7 +22,10 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <UI:InteractionButton DataContext="{Binding}" />
+                            <UI:InteractionButton 
+                                DataContext="{Binding}" 
+                                cal:Message.Attach="[Event Loaded] = [Action Start($source)]"
+                                />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
