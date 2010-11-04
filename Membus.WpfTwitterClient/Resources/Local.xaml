@@ -5,11 +5,5 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="Black" />
     </Style>
-    <Style x:Key="Check" TargetType="{x:Type ContentControl}" >
-        <Setter Property="Content">
-            <Setter.Value>
-                <Image Source="pack://application:,,,/Resources/check.png" /> 
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <BitmapImage x:Key="CheckImage" UriSource="pack://application:,,,/Resources/check.png" />
 </ResourceDictionary>

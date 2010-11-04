@@ -15,7 +15,7 @@
     <RadialGradientBrush x:Key="attentionbutton_error">
         <GradientStop Color="Orange" Offset="0.0" />
         <GradientStop Color="DarkMagenta" Offset="0.3" />
-        <GradientStop Color="Red" Offset="0.9" />
+        <GradientStop Color="#FFAF0000" Offset="0.9" />
     </RadialGradientBrush>
     <LinearGradientBrush StartPoint="0.3,0.1" EndPoint="0.8,0.8" x:Key="steel_brush">
         <GradientStop Offset="0" Color="White" />

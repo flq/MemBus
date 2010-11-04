@@ -8,5 +8,10 @@ namespace Membus.WpfTwitterClient.Frame.UI
         {
             Message = message;
         }
+
+        public override void MainPush()
+        {
+            Stop();
+        }
     }
 }

@@ -31,6 +31,11 @@ namespace Membus.WpfTwitterClient.Frame.UI
             openingSource.BeginAnimation(UIElement.OpacityProperty, makeVisible);
         }
 
+        public virtual void MainPush()
+        {
+            
+        }
+
         public void Stop()
         {
             if (openingSource == null)

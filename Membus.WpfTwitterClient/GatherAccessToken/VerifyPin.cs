@@ -17,15 +17,16 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
             get { return possibleVerifier; }
         }
 
-        private string verifierOverride;
-        public string VerifierOverride
+        public string VerifierOverride { get; set; }
+
+        public void CaptureIsGood()
         {
-            get { return verifierOverride; }
-            set
-            {
-                verifierOverride = value;
-                //NotifyOfPropertyChange(()=>VerifierOverride);
-            }
+            
+        }
+
+        public void UseUserPin()
+        {
+            
         }
     }
 }

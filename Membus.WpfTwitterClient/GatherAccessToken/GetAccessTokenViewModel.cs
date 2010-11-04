@@ -34,6 +34,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
         public void BrowserLoaded(WebBrowser browser)
         {
             bus.Publish(new RequestForAttention(new ConfirmationMessage("Test")));
+            bus.Publish(new RequestForAttention(new VerifyPin("2873627")));
             return;
             // Source property ocannot be bound, which is why we have to do silly things here
             loadUri = uri => browser.Source = uri;

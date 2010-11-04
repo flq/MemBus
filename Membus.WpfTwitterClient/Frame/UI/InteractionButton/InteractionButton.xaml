@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:UI="clr-namespace:Membus.WpfTwitterClient.Frame.UI" mc:Ignorable="d"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:UI="clr-namespace:Membus.WpfTwitterClient.Frame.UI" xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" mc:Ignorable="d"
              >
     <UserControl.Resources>
         <!-- Used from code-behind, ignore resharper warning -->
@@ -43,7 +43,10 @@
                 </ContentControl>
             </Border>
         </Popup>
-        <Button x:Name="button" MouseEnter="onButtonMouseEnter" MouseLeave="onButtonMouseLeave" Margin="5 0" Padding="2">
+        <Button x:Name="button" 
+                MouseEnter="onButtonMouseEnter" MouseLeave="onButtonMouseLeave" 
+                cal:Message.Attach="[Event Click] = [Action MainPush()]"
+                Margin="5 0" Padding="2">
             <Image Width="30" Height="30">
                 <Image.Source>
                     <DrawingImage x:Name="img" Drawing="{DynamicResource ResourceKey=simple_info}" />
