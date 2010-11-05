@@ -1,6 +1,8 @@
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace Membus.WpfTwitterClient.Frame.UI
 {
@@ -29,6 +31,11 @@ namespace Membus.WpfTwitterClient.Frame.UI
             }
             renderTarget.Render(drawingVisual);
             return renderTarget;
+        }
+
+        public static void Invoke(this Dispatcher dispatcher, Action action)
+        {
+            dispatcher.Invoke(DispatcherPriority.Normal, action);
         }
     }
 }

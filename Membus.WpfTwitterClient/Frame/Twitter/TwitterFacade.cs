@@ -7,12 +7,14 @@ namespace Membus.WpfTwitterClient.Frame.Twitter
     public class TwitterSession : ITwitterSession
     {
         private readonly TwitterKeys keys;
+        private readonly Func<IUserSettings> userSettingsLoader;
         private string requestToken;
         private string accessToken;
 
-        public TwitterSession(TwitterKeys keys)
+        public TwitterSession(TwitterKeys keys, Func<IUserSettings> userSettingsLoader)
         {
             this.keys = keys;
+            this.userSettingsLoader = userSettingsLoader;
         }
 
         public void GetAuthorizationUrl(Action<Uri> authorizationUriAvailable)

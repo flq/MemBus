@@ -2,15 +2,16 @@ using MemBus;
 using Membus.WpfTwitterClient.Frame;
 using Membus.WpfTwitterClient.Frame.UI;
 using Membus.WpfTwitterClient.GatherAccessToken;
+using Membus.WpfTwitterClient.Timeline;
 
 namespace Membus.WpfTwitterClient.Startup
 {
-    public class TwitterBootstrap : Handles<RequestToStartup>
+    public class StartupHandler : Handles<RequestToStartup>
     {
         private readonly IUserSettings settings;
         private readonly IBus bus;
 
-        public TwitterBootstrap(IUserSettings settings, IBus bus)
+        public StartupHandler(IUserSettings settings, IBus bus)
         {
             this.settings = settings;
             this.bus = bus;
@@ -18,8 +19,10 @@ namespace Membus.WpfTwitterClient.Startup
 
         protected override void push(RequestToStartup message)
         {
-            if (string.IsNullOrEmpty(settings.AccessToken))
-                bus.Publish(new RequestToActivateMainScreen(typeof(GetAccessTokenViewModel)));
+            var screenToActivate = string.IsNullOrEmpty(settings.AccessToken)
+                                       ? typeof (GetAccessTokenViewModel)
+                                       : typeof (MainTimelineViewModel);
+            bus.Publish(new RequestToActivateMainScreen(screenToActivate));
         }
     }
 }

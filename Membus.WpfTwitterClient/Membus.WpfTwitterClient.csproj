@@ -122,6 +122,8 @@
       <DependentUpon>GetAccessTokenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GatherAccessToken\GetAccessTokenViewModel.cs" />
+    <Compile Include="GatherAccessToken\GetAndStoreAccessTokenHandler.cs" />
+    <Compile Include="GatherAccessToken\RequestToGetAccessToken.cs" />
     <Compile Include="GatherAccessToken\RequestToScanContentForVerifier.cs" />
     <Compile Include="GatherAccessToken\ScanContentForVerifierHandler.cs" />
     <Compile Include="GatherAccessToken\VerifyPin.cs" />
@@ -132,10 +134,14 @@
     <Compile Include="ShellOfApp\ShellViewModel.cs" />
     <Compile Include="ShellOfApp\StreamOfAttentions.cs" />
     <Compile Include="Startup\AppBootstrap.cs" />
-    <Compile Include="Startup\TwitterBootstrap.cs" />
+    <Compile Include="Startup\StartupHandler.cs" />
     <Compile Include="Startup\RequestToStartup.cs" />
     <Compile Include="Frame\ServiceLocator.cs" />
     <Compile Include="Frame\Twitter\TwitterFacade.cs" />
+    <Compile Include="Timeline\MainTimeline.xaml.cs">
+      <DependentUpon>MainTimeline.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Timeline\MainTimelineViewModel.cs" />
     <Page Include="Frame\UI\InteractionButton\InteractionButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,6 +169,10 @@
     <Page Include="ShellOfApp\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Timeline\MainTimeline.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
