@@ -1,8 +1,11 @@
+using Membus.WpfTwitterClient.Frame.Config;
+
 namespace Membus.WpfTwitterClient.Frame
 {
     public interface IUserSettings
     {
-        string AccessToken { get; }
-        void StoreAccessToken(string token);
+        bool IsAccessTokenAvailable { get; }
+        TwitterAccessToken AccessToken { get; }
+        void StoreAccessToken(TwitterAccessToken token);
     }
 }

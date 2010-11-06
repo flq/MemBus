@@ -8,17 +8,24 @@ namespace Membus.WpfTwitterClient.Frame.Config
         public CheapUserSettings()
         {
             if (!File.Exists("user.txt"))
-                File.CreateText("user.txt").Dispose();
+                return;
             using (var r = File.OpenText("user.txt"))
-                AccessToken = r.ReadToEnd();
+            {
+                AccessToken = new TwitterAccessToken(r.ReadLine(), r.ReadLine());
+            }
         }
 
-        public string AccessToken { get; private set; }
+        public bool IsAccessTokenAvailable
+        {
+            get { return AccessToken != null; }
+        }
 
-        public void StoreAccessToken(string token)
+        public TwitterAccessToken AccessToken { get; private set; }
+
+        public void StoreAccessToken(TwitterAccessToken token)
         {
             AccessToken = token;
-            File.WriteAllText("user.txt", AccessToken);
+            File.WriteAllText("user.txt", token.Token + Environment.NewLine + token.Secret);
         }
     }
 }

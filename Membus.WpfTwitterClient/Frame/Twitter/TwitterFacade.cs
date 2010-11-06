@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Membus.WpfTwitterClient.Frame.Config;
 using Twitterizer;
 
 namespace Membus.WpfTwitterClient.Frame.Twitter
@@ -9,7 +11,8 @@ namespace Membus.WpfTwitterClient.Frame.Twitter
         private readonly TwitterKeys keys;
         private readonly Func<IUserSettings> userSettingsLoader;
         private string requestToken;
-        private string accessToken;
+
+        readonly TaskFactory taskFactory = new TaskFactory();
 
         public TwitterSession(TwitterKeys keys, Func<IUserSettings> userSettingsLoader)
         {
@@ -19,27 +22,47 @@ namespace Membus.WpfTwitterClient.Frame.Twitter
 
         public void GetAuthorizationUrl(Action<Uri> authorizationUriAvailable)
         {
-            var t = new Task(
-                () =>
-                    {
-                        var response = OAuthUtility.GetRequestToken(keys.ConsumerKey, keys.ConsumerSecret, "oob");
-                        requestToken = response.Token;
-                        var uri = OAuthUtility.BuildAuthorizationUri(requestToken);
-                        authorizationUriAvailable(uri);
-                    });
-            t.Start();
+            taskFactory.StartNew(() =>
+                                     {
+                                         var response = OAuthUtility.GetRequestToken(keys.ConsumerKey,
+                                                                                     keys.ConsumerSecret, "oob");
+                                         requestToken = response.Token;
+                                         var uri = OAuthUtility.BuildAuthorizationUri(requestToken);
+                                         authorizationUriAvailable(uri);
+                                     });
         }
 
-        public void GetAccessToken(string verifyCode, Action<string> accessTokenAvailable)
+        public void GetAccessToken(string verifyCode, Action<TwitterAccessToken> accessTokenAvailable)
         {
-            var t = new Task(
-                () =>
+            taskFactory.StartNew(() =>
                 {
                     var response = OAuthUtility.GetAccessToken(keys.ConsumerKey, keys.ConsumerSecret, requestToken, verifyCode);
-                    accessToken = response.Token;
-                    accessTokenAvailable(accessToken);
+                    accessTokenAvailable(new TwitterAccessToken(response.Token, response.TokenSecret));
                 });
-            t.Start();
+        }
+
+        public void LoadPublicTimeline(Action<ICollection<TwitterStatus>> action)
+        {
+            taskFactory.StartNew(() =>
+                                     {
+                                         var statuses = TwitterTimeline.PublicTimeline(getOAuthToken());
+                                         action(statuses);
+                                     });
+        }
+
+        private OAuthTokens getOAuthToken()
+        {
+            var userSettings = userSettingsLoader();
+            if (!userSettings.IsAccessTokenAvailable)
+                throw new InvalidOperationException("By some reason no access token is available, this is an invalid state of the application.");
+            var token = userSettings.AccessToken;
+            return new OAuthTokens
+                       {
+                           AccessToken = token.Token,
+                           AccessTokenSecret = token.Secret,
+                           ConsumerKey = keys.ConsumerKey,
+                           ConsumerSecret = keys.ConsumerSecret
+                       };
         }
     }
 }
