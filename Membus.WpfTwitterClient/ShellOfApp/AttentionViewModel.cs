@@ -1,10 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows.Threading;
 using Membus.WpfTwitterClient.Frame.UI;
-using System.Linq;
 
 namespace Membus.WpfTwitterClient.ShellOfApp
 {
@@ -12,10 +8,10 @@ namespace Membus.WpfTwitterClient.ShellOfApp
     {
         private readonly IDisposable streamDispose;
 
-        public AttentionViewModel(IObservable<RequestForAttention> attentionStream)
+        public AttentionViewModel(StreamOfAttentions attentionStream)
         {
             CurrentAttentions = new ObservableCollection<object>();
-            streamDispose = attentionStream.ObserveOnDispatcher().Subscribe(onAttentionRequested);
+            streamDispose = attentionStream.Subscribe(onAttentionRequested);
         }
 
         public ObservableCollection<object> CurrentAttentions { get; private set; }

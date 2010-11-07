@@ -25,7 +25,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
             session.GetAccessToken(message.Pin, token =>
                                                     {
                                                         settings.StoreAccessToken(token);
-                                                        bus.Publish(new RequestToActivateMainScreen(typeof(MainTimelineViewModel)));
+                                                        bus.Publish(new RequestToActivateMainScreen(typeof(TimelinesViewModel)));
                                                     });
         }
     }

@@ -26,7 +26,7 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
         public void TwitterLoadCompleted(NavigationEventArgs e)
         {
             var s = loadedContents();
-            bus.Publish(new ApplicationActivityMessage());
+            bus.PublishActivityEnds();
             bus.Publish(new RequestToScanContentForVerifier(s));
             
         }
@@ -41,13 +41,13 @@ namespace Membus.WpfTwitterClient.GatherAccessToken
                                      var b = browser.Document as dynamic;
                                      return (string) b.documentElement.innerText;
                                  };
-            bus.Publish(new ApplicationActivityMessage("Negotiating with Twitter"));
+            bus.PublishNewActivity("Negotiating with Twitter");
             session.GetAuthorizationUrl(new ActionOnDispatcher<Uri>(onAuthorizationuriAvailable));
         }
 
         public void TwitterWebsiteNavigating(NavigatingCancelEventArgs args)
         {
-            bus.Publish(new ApplicationActivityMessage("Loading Twitter screen"));
+            bus.PublishNewActivity("Loading Twitter screen");
         }
 
         private void onAuthorizationuriAvailable(Uri uri)

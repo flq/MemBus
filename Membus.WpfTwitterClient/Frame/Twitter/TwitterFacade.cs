@@ -41,12 +41,12 @@ namespace Membus.WpfTwitterClient.Frame.Twitter
                 });
         }
 
-        public void LoadPublicTimeline(Action<ICollection<TwitterStatus>> action)
+        public void LoadHomeTimeline(Action<ICollection<TwitterStatus>> timelineAvailable)
         {
             taskFactory.StartNew(() =>
                                      {
-                                         var statuses = TwitterTimeline.PublicTimeline(getOAuthToken());
-                                         action(statuses);
+                                         var statuses = TwitterTimeline.HomeTimeline(getOAuthToken());
+                                         timelineAvailable(statuses);
                                      });
         }
 

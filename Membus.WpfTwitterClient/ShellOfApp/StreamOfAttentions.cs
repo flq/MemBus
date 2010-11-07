@@ -12,7 +12,7 @@ namespace Membus.WpfTwitterClient.ShellOfApp
 
         protected override System.IObservable<RequestForAttention> constructObservable(System.IObservable<RequestForAttention> startingPoint)
         {
-            return startingPoint.SubscribeOnDispatcher();
+            return startingPoint.ObserveOnDispatcher();
         }
     }
 }

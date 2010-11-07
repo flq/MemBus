@@ -20,7 +20,7 @@ namespace Membus.WpfTwitterClient.Startup
         protected override void push(RequestToStartup message)
         {
             var screenToActivate = settings.IsAccessTokenAvailable
-                                       ? typeof (MainTimelineViewModel)
+                                       ? typeof (TimelinesViewModel)
                                        : typeof (GetAccessTokenViewModel);
             bus.Publish(new RequestToActivateMainScreen(screenToActivate));
         }
