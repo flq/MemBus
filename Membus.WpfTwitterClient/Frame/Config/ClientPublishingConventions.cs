@@ -9,9 +9,7 @@ namespace Membus.WpfTwitterClient.Frame.Config
         public void Accept(IConfigurableBus setup)
         {
             setup.ConfigurePublishing(
-                    p => p.MessageMatch(
-                        m => m.IsType<RequestToStartup>(),
-                        l => l.PublishPipeline(new SequentialPublisher())));
+                    p => p.MessageMatch(m => m.IsType<RequestToStartup>()).PublishPipeline(new SequentialPublisher()));
         }
     }
 }

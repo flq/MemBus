@@ -34,11 +34,11 @@ namespace MemBus.Publishing
             pipelines.Insert(0, new PipelineProvider(info=>true, publishPipelineMembers));
         }
 
-        void IConfigurablePublishing.MessageMatch(Func<MessageInfo, bool> match, Action<IConfigurePipeline> configure)
+        IConfigurePipeline IConfigurablePublishing.MessageMatch(Func<MessageInfo, bool> match)
         {
             var cP = new ConfigurePipeline(match, bus);
-            configure(cP);
             pipelines.Add(cP.Provider);
+            return cP;
         }
 
         void IConfigurablePublishing.ConfigureWith<T>()
@@ -51,15 +51,16 @@ namespace MemBus.Publishing
         {
             private readonly Func<MessageInfo, bool> match;
             private readonly IBus bus;
-            private readonly List<IPublishPipelineMember> members = new List<IPublishPipelineMember>();
+            private readonly PipelineProvider pipelineProvider;
 
             public ConfigurePipeline(Func<MessageInfo, bool> match, IBus bus)
             {
                 this.match = match;
                 this.bus = bus;
+                pipelineProvider = new PipelineProvider(match);
             }
 
-            public PipelineProvider Provider { get { return new PipelineProvider(match, members); } }
+            public PipelineProvider Provider { get { return pipelineProvider; } }
 
             public void ConfigureWith<T>() where T : ISetup<IConfigurePipeline>, new()
             {
@@ -69,9 +70,11 @@ namespace MemBus.Publishing
 
             public void PublishPipeline(params IPublishPipelineMember[] publishPipelineMembers)
             {
-                members.AddRange(publishPipelineMembers);
                 foreach (var m in publishPipelineMembers)
+                {
                     m.TryInvoke(p => p.Bus = bus);
+                    Provider.Add(m);
+                }
             }
         }
 

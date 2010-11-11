@@ -44,6 +44,7 @@
     <Compile Include="Bus.cs" />
     <Compile Include="CompositeResolver.cs" />
     <Compile Include="CompositeSubscription.cs" />
+    <Compile Include="Configurators\Fast.cs" />
     <Compile Include="Configurators\ServiceLocatorSupport.cs" />
     <Compile Include="Handles.cs" />
     <Compile Include="IBus.cs" />

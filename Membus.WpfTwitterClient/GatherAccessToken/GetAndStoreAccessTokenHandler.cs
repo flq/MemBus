@@ -1,4 +1,3 @@
-using System;
 using MemBus;
 using Membus.WpfTwitterClient.Frame;
 using Membus.WpfTwitterClient.Frame.Twitter;

@@ -47,11 +47,6 @@ namespace Membus.WpfTwitterClient.Timeline
               streamDispose.Dispose();
         }
 
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-        }
-
         private void askForNewStatuses()
         {
             bus.PublishNewActivity("Retrieving statuses");

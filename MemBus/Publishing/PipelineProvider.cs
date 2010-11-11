@@ -8,6 +8,8 @@ namespace MemBus.Publishing
         private readonly Func<MessageInfo, bool> match;
         private readonly List<IPublishPipelineMember> pipelineMembers = new List<IPublishPipelineMember>();
 
+        public PipelineProvider(Func<MessageInfo, bool> match) : this(match, new IPublishPipelineMember[] {}) {}
+
         public PipelineProvider(Func<MessageInfo, bool> match, IEnumerable<IPublishPipelineMember> members)
         {
             this.match = match;
@@ -25,6 +27,9 @@ namespace MemBus.Publishing
                 pipelineMembers[i].LookAt(token);
         }
 
-
+        public void Add(IPublishPipelineMember publishPipelineMember)
+        {
+            pipelineMembers.Add(publishPipelineMember);
+        }
     }
 }

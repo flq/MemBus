@@ -4,7 +4,6 @@ namespace MemBus.Support
 {
     public class AdHocAutomaton<M> : AbstractAutomaton<M>
     {
-        private readonly Func<Trigger> triggerCreator;
         private readonly Func<M> messageCreator;
 
         public AdHocAutomaton(Func<Trigger> triggerCreator, Func<M> messageCreator) : base(triggerCreator)

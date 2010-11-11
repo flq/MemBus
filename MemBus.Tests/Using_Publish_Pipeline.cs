@@ -73,7 +73,7 @@ namespace MemBus.Tests
                 pp =>
                     {
                         pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object);
-                        pp.MessageMatch(mi => mi.IsType<MessageA>(), cp => cp.PublishPipeline(t.Mock2Object));
+                        pp.MessageMatch(mi => mi.IsType<MessageA>()).PublishPipeline(t.Mock2Object);
                     });
 
 
@@ -88,8 +88,7 @@ namespace MemBus.Tests
             t.TestWith(pp =>
                            {
                                pp.DefaultPublishPipeline(t.Mock1Object, t.Mock3Object);
-                               pp.MessageMatch(mi => mi.IsType<MessageB>(),
-                                                     cp => cp.PublishPipeline(t.Mock2Object));
+                               pp.MessageMatch(mi => mi.IsType<MessageB>()).PublishPipeline(t.Mock2Object);
                            });
 
 
@@ -102,9 +101,7 @@ namespace MemBus.Tests
         public void use_send_this_to_send_message_while_publishing()
         {
             var b = BusSetup.StartWith<Conservative>(cb=> cb.ConfigurePublishing(
-                p=> p.MessageMatch(
-                    m => m.IsType<MessageA>(),
-                    c => c.PublishPipeline(Publish.This(new MessageB()), new SequentialPublisher()))))
+                p => p.MessageMatch(m => m.IsType<MessageA>()).PublishPipeline(Publish.This(new MessageB()), new SequentialPublisher())))
                 .Construct();
 
             int bCount = 0;

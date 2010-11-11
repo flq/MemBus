@@ -93,7 +93,7 @@ namespace MemBus.Tests.Frame
 
     public static void ShouldBeOfType<T>(this object target)
     {
-      Assert.IsInstanceOfType(typeof(T), target);
+      Assert.IsAssignableFrom<T>(target);
     }
 
   }

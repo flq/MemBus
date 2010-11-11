@@ -14,8 +14,7 @@ namespace MemBus.Tests
             var busMock = new Mock<IBus>();
             var manualTrigger = new ManualTrigger();
             var messageA = new MessageA();
-            var a = new AdHocAutomaton<MessageA>(() => manualTrigger, () => messageA);
-            a.Bus = busMock.Object;
+            var a = new AdHocAutomaton<MessageA>(() => manualTrigger, () => messageA) {Bus = busMock.Object};
             manualTrigger.Trigger();
 
             busMock.Verify(b=>b.Publish(messageA));
