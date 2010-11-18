@@ -3,9 +3,7 @@ using System.Threading;
 using System.Windows.Threading;
 using MemBus.Publishing;
 using MemBus.Setup;
-using MemBus.Support;
 using Moq;
-using Moq.Protected;
 
 namespace MemBus.Tests.Frame
 {

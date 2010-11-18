@@ -13,7 +13,7 @@ namespace MemBus.Tests.Help
     {
     }
 
-    public class MessageD : MessageA
+    public class MessageASpecialization : MessageA
     {
     }
 

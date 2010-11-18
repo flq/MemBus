@@ -1,6 +1,7 @@
 using System;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
+using Moq;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
 
@@ -9,6 +10,21 @@ namespace MemBus.Tests
     [TestFixture]
     public class Using_disposable_method_subscription
     {
+        [Test]
+        public void the_basic_method_subscription_is_contravariant()
+        {
+            var sub = new MethodInvocation<MessageA>(msg => { });
+            sub.Handles(typeof(MessageASpecialization)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void An_implementator_of_handles_acts_contravariant()
+        {
+            var mock = new Mock<Handles<MessageA>>();
+            ((IHandles<MessageA>)mock.Object).Handles(typeof(MessageASpecialization)).ShouldBeTrue();
+        }
+
+        
         [Test]
         public void handle_type_derived_from_Action()
         {
