@@ -14,7 +14,7 @@ namespace MemBus.Tests.Frame
         public static Mock<ISubscription> MockSubscriptionThatHandles<T>()
         {
             var mock = new Mock<ISubscription>();
-            mock.Setup(m => m.Handles).Returns(typeof (T));
+            mock.Setup(m => m.Handles(typeof(T))).Returns(true);
             return mock;
         }
 

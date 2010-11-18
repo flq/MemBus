@@ -16,6 +16,11 @@ namespace MemBus.Support
                     bus.Publish(new ExceptionOccurred(tasks[i].Exception));
         }
 
+        public static IEnumerable<T> AsEnumerable<T>(this T item)
+        {
+            return new[] {item};
+        }
+
         /// <summary>
         /// Perform an action with every item of an enumerable
         /// </summary>

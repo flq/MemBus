@@ -76,11 +76,6 @@ namespace MemBus
         public void Publish(object message)
         {
             checkDisposed();
-            UpwardsPublish(message);
-        }
-
-        public void UpwardsPublish(object message)
-        {
             var subs = resolvers.GetSubscriptionsFor(message);
             subs = subscriptionPipeline.Shape(subs, message);
             var t = new PublishToken(message, subs);

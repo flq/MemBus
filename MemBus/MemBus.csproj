@@ -104,8 +104,7 @@
     <Compile Include="Support\RespondExtension.cs" />
     <Compile Include="Support\Trigger.cs" />
     <Compile Include="Support\UsefulExtensions.cs" />
-    <Compile Include="TableBasedContravariantResolver.cs" />
-    <Compile Include="TableBasedResolver.cs" />
+    <Compile Include="CachingResolver.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

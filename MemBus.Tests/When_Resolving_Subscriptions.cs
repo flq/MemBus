@@ -23,7 +23,7 @@ namespace MemBus.Tests
         {
             var subs = resolver.GetSubscriptionsFor(new MessageB());
             subs.ShouldHaveCount(1);
-            subs.Single().Handles.ShouldBeEqualTo(typeof(MessageB));
+            subs.Single().Handles(typeof(MessageB)).ShouldBeTrue();
         }
 
         [Test]
@@ -40,15 +40,6 @@ namespace MemBus.Tests
             subs.ShouldHaveCount(2);
         }
 
-        [Test]
-        public void Table_based_resolver_accepts_and_returns_subscriptions()
-        {
-            var sub = Helpers.MockSubscriptionThatHandles<MessageA>();
-            var r = new TableBasedResolver();
-            r.Add(sub.Object);
-            var subs = r.GetSubscriptionsFor(new MessageA()).ToList();
-            subs.ShouldHaveCount(1);
-        }
     }
 
 }

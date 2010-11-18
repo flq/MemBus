@@ -17,7 +17,7 @@ namespace MemBus.Tests.Help
            if (message == null)
                throw new ArgumentNullException("message");
 
-            return subscriptions.Where(s => s.Handles.IsAssignableFrom(message.GetType()));
+            return subscriptions.Where(s => s.Handles(message.GetType()));
         }
 
         public bool Add(ISubscription s)

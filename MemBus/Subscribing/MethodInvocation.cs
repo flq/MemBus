@@ -16,9 +16,9 @@ namespace MemBus.Subscribing
             action((T)message);
         }
 
-        public Type Handles
+        public bool Handles(Type messageType)
         {
-            get { return typeof(T); }
+            return typeof (T).IsAssignableFrom(messageType);
         }
     }
 }

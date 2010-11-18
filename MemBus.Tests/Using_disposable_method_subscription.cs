@@ -14,7 +14,7 @@ namespace MemBus.Tests
         {
             int callCount = 0;
             var sub = new DisposableSubscription(new MethodInvocation<MessageA>(msg => callCount++));
-            sub.Handles.ShouldBeEqualTo(typeof(MessageA));
+            sub.Handles(typeof(MessageA)).ShouldBeTrue();
         }
 
         [Test]

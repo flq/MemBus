@@ -19,6 +19,11 @@ namespace MemBus
               Push(typedMsg);
         }
 
+        bool ISubscription.Handles(Type messageType)
+        {
+            return typeof (T).IsAssignableFrom(messageType);
+        }
+
         /// <summary>
         /// return true to handle this message
         /// </summary>
@@ -29,9 +34,6 @@ namespace MemBus
 
         protected abstract void push(T message);
 
-        Type ISubscription.Handles
-        {
-            get { return typeof(T); }
-        }
+        
     }
 }

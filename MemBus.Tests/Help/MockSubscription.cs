@@ -5,7 +5,7 @@ using MemBus.Support;
 
 namespace MemBus.Tests.Help
 {
-    public class MockSubscription<T> : ISubscription, IDisposable
+    public class MockSubscription<T> : IDisposableSubscription, IDisposable
     {
         private readonly ManualResetEvent evtBlock;
         private readonly ManualResetEvent evtSignal;
@@ -30,20 +30,26 @@ namespace MemBus.Tests.Help
               evtSignal.Set();
         }
 
+        public bool Handles(Type messageType)
+        {
+            return typeof(T).IsAssignableFrom(messageType);
+        }
+
         public IDisposable GetDisposer()
         {
             return this;
         }
 
-        public event EventHandler Disposed;
-
-        public Type Handles
+        public bool IsDisposed
         {
-            get { return typeof(T); }
+            get; private set;
         }
+
+        public event EventHandler Disposed;
 
         public void Dispose()
         {
+            IsDisposed = true;
             Disposed.Raise(this);
         }
     }
@@ -55,10 +61,11 @@ namespace MemBus.Tests.Help
             
         }
 
-        public Type Handles
+        public bool Handles(Type messageType)
         {
-            get { return typeof(MessageA); }
+            return messageType.Equals(typeof (MessageA));
         }
+
 
         public bool Deny
         {

@@ -23,10 +23,11 @@ namespace MemBus.Subscribing
                 .Wait();
         }
 
-        public Type Handles
+        public bool Handles(Type messageType)
         {
-            get { return subscription.Handles; }
+            return subscription.Handles(messageType);
         }
+
 
         public bool Deny
         {

@@ -5,12 +5,13 @@ namespace MemBus
     public interface ISubscription
     {
         void Push(object message);
-        Type Handles { get; }
+        bool Handles(Type messageType);
     }
 
     public interface IDisposableSubscription : ISubscription
     {
         IDisposable GetDisposer();
+        bool IsDisposed { get; }
         event EventHandler Disposed;
     }
 }

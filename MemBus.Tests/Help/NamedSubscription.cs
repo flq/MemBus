@@ -37,11 +37,13 @@ namespace MemBus.Tests.Help
             Pushed++;
         }
 
+        public bool Handles(Type messageType)
+        {
+            return inner.Handles(messageType);
+        }
+
         protected int Pushed { get; private set; }
 
-        public Type Handles
-        {
-            get { return inner.Handles; }
-        }
+       
     }
 }

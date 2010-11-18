@@ -16,7 +16,7 @@ namespace MemBus.Tests
         public void Default_setup_routes_the_message_correctly()
         {
             var sub = new Mock<ISubscription>();
-            sub.Setup(s => s.Handles).Returns(typeof (MessageA));
+            sub.Setup(s => s.Handles(typeof(MessageA))).Returns(true);
             var b = BusSetup
                 .StartWith<Conservative>(cb => cb.AddSubscription(sub.Object))
                 .Construct();

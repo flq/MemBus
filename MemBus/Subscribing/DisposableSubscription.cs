@@ -7,6 +7,11 @@ namespace MemBus.Subscribing
     {
         private ISubscription action;
 
+        public DisposableSubscription() : this(new NullSubscription())
+        {
+            this.action = action;
+        }
+
         public DisposableSubscription(ISubscription action)
         {
             this.action = action;
@@ -17,22 +22,25 @@ namespace MemBus.Subscribing
             action.Push(message);
         }
 
+        public bool Handles(Type messageType)
+        {
+            return action.Handles(messageType);
+        }
+
         public IDisposable GetDisposer()
         {
             return this;
         }
+
+        public bool IsDisposed { get; private set; }
 
         public event EventHandler Disposed;
 
         private void raiseDispose()
         {
             action = null;
+            IsDisposed = true;
             Disposed.Raise(this);
-        }
-
-        public Type Handles
-        {
-            get { return action.Handles; }
         }
 
         void IDisposable.Dispose()
@@ -43,6 +51,19 @@ namespace MemBus.Subscribing
         public bool Deny
         {
             get { return action.CheckDenyOrAllIsGood(); }
+        }
+
+        private class NullSubscription : ISubscription
+        {
+            public void Push(object message)
+            {
+                
+            }
+
+            public bool Handles(Type messageType)
+            {
+                return false;
+            }
         }
     }
 }
