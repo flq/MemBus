@@ -40,10 +40,15 @@ namespace MemBus
 
         public void Add(ISubscription subscription)
         {
-            var disposableSub = subscription is IDisposableSubscription ? 
-                (IDisposableSubscription)subscription : new DisposableSubscription(subscription);
+            IDisposableSubscription disposableSub = getDisposableSub(subscription);
             disposableSub.Disposed += onSubscriptionDisposed;
             subscriptions.AddOrUpdate(disposableSub.GetHashCode(), _ => disposableSub, (_,__) => disposableSub);
+        }
+
+        private static IDisposableSubscription getDisposableSub(ISubscription subscription)
+        {
+            return subscription is IDisposableSubscription ? 
+                   (IDisposableSubscription)subscription : new DisposableSubscription(subscription);
         }
 
         private void onSubscriptionDisposed(object sender, EventArgs e)

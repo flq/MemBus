@@ -5,6 +5,7 @@ using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
+using System.Linq;
 
 namespace MemBus
 {
@@ -85,6 +86,20 @@ namespace MemBus
         public IDisposable Subscribe<M>(Action<M> subscription)
         {
             return Subscribe(subscription, subscriptionPipeline.GetIntroductionShape());
+        }
+
+        public IDisposable Subscribe(object subscriber)
+        {
+            var svc = services.Get<IAdapterServices>();
+            if (svc == null)
+                throw new InvalidOperationException(
+                    "No subscription adapter rules were formulated. Apply the FlexibleSubscribeAdapter to state rules how some instance may be wired up into MemBus.");
+            var disposeShape = new ShapeToDispose();
+            var subs = svc.SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription).ToList();
+            foreach (var s in subs)
+                resolvers.Add(s);
+            return new DisposeContainer(subs.Select(s => ((IDisposableSubscription) s).GetDisposer()));
+
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)

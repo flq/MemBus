@@ -86,6 +86,7 @@
     <Compile Include="When_Resolving_Subscriptions.cs" />
     <Compile Include="When_using_dynamics.cs" />
     <Compile Include="When_using_the_bus.cs" />
+    <Compile Include="When_using_the_bus_with_flexible_subscriptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MemBus\MemBus.csproj">

@@ -1,9 +1,11 @@
 using System;
+using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using Moq;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
+using System.Linq;
 
 namespace MemBus.Tests
 {
@@ -50,7 +52,23 @@ namespace MemBus.Tests
             sub.Disposed += (s, e) => disposeCalled = true;
             sub.GetDisposer().Dispose();
             disposeCalled.ShouldBeTrue();
-            
+        }
+
+        [Test]
+        public void Adapter_subscriptions_can_also_be_disposed()
+        {
+            var b = new MethodBasedBuilder("Handle");
+            var disposableSub = new DisposableSubscription(b.BuildSubscriptions(new SomeHandler()).First());
+            var resolver = new CachingResolver();
+            resolver.Add(disposableSub);
+
+            var subs = resolver.GetSubscriptionsFor(new MessageA());
+            subs.ShouldHaveCount(1);
+
+            disposableSub.GetDisposer().Dispose();
+
+            subs = resolver.GetSubscriptionsFor(new MessageA());
+            subs.ShouldHaveCount(0);
         }
     }
 }
