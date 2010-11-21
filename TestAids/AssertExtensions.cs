@@ -10,7 +10,7 @@ namespace MemBus.Tests.Frame
   {
     public static void ShouldHaveCount(this IEnumerable collection, int expectedCount)
     {
-        var actual = collection.OfType<object>().Count();
+        var actual = collection.Cast<object>().Count();
         Assert.AreEqual(
         expectedCount,
         actual,

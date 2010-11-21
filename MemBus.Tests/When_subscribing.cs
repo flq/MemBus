@@ -7,7 +7,7 @@ using MemBus.Tests.Frame;
 namespace MemBus.Tests
 {
     [TestFixture]
-    public class sWhen_subscribing
+    public class When_subscribing
     {
         [Test]
         public void Conventions_allow_changing_the_shape()

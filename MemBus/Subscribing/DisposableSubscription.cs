@@ -9,7 +9,6 @@ namespace MemBus.Subscribing
 
         public DisposableSubscription() : this(new NullSubscription())
         {
-            this.action = action;
         }
 
         public DisposableSubscription(ISubscription action)

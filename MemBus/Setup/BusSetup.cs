@@ -9,6 +9,8 @@ namespace MemBus
     {
         private readonly List<ISetup<IConfigurableBus>> configurators = new List<ISetup<IConfigurableBus>>();
 
+        private BusSetup() { }
+
         public BusSetup Apply(params ISetup<IConfigurableBus>[] configurators)
         {
             this.configurators.AddRange(configurators);
@@ -19,6 +21,13 @@ namespace MemBus
         {
             this.configurators.Add(new T());
             return Apply(configurators);
+        }
+
+        public BusSetup Apply<T>(Action<T> additionalConfig) where T : ISetup<IConfigurableBus>, new()
+        {
+            var t = new T();
+            additionalConfig(t);
+            return Apply(t);
         }
 
         public IBus Construct()
