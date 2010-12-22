@@ -7,10 +7,10 @@ namespace MemBus
 {
     internal class CachingResolver : ISubscriptionResolver
     {
-        private abstract class ImpossibleMessage {}
-        private ConcurrentDictionary<Type, CompositeSubscription> cachedSubscriptions = new ConcurrentDictionary<Type, CompositeSubscription>();
+        private static class ImpossibleMessage {}
+        private readonly ConcurrentDictionary<Type, CompositeSubscription> cachedSubscriptions = new ConcurrentDictionary<Type, CompositeSubscription>();
 
-        private HashSet<Type> seenMessageTypes = new HashSet<Type>();
+        private readonly HashSet<Type> seenMessageTypes = new HashSet<Type>();
         private volatile bool newSubscriptions = false;
 
         public CachingResolver()

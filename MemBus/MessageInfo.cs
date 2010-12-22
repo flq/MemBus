@@ -1,4 +1,5 @@
 ﻿using System;
+using MemBus.Support;
 
 namespace MemBus
 {
@@ -17,6 +18,7 @@ namespace MemBus
             return message.GetType().Equals(typeof (T));
         }
 
+        [Api]
         public bool IsType<T>(Func<T,bool> additionalMatch)
         {
             if (additionalMatch == null) throw new ArgumentNullException("additionalMatch");

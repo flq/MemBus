@@ -17,6 +17,7 @@ namespace MemBus.Support
         /// <typeparam name="T">The type of the attribute you are looking for</typeparam>
         /// <param name="provider">Target</param>
         /// <returns>True if this attribute is defined on this target</returns>
+        [Api]
         public static bool HasAttribute<T>(this ICustomAttributeProvider provider) where T : Attribute
         {
             var atts = provider.GetCustomAttributes(typeof(T), true);
@@ -30,6 +31,7 @@ namespace MemBus.Support
         /// <typeparam name="T">The type of the attribute you are looking for</typeparam>
         /// <param name="provider">Target</param>
         /// <returns>The first attribute on the target that is of the desired type</returns>
+        [Api]
         public static T GetAttribute<T>(this ICustomAttributeProvider provider) where T : Attribute
         {
             var atts = provider.GetCustomAttributes(typeof(T), true);
@@ -42,6 +44,7 @@ namespace MemBus.Support
         /// <typeparam name="T">The desired attribute type</typeparam>
         /// <param name="provider">Target</param>
         /// <param name="action">An action to perform on a found attribute</param>
+        [Api]
         public static void ForAttributesOf<T>(this ICustomAttributeProvider provider, Action<T> action) where T : Attribute
         {
             foreach (T attribute in provider.GetCustomAttributes(typeof(T), true))

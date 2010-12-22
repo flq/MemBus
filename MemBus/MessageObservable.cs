@@ -4,17 +4,17 @@ namespace MemBus
 {
     public class MessageObservable<M> : IObservable<M>
     {
-        private readonly IBus bus;
+        private readonly ISubscriber subscriber;
         
-        public MessageObservable(IBus bus)
+        public MessageObservable(ISubscriber subscriber)
         {
-            this.bus = bus;
+            this.subscriber = subscriber;
         }
 
         public IDisposable Subscribe(IObserver<M> observer)
         {
             if (observer == null) throw new ArgumentNullException("observer");
-            return bus.Subscribe<M>(observer.OnNext);
+            return subscriber.Subscribe<M>(observer.OnNext);
         }
 
     }

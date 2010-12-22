@@ -1,9 +1,8 @@
 obj
 bin
 out
-NDependOut
-
-db data
+NDependOut*
+_cache
 _ReSharper.*
 *.user
 *.resharper
@@ -11,10 +10,6 @@ _ReSharper.*
 *.suo
 *.cache
 *.~
+MemBus*.wrap
+wraps/openwrap
 *.swp
-test.htm
-test2.htm
-test2_files
-WebRelease.config
-rf.ico
-Rf.Sites/files/images/*.*

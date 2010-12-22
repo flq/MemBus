@@ -2,12 +2,16 @@
 
 namespace MemBus.Setup
 {
-    public interface IConfigurableBus
+    public interface IConfigurableSubscriber
     {
-        void ConfigurePublishing(Action<IConfigurablePublishing> configure);
         void ConfigureSubscribing(Action<IConfigurableSubscribing> configure);
         void AddResolver(ISubscriptionResolver resolver);
         void AddSubscription(ISubscription subscription);
+    }
+
+    public interface IConfigurableBus : IConfigurableSubscriber
+    {
+        void ConfigurePublishing(Action<IConfigurablePublishing> configure);
         void AddAutomaton(object automaton);
         void AddService<T>(T service);
     }

@@ -84,6 +84,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
-		Project = ""
+		Project = ".\MemBus.ndproj"
 	EndGlobalSection
 EndGlobal

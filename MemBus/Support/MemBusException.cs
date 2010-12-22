@@ -6,11 +6,6 @@ namespace MemBus.Support
     [Serializable]
     public class MemBusException : Exception
     {
-
-        public MemBusException()
-        {
-        }
-
         public MemBusException(string message) : base(message)
         {
         }

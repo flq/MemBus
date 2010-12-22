@@ -13,7 +13,7 @@ namespace Membus.Reactive.Tests
     [TestFixture]
     public class When_MemBus_is_used_as_Observable
     {
-        IBus bus = BusSetup.StartWith<Conservative>().Construct();
+        readonly IBus bus = BusSetup.StartWith<Conservative>().Construct();
 
         [Test]
         public void Apply_extension_method_where()

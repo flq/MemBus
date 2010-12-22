@@ -13,6 +13,10 @@ namespace MemBus.Support
             return new PipelineMemberToPublishAMessage(message);
         }
 
+        /// <summary>
+        /// Public because the TryInvoke currently does not handle private types
+        /// </summary>
+        [MustBePublic]
         public class PipelineMemberToPublishAMessage : IPublishPipelineMember
         {
             private readonly object message;

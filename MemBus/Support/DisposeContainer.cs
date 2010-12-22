@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace MemBus.Support
     /// Helps to dispose several instances at once. You can pass in any object, the container will seed
     /// out automatically what can be disposed and what not.
     /// </summary>
-    public class DisposeContainer : IDisposable
+    public class DisposeContainer : IDisposable, IEnumerable<IDisposable>
     {
         private readonly List<IDisposable> disposables = new List<IDisposable>();
         private readonly object disposeLock = new object();
@@ -23,11 +24,13 @@ namespace MemBus.Support
             this.disposables.AddRange(from d in disposables let realD = d as IDisposable where realD != null select realD);
         }
 
+        [Api]
         public void Add(IDisposable disposable)
         {
             disposables.Add(disposable);
         }
 
+        [Api]
         public void Add(params IDisposable[] disposables)
         {
             this.disposables.AddRange(disposables);
@@ -43,6 +46,16 @@ namespace MemBus.Support
                 disposables.Clear();
                 disposed = true;
             }
+        }
+
+        public IEnumerator<IDisposable> GetEnumerator()
+        {
+            return disposables.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

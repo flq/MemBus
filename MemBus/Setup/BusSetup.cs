@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MemBus.Setup;
+using MemBus.Support;
 
 // ReSharper disable CheckNamespace
 namespace MemBus
@@ -11,12 +12,14 @@ namespace MemBus
 
         private BusSetup() { }
 
+        [Api]
         public BusSetup Apply(params ISetup<IConfigurableBus>[] configurators)
         {
             this.configurators.AddRange(configurators);
             return this;
         }
 
+        [Api]
         public BusSetup Apply<T>(params ISetup<IConfigurableBus>[] configurators) where T : ISetup<IConfigurableBus>, new()
         {
             this.configurators.Add(new T());

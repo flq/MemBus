@@ -2,17 +2,6 @@ using System;
 
 namespace MemBus.Subscribing
 {
-    /// <summary>
-    /// Helper to build a <see cref="MethodInvocation{T}"/>. See <see cref="FlexibleSubscribeAdapter"/> why.
-    /// </summary>
-    public class MethodInvocation
-    {
-        public MethodInvocation<T> Build<T>(Action<T> action)
-        {
-            return new MethodInvocation<T>(action);
-        }
-    }
-
     public class MethodInvocation<T> : ISubscription
     {
         private readonly Action<T> action;

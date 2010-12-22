@@ -10,7 +10,6 @@ namespace MemBus
 {
     internal class CompositeSubscription : ISubscription, IEnumerable<ISubscription>
     {
-
         private readonly ConcurrentDictionary<int,IDisposableSubscription> subscriptions = new ConcurrentDictionary<int,IDisposableSubscription>();
 
         public CompositeSubscription() { }
@@ -29,11 +28,6 @@ namespace MemBus
         bool ISubscription.Handles(Type messageType)
         {
             return subscriptions.Values.All(s => s.Handles(messageType));
-        }
-
-        public IDisposable GetDisposer()
-        {
-            return new DisposeContainer(subscriptions.Values.Select(s => s.GetDisposer()));
         }
 
         public event EventHandler Disposed;

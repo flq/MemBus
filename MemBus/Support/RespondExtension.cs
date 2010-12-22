@@ -24,6 +24,7 @@ namespace MemBus.Support
             return dynExists.OperationExists;
         }
 
+        [Api]
         public static bool RespondsTo(this object target, Action<dynamic> selector)
         {
             var dynExists = new DynamicExists(target);

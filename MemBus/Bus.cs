@@ -1,20 +1,17 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
-using System.Linq;
 
 namespace MemBus
 {
     internal class Bus : IConfigurableBus, IBus
     {
         private readonly BusSetup busSetup;
-        private readonly CompositeResolver resolvers = new CompositeResolver();
         private readonly PublishPipeline publishPipeline;
-        private readonly SubscriptionPipeline subscriptionPipeline;
+        private readonly Subscriber subscriber;
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
 
@@ -25,8 +22,8 @@ namespace MemBus
         internal Bus()
         {
             publishPipeline = new PublishPipeline(this);
-            subscriptionPipeline = new SubscriptionPipeline(services);
-            disposer = new DisposeContainer(resolvers, publishPipeline, subscriptionPipeline, services);
+            subscriber = new Subscriber(services);
+            disposer = new DisposeContainer { publishPipeline, subscriber, (IDisposable)services };
         }
 
         public Bus(BusSetup busSetup) : this()
@@ -43,21 +40,17 @@ namespace MemBus
 
         public void ConfigureSubscribing(Action<IConfigurableSubscribing> configure)
         {
-            checkDisposed();
-            configure(subscriptionPipeline);
+           ((IConfigurableSubscriber)subscriber).ConfigureSubscribing(configure);
         }
 
-        void IConfigurableBus.AddResolver(ISubscriptionResolver resolver)
+        void IConfigurableSubscriber.AddResolver(ISubscriptionResolver resolver)
         {
-            checkDisposed();
-            resolver.TryInvoke(r => r.Services = services);
-            resolvers.Add(resolver);
+            ((IConfigurableSubscriber)subscriber).AddResolver(resolver);
         }
 
-        void IConfigurableBus.AddSubscription(ISubscription subscription)
+        void IConfigurableSubscriber.AddSubscription(ISubscription subscription)
         {
-            checkDisposed();
-            resolvers.Add(subscription);
+            ((IConfigurableSubscriber)subscriber).AddSubscription(subscription);
         }
 
         void IConfigurableBus.AddAutomaton(object automaton)
@@ -77,51 +70,35 @@ namespace MemBus
         public void Publish(object message)
         {
             checkDisposed();
-            var subs = resolvers.GetSubscriptionsFor(message);
-            subs = subscriptionPipeline.Shape(subs, message);
+            var subs = subscriber.GetSubscriptionsFor(message);
             var t = new PublishToken(message, subs);
             publishPipeline.LookAt(t);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription)
         {
-            return Subscribe(subscription, subscriptionPipeline.GetIntroductionShape());
+            return subscriber.Subscribe(subscription);
         }
 
         public IDisposable Subscribe(object subscriber)
         {
-            var svc = services.Get<IAdapterServices>();
-            if (svc == null)
-                throw new InvalidOperationException(
-                    "No subscription adapter rules were formulated. Apply the FlexibleSubscribeAdapter to state rules how some instance may be wired up into MemBus.");
-            var disposeShape = new ShapeToDispose();
-            var subs = svc.SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription).ToList();
-            foreach (var s in subs)
-                resolvers.Add(s);
-            return new DisposeContainer(subs.Select(s => ((IDisposableSubscription) s).GetDisposer()));
-
+            return this.subscriber.Subscribe(subscriber);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)
         {
-            var subC = new SubscriptionCustomizer<M>(subscriptionPipeline.GetIntroductionShape(), services);
-            customization(subC);
-            return Subscribe(subscription, subC);
+            return subscriber.Subscribe(subscription, customization);
         }
 
 
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization)
         {
-            checkDisposed();
-            var sub = customization.EnhanceSubscription(new MethodInvocation<M>(subscription));
-            resolvers.Add(sub);
-            return sub.TryReturnDisposerOfSubscription();
+            return subscriber.Subscribe(subscription, customization);
         }
 
         public IObservable<M> Observe<M>()
         {
-            checkDisposed();
-            return new MessageObservable<M>(this);
+            return subscriber.Observe<M>();
         }
 
         public IBus Clone()
