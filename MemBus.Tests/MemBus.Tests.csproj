@@ -32,12 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="grensesnitt.AddIn">
-      <HintPath>..\lib\grensesnitt.AddIn.dll</HintPath>
-    </Reference>
-    <Reference Include="grensesnitt.Framework">
-      <HintPath>..\lib\grensesnitt.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\lib\Moq.dll</HintPath>

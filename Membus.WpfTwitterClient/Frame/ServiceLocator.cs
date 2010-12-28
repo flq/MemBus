@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Practices.ServiceLocation;
+using MemBus;
 using StructureMap;
 using System.Linq;
 
 namespace Membus.WpfTwitterClient.Frame
 {
-    public class ServiceLocator : ServiceLocatorImplBase
+    public class ServiceLocator : IocAdapter
     {
         private readonly Func<IContainer> containerLookup;
 
@@ -20,14 +20,10 @@ namespace Membus.WpfTwitterClient.Frame
             this.containerLookup = containerLookup;
         }
 
-        protected override object DoGetInstance(Type serviceType, string key)
-        {
-            return string.IsNullOrEmpty(key) ? container.GetInstance(serviceType) : container.GetInstance(serviceType, key);
-        }
 
-        protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
+        public IEnumerable<object> GetAllInstances(Type desiredType)
         {
-            return container.GetAllInstances(serviceType).OfType<object>();
+            return container.GetAllInstances(desiredType).OfType<object>();
         }
     }
 }

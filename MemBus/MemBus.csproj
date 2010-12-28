@@ -33,9 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
@@ -45,10 +42,11 @@
     <Compile Include="CompositeResolver.cs" />
     <Compile Include="CompositeSubscription.cs" />
     <Compile Include="Configurators\Fast.cs" />
-    <Compile Include="Configurators\ServiceLocatorSupport.cs" />
+    <Compile Include="Configurators\IoCSupport.cs" />
     <Compile Include="Handles.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="IHandles.cs" />
+    <Compile Include="IocAdapter.cs" />
     <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\ExceptionOccurred.cs" />
     <Compile Include="Messages\PeriodPassed.cs" />
@@ -65,7 +63,7 @@
     <Compile Include="Publishing\PublishToken.cs" />
     <Compile Include="Publishing\SequentialPublisher.cs" />
     <Compile Include="RxEnabledObservable.cs" />
-    <Compile Include="ServiceLocationBasedResolver.cs" />
+    <Compile Include="IoCBasedResolver.cs" />
     <Compile Include="Setup\AdHocConfigurator.cs" />
     <Compile Include="Configurators\AsyncConfiguration.cs" />
     <Compile Include="Setup\BusSetup.cs" />

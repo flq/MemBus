@@ -34,7 +34,7 @@ namespace Membus.WpfTwitterClient.Frame.Config
         private static IBus constructBus()
         {
             return BusSetup.StartWith<AsyncRichClientFrontend, ClientPublishingConventions>(
-                new ServiceLocatorSupport(new ServiceLocator(() => ObjectFactory.Container)))
+                new IoCSupport(new ServiceLocator(() => ObjectFactory.Container)))
                 .Construct();
         }
     }
