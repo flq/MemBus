@@ -16,27 +16,7 @@ See the License for the specific language governing permissions and limitations 
 ## Dependencies ##
 
 Dependencies can be found in the "**lib**" subfolder. MemBus currently has no mandatory dependencies. 
-If you want to use the Service Location feature for resolving e.g. handlers, also deploy the **Microsoft.Practices.ServiceLocation.dll** 
-(taken from [codeplex](http://commonservicelocator.codeplex.com/)).
+To have more fun with the Observables, it is recommended you use the Reactive framework. The 2 important dlls are **System.Reactive.dll** and **System.CoreEx.dll**, included in the lib
 
-To have more fun with the Observables, it is recommended you use the Reactive framework. The 2 important dlls are **System.Reactive.dll** and **System.CoreEx.dll**.
-
-The additional WPF Application dependencies are contained in the **WpfApp subfolder** of the lib:
-
-* [Caliburn.Micro.dll](http://caliburnmicro.codeplex.com/)
-    * System.Windows.Interactivity.dll
-* [Twitterizer2.dll](http://www.twitterizer.net/)
-    * Twitterizer.Data.dll
-    * [Newtonsoft.Json.dll](http://james.newtonking.com/pages/json-net.aspx)
-* [StructureMap](http://structuremap.sourceforge.net/)
-
-## Other stuff ##
-
-### Annoying warning from IE on Twitter login screen? ###
-
-See [here](http://blog.httpwatch.com/2009/04/23/fixing-the-ie-8-warning-do-you-want-to-view-only-the-webpage-content-that-was-delivered-securely/):
-
-* Going  to Tools->Internet Options->Security
-* Select the "Security" tab
-* Click the "Custom Level" button
-* In the "Miscellaneous" section change “Display mixed content” to Enable
+## MemBus as a wrap  ##
+MemBus supports OpenWrap. As such, just run `o build-wrap in the directory to get a wrap you can put into your repository of choice.
