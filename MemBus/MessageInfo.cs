@@ -15,7 +15,7 @@ namespace MemBus
 
         public bool IsType<T>()
         {
-            return message.GetType().Equals(typeof (T));
+            return typeof(T).IsAssignableFrom(message.GetType());
         }
 
         [Api]

@@ -114,6 +114,15 @@ namespace MemBus.Tests
             aCount.ShouldBeEqualTo(1);
         }
 
+        [Test]
+        public void MessageInfo_isType_supports_variance()
+        {
+            var info = new MessageInfo(new Foo());
+            info.IsType<Base>().ShouldBeTrue();
+        }
 
+        class Base { }
+
+        class Foo : Base { }
     }
 }
