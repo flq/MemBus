@@ -36,7 +36,12 @@ namespace MemBus
             var subs = svc.SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription).ToList();
             foreach (var s in subs)
                 resolvers.Add(s);
-            return new DisposeContainer(subs.Select(s => ((IDisposableSubscription)s).GetDisposer()));
+            
+            var disposeContainer = new DisposeContainer(subs.Select(s => ((IDisposableSubscription)s).GetDisposer()));
+
+            PushDisposerToSubscriberIfPossible(subscriber, disposeContainer);
+
+            return disposeContainer;
 
         }
 
@@ -104,6 +109,13 @@ namespace MemBus
         {
             if (isDisposed)
                 throw new ObjectDisposedException("Publisher");
+        }
+
+        private static void PushDisposerToSubscriberIfPossible(object subscriber, DisposeContainer disposeContainer)
+        {
+            var disposeAcceptor = subscriber as IAcceptDisposeToken;
+            if (disposeAcceptor != null)
+                disposeAcceptor.Accept(disposeContainer);
         }
     }
 }

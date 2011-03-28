@@ -80,6 +80,7 @@
     <Compile Include="Subscribing\Adapter\InterfaceBasedBuilder.cs" />
     <Compile Include="Subscribing\Adapter\ISubscriptionBuilder.cs" />
     <Compile Include="Subscribing\Adapter\MethodBasedBuilder.cs" />
+    <Compile Include="Subscribing\IAcceptDisposeToken.cs" />
     <Compile Include="Subscribing\ShapeToPassthrough.cs" />
     <Compile Include="Subscribing\SubscriptionPipeline.cs" />
     <Compile Include="Subscribing\DisposableSubscription.cs" />
