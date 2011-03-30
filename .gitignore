@@ -13,3 +13,4 @@ _ReSharper.*
 MemBus*.wrap
 wraps/openwrap
 *.swp
+*.nupkg
