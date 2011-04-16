@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
@@ -32,15 +31,7 @@ namespace MemBus
             if (svc == null)
                 throw new InvalidOperationException(
                     "No subscription adapter rules were formulated. Apply the FlexibleSubscribeAdapter to state rules how some instance may be wired up into MemBus.");
-            var disposeShape = new ShapeToDispose();
-            var subs = svc.SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription).ToList();
-            foreach (var s in subs)
-                resolvers.Add(s);
-            
-            var disposeContainer = new DisposeContainer(subs.Select(s => ((IDisposableSubscription)s).GetDisposer()));
-
-            PushDisposerToSubscriberIfPossible(subscriber, disposeContainer);
-
+            var disposeContainer = svc.WireUpSubscriber(resolvers, subscriber);
             return disposeContainer;
 
         }
@@ -109,13 +100,6 @@ namespace MemBus
         {
             if (isDisposed)
                 throw new ObjectDisposedException("Publisher");
-        }
-
-        private static void PushDisposerToSubscriberIfPossible(object subscriber, DisposeContainer disposeContainer)
-        {
-            var disposeAcceptor = subscriber as IAcceptDisposeToken;
-            if (disposeAcceptor != null)
-                disposeAcceptor.Accept(disposeContainer);
         }
     }
 }

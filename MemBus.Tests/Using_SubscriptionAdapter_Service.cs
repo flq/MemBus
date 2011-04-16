@@ -42,7 +42,10 @@ namespace MemBus.Tests
                 .ByMethodName("Schmandle");
             
             var handler = new SomeCrazyHandler();
-            var subs = ((IAdapterServices) setup).SubscriptionsFor(handler);
+            var simpleResolver = new SimpleResolver();
+            ((IAdapterServices) setup).WireUpSubscriber(simpleResolver, handler);
+
+            var subs = simpleResolver.ToList();
 
             subs.ShouldHaveCount(5);
 

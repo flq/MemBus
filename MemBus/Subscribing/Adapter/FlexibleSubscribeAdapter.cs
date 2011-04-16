@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using MemBus.Setup;
 using System.Linq;
+using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
@@ -39,15 +40,36 @@ namespace MemBus.Subscribing
             return this;
         }
 
-        IEnumerable<ISubscription> IAdapterServices.SubscriptionsFor(object subscriber)
+        private IEnumerable<ISubscription> SubscriptionsFor(object subscriber)
         {
             return builders.SelectMany(b => b.BuildSubscriptions(subscriber));
+        }
+
+        public IDisposable WireUpSubscriber(ISubscriptionResolver subscriptionResolver, object subscriber)
+        {
+            var disposeShape = new ShapeToDispose();
+            var subs = SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription).ToList();
+            foreach (var s in subs)
+                subscriptionResolver.Add(s);
+
+            var disposeContainer = new DisposeContainer(subs.Select(s => ((IDisposableSubscription)s).GetDisposer()));
+
+            PushDisposerToSubscriberIfPossible(subscriber, disposeContainer);
+
+            return disposeContainer;
         }
 
         private void addToBuilders(ISubscriptionBuilder builder)
         {
             builders.Add(builder);
             configurationAvailable = true;
+        }
+
+        private static void PushDisposerToSubscriberIfPossible(object subscriber, DisposeContainer disposeContainer)
+        {
+            var disposeAcceptor = subscriber as IAcceptDisposeToken;
+            if (disposeAcceptor != null)
+                disposeAcceptor.Accept(disposeContainer);
         }
     }
 }

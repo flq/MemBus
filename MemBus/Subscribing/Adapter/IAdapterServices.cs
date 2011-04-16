@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MemBus.Subscribing
 {
     public interface IAdapterServices
     {
-        IEnumerable<ISubscription> SubscriptionsFor(object subscriber);
+        IDisposable WireUpSubscriber(ISubscriptionResolver subscriptionResolver, object subscriber);
     }
 }
