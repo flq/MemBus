@@ -83,6 +83,10 @@
     <Compile Include="When_using_the_bus_with_flexible_subscriptions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MemBus.Addons\MemBus.Addons.csproj">
+      <Project>{EAB04C70-A8F9-421C-B6B0-00AD8D2132D1}</Project>
+      <Name>MemBus.Addons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MemBus\MemBus.csproj">
       <Project>{708D3958-76FA-42F9-A2A7-2926F2734E0E}</Project>
       <Name>MemBus</Name>

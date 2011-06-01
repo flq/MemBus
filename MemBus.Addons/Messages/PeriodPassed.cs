@@ -1,4 +1,4 @@
-namespace MemBus.Messages
+namespace MemBus.Addons.Messages
 {
     public class PeriodPassed
     {

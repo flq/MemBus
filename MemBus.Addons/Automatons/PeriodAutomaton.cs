@@ -1,7 +1,7 @@
 using System;
-using MemBus.Messages;
+using MemBus.Addons.Messages;
 
-namespace MemBus.Support
+namespace MemBus.Addons.Automatons
 {
     public class PeriodAutomaton : AbstractAutomaton<PeriodPassed>
     {

@@ -1,3 +1,4 @@
+using MemBus.Addons.Automatons;
 using MemBus.Support;
 using MemBus.Tests.Help;
 using Moq;

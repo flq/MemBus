@@ -1,6 +1,6 @@
 using System;
 
-namespace MemBus.Support
+namespace MemBus.Addons.Automatons
 {
     public class AdHocAutomaton<M> : AbstractAutomaton<M>
     {

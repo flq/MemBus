@@ -1,6 +1,7 @@
 using System;
+using MemBus.Support;
 
-namespace MemBus.Support
+namespace MemBus.Addons.Automatons
 {
     /// <summary>
     /// An automaton is something that should usually publish messages inside the bus' infrastructure 

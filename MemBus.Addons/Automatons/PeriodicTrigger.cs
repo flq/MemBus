@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace MemBus.Support
+namespace MemBus.Addons.Automatons
 {
     public class PeriodicTrigger : Trigger
     {

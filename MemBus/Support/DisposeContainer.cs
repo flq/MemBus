@@ -21,7 +21,7 @@ namespace MemBus.Support
 
         public DisposeContainer(IEnumerable<object> disposables)
         {
-            this.disposables.AddRange(from d in disposables let realD = d as IDisposable where realD != null select realD);
+            this.disposables.AddRange(disposables.OfType<IDisposable>());
         }
 
         [Api]

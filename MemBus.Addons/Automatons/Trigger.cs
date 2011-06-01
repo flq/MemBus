@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MemBus.Support
+namespace MemBus.Addons.Automatons
 {
     public abstract class Trigger
     {

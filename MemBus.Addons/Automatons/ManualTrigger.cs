@@ -1,4 +1,4 @@
-﻿namespace MemBus.Support
+﻿namespace MemBus.Addons.Automatons
 {
     /// <summary>
     /// Provides a fire method to fire the trigger "manually"
