@@ -1,4 +1,0 @@
-﻿depends: openwrap anchored content
-build:msbuild;profile=net40;project=MemBus\MemBus.csproj;
-name: MemBus
-description: Pure In-Memory publish/subscribe framework for .NET 4.0
