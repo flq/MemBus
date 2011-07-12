@@ -13,10 +13,11 @@ software distributed under the License is distributed on an "AS IS"
 BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 See the License for the specific language governing permissions and limitations under the License. 
 
-## Dependencies ##
+## 1.0.4 ##
 
-Dependencies can be found in the "**lib**" subfolder. MemBus currently has no mandatory dependencies. 
-To have more fun with the Observables, it is recommended you use the Reactive framework. The 2 important dlls are **System.Reactive.dll** and **System.CoreEx.dll**, included in the lib
+Added Infrastructure class "DeferredPublishPipelineMember" to separate the time-wise coupling of setting up the bus and being able
+to construct an instance of "IPublishpipelineMember"
 
-## MemBus as a wrap  ##
-MemBus supports OpenWrap. As such, just run `o build-wrap in the directory to get a wrap you can put into your repository of choice.
+## 1.0.3 ##
+
+Removal of classes from MemBus that have no direct relationship to the core function of MemBus.

@@ -48,6 +48,7 @@
     <Compile Include="IocAdapter.cs" />
     <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\ExceptionOccurred.cs" />
+    <Compile Include="Publishing\DeferredPublishPipelineMember.cs" />
     <Compile Include="Subscriber.cs" />
     <Compile Include="Publishing\FireAndForgetPublisher.cs" />
     <Compile Include="Publishing\ParallelNonBlockingPublisher.cs" />
