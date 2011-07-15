@@ -82,6 +82,16 @@ namespace MemBus.Tests
         }
 
         [Test]
+        public void Execution_of_pipeline_is_cancellable_by_member()
+        {
+            var t = new PublishPipelineTester<MessageA>();
+            t.Mock1.Setup(pm => pm.LookAt(It.IsAny<PublishToken>())).Callback((PublishToken token) => token.Cancel = true);
+            t.TestWith(pp => pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object));
+            t.VerifyCalled(t.Mock1);
+            t.VerifyNotCalled(t.Mock2);
+        }
+
+        [Test]
         public void default_publish_pipeline_is_fallback()
         {
             var t = new PublishPipelineTester<MessageA>();

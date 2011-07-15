@@ -13,6 +13,11 @@ software distributed under the License is distributed on an "AS IS"
 BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 See the License for the specific language governing permissions and limitations under the License. 
 
+## 1.1.0 ##
+
+PublishToken now has a Cancel property. 
+If a publish pipeline member sets this to true, all subsequent pipeline members will not be called anymore
+
 ## 1.0.4 ##
 
 Added Infrastructure class "DeferredPublishPipelineMember" to separate the time-wise coupling of setting up the bus and being able

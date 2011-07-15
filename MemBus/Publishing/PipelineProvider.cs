@@ -24,7 +24,11 @@ namespace MemBus.Publishing
         public void LookAt(PublishToken token)
         {
             for (var i = 0; i <= pipelineMembers.Count - 1; i++)
+            {
+                if (token.Cancel)
+                    break;
                 pipelineMembers[i].LookAt(token);
+            }
         }
 
         public void Add(IPublishPipelineMember publishPipelineMember)
