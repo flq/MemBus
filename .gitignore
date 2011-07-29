@@ -10,7 +10,6 @@ _ReSharper.*
 *.suo
 *.cache
 *.~
-MemBus*.wrap
-wraps/openwrap
+MemBus_mm_cache.bin
 *.swp
 *.nupkg

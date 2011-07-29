@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
@@ -54,10 +55,31 @@ namespace MemBus.Tests
 
         }
 
+        [Test]
+        public void Related_to_caching_resolver_failed_publish()
+        {
+            var b = ConstructBusForHandle();
+            var handler = new SomeHandler();
+            b.Subscribe(handler);
+            b.Publish(new MessageA());
+            handler.MsgACalls.ShouldBeEqualTo(1);
+            handler.InvokeDisposeToken();
+            
+            
+            handler = new SomeHandler();
+            handler.MsgACalls.ShouldBeEqualTo(0);
+            b.Subscribe(handler);
+
+            b.Publish(new MessageB());
+            b.Publish(new MessageA());
+
+            handler.MsgACalls.ShouldBeEqualTo(1);
+        }
+
         private IBus ConstructBusForHandle()
         {
             return BusSetup.StartWith<Conservative>()
-                .Apply<FlexibleSubscribeAdapter>(c => c.ByMethodName("Handle")).Construct();
+                .Apply<FlexibleSubscribeAdapter>(c => c.ByMethodName("Handle").ByInterface(typeof(IHandles<>))).Construct();
         }
     }
 }

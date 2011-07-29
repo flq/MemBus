@@ -18,7 +18,12 @@ namespace MemBus
         {
             AddRange(subscriptions);
         }
-        
+
+        public bool IsEmpty
+        {
+            get { return subscriptions.IsEmpty; }
+        }
+
         public void Push(object message)
         {
             foreach (var s in subscriptions.Values)
@@ -66,6 +71,18 @@ namespace MemBus
         {
             foreach (var s in subscriptions)
                 Add(s);
+        }
+
+        private void Remove(ISubscription subscription)
+        {
+            IDisposableSubscription d;
+            subscriptions.TryRemove(subscription.GetHashCode(), out d);
+        }
+
+        public void RemoveRange(IEnumerable<ISubscription> subscriptions)
+        {
+            foreach (var s in subscriptions)
+                Remove(s);
         }
     }
 }

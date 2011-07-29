@@ -42,6 +42,35 @@ namespace MemBus.Tests
             r.GetSubscriptionsFor(new MessageB()).ShouldHaveCount(0);
 
         }
+
+        [Test]
+        public void correct_behavior_of_resolver_with_regard_to_subscribe_dispose_subscribe_publish_twice()
+        {
+            var sub1 = new MockSubscription<MessageA>();
+            var r = new CachingResolver();
+            
+            r.Add(sub1);
+            r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
+            sub1.Dispose();
+
+            sub1 = new MockSubscription<MessageA>();
+            r.Add(sub1);
+            r.GetSubscriptionsFor(new MessageB()).ShouldHaveCount(0);
+            r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void correct_behavior_subscribe_get_subscribe_new_then_get_old()
+        {
+            var sub1 = new MockSubscription<MessageA>();
+            var sub2 = new MockSubscription<MessageB>();
+            var r = new CachingResolver();
+
+            r.Add(sub1);
+            r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
+            r.Add(sub2);
+            r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
+        }
     }
 
 }
