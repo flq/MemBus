@@ -3,7 +3,7 @@ using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    public class DisposableSubscription : IDisposableSubscription, IDenyShaper, IDisposable
+    public class DisposableSubscription : IDisposableSubscription, IDenyShaper, IDisposable, IKnowsSubscribedInstance
     {
         private ISubscription action;
 
@@ -59,6 +59,11 @@ namespace MemBus.Subscribing
             {
                 return false;
             }
+        }
+
+        public object Instance
+        {
+            get { return (action as IKnowsSubscribedInstance).IfNotNull(ks => ks.Instance); }
         }
     }
 }

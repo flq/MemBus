@@ -7,8 +7,14 @@ using MemBus.Subscribing;
 
 namespace MemBus.Support
 {
+    /// <summary>
+    /// Extensions used internally by Membus
+    /// </summary>
     public static class UsefulExtensions
     {
+        /// <summary>
+        /// Sends off <see cref="ExceptionOccurred"/> messages on a bus based on a list of faulted tasks
+        /// </summary>
         public static void PublishExceptionMessages(this Task[] tasks, IBus bus)
         {
             for (int i = 0; i < tasks.Length; i++)
@@ -16,6 +22,9 @@ namespace MemBus.Support
                     bus.Publish(new ExceptionOccurred(tasks[i].Exception));
         }
 
+        /// <summary>
+        /// A single item as Enumerable
+        /// </summary>
         public static IEnumerable<T> AsEnumerable<T>(this T item)
         {
             return new[] {item};
@@ -30,10 +39,21 @@ namespace MemBus.Support
                 action(i);
         }
 
+        /// <summary>
+        /// string.Format as extension method
+        /// </summary>
         public static string Fmt(this string @string, params object[] args)
         {
             if (@string == null) throw new ArgumentNullException("string");
             return string.Format(@string, args);
+        }
+
+        /// <summary>
+        /// Return the value accessesd by selector or the default(O) if the input is null
+        /// </summary>
+        public static O IfNotNull<I,O>(this I input, Func<I,O> selector) where I : class
+        {
+            return input != null ? selector(input) : default(O);
         }
 
         internal static bool CheckDenyOrAllIsGood(this object obj)
@@ -41,7 +61,7 @@ namespace MemBus.Support
             return obj is IDenyShaper ? ((IDenyShaper)obj).Deny : false;
         }
 
-        public static IDisposable TryReturnDisposerOfSubscription(this ISubscription sub)
+        internal static IDisposable TryReturnDisposerOfSubscription(this ISubscription sub)
         {
             return sub is IDisposableSubscription ? ((IDisposableSubscription)sub).GetDisposer() : null;
         }

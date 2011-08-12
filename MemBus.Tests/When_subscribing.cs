@@ -1,5 +1,6 @@
 using System.Text;
 using MemBus.Configurators;
+using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
@@ -40,5 +41,23 @@ namespace MemBus.Tests
             BusSetup.StartWith<Conservative>(new BusSetupPutShapeOnMsgA(testShaper)).Construct();
             testShaper.Services.ShouldNotBeNull();
         }
+
+        [Test]
+        public void The_instance_of_a_static_method_is_null()
+        {
+            var sub = new MethodInvocation<object>(Substatic);
+            ((IKnowsSubscribedInstance)sub).Instance.ShouldBeNull();
+            
+        }
+
+        [Test]
+        public void Meth_invocation_implements_knows_instance()
+        {
+            var sub = new MethodInvocation<object>(Sub);
+            ((IKnowsSubscribedInstance)sub).Instance.ShouldBeOfType<When_subscribing>();
+        }
+
+        public void Sub(object msg) { }
+        public static void Substatic(object msg) {}
     }
 }
