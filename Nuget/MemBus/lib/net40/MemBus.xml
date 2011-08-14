@@ -1,0 +1,713 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MemBus</name>
+    </assembly>
+    <members>
+        <member name="T:MemBus.Subscribing.MethodInvocation`1">
+            <summary>
+            Basic <see cref="T:MemBus.ISubscription"/> implementation that wraps a void(Arg a) method
+            as a subscription
+            </summary>
+        </member>
+        <member name="T:MemBus.ISubscription">
+            <summary>
+            Basic ISubscription interface
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscription.Push(System.Object)">
+            <summary>
+            Accept the message
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscription.Handles(System.Type)">
+            <summary>
+            State whether this type of message is handled
+            </summary>
+        </member>
+        <member name="T:MemBus.Subscribing.IKnowsSubscribedInstance">
+            <summary>
+            This may be implemented by implementors of <see cref="T:MemBus.ISubscription"/>
+            If implemented, the property returns the instance which is subscribed.
+            Note that this may be null if the target is a static method.
+            </summary>
+        </member>
+        <member name="P:MemBus.Subscribing.IKnowsSubscribedInstance.Instance">
+            <summary>
+            The instance that "belongs" to a subscription or null, if the subscription is based on a static method
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.MethodInvocation`1.#ctor(System.Delegate)">
+            <summary>
+            ctor for any delegate. Can fail with <see cref="T:System.InvalidCastException"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.MethodInvocation`1.#ctor(System.Action{`0})">
+            <summary>
+            ctor for <see cref="T:System.Action`1"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.MethodInvocation`1.Push(System.Object)">
+            <summary>
+            <see cref="M:MemBus.ISubscription.Push(System.Object)"/>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:MemBus.Subscribing.MethodInvocation`1.Handles(System.Type)">
+            <summary>
+            <see cref="M:MemBus.ISubscription.Handles(System.Type)"/>
+            </summary>
+        </member>
+        <member name="T:MemBus.Publishing.DeferredPublishPipelineMember`1">
+            <summary>
+            Use this class if you cannot instantiate the actual pipeline member at the time you setup the pipeline
+            Provide a factory method to a pipeline member that will be called and used once this member is called
+            during publish processing
+            </summary>
+            <typeparam name="T">Any class implementing <see cref="T:MemBus.Publishing.IPublishPipelineMember"/></typeparam>
+        </member>
+        <member name="M:MemBus.Publishing.DeferredPublishPipelineMember`1.#ctor(System.Func{`0})">
+            <summary>
+            ctor with the factory method to obtain the "real" <see cref="T:MemBus.Publishing.IPublishPipelineMember"/>
+            </summary>
+            <param name="actualPipelineMember"></param>
+        </member>
+        <member name="T:MemBus.IBus">
+            <summary>
+            The IBus brings together the <see cref="T:MemBus.IPublisher"/> and <see cref="T:MemBus.ISubscriber"/> capabilities of MemBus.
+            You obtain an instance via the <see cref="T:MemBus.BusSetup"/> class.
+            </summary>
+        </member>
+        <member name="T:MemBus.IPublisher">
+            <summary>
+            Descibes just the publishing features of MemBus. The <see cref="T:MemBus.IBus"/> itf inherits from this one.
+            </summary>
+        </member>
+        <member name="M:MemBus.IPublisher.Publish(System.Object)">
+            <summary>
+            Publish a message
+            </summary>
+        </member>
+        <member name="T:MemBus.ISubscriber">
+            <summary>
+            Descibes just the subscribing features of MemBus. The <see cref="T:MemBus.IBus"/> itf inherits from this one.
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscriber.Subscribe``1(System.Action{``0})">
+            <summary>
+            Subscribe anything matching the signature
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscriber.Subscribe(System.Object)">
+            <summary>
+            Subscribe any methods defined on the subscriber. You need to have added and configured the <see cref="T:MemBus.Subscribing.FlexibleSubscribeAdapter"/>
+            for this to work
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscriber.Subscribe``1(System.Action{``0},MemBus.Subscribing.ISubscriptionShaper)">
+            <summary>
+            Subscribe and additionally specify customizations to be applied to the subscription
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscriber.Subscribe``1(System.Action{``0},System.Action{MemBus.Subscribing.ISubscriptionCustomizer{``0}})">
+            <summary>
+            Subscribe and use some predefined customizations available through MemBus
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscriber.Observe``1">
+            <summary>
+            Obtain an <see cref="T:System.IObservable`1"/> instance to observe any incoming objects of te desired types
+            </summary>
+        </member>
+        <member name="T:MemBus.Subscribing.ISubscriptionCustomizer`1">
+            <summary>
+            Used by <see cref="M:MemBus.ISubscriber.Subscribe``1(System.Action{``0},System.Action{MemBus.Subscribing.ISubscriptionCustomizer{``0}})"/>
+            to allow the subscriber to customaize the way it obtains messages
+            </summary>
+            <typeparam name="M"></typeparam>
+        </member>
+        <member name="M:MemBus.Subscribing.ISubscriptionCustomizer`1.SetFilter(System.Func{`0,System.Boolean})">
+            <summary>
+            Set a filter to only obtain those messages that pass the specified filter
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.ISubscriptionCustomizer`1.DispatchOnUiThread">
+            <summary>
+            Say that you want to Dispatch message reception on the UI-thread. You need to have added a <see cref="T:System.Threading.Tasks.TaskScheduler"/> from the method
+            <see cref="M:System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext"/> to the MemBus Services as is done in e.g. <see cref="T:MemBus.Configurators.RichClientFrontend"/>
+            </summary>
+        </member>
+        <member name="T:MemBus.BusSetup">
+            <summary>
+            Your main entry point to set up an <see cref="T:MemBus.IBus"/> instance. Use the different Apply overloads and
+            at the end call <see cref="M:MemBus.BusSetup.Construct"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.BusSetup.Apply(MemBus.Setup.ISetup{MemBus.Setup.IConfigurableBus}[])">
+            <summary>
+            Apply an arbitrary number of <see cref="T:MemBus.Setup.ISetup`1"/> of <see cref="T:MemBus.Setup.IConfigurableBus"/> instances.
+            Examples are <see cref="T:MemBus.Configurators.Conservative"/> or <see cref="T:MemBus.Configurators.AsyncConfiguration"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.BusSetup.Apply``1(MemBus.Setup.ISetup{MemBus.Setup.IConfigurableBus}[])">
+            <summary>
+            Apply variant where you specify a configurator as type, and others as instance
+            </summary>
+        </member>
+        <member name="M:MemBus.BusSetup.Apply``1(System.Action{``0})">
+            <summary>
+            Apply a configurator that requires additional configuration which you can provide through the additionalConfig
+            parameter. One example for this pattern is the <see cref="T:MemBus.Subscribing.FlexibleSubscribeAdapter"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.BusSetup.Construct">
+            <summary>
+            Once you have applied a number of customizations, call this to obtain the <see cref="T:MemBus.IBus"/> instance to be used by your App.
+            </summary>
+        </member>
+        <member name="M:MemBus.BusSetup.StartWith``1(MemBus.Setup.ISetup{MemBus.Setup.IConfigurableBus}[])">
+            <summary>
+            Start with a configuration setup like e.g. <see cref="T:MemBus.Configurators.Conservative"/> or <see cref="T:MemBus.Configurators.Fast"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.BusSetup.StartWith``1(System.Action{MemBus.Setup.IConfigurableBus})">
+            <summary>
+            Start with some Ad-Hoc configuration
+            </summary>
+        </member>
+        <member name="M:MemBus.BusSetup.StartWith``2(MemBus.Setup.ISetup{MemBus.Setup.IConfigurableBus}[])">
+            <summary>
+            Apply two configurators as type arguments
+            </summary>
+        </member>
+        <member name="T:MemBus.ISubscriptionResolver">
+            <summary>
+            Describes a component that for a given message returns subscriptions that want to handle it
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscriptionResolver.GetSubscriptionsFor(System.Object)">
+            <summary>
+            Returns a list of subscriptions that would handle this message
+            </summary>
+        </member>
+        <member name="M:MemBus.ISubscriptionResolver.Add(MemBus.ISubscription)">
+            <summary>
+            Adds a subscription. the return value signals whether the resolver did in fact accept the subscription
+            </summary>
+        </member>
+        <member name="T:MemBus.Subscribing.IDenyShaper">
+            <summary>
+            Use this on a <see cref="T:MemBus.ISubscription"/> implementation to state that 
+            this implementation should be skipped when applying a convention driven <see cref="T:MemBus.Subscribing.SubscriptionShaperAggregate"/>
+            </summary>
+        </member>
+        <member name="T:MemBus.IDisposableSubscription">
+            <summary>
+            A disposable subscription
+            </summary>
+        </member>
+        <member name="M:MemBus.IDisposableSubscription.GetDisposer">
+            <summary>
+            Get a handle to be able to dispose this subscription
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MemBus.IDisposableSubscription.IsDisposed">
+            <summary>
+            State whether this subscription is disposed
+            </summary>
+        </member>
+        <member name="E:MemBus.IDisposableSubscription.Disposed">
+            <summary>
+            Raise event when you get disposed
+            </summary>
+        </member>
+        <member name="M:MemBus.Setup.IConfigurableSubscribing.DefaultShapeOutwards(MemBus.Subscribing.ISubscriptionShaper[])">
+            <summary>
+            These shapes are applied to subscription if none other matched during publishing of the pipeline
+            </summary>
+        </member>
+        <member name="M:MemBus.Setup.IConfigurableSubscribing.MessageMatch(System.Func{MemBus.MessageInfo,System.Boolean},System.Action{MemBus.Setup.IConfigureSubscription})">
+            <summary>
+            Describe what shapes are applied to a subscription when a match is given to the message that is currently being published
+            </summary>
+        </member>
+        <member name="M:MemBus.Setup.IConfigurableSubscribing.ApplyOnNewSubscription(MemBus.Subscribing.ISubscriptionShaper[])">
+            <summary>
+            These shapes are applied directly when introducing a subscription to the Bus
+            </summary>
+        </member>
+        <member name="M:MemBus.SubscriptionPipeline.GetIntroductionShape">
+            <summary>
+            Return a shaper aggregate that is applied directly to a newly introduced subscription.
+            The returned instance can be further modified without affecting the infrastructure
+            </summary>
+        </member>
+        <member name="T:MemBus.Setup.ISetup`1">
+            <summary>
+            An interface that follws an extension pattern in which you accept an instance of the specified type
+            </summary>
+        </member>
+        <member name="M:MemBus.Setup.ISetup`1.Accept(`0)">
+            <summary>
+            Accept an instance of type T
+            </summary>
+        </member>
+        <member name="T:MemBus.Publishing.SequentialPublisher">
+            <summary>
+            This is the most simple publisher that works like event handlers: All subscriptions are called in sequence.
+            If any subscription throws an exception the chain is broken.
+            </summary>
+        </member>
+        <member name="P:MemBus.Publishing.PublishToken.Cancel">
+            <summary>
+            When set to true, the subsequent members in the publish pipeline will not be called anymore
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.UsefulExtensions">
+            <summary>
+            Extensions used internally by Membus
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.UsefulExtensions.PublishExceptionMessages(System.Threading.Tasks.Task[],MemBus.IBus)">
+            <summary>
+            Sends off <see cref="T:MemBus.Messages.ExceptionOccurred"/> messages on a bus based on a list of faulted tasks
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.UsefulExtensions.AsEnumerable``1(``0)">
+            <summary>
+            A single item as Enumerable
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.UsefulExtensions.Each``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Perform an action with every item of an enumerable
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.UsefulExtensions.Fmt(System.String,System.Object[])">
+            <summary>
+            string.Format as extension method
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.UsefulExtensions.IfNotNull``2(``0,System.Func{``0,``1})">
+            <summary>
+            Return the value accessesd by selector or the default(O) if the input is null
+            </summary>
+        </member>
+        <member name="T:MemBus.RxEnabledObservable`1">
+            <summary>
+            Helps you in separating a possibly complex Rx-based Observable query 
+            to its own class
+            </summary>
+        </member>
+        <member name="T:MemBus.IHandles`1">
+            <summary>
+            Type-safe version of a <see cref="T:MemBus.ISubscription"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.IHandles`1.Push(`0)">
+            <summary>
+            Accept a message of type T.
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.MustBePublicAttribute">
+            <summary>
+            Used to mark a class as public even though it does not need to be. This is
+            e.g. when the class is used to reflect upon
+            </summary>
+        </member>
+        <member name="T:MemBus.Configurators.Fast">
+            <summary>
+            A fire and forget publisher is used that publishes messages in parallel. With this setup <see cref="!:IBus.Publish"/> does NOT block.
+            </summary>
+        </member>
+        <member name="M:MemBus.Configurators.Fast.Accept(MemBus.Setup.IConfigurableBus)">
+            <summary>
+            <see cref="M:MemBus.Setup.ISetup`1.Accept(`0)"/>
+            </summary>
+        </member>
+        <member name="T:MemBus.Publishing.ParallelBlockingPublisher">
+            <summary>
+            Calls subscribers in parallel but blocks until all subscriptions return.
+            </summary>
+        </member>
+        <member name="T:MemBus.Messages.ExceptionOccurred">
+            <summary>
+            Some configurations send out this message if during publishing of a Message an exception occurs
+            </summary>
+        </member>
+        <member name="M:MemBus.Messages.ExceptionOccurred.#ctor(System.Exception)">
+            <summary>
+            ctor with the exception to be captured
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="M:MemBus.Messages.ExceptionOccurred.ToString">
+            <summary>
+            Some exception Information
+            </summary>
+        </member>
+        <member name="P:MemBus.Messages.ExceptionOccurred.Exception">
+            <summary>
+            The caotured exception
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.DisposeContainer">
+            <summary>
+            Helps to dispose several instances at once. You can pass in any object, the container will seed
+            out automatically what can be disposed and what not.
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.ReflectionExtensions">
+            <summary>
+            A number of reflection Extension Methods to help you
+            in working with attributes and other reflection mechanisms
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.ReflectionExtensions.HasAttribute``1(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+            Determine whether a certain custom attribute is specified on this element
+            </summary>
+            <typeparam name="T">The type of the attribute you are looking for</typeparam>
+            <param name="provider">Target</param>
+            <returns>True if this attribute is defined on this target</returns>
+        </member>
+        <member name="M:MemBus.Support.ReflectionExtensions.GetAttribute``1(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+            Get a specific attribute from your target
+            </summary>
+            <typeparam name="T">The type of the attribute you are looking for</typeparam>
+            <param name="provider">Target</param>
+            <returns>The first attribute on the target that is of the desired type</returns>
+        </member>
+        <member name="M:MemBus.Support.ReflectionExtensions.ForAttributesOf``1(System.Reflection.ICustomAttributeProvider,System.Action{``0})">
+            <summary>
+            Do some work for every attribute of a desaired type
+            </summary>
+            <typeparam name="T">The desired attribute type</typeparam>
+            <param name="provider">Target</param>
+            <param name="action">An action to perform on a found attribute</param>
+        </member>
+        <member name="M:MemBus.Support.ReflectionExtensions.ImplementsInterface``1(System.Type)">
+            <summary>
+            Ask some class whether it implements a certain interface
+            </summary>
+            <typeparam name="T">The interface you are looking for</typeparam>
+            <param name="type">the inspected type</param>
+            <returns>true if the interface is imaplemented</returns>
+        </member>
+        <member name="M:MemBus.Support.ReflectionExtensions.Raise(System.EventHandler,System.Object)">
+            <summary>
+            Raise an event
+            </summary>
+        </member>
+        <member name="T:MemBus.Subscribing.ShapeToUiDispatch">
+            <summary>
+            Use this shape to specify that the enclosed subscription works on the UI thread.
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.ShapeToUiDispatch.#ctor">
+            <summary>
+            Use this constructor if the bus provides the necessary Task Scheduler for UI thread dispatching.
+            </summary>
+        </member>
+        <member name="T:MemBus.MessageInfo">
+            <summary>
+            Used to specify filters in the context of <see cref="T:MemBus.Setup.IConfigurablePublishing"/> and <see cref="T:MemBus.Setup.IConfigurableSubscribing"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.MessageInfo.IsType``1">
+            <summary>
+            True if the message associated with this info is asssignable to T
+            </summary>
+        </member>
+        <member name="M:MemBus.MessageInfo.IsType``1(System.Func{``0,System.Boolean})">
+            <summary>
+            Like IsType but allows you ti supply additional matching
+            </summary>
+        </member>
+        <member name="P:MemBus.MessageInfo.Name">
+            <summary>
+            The Name of this message's type
+            </summary>
+        </member>
+        <member name="T:MemBus.Publishing.ParallelNonBlockingPublisher">
+            <summary>
+            Publisher of messages that publishes in parallel and does not wait for all handlers to return.
+            When all subscriptions have done their work, any exceptions will be collected and put on the bus
+            as <see cref="T:MemBus.Messages.ExceptionOccurred"/> messages.
+            </summary>
+        </member>
+        <member name="T:MemBus.IocAdapter">
+            <summary>
+            Implement to be used in conjunction with <see cref="T:MemBus.Configurators.IoCSupport"/>. This allows you to inject your container of choice into
+            the resolution of subscriptions
+            </summary>
+        </member>
+        <member name="M:MemBus.IocAdapter.GetAllInstances(System.Type)">
+            <summary>
+            Return all instances that implement the desired type
+            </summary>
+        </member>
+        <member name="T:MemBus.Handles`1">
+            <summary>
+            Base class to write a handler that handles messages of the given param type
+            </summary>
+        </member>
+        <member name="M:MemBus.Handles`1.Push(`0)">
+            <summary>
+            <see cref="M:MemBus.IHandles`1.Push(`0)"/>
+            </summary>
+        </member>
+        <member name="M:MemBus.Handles`1.matches(`0)">
+            <summary>
+            return true to handle this message
+            </summary>
+        </member>
+        <member name="M:MemBus.Handles`1.push(`0)">
+            <summary>
+            Implement to obtain message instances of the desired type
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.Publish.This(System.Object)">
+            <summary>
+            Provides a publish pipeline member that will publish a provided message
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.Publish.PipelineMemberToPublishAMessage">
+            <summary>
+            Public because the TryInvoke currently does not handle private types
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.StandardServices">
+            <summary>
+            Use this context class if a standard, untyped context is completely sufficient for you
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.AbstractServices`1">
+            <summary>
+            Context class with an extension pattern as seen in WCF. You can Add and remove instances of any type.
+            However, you can keep ONLY ONE instance of every kind.
+            </summary>
+            <typeparam name="TARGET">The class that is inheriting from Context</typeparam>
+        </member>
+        <member name="F:MemBus.Support.AbstractServices`1.attachedObjects">
+            <summary>
+            The list of objects attached to this context. These may be context extensions
+            or other objects
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.AddExtension``1(``0)">
+            <summary>
+            Adds a OCntext extension to this context instance
+            </summary>
+            <typeparam name="T">The type of the extension</typeparam>
+            <param name="extension">The extension which must implement the <see cref="T:MemBus.Support.IServicesExtension`1"/> interface</param>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.RemoveExtension``1">
+            <summary>
+            Remove an extension
+            </summary>
+            <typeparam name="T">The type of the extension to remove</typeparam>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Remove(MemBus.Support.IServicesExtension{`0})">
+            <summary>
+            Remove a specific extension
+            </summary>
+            <param name="extension">The extension instance to remove</param>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Get``1">
+            <summary>
+            Get the Object from the context of type T
+            </summary>
+            <typeparam name="T">the type of the object to retrieve</typeparam>
+            <returns>The instance of said type or teh default value of T</returns>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Add``1(``0)">
+            <summary>
+            Add any object of type T
+            </summary>
+            <typeparam name="T">The type of teh object to be added</typeparam>
+            <param name="object">The instance to be added</param>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Add``1(``0,System.Boolean)">
+            <summary>
+             Add.
+            </summary>
+            <param name="object"></param>
+            <param name="disposable"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.ForceAdd``1(``0)">
+            <summary>
+             Force add.
+            </summary>
+            <param name="object"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Replace``1(``0)">
+            <summary>
+            Replace a certain object of type T with a new one of the same type
+            </summary>
+            <typeparam name="T">The type of the object to be added</typeparam>
+            <param name="object">The instance</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Remove``1">
+            <summary>
+            Remove an object of type T.
+            </summary>
+            <typeparam name="T">The type of the object to be removed</typeparam>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.CloneContext">
+            <summary>
+            Get a clone of this context. Its initial state will be the same as the cloned context,
+            however you can modify the copy in any way you want.
+            </summary>
+            <returns>A new instance in the same state as the original context</returns>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Clone">
+            <summary>
+             Creates a new object that is a copy of the current instance.      
+            </summary>
+            <returns>
+             A new object that is a copy of this instance.
+            </returns>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.Dispose">
+            <summary>
+             If an added object is an extension, Unattach will be called, if the object implements Dispose,
+             Dispose will be called, if both then both.
+            </summary>
+        </member>
+        <member name="P:MemBus.Support.AbstractServices`1.WhatDoIHave">
+            <summary>
+            <see cref="!:IServices&lt;TARGET&gt;.WhatDoIHave()"/>
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.AbstractServices`1.IAttachedObject">
+            <summary>
+             IAttachedObject interface.
+            </summary>
+        </member>
+        <member name="P:MemBus.Support.AbstractServices`1.IAttachedObject.CanBeDisposed">
+            <summary>
+             Can be disposed.
+            </summary>
+        </member>
+        <member name="P:MemBus.Support.AbstractServices`1.IAttachedObject.TheObject">
+            <summary>
+             The object.
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.AbstractServices`1.AttachedObject`1">
+            <summary>
+             Attached object.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:MemBus.Support.AbstractServices`1.AttachedObject`1.theObject">
+            <summary>
+             The object.
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.AttachedObject`1.op_Implicit(MemBus.Support.AbstractServices{`0}.AttachedObject{`1})~`1">
+            <summary>
+             The object.
+            </summary>
+        </member>
+        <member name="M:MemBus.Support.AbstractServices`1.AttachedObject`1.op_Implicit(`1)~MemBus.Support.AbstractServices{`0}.AttachedObject{`1}">
+            <summary>
+             Attached object.
+            </summary>
+        </member>
+        <member name="P:MemBus.Support.AbstractServices`1.AttachedObject`1.CanBeDisposed">
+            <summary>
+             Can be disposed.
+            </summary>
+        </member>
+        <member name="T:MemBus.Subscribing.SubscriptionShaperAggregate">
+            <summary>
+            Subsequent adds form a matroschka from inner to outer
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.SubscriptionShaperAggregate.AddNextToInner(MemBus.Subscribing.ISubscriptionShaper)">
+            <summary>
+            Add a shape next to the inner one. It is allowed to pass null. In this case, nothing is added
+            </summary>
+        </member>
+        <member name="T:MemBus.Configurators.RichClientFrontend">
+            <summary>
+            Setup the Bus with this on the UI thread (Important!).
+            A parallel publisher is used that publishes messages in parallel but blocks until all message processing is done.
+            Exceptions will not stop the publishing and become available on the bus as <see cref="T:MemBus.Messages.ExceptionOccurred"/> message.
+            The setup allows you to call <see cref="M:MemBus.Subscribing.ISubscriptionCustomizer`1.DispatchOnUiThread"/> when doing a subscription.
+            </summary>
+        </member>
+        <member name="T:MemBus.Configurators.AsyncRichClientFrontend">
+            <summary>
+            Setup the Bus with this on the UI thread (Important!).
+            A parallel publisher is used that publishes messages in parallel. With this setup <see cref="!:IBus.Publish"/> does NOT block.
+            Exceptions will become available once all subscriptions are done processing the message as <see cref="T:MemBus.Messages.ExceptionOccurred"/> message.
+            This setup allows you to call <see cref="M:MemBus.Subscribing.ISubscriptionCustomizer`1.DispatchOnUiThread"/> when doing a subscription.
+            </summary>
+        </member>
+        <member name="T:MemBus.Configurators.AsyncConfiguration">
+            <summary>
+            A parallel publisher is used that publishes messages in parallel. With this setup <see cref="!:IBus.Publish"/> does NOT block.
+            Exceptions will become available once all subscriptions are done processing the message as <see cref="T:MemBus.Messages.ExceptionOccurred"/> message.
+            </summary>
+        </member>
+        <member name="M:MemBus.Configurators.AsyncConfiguration.Accept(MemBus.Setup.IConfigurableBus)">
+            <summary>
+            <see cref="M:MemBus.Setup.ISetup`1.Accept(`0)"/>
+            </summary>
+        </member>
+        <member name="T:MemBus.Configurators.Conservative">
+            <summary>
+            Sets up a SequentialPublisher, and a table based resolver.
+            The message push process is interrupted when an exception is raised by a subscription.
+            </summary>
+        </member>
+        <member name="T:MemBus.Configurators.IoCSupport">
+            <summary>
+            Add ServiceLocator Support
+            </summary>
+        </member>
+        <member name="M:MemBus.Configurators.IoCSupport.#ctor(MemBus.IocAdapter)">
+            <summary>
+            Add an IoCadapter that will be used to resolve subscriptions. subscriptions will be resolved based on the <see cref="T:MemBus.IHandles`1"/> interface
+            </summary>
+        </member>
+        <member name="T:MemBus.Support.ApiAttribute">
+            <summary>
+            Used to mark methods or classes to be useful in the context of an available API. 
+            This is useful for NDepend code analysis to mark items that could be private as they do not seem to be used
+            </summary>
+        </member>
+        <member name="T:MemBus.Publishing.FireAndForgetPublisher">
+            <summary>
+            Publisher of messages for maximum througput. If any exceptions occur, they will not be honoured in any way.
+            </summary>
+        </member>
+        <member name="T:MemBus.Subscribing.FlexibleSubscribeAdapter">
+            <summary>
+            Add this through the <see cref="T:MemBus.BusSetup"/> to your configuration to support subscribing objects with the 
+            <see cref="M:MemBus.ISubscriber.Subscribe(System.Object)"/>, <see cref="M:MemBus.ISubscriber.Subscribe(System.Object)"/> overload.
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.FlexibleSubscribeAdapter.ByMethodName(System.String)">
+            <summary>
+            Look at an object and look for methods with the provided name. The method must be void
+            and accept a single parameter
+            </summary>
+        </member>
+        <member name="M:MemBus.Subscribing.FlexibleSubscribeAdapter.ByInterface(System.Type)">
+            <summary>
+            Look at an object and check it for interfaces. An interface should adhere to the following rules:
+            Interface should define only one void method with a single parameter. 
+            The interface may be generic and can be implemented multiple times.
+            </summary>
+        </member>
+    </members>
+</doc>

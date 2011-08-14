@@ -7,6 +7,9 @@ namespace MemBus
     /// </summary>
     public abstract class Handles<T> : IHandles<T>
     {
+        /// <summary>
+        /// <see cref="IHandles{T}.Push(T)"/>
+        /// </summary>
         public void Push(T message)
         {
             push(message);
@@ -32,8 +35,10 @@ namespace MemBus
             return true;
         }
 
+        /// <summary>
+        /// Implement to obtain message instances of the desired type
+        /// </summary>
         protected abstract void push(T message);
-
         
     }
 }

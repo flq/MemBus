@@ -12,12 +12,16 @@ namespace MemBus.Publishing
     {
         private readonly Func<T> _actualPipelineMember;
 
+        /// <summary>
+        /// ctor with the factory method to obtain the "real" <see cref="IPublishPipelineMember"/>
+        /// </summary>
+        /// <param name="actualPipelineMember"></param>
         public DeferredPublishPipelineMember(Func<T> actualPipelineMember)
         {
             _actualPipelineMember = actualPipelineMember;
         }
 
-        public void LookAt(PublishToken token)
+        void IPublishPipelineMember.LookAt(PublishToken token)
         {
             var member = _actualPipelineMember();
             member.LookAt(token);

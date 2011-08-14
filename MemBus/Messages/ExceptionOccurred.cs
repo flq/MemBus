@@ -3,15 +3,28 @@ using System.Text;
 
 namespace MemBus.Messages
 {
+    /// <summary>
+    /// Some configurations send out this message if during publishing of a Message an exception occurs
+    /// </summary>
     public class ExceptionOccurred
     {
+        /// <summary>
+        /// The caotured exception
+        /// </summary>
         public Exception Exception { get; private set; }
 
+        /// <summary>
+        /// ctor with the exception to be captured
+        /// </summary>
+        /// <param name="exception"></param>
         public ExceptionOccurred(Exception exception)
         {
             Exception = exception;
         }
 
+        /// <summary>
+        /// Some exception Information
+        /// </summary>
         public override string ToString()
         {
             var b = new StringBuilder();

@@ -9,12 +9,15 @@ namespace MemBus.Configurators
     {
         private readonly IocAdapter adapter;
 
+        /// <summary>
+        /// Add an IoCadapter that will be used to resolve subscriptions. subscriptions will be resolved based on the <see cref="IHandles{T}"/> interface
+        /// </summary>
         public IoCSupport(IocAdapter adapter)
         {
             this.adapter = adapter;
         }
 
-        public void Accept(IConfigurableBus setup)
+        void ISetup<IConfigurableBus>.Accept(IConfigurableBus setup)
         {
             setup.AddService(adapter);
             setup.AddResolver(new IoCBasedResolver(adapter));

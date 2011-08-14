@@ -1,3 +1,4 @@
+using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using Moq;
 using NUnit.Framework;
@@ -71,6 +72,19 @@ namespace MemBus.Tests
             r.Add(sub2);
             r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
         }
+
+        [Test]
+        public void correct_behavior_regarding_contravariance()
+        {
+            var sub = new MethodInvocation<Clong>(f => {});
+            var r = new CachingResolver();
+            r.Add(sub);
+            r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
+            r.GetSubscriptionsFor(new Clung()).ShouldHaveCount(1);
+        }
     }
+
+    public class Clong {}
+    public class Clung : Clong {}
 
 }

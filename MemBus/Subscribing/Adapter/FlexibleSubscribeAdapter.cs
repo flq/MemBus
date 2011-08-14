@@ -6,6 +6,10 @@ using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
+    /// <summary>
+    /// Add this through the <see cref="BusSetup"/> to your configuration to support subscribing objects with the 
+    /// <see cref="ISubscriber.Subscribe(object)"/>, <see cref="ISubscriber.Subscribe(object)"/> overload.
+    /// </summary>
     public class FlexibleSubscribeAdapter : ISetup<IConfigurableBus>, IAdapterServices
     {
         private bool configurationAvailable;
@@ -25,7 +29,7 @@ namespace MemBus.Subscribing
         /// </summary>
         public FlexibleSubscribeAdapter ByMethodName(string methodName)
         {
-            addToBuilders(new MethodBasedBuilder(methodName));
+            AddToBuilders(new MethodBasedBuilder(methodName));
             return this;
         }
 
@@ -36,7 +40,7 @@ namespace MemBus.Subscribing
         /// </summary>
         public FlexibleSubscribeAdapter ByInterface(Type interfaceType)
         {
-            addToBuilders(new InterfaceBasedBuilder(interfaceType));
+            AddToBuilders(new InterfaceBasedBuilder(interfaceType));
             return this;
         }
 
@@ -45,7 +49,8 @@ namespace MemBus.Subscribing
             return builders.SelectMany(b => b.BuildSubscriptions(subscriber));
         }
 
-        public IDisposable WireUpSubscriber(ISubscriptionResolver subscriptionResolver, object subscriber)
+
+        IDisposable IAdapterServices.WireUpSubscriber(ISubscriptionResolver subscriptionResolver, object subscriber)
         {
             var disposeShape = new ShapeToDispose();
             var subs = SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription).ToList();
@@ -59,7 +64,7 @@ namespace MemBus.Subscribing
             return disposeContainer;
         }
 
-        private void addToBuilders(ISubscriptionBuilder builder)
+        private void AddToBuilders(ISubscriptionBuilder builder)
         {
             builders.Add(builder);
             configurationAvailable = true;

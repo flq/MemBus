@@ -11,6 +11,10 @@ namespace MemBus.Configurators
     /// </summary>
     public class AsyncConfiguration : ISetup<IConfigurableBus>
     {
+
+        /// <summary>
+        /// <see cref="ISetup{T}.Accept"/>
+        /// </summary>
         public virtual void Accept(IConfigurableBus setup)
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new ParallelNonBlockingPublisher()));

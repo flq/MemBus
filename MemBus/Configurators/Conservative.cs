@@ -10,7 +10,7 @@ namespace MemBus.Configurators
     /// </summary>
     public class Conservative : ISetup<IConfigurableBus>
     {
-        public void Accept(IConfigurableBus setup)
+        void ISetup<IConfigurableBus>.Accept(IConfigurableBus setup)
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new SequentialPublisher()));
             setup.AddResolver(new CachingResolver());

@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and limitations 
 ## 1.2.0 ##
 
 Removed cloning feature from Bus, as it was only partially implemented and does not seem very useful in real life.
-Added documentation xml.
 
 ## 1.1.2 ##
 

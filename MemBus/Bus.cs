@@ -101,15 +101,6 @@ namespace MemBus
             return subscriber.Observe<M>();
         }
 
-        public IBus Clone()
-        {
-            if (busSetup == null)
-              throw new InvalidOperationException("This bus was not constructed as cloneable");
-            var b = new Bus();
-            busSetup.Accept(b);
-            return b;
-        }
-
         public void Dispose()
         {
             disposer.Dispose();

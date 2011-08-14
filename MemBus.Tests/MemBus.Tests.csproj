@@ -49,7 +49,6 @@
     <Compile Include="..\TestAids\AssertExtensions.cs">
       <Link>Frame\AssertExtensions.cs</Link>
     </Compile>
-    <Compile Include="Cloning_a_bus.cs" />
     <Compile Include="Help\IClassicIHandleStuffI.cs" />
     <Compile Include="Help\ItfNonGenericForHandles.cs" />
     <Compile Include="Help\SomeCrazyHandler.cs" />
