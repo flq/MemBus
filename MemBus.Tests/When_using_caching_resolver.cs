@@ -82,6 +82,16 @@ namespace MemBus.Tests
             r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
             r.GetSubscriptionsFor(new Clung()).ShouldHaveCount(1);
         }
+
+        [Test]
+        public void correct_behavior_not_getting_message_twice()
+        {
+            var sub = new MethodInvocation<Clong>(f => { });
+            var r = new CachingResolver();
+            r.Add(sub);
+            r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
+            r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
+        }
     }
 
     public class Clong {}
