@@ -18,7 +18,7 @@ namespace MemBus.Configurators
         public virtual void Accept(IConfigurableBus setup)
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new ParallelNonBlockingPublisher()));
-            setup.AddResolver(new CachingResolver());
+            setup.AddResolver(new StandardResolver());
             setup.ConfigureSubscribing(cs => cs.ApplyOnNewSubscription(new ShapeToDispose()));
         }
     }

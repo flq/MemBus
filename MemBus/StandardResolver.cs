@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace MemBus
 {
-    internal class CachingResolver : ISubscriptionResolver
+    internal class StandardResolver : ISubscriptionResolver
     {
         private static class ImpossibleMessage { }
         private readonly ConcurrentDictionary<Type, CompositeSubscription> cachedSubscriptions = new ConcurrentDictionary<Type, CompositeSubscription>();
 
-        public CachingResolver()
+        public StandardResolver()
         {
             cachedSubscriptions.TryAdd(typeof(ImpossibleMessage), new CompositeSubscription());
         }

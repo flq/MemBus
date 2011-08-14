@@ -106,7 +106,7 @@
     <Compile Include="Support\ReflectionExtensions.cs" />
     <Compile Include="Support\RespondExtension.cs" />
     <Compile Include="Support\UsefulExtensions.cs" />
-    <Compile Include="CachingResolver.cs" />
+    <Compile Include="StandardResolver.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

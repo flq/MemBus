@@ -16,7 +16,7 @@ namespace MemBus.Tests
         public void Caching_resolver_accepts_and_returns_subscriptions()
         {
             var sub = Helpers.MockSubscriptionThatHandles<MessageA>();
-            var r = new CachingResolver();
+            var r = new StandardResolver();
             r.Add(sub.Object);
             var subs = r.GetSubscriptionsFor(new MessageA()).ToList();
             subs.ShouldHaveCount(1);
@@ -29,7 +29,7 @@ namespace MemBus.Tests
             var sub2 = new MockSubscription<MessageA>();
             var sub3 = new MockSubscription<MessageB>();
             
-            var r = new CachingResolver();
+            var r = new StandardResolver();
             r.Add(sub1);
             r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
             r.Add(sub2);
@@ -48,7 +48,7 @@ namespace MemBus.Tests
         public void correct_behavior_of_resolver_with_regard_to_subscribe_dispose_subscribe_publish_twice()
         {
             var sub1 = new MockSubscription<MessageA>();
-            var r = new CachingResolver();
+            var r = new StandardResolver();
             
             r.Add(sub1);
             r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
@@ -65,7 +65,7 @@ namespace MemBus.Tests
         {
             var sub1 = new MockSubscription<MessageA>();
             var sub2 = new MockSubscription<MessageB>();
-            var r = new CachingResolver();
+            var r = new StandardResolver();
 
             r.Add(sub1);
             r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
@@ -77,7 +77,7 @@ namespace MemBus.Tests
         public void correct_behavior_regarding_contravariance()
         {
             var sub = new MethodInvocation<Clong>(f => {});
-            var r = new CachingResolver();
+            var r = new StandardResolver();
             r.Add(sub);
             r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
             r.GetSubscriptionsFor(new Clung()).ShouldHaveCount(1);
@@ -87,7 +87,7 @@ namespace MemBus.Tests
         public void correct_behavior_not_getting_message_twice()
         {
             var sub = new MethodInvocation<Clong>(f => { });
-            var r = new CachingResolver();
+            var r = new StandardResolver();
             r.Add(sub);
             r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
             r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
