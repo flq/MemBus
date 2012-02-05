@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using MemBus.Support;
 
 namespace MemBus.Subscribing
@@ -12,7 +11,7 @@ namespace MemBus.Subscribing
 
         public InterfaceBasedBuilder(Type interfaceType)
         {
-            var suitableMethodsFound = getRelevantMethods(interfaceType).Count() == 1;
+            var suitableMethodsFound = interfaceType.InterfaceIsSuitableAsHandlerType();
 
             if (!suitableMethodsFound)
                 throw new InvalidOperationException("Membus cannot handle Interface {0} as subscription. Interface should define only one void method with one parameter. Interface may be generic and can be implemented multiple times.".Fmt(interfaceType.Name));
@@ -22,14 +21,6 @@ namespace MemBus.Subscribing
             else
                 innerBuilder = new ClosedInterfaceBuilder(interfaceType);
             
-        }
-
-        private static IEnumerable<MethodInfo> getRelevantMethods(Type interfaceType)
-        {
-            return from mi in interfaceType.GetMethods() 
-                   where mi.GetParameters().Length == 1 && 
-                         mi.ReturnType.Equals(typeof(void))
-                   select mi;
         }
 
         public IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt)
@@ -77,7 +68,7 @@ namespace MemBus.Subscribing
                 if (!hasInterface)
                     return new ISubscription[0];
 
-                var itfMi = getRelevantMethods(interfaceType).First();
+                var itfMi = interfaceType.MethodsSuitableForSubscription().First();
 
                 var candidates = from mi in targetToAdapt.GetType().GetMethods()
                                  where mi.Name == itfMi.Name &&

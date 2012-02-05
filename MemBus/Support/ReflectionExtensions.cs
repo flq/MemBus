@@ -46,6 +46,7 @@ namespace MemBus.Support
         /// <param name="provider">Target</param>
         /// <param name="action">An action to perform on a found attribute</param>
         [Api]
+        [Obsolete("This helper will be removed in the near future")]
         public static void ForAttributesOf<T>(this ICustomAttributeProvider provider, Action<T> action) where T : Attribute
         {
             foreach (T attribute in provider.GetCustomAttributes(typeof(T), true))
@@ -63,7 +64,6 @@ namespace MemBus.Support
             return type.GetInterfaces().Any(t => t == typeof(T));
         }
 
-
         /// <summary>
         /// Raise an event
         /// </summary>
@@ -73,5 +73,17 @@ namespace MemBus.Support
                 @event(sender, EventArgs.Empty);
         }
 
+        public static bool InterfaceIsSuitableAsHandlerType(this Type interfaceType)
+        {
+            return interfaceType.MethodsSuitableForSubscription().Count() == 1;
+        }
+
+        public static IEnumerable<MethodInfo> MethodsSuitableForSubscription(this Type interfaceType)
+        {
+            return from mi in interfaceType.GetMethods()
+                   where mi.GetParameters().Length == 1 &&
+                         mi.ReturnType.Equals(typeof(void))
+                   select mi;
+        }
     }
 }

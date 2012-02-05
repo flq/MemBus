@@ -70,6 +70,7 @@
     <Compile Include="Help\RxBasedFooObservable.cs" />
     <Compile Include="Using_SubscriptionAdapter_Service.cs" />
     <Compile Include="Rx\When_MemBus_is_used_as_Observable.cs" />
+    <Compile Include="When_using_ioc_support.cs" />
     <Compile Include="When_using_standard_resolver.cs" />
     <Compile Include="Documentation_tests.cs" />
     <Compile Include="Frame\PublishPipelineTester.cs" />

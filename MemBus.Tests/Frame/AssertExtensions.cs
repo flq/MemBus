@@ -76,6 +76,11 @@ namespace MemBus.Tests.Frame
       Assert.IsTrue(target.Any(predicate));
     }
 
+    public static void ShouldContain(this string target, string piece)
+    {
+        target.Contains(piece).ShouldBeTrue();
+    }
+
     public static void ShouldNotContain<T>(this IEnumerable<T> target, Func<T, bool> predicate)
     {
       Assert.IsFalse(target.Any(predicate), "The checked element does contain what is looked for");

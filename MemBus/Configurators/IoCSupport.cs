@@ -1,4 +1,6 @@
+using System;
 using MemBus.Setup;
+using MemBus.Support;
 
 namespace MemBus.Configurators
 {
@@ -7,20 +9,46 @@ namespace MemBus.Configurators
     /// </summary>
     public class IoCSupport : ISetup<IConfigurableBus>
     {
-        private readonly IocAdapter adapter;
+        private IocAdapter _adapter;
+        private Type _handlerType;
 
         /// <summary>
-        /// Add an IoCadapter that will be used to resolve subscriptions. subscriptions will be resolved based on the <see cref="IHandles{T}"/> interface
+        /// Add an IoCadapter that will be used to resolve subscriptions. subscriptions will be resolved based on the interface you provide
         /// </summary>
-        public IoCSupport(IocAdapter adapter)
+        public IoCSupport SetAdapter(IocAdapter adapter)
         {
-            this.adapter = adapter;
+            this._adapter = adapter;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the interface type that will be closed in order to construct the interface with which MemBus
+        /// will search for types handling some message
+        /// </summary>
+        public IoCSupport SetHandlerInterface(Type openGenericHandlerType)
+        {
+            _handlerType = openGenericHandlerType;
+            return this;
         }
 
         void ISetup<IConfigurableBus>.Accept(IConfigurableBus setup)
         {
-            setup.AddService(adapter);
-            setup.AddResolver(new IoCBasedResolver(adapter));
+            if (_adapter == null)
+                throw new ArgumentException("The IocAdapter has not been specified on the Ioc support.");
+            if (_handlerType == null)
+                throw new ArgumentException("No handler type has been specified.");
+            ThrowIfBadHandlerType();
+            setup.AddService(_adapter);
+            setup.AddResolver(new IoCBasedResolver(_adapter));
+        }
+
+        private void ThrowIfBadHandlerType()
+        {
+            if (!_handlerType.IsGenericTypeDefinition)
+                throw new ArgumentException("An open generic should be specified as handler type");
+            if (!_handlerType.InterfaceIsSuitableAsHandlerType())
+                throw new ArgumentException("Type should contain a single method with one argument and void return");
+
         }
     }
 }
