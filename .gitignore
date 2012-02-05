@@ -11,5 +11,6 @@ _ReSharper.*
 *.cache
 *.~
 MemBus_mm_cache.bin
+packages
 *.swp
 *.nupkg

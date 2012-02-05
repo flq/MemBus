@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using MemBus;
 using MemBus.Configurators;
-using Membus.Reactive.Tests.Help;
+using MemBus.Tests.Help;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
+using MessageA = Membus.Reactive.Tests.Help.MessageA;
 
 namespace Membus.Reactive.Tests
 {
