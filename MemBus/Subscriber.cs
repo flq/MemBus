@@ -36,7 +36,7 @@ namespace MemBus
 
         }
 
-        public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)
+        public IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization)
         {
             var subC = new SubscriptionCustomizer<M>(subscriptionPipeline.GetIntroductionShape(), services);
             customization(subC);

@@ -85,7 +85,7 @@ namespace MemBus
             return this.subscriber.Subscribe(subscriber);
         }
 
-        public IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization)
+        public IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization)
         {
             return subscriber.Subscribe(subscription, customization);
         }

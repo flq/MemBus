@@ -10,7 +10,7 @@ namespace MemBus.Configurators
     /// Setup the Bus with this on the UI thread (Important!).
     /// A parallel publisher is used that publishes messages in parallel but blocks until all message processing is done.
     /// Exceptions will not stop the publishing and become available on the bus as <see cref="ExceptionOccurred"/> message.
-    /// The setup allows you to call <see cref="ISubscriptionCustomizer{M}.DispatchOnUiThread"/> when doing a subscription.
+    /// The setup allows you to call <see cref="SubscriptionCustomizer{M}.DispatchOnUiThread"/> when doing a subscription.
     /// </summary>
     public class RichClientFrontend : ISetup<IConfigurableBus>
     {
@@ -27,7 +27,7 @@ namespace MemBus.Configurators
     /// Setup the Bus with this on the UI thread (Important!).
     /// A parallel publisher is used that publishes messages in parallel. With this setup <see cref="IBus.Publish"/> does NOT block.
     /// Exceptions will become available once all subscriptions are done processing the message as <see cref="ExceptionOccurred"/> message.
-    /// This setup allows you to call <see cref="ISubscriptionCustomizer{M}.DispatchOnUiThread"/> when doing a subscription.
+    /// This setup allows you to call <see cref="SubscriptionCustomizer{M}.DispatchOnUiThread"/> when doing a subscription.
     /// </summary>
     public class AsyncRichClientFrontend : AsyncConfiguration
     {

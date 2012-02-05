@@ -23,6 +23,7 @@ namespace MemBus
         /// Subscribe anything matching the signature
         /// </summary>
         IDisposable Subscribe<M>(Action<M> subscription);
+        
         /// <summary>
         /// Subscribe any methods defined on the subscriber. You need to have added and configured the <see cref="FlexibleSubscribeAdapter"/>
         /// for this to work
@@ -37,7 +38,7 @@ namespace MemBus
         /// <summary>
         /// Subscribe and use some predefined customizations available through MemBus
         /// </summary>
-        IDisposable Subscribe<M>(Action<M> subscription, Action<ISubscriptionCustomizer<M>> customization);
+        IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization);
 
         /// <summary>
         /// Obtain an <see cref="IObservable{T}"/> instance to observe any incoming objects of te desired types

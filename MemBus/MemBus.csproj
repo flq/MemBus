@@ -89,7 +89,6 @@
     <Compile Include="Subscribing\DisposableSubscription.cs" />
     <Compile Include="Subscribing\FilteredSubscription.cs" />
     <Compile Include="Subscribing\IDenyShaper.cs" />
-    <Compile Include="Subscribing\ISubscriptionCustomizer.cs" />
     <Compile Include="Subscribing\ISubscriptionShaper.cs" />
     <Compile Include="Subscribing\MethodInvocation.cs" />
     <Compile Include="Subscribing\ShapeToDispose.cs" />

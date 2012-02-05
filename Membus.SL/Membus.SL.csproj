@@ -204,9 +204,6 @@
     <Compile Include="..\MemBus\Subscribing\IKnowsSubscribedInstance.cs">
       <Link>Subscribing\IKnowsSubscribedInstance.cs</Link>
     </Compile>
-    <Compile Include="..\MemBus\Subscribing\ISubscriptionCustomizer.cs">
-      <Link>Subscribing\ISubscriptionCustomizer.cs</Link>
-    </Compile>
     <Compile Include="..\MemBus\Subscribing\ISubscriptionShaper.cs">
       <Link>Subscribing\ISubscriptionShaper.cs</Link>
     </Compile>
