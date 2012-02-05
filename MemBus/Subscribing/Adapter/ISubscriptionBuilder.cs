@@ -2,7 +2,7 @@
 
 namespace MemBus.Subscribing
 {
-    public interface ISubscriptionBuilder
+    internal interface ISubscriptionBuilder
     {
         IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt);
     }

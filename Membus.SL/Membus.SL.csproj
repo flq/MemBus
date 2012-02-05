@@ -177,9 +177,6 @@
     <Compile Include="..\MemBus\Subscribing\Adapter\FlexibleSubscribeAdapter.cs">
       <Link>Subscribing\Adapter\FlexibleSubscribeAdapter.cs</Link>
     </Compile>
-    <Compile Include="..\MemBus\Subscribing\Adapter\IAdapterServices.cs">
-      <Link>Subscribing\Adapter\IAdapterServices.cs</Link>
-    </Compile>
     <Compile Include="..\MemBus\Subscribing\Adapter\InterfaceBasedBuilder.cs">
       <Link>Subscribing\Adapter\InterfaceBasedBuilder.cs</Link>
     </Compile>

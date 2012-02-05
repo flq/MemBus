@@ -6,6 +6,11 @@ using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
+    internal interface IAdapterServices
+    {
+        IDisposable WireUpSubscriber(ISubscriptionResolver subscriptionResolver, object subscriber);
+    }
+
     /// <summary>
     /// Add this through the <see cref="BusSetup"/> to your configuration to support subscribing objects with the 
     /// <see cref="ISubscriber.Subscribe(object)"/>, <see cref="ISubscriber.Subscribe(object)"/> overload.

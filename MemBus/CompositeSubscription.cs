@@ -67,22 +67,11 @@ namespace MemBus
             return GetEnumerator();
         }
 
-        public void AddRange(IEnumerable<ISubscription> subscriptions)
+        private void AddRange(IEnumerable<ISubscription> subscriptions)
         {
             foreach (var s in subscriptions)
                 Add(s);
         }
 
-        private void Remove(ISubscription subscription)
-        {
-            IDisposableSubscription d;
-            subscriptions.TryRemove(subscription.GetHashCode(), out d);
-        }
-
-        public void RemoveRange(IEnumerable<ISubscription> subscriptions)
-        {
-            foreach (var s in subscriptions)
-                Remove(s);
-        }
     }
 }

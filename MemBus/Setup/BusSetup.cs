@@ -87,7 +87,7 @@ namespace MemBus
             return new BusSetup().Apply<T1>().Apply<T2>(configurators);
         }
 
-        internal void Accept(IConfigurableBus configurableBus)
+        private void Accept(IConfigurableBus configurableBus)
         {
             foreach (var c in configurators)
                 c.Accept(configurableBus);
