@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Main" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration>Release</Configuration>
+	<SlnDir>..\</SlnDir>
+    <NugetDir>MemBus</NugetDir>
+    <NetDir>$(NugetDir)\lib\net40</NetDir>
+	<SlDir>$(NugetDir)\lib\sl5</SlDir>
+  </PropertyGroup>
+  
+  <Target Name="Prepare">
+    <MakeDir Directories="$(NetDir);$(SlDir)" />
+    <MSBuild Projects="$(SlnDir)MemBus.sln" Properties="Configuration=$(Configuration)" />
+  </Target>
+
+  <Target Name="BuildApp">
+	<ItemGroup>
+	  <NetAssemblies Include="$(SlnDir)MemBus\bin\$(Configuration)\MemBus.dll" />
+	  <SlAssemblies Include="$(SlnDir)MemBus.SL\bin\$(Configuration)\MemBus.dll" />
+	  <Docs Include="$(SlnDir)MemBus\bin\$(Configuration)\MemBus.xml" />
+	</ItemGroup>
+	
+    <Copy SourceFiles="@(NetAssemblies)" DestinationFolder="$(NetDir)" />
+    <Copy SourceFiles="@(SlAssemblies)" DestinationFolder="$(SlDir)" />
+	<Copy SourceFiles="@(Docs)" DestinationFolder="$(NetDir)" />
+	<Copy SourceFiles="@(Docs)" DestinationFolder="$(SlDir)" />
+    <Copy SourceFiles="$(SlnDir)\readme.md" DestinationFiles="$(NugetDir)\readme.md" />
+  </Target>
+
+  <Target Name="Main" DependsOnTargets="Prepare;BuildApp">
+    <Message Text="Finished setting up Nuget structure into --&gt; $(NugetDir)" Importance="High" />
+  </Target>
+  
+</Project>

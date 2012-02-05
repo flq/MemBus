@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace MemBus.Support
 {
@@ -59,7 +60,7 @@ namespace MemBus.Support
         /// <returns>true if the interface is imaplemented</returns>
         public static bool ImplementsInterface<T>(this Type type) where T : class
         {
-            return Array.Exists(type.GetInterfaces(), t => t == typeof(T));
+            return type.GetInterfaces().Any(t => t == typeof(T));
         }
 
 

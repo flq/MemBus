@@ -2,14 +2,18 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>MemBus</id>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <authors>Frank Quednau</authors>
     <owners>Frank Quednau</owners>
     <description>In-memory publish-subscribe bus with pluggable subscription and publishing pipeline, first-class support of Observables, contravariant messaging and resolution of handlers through pluggable IOC.</description> 
+    <releaseNotes>Now also targets SL5. The SL5 version has a dependency on Rx.Main which is not specified in this package!</releaseNotes>
     <projectUrl>http://github.com/flq/MemBus</projectUrl>
     <licenseUrl>http://www.opensource.org/licenses/apache2.0</licenseUrl>
     <iconUrl>http://realfiction.net/files/bus.png</iconUrl>
-    <tags>event-aggregator messaging bus .net40</tags>
+    <tags>event-aggregator messaging bus .net40 sl5</tags>
     <language>en-us</language>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="sl5" />
+    </frameworkAssemblies>
   </metadata>
 </package>

@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{16B5C52F-80C9-4F78-A929-DA30D5B0B22B}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Membus</RootNamespace>
+    <AssemblyName>Membus</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\MemBus\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive">
+      <HintPath>..\packages\Rx-Main.1.0.11226\lib\SL5\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\MemBus\Bus.cs">
+      <Link>Bus.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\CompositeResolver.cs">
+      <Link>CompositeResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\CompositeSubscription.cs">
+      <Link>CompositeSubscription.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Configurators\AsyncConfiguration.cs">
+      <Link>Configurators\AsyncConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Configurators\Conservative.cs">
+      <Link>Configurators\Conservative.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Configurators\Fast.cs">
+      <Link>Configurators\Fast.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Configurators\IoCSupport.cs">
+      <Link>Configurators\IoCSupport.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Configurators\RichClientFrontend.cs">
+      <Link>Configurators\RichClientFrontend.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Handles.cs">
+      <Link>Handles.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\IBus.cs">
+      <Link>IBus.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\IHandles.cs">
+      <Link>IHandles.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\IocAdapter.cs">
+      <Link>IocAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\IoCBasedResolver.cs">
+      <Link>IoCBasedResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\ISubscription.cs">
+      <Link>ISubscription.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\ISubscriptionResolver.cs">
+      <Link>ISubscriptionResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\MessageInfo.cs">
+      <Link>MessageInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\MessageObservable.cs">
+      <Link>MessageObservable.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Messages\ExceptionOccurred.cs">
+      <Link>Messages\ExceptionOccurred.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Properties\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\DeferredPublishPipelineMember.cs">
+      <Link>Publishing\DeferredPublishPipelineMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\FireAndForgetPublisher.cs">
+      <Link>Publishing\FireAndForgetPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\IPublishPipelineMember.cs">
+      <Link>Publishing\IPublishPipelineMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\ParallelBlockingPublisher.cs">
+      <Link>Publishing\ParallelBlockingPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\ParallelNonBlockingPublisher.cs">
+      <Link>Publishing\ParallelNonBlockingPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\PipelineProvider.cs">
+      <Link>Publishing\PipelineProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\PublishPipeline.cs">
+      <Link>Publishing\PublishPipeline.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\PublishToken.cs">
+      <Link>Publishing\PublishToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\SequentialPublisher.cs">
+      <Link>Publishing\SequentialPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\RxEnabledObservable.cs">
+      <Link>RxEnabledObservable.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\AdHocConfigurator.cs">
+      <Link>Setup\AdHocConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\BusSetup.cs">
+      <Link>Setup\BusSetup.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\IConfigurableBus.cs">
+      <Link>Setup\IConfigurableBus.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\IConfigurablePublishing.cs">
+      <Link>Setup\IConfigurablePublishing.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\IConfigurableSubscribing.cs">
+      <Link>Setup\IConfigurableSubscribing.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\ISetup.cs">
+      <Link>Setup\ISetup.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\StandardResolver.cs">
+      <Link>StandardResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscriber.cs">
+      <Link>Subscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\ConstructSubscriptionExtension.cs">
+      <Link>Subscribing\Adapter\ConstructSubscriptionExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\FlexibleSubscribeAdapter.cs">
+      <Link>Subscribing\Adapter\FlexibleSubscribeAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\IAdapterServices.cs">
+      <Link>Subscribing\Adapter\IAdapterServices.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\InterfaceBasedBuilder.cs">
+      <Link>Subscribing\Adapter\InterfaceBasedBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\ISubscriptionBuilder.cs">
+      <Link>Subscribing\Adapter\ISubscriptionBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\MethodBasedBuilder.cs">
+      <Link>Subscribing\Adapter\MethodBasedBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\DisposableSubscription.cs">
+      <Link>Subscribing\DisposableSubscription.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\FilteredSubscription.cs">
+      <Link>Subscribing\FilteredSubscription.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\IAcceptDisposeToken.cs">
+      <Link>Subscribing\IAcceptDisposeToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\IDenyShaper.cs">
+      <Link>Subscribing\IDenyShaper.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\IKnowsSubscribedInstance.cs">
+      <Link>Subscribing\IKnowsSubscribedInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\ISubscriptionCustomizer.cs">
+      <Link>Subscribing\ISubscriptionCustomizer.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\ISubscriptionShaper.cs">
+      <Link>Subscribing\ISubscriptionShaper.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\MethodInvocation.cs">
+      <Link>Subscribing\MethodInvocation.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\ShapeToDispose.cs">
+      <Link>Subscribing\ShapeToDispose.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\ShapeToFilter.cs">
+      <Link>Subscribing\ShapeToFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\ShapeToPassthrough.cs">
+      <Link>Subscribing\ShapeToPassthrough.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\ShapeToUIDispatch.cs">
+      <Link>Subscribing\ShapeToUIDispatch.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\SubscriptionCustomizer.cs">
+      <Link>Subscribing\SubscriptionCustomizer.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\SubscriptionPipeline.cs">
+      <Link>Subscribing\SubscriptionPipeline.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\SubscriptionShaperAggregate.cs">
+      <Link>Subscribing\SubscriptionShaperAggregate.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\UiDispatchingSubscription.cs">
+      <Link>Subscribing\UiDispatchingSubscription.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\AbstractServices.cs">
+      <Link>Support\AbstractServices.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\APIAttribute.cs">
+      <Link>Support\APIAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\DisposeContainer.cs">
+      <Link>Support\DisposeContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\IServices.cs">
+      <Link>Support\IServices.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\MemBusException.cs">
+      <Link>Support\MemBusException.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\MustBePublicAttribute.cs">
+      <Link>Support\MustBePublicAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\Publish.cs">
+      <Link>Support\Publish.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\ReflectionExtensions.cs">
+      <Link>Support\ReflectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\RespondExtension.cs">
+      <Link>Support\RespondExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\UsefulExtensions.cs">
+      <Link>Support\UsefulExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Support\ConcurrentDictionary.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

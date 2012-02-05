@@ -12,5 +12,8 @@ _ReSharper.*
 *.~
 MemBus_mm_cache.bin
 packages
+Nuget/MemBus/lib
+Nuget/MemBus/readme.md
 *.swp
 *.nupkg
+readme.html

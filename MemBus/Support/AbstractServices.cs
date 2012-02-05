@@ -21,7 +21,7 @@ namespace MemBus.Support
   /// <typeparam name="TARGET">The class that is inheriting from Context</typeparam>
   [DebuggerDisplay("{WhatDoIHave}")]
   public abstract class AbstractServices<TARGET> 
-    : IServices<TARGET>, ICloneable, IDisposable, IEnumerable<object> where TARGET : AbstractServices<TARGET>
+    : IServices<TARGET>, IDisposable, IEnumerable<object> where TARGET : AbstractServices<TARGET>
   {
 
     /// <summary>
@@ -164,17 +164,6 @@ namespace MemBus.Support
            select string.Format("Access Type: {0}, Stored Object: {1}", entry.Key.FullName, entry.Value.TheObject)).ToArray();
         return string.Join(Environment.NewLine, strings);
       }
-    }
-
-    ///<summary>
-    /// Creates a new object that is a copy of the current instance.      
-    ///</summary>
-    ///<returns>
-    /// A new object that is a copy of this instance.
-    ///</returns>
-    public object Clone()
-    {
-      return CloneContext();
     }
 
     ///<summary>
