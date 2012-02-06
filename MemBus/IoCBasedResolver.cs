@@ -9,12 +9,14 @@ namespace MemBus
     {
 
         private readonly IocAdapter adapter;
+        private readonly Type _handlerType;
 
         private readonly ConcurrentDictionary<Type, Type> typeCache = new ConcurrentDictionary<Type, Type>();
 
-        public IoCBasedResolver(IocAdapter adapter)
+        public IoCBasedResolver(IocAdapter adapter, Type handlerType)
         {
             this.adapter = adapter;
+            _handlerType = handlerType;
         }
 
 
@@ -26,7 +28,7 @@ namespace MemBus
 
         private Type constructHandlesType(Type messageType)
         {
-            return typeCache.GetOrAdd(messageType, msgT => typeof (IHandles<>).MakeGenericType(messageType));
+            return typeCache.GetOrAdd(messageType, msgT => _handlerType.MakeGenericType(messageType));
         }
 
         public bool Add(ISubscription subscription)

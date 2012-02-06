@@ -1,8 +1,11 @@
+using System;
+
 namespace MemBus
 {
     /// <summary>
     /// Type-safe version of a <see cref="ISubscription"/>
     /// </summary>
+    [Obsolete("In a next release MemBus may not support this interface. It was used in the context of resolving handlers from Ioc. You are now able to define your own Handler interface")]
     public interface IHandles<in T> : ISubscription
     {
         /// <summary>

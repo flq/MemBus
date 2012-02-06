@@ -5,6 +5,7 @@ namespace MemBus
     /// <summary>
     /// Base class to write a handler that handles messages of the given param type
     /// </summary>
+    [Obsolete("In a next release MemBus may not support this class. It was used in the context of resolving handlers from Ioc. You are now able to define your own Handler based on a a generic interface")]
     public abstract class Handles<T> : IHandles<T>
     {
         /// <summary>

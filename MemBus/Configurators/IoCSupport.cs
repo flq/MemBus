@@ -39,13 +39,15 @@ namespace MemBus.Configurators
                 throw new ArgumentException("No handler type has been specified.");
             ThrowIfBadHandlerType();
             setup.AddService(_adapter);
-            setup.AddResolver(new IoCBasedResolver(_adapter));
+            setup.AddResolver(new IoCBasedResolver(_adapter, _handlerType));
         }
 
         private void ThrowIfBadHandlerType()
         {
             if (!_handlerType.IsGenericTypeDefinition)
                 throw new ArgumentException("An open generic should be specified as handler type");
+            if (_handlerType.GetGenericArguments().Length != 1)
+                throw new ArgumentException("An open generic should be specified that has only one type argument");
             if (!_handlerType.InterfaceIsSuitableAsHandlerType())
                 throw new ArgumentException("Type should contain a single method with one argument and void return");
 
