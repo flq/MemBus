@@ -52,18 +52,18 @@ namespace MemBus.Tests
             _bus.Subscribe(sub);
             _bus.Publish(new NormalMessage());
             _bus.Publish(new SpecialMessage());
-            sub.NormalMsgCount.ShouldBeEqualTo(1);
-            sub.SpecialMsgCount.ShouldBeEqualTo(1);
+            sub.NormalMsgCount.ShouldBeEqualTo(1, "Normal message sent");
+            sub.SpecialMsgCount.ShouldBeEqualTo(1, "Special message sent");
             sub.Suspend();
             _bus.Publish(new NormalMessage());
             _bus.Publish(new SpecialMessage());
-            sub.NormalMsgCount.ShouldBeEqualTo(2);
-            sub.SpecialMsgCount.ShouldBeEqualTo(1);
+            sub.NormalMsgCount.ShouldBeEqualTo(2, "2nd normal message unharmed");
+            sub.SpecialMsgCount.ShouldBeEqualTo(1, "Special blocked, must not be delivered");
             sub.Resume();
             _bus.Publish(new NormalMessage());
             _bus.Publish(new SpecialMessage());
-            sub.NormalMsgCount.ShouldBeEqualTo(3);
-            sub.SpecialMsgCount.ShouldBeEqualTo(2);
+            sub.NormalMsgCount.ShouldBeEqualTo(3, "3rd normal message");
+            sub.SpecialMsgCount.ShouldBeEqualTo(2, "Special was resumed");
         }
     }
 

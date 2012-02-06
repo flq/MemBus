@@ -41,6 +41,11 @@ namespace MemBus.Tests.Frame
       Assert.AreEqual(expectedValue, target);
     }
 
+    public static void ShouldBeEqualTo<T>(this T target, T expectedValue, string message)
+    {
+        Assert.AreEqual(expectedValue, target, message);
+    }
+
     public static void ShouldAllBeEqualTo<T>(this IEnumerable<T> target, T value)
     {
       var badOnes = target.Where(v => !value.Equals(v)).Select((_, i) => i.ToString()).ToArray();

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace MemBus.Subscribing
 {
@@ -44,7 +45,14 @@ namespace MemBus.Subscribing
 
         object IKnowsSubscribedInstance.Instance
         {
-            get { return action.Target; }
+            get
+            {
+                if (action.Target is Closure)
+                {
+                    return ((Closure)action.Target).Constants[0];
+                }
+                return action.Target;
+            }
         }
     }
 }
