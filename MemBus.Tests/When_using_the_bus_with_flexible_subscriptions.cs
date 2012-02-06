@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
@@ -30,7 +29,7 @@ namespace MemBus.Tests
         }
 
         [Test]
-        public void Disposal_Also_works_on_flexible_subscriptions()
+        public void Disposal_also_works_on_flexible_subscriptions()
         {
             var b = ConstructBusForHandle();
             var handler = new SomeHandler();
@@ -76,10 +75,10 @@ namespace MemBus.Tests
             handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
-        private IBus ConstructBusForHandle()
+        private static IBus ConstructBusForHandle()
         {
             return BusSetup.StartWith<Conservative>()
-                .Apply<FlexibleSubscribeAdapter>(c => c.ByMethodName("Handle").ByInterface(typeof(IHandles<>))).Construct();
+                .Apply<FlexibleSubscribeAdapter>(c => c.ByMethodName("Handle")).Construct();
         }
     }
 }

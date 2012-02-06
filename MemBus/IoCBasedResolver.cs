@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using MemBus.Subscribing;
 
 namespace MemBus
 {
@@ -23,7 +24,9 @@ namespace MemBus
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
             var handlesType = constructHandlesType(message.GetType());
-            return adapter.GetAllInstances(handlesType).Select(svc => (ISubscription) svc);
+            var mi = handlesType.GetMethods()[0];
+            return adapter.GetAllInstances(handlesType)
+                .Select(svc => mi.ConstructSubscription(svc));
         }
 
         private Type constructHandlesType(Type messageType)

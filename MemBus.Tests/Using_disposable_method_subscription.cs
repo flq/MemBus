@@ -19,13 +19,6 @@ namespace MemBus.Tests
             sub.Handles(typeof(MessageASpecialization)).ShouldBeTrue();
         }
 
-        [Test]
-        public void An_implementator_of_handles_acts_contravariant()
-        {
-            var mock = new Mock<Handles<MessageA>>();
-            ((IHandles<MessageA>)mock.Object).Handles(typeof(MessageASpecialization)).ShouldBeTrue();
-        }
-
         
         [Test]
         public void handle_type_derived_from_Action()
