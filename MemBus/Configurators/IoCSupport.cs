@@ -12,6 +12,15 @@ namespace MemBus.Configurators
         private IocAdapter _adapter;
         private Type _handlerType;
 
+        public IoCSupport() { }
+
+        [Obsolete("Use the fluent configuration methods, since you also need to use SetHandlerInterface. This constructor registers the IHandler<> interface, but it is also marked obsolete.")]
+        public IoCSupport(IocAdapter adapter)
+        {
+            _adapter = adapter;
+            _handlerType = typeof(IHandles<>);
+        }
+
         /// <summary>
         /// Add an IoCadapter that will be used to resolve subscriptions. subscriptions will be resolved based on the interface you provide
         /// </summary>

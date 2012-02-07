@@ -2,11 +2,11 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>MemBus</id>
-    <version>1.3.0</version>
+    <version>1.4.1</version>
     <authors>Frank Quednau</authors>
     <owners>Frank Quednau</owners>
     <description>In-memory publish-subscribe bus with pluggable subscription and publishing pipeline, first-class support of Observables, contravariant messaging and resolution of handlers through pluggable IOC.</description> 
-    <releaseNotes>Now also targets SL5. The SL5 version has a dependency on Rx.Main which is not specified in this package!</releaseNotes>
+    <releaseNotes>Changes with regard to IocSupport. Check the wiki at the project site. Numerous pieces have been marked obsolete. Changes in constructing subscriptions from flexiblesubscribing etc.</releaseNotes>
     <projectUrl>http://github.com/flq/MemBus</projectUrl>
     <licenseUrl>http://www.opensource.org/licenses/apache2.0</licenseUrl>
     <iconUrl>http://realfiction.net/files/bus.png</iconUrl>
