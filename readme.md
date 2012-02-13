@@ -74,6 +74,29 @@ If your object implements **IAcceptsDisposeToken**, the disposable that is retur
 
 There isn't a lot one can say about Publishing. You may pass any object instance into the __"Publish"__ method.
 
+##Publishing to a DI Container
+
+One use case of using MemBus is to dispatch handling of a message to an IOC container. Given a message, the implementation of some type is looked up, instantiated by the container and the message is delivered to the handling method.
+
+In order to do that you need to configure MemBus with the __IocSupport__ option:
+
+    _bus = BusSetup
+        .StartWith<Conservative>()
+        .Apply<IoCSupport>(s => s.SetAdapter(_testAdapter).SetHandlerInterface(typeof(GimmeMsg<>)))
+        .Construct();
+
+The Adapter is some instance that needs to implement [IocAdapter][1]. Implement this interface to bridge the request to your container of choice. The interface is very straightforward:
+
+    public interface IocAdapter
+    {
+        IEnumerable<object> GetAllInstances(Type desiredType);
+    }
+
+Secondly, you declare the interface that will be requested from the IoCContainer. You need to apply the following rules with regard to the chosen interface:
+
+* It needs to be generic with one type argument
+* It provides a single void method with one argument. The argument type typically corresponds with the generic type argument.
+
 <hr>
 
 ## Release History
