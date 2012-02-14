@@ -14,7 +14,8 @@ namespace MemBus.Subscribing
 
         public void Push(object message)
         {
-            action.Push(message);
+            if (!IsDisposed)
+              action.Push(message);
         }
 
         public bool Handles(Type messageType)
@@ -33,8 +34,8 @@ namespace MemBus.Subscribing
 
         private void raiseDispose()
         {
-            action = null;
             IsDisposed = true;
+            action = null;
             Disposed.Raise(this);
         }
 
@@ -46,19 +47,6 @@ namespace MemBus.Subscribing
         public bool Deny
         {
             get { return action.CheckDenyOrAllIsGood(); }
-        }
-
-        private class NullSubscription : ISubscription
-        {
-            public void Push(object message)
-            {
-                
-            }
-
-            public bool Handles(Type messageType)
-            {
-                return false;
-            }
         }
 
         public object Instance
