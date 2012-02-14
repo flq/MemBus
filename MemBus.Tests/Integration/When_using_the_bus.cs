@@ -94,10 +94,5 @@ namespace MemBus.Tests.Integration
             received.ShouldBeEqualTo(1);
         }
 
-        public void A_Bus_is_cloneable_and_works_as_parent()
-        {
-            
-        }
-
     }
 }
