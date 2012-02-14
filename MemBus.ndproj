@@ -1,11 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <NDepend AppName="MemBus" Platform="DotNet">
   <OutputDir KeepHistoric="True" KeepXmlFiles="True">C:\dotnet\dev\github\MemBus\NDependOut1</OutputDir>
   <Assemblies>
     <Name>MemBus</Name>
     <Name>MemBus.Tests</Name>
   </Assemblies>
-  <FrameworkAssemblies />
+  <FrameworkAssemblies>
+    <Name>mscorlib</Name>
+    <Name>System.Core</Name>
+    <Name>Microsoft.CSharp</Name>
+    <Name>Moq</Name>
+    <Name>nunit.framework</Name>
+    <Name>System.Reactive</Name>
+    <Name>WindowsBase</Name>
+    <Name>MemBus.Addons</Name>
+  </FrameworkAssemblies>
   <Dirs>
     <Dir>C:\Windows\Microsoft.NET\Framework\v4.0.30319</Dir>
     <Dir>C:\Windows\Microsoft.NET\Framework\v4.0.30319\WPF</Dir>
@@ -31,38 +40,173 @@
   <BuildComparisonSetting ProjectMode="DontCompare" BuildMode="MostRecentBuildAvailable" ProjectFileToCompareWith="" BuildFileToCompareWith="" NDaysAgo="1" />
   <BaselineInUISetting ProjectMode="DontCompare" BuildMode="MostRecentBuildAvailable" ProjectFileToCompareWith="" BuildFileToCompareWith="" NDaysAgo="1" />
   <CoverageFiles UncoverableAttribute="" />
-  <SourceFileRebasing FromPath="" ToPath="" /><CQLQueries>
-    <CQLGroup Name="Bare" Active="True" ShownInReport="False">
-      <CQLGroup Name="Types" Active="True" ShownInReport="False">
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="True">// &lt;Name&gt;Types too big&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT TYPES WHERE \r\n   NbLinesOfCode &gt; 400 OR\r\n   NbILInstructions &gt; 2500\r\n   ORDER BY NbLinesOfCode DESC</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Types with poor cohesion&lt;/Name&gt;\r\n// m - members\r\n// a - instance fields\r\n// LCOM HS = 1 - sum(mA)/(m*a)\r\nWARN IF Count &gt; 0 IN SELECT TYPES WHERE \r\n  LCOMHS &gt; 0.95 AND \r\n  NbFields &gt; 10 AND \r\n  NbMethods &gt;10 \r\n  ORDER BY LCOMHS DESC</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Efferent (outgoing) Coupling&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT TYPES OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help"  WHERE \r\n  TypeCe &gt; 50 \r\n  ORDER BY TypeCe DESC</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Non-Abstract Afferent (incoming) coupling&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT TYPES OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help"  WHERE TypeCa &gt; 20 \r\nAND !(IsAbstract OR IsInterface OR IsGeneratedByCompiler)</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;A stateless class or structure might be turned into a static type&lt;/Name&gt;\r\nWARN IF Count &gt; 5 IN SELECT TYPES OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help"  WHERE\r\n  SizeOfInst ==0 AND\r\n  NbInterfacesImplemented == 0 AND                           \r\n  ((IsClass AND DepthOfInheritance == 1   \r\n            AND NbChildren == 0)          \r\n    OR IsStructure) AND                   \r\n  !IsStatic AND\r\n  !IsGeneric</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Types that could be declared as 'private'&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT TYPES WHERE \r\n  CouldBePrivate AND\r\n  !HasAttribute "MemBus.Support.MustBePublicAttribute"</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Structures should be immutable&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT TYPES WHERE \r\n  IsStructure AND \r\n  !IsImmutable AND \r\n  !IsInFrameworkAssembly</CQLQuery>
-      </CQLGroup>
-      <CQLGroup Name="Methods" Active="True" ShownInReport="False">
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Methods too big&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT METHODS WHERE \r\n   NbLinesOfCode &gt; 30 OR NbILInstructions &gt; 200 \r\n   ORDER BY NbLinesOfCode DESC</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Methods too complex&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT METHODS WHERE \r\n  CyclomaticComplexity &gt; 20 OR ILNestingDepth &gt; 4\r\n  ORDER BY CyclomaticComplexity DESC</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Methods with too many parameters (NbParameters)&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT METHODS WHERE \r\n  NbParameters &gt; 5 \r\n  ORDER BY NbParameters DESC\r\n\r\n// METHODS WHERE NbParameters &gt; 5 might be painful to call \r\n// and might degrade performance. You should prefer using \r\n// additional properties/fields to the declaring type to \r\n// handle numerous states. Another alternative is to provide \r\n// a class or structure dedicated to handle arguments passing \r\n// (for example see the class System.Diagnostics.ProcessStartInfo \r\n// and the method System.Diagnostics.Process.Start(ProcessStartInfo))\r\n// See the definition of the NbParameters metric here \r\n// http://www.ndepend.com/Metrics.aspx#NbParameters</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Methods with too many overloads (NbOverloads)&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT METHODS WHERE \r\n  NbOverloads &gt; 6 \r\n  ORDER BY NbOverloads DESC\r\n\r\n// METHODS WHERE NbOverloads &gt; 6 might \r\n// be a problem to maintain and provoke higher coupling \r\n// than necessary. \r\n// This might also reveal a potential misused of the \r\n// C# and VB.NET language that since C#3 and VB9 support \r\n// object initialization. This feature helps reducing the number \r\n// of constructors of a class.\r\n// See the definition of the NbOverloads metric here \r\n// http://www.ndepend.com/Metrics.aspx#NbOverloads</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Potentially unused methods&lt;/Name&gt;\r\n// Caution: Methods used only by reflection might be matched.\r\nWARN IF Count &gt; 0 IN SELECT METHODS OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help"  WHERE \r\n MethodCa == 0 AND\r\n !IsPublic AND\r\n !IsProtected AND \r\n !IsEntryPoint AND\r\n !IsExplicitInterfaceImpl AND \r\n !IsClassConstructor AND\r\n!IsGeneratedByCompiler AND\r\n !IsFinalizer\r\n</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Methods that could be declared as 'private'&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT METHODS \r\nOUT OF NAMESPACES \r\n"MemBus.Tests.*"\r\nWHERE CouldBePrivate AND !IsGeneratedByCompiler AND !IsSpecialName AND !HasAttribute "MemBus.Support.ApiAttribute"</CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Afferent (incoming) coupling method level&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT METHODS\r\nOUT OF NAMESPACES "MemBus.Tests.*"\r\nWHERE MethodCa &gt; 30</CQLQuery>
-      </CQLGroup>
-      <CQLGroup Name="Fields" Active="True" ShownInReport="False">
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Fields should be marked as ReadOnly when possible&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT FIELDS OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help" WHERE \r\n  IsImmutable AND \r\n  !IsInitOnly AND\r\n  !IsGeneratedByCompiler AND \r\n  !IsEventDelegateObject  </CQLQuery>
-        <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Fields should be declared as private&lt;/Name&gt;\r\nWARN IF Count &gt; 0 IN SELECT FIELDS OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help" WHERE \r\n !IsPrivate AND \r\n\r\n // These conditions filter cases where fields \r\n // doesn't represent state that should be encapsulated. \r\n !IsInFrameworkAssembly AND \r\n !IsGeneratedByCompiler AND \r\n !IsSpecialName AND \r\n !IsInitOnly AND \r\n !IsLiteral AND \r\n !IsEnumValue</CQLQuery>
-      </CQLGroup>
-    </CQLGroup>
-    <CQLGroup Name="Stats" Active="False" ShownInReport="False">
-      <CQLQuery Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Most used types (TypeRank)&lt;/Name&gt;\r\nSELECT TOP 50 TYPES ORDER BY TypeRank DESC\r\n\r\n// TypeRank values are computed by applying \r\n// the Google PageRank  algorithm on the \r\n// graph of types' dependencies. Types with \r\n// high Rank are the most used ones.\r\n// See the definition of the TypeRank metric here: \r\n// http://www.ndepend.com/Metrics.aspx#TypeRank</CQLQuery>
-      <CQLQuery Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Most used namespaces (NamespaceCa)&lt;/Name&gt;\r\nSELECT TOP 50 NAMESPACES ORDER BY NamespaceCa DESC\r\n\r\n// The Afferent Coupling for a particular namespace \r\n// is the number of namespaces that depends directly \r\n// on it. Namespaces with high Ca are the most \r\n// used ones. \r\n// See the definition of the NamespaceCa metric here:\r\n// http://www.ndepend.com/Metrics.aspx#NamespaceCa</CQLQuery>
-      <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Afferent (incoming) Coupling&lt;/Name&gt;\r\nSELECT TOP 30 TYPES ORDER BY TypeCa DESC\r\n</CQLQuery>
-      <CQLQuery Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Most used methods (MethodRank)&lt;/Name&gt;\r\nSELECT TOP 50 METHODS ORDER BY MethodRank DESC\r\n\r\n// MethodRank values are computed by applying \r\n// the Google PageRank  algorithm on the graph of \r\n// methods' dependencies. Methods with high Rank \r\n// are the most used ones. See the definition of \r\n// the MethodRank metric here:\r\n// http://www.ndepend.com/Metrics.aspx#MethodRank</CQLQuery>
-      <CQLQuery Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Methods that use many other methods (MethodCe)&lt;/Name&gt;\r\nSELECT TOP 50 METHODS ORDER BY MethodCe DESC\r\n\r\n// The Efferent Coupling for a particular method \r\n// is the number of methods it directly depends on.\r\n// Methods declared in Framework assemblies are \r\n// taken account.\r\n// See the definition of the MethodCe metric here http://www.ndepend.com/Metrics.aspx#MethodCe</CQLQuery>
-      <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Methods not generated by compiler and without properties&lt;/Name&gt;\r\nSELECT METHODS WHERE ! IsGeneratedByCompiler AND !IsPropertySetter AND !IsPropertyGetter</CQLQuery>
-      <CQLQuery Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False">// &lt;Name&gt;Types not generated by compiler&lt;/Name&gt;\r\nSELECT TYPES WHERE !IsGeneratedByCompiler</CQLQuery>
-    </CQLGroup>
-  </CQLQueries></NDepend>
+  <SourceFileRebasing FromPath="" ToPath="" />
+  <Queries>
+    <Group Name="Bare" Active="True" ShownInReport="False">
+      <Group Name="Types" Active="True" ShownInReport="False">
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="True"><![CDATA[// <Name>Types too big</Name>
+WARN IF Count > 0 IN SELECT TYPES WHERE 
+   NbLinesOfCode > 400 OR
+   NbILInstructions > 2500
+   ORDER BY NbLinesOfCode DESC]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Types with poor cohesion</Name>
+// m - members
+// a - instance fields
+// LCOM HS = 1 - sum(mA)/(m*a)
+WARN IF Count > 0 IN SELECT TYPES WHERE 
+  LCOMHS > 0.95 AND 
+  NbFields > 10 AND 
+  NbMethods >10 
+  ORDER BY LCOMHS DESC]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Efferent (outgoing) Coupling</Name>
+WARN IF Count > 0 IN SELECT TYPES OUT OF NAMESPACES "MemBus.Tests.*"  WHERE 
+  TypeCe > 50 
+  ORDER BY TypeCe DESC]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Non-Abstract Afferent (incoming) coupling</Name>
+WARN IF Count > 0 IN SELECT TYPES OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help"  WHERE TypeCa > 20 
+AND !(IsAbstract OR IsInterface OR IsGeneratedByCompiler)]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>A stateless class or structure might be turned into a static type</Name>
+WARN IF Count > 5 IN SELECT TYPES OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help"  WHERE
+  SizeOfInst ==0 AND
+  NbInterfacesImplemented == 0 AND                           
+  ((IsClass AND DepthOfInheritance == 1   
+            AND NbChildren == 0)          
+    OR IsStructure) AND                   
+  !IsStatic AND
+  !IsGeneric]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Types that could be declared as 'private'</Name>
+WARN IF Count > 0 IN SELECT TYPES WHERE 
+  CouldBePrivate AND
+  !HasAttribute "MemBus.Support.MustBePublicAttribute"]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Structures should be immutable</Name>
+WARN IF Count > 0 IN SELECT TYPES WHERE 
+  IsStructure AND 
+  !IsImmutable AND 
+  !IsInFrameworkAssembly]]></Query>
+      </Group>
+      <Group Name="Methods" Active="True" ShownInReport="False">
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods too big</Name>
+WARN IF Count > 0 IN SELECT METHODS WHERE 
+   NbLinesOfCode > 30 OR NbILInstructions > 200 
+   ORDER BY NbLinesOfCode DESC]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods too complex</Name>
+WARN IF Count > 0 IN SELECT METHODS WHERE 
+  CyclomaticComplexity > 20 OR ILNestingDepth > 4
+  ORDER BY CyclomaticComplexity DESC]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods with too many parameters (NbParameters)</Name>
+WARN IF Count > 0 IN SELECT METHODS WHERE 
+  NbParameters > 5 
+  ORDER BY NbParameters DESC
+
+// METHODS WHERE NbParameters > 5 might be painful to call 
+// and might degrade performance. You should prefer using 
+// additional properties/fields to the declaring type to 
+// handle numerous states. Another alternative is to provide 
+// a class or structure dedicated to handle arguments passing 
+// (for example see the class System.Diagnostics.ProcessStartInfo 
+// and the method System.Diagnostics.Process.Start(ProcessStartInfo))
+// See the definition of the NbParameters metric here 
+// http://www.ndepend.com/Metrics.aspx#NbParameters]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods with too many overloads (NbOverloads)</Name>
+WARN IF Count > 0 IN SELECT METHODS WHERE 
+  NbOverloads > 6 
+  ORDER BY NbOverloads DESC
+
+// METHODS WHERE NbOverloads > 6 might 
+// be a problem to maintain and provoke higher coupling 
+// than necessary. 
+// This might also reveal a potential misused of the 
+// C# and VB.NET language that since C#3 and VB9 support 
+// object initialization. This feature helps reducing the number 
+// of constructors of a class.
+// See the definition of the NbOverloads metric here 
+// http://www.ndepend.com/Metrics.aspx#NbOverloads]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Potentially unused methods</Name>
+// Caution: Methods used only by reflection might be matched.
+WARN IF Count > 0 IN SELECT METHODS OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help"  WHERE 
+ MethodCa == 0 AND
+ !IsPublic AND
+ !IsProtected AND 
+ !IsEntryPoint AND
+ !IsExplicitInterfaceImpl AND 
+ !IsClassConstructor AND
+!IsGeneratedByCompiler AND
+ !IsFinalizer
+]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods that could be declared as 'private'</Name>
+WARN IF Count > 0 IN SELECT METHODS 
+OUT OF NAMESPACES 
+"MemBus.Tests.*"
+WHERE CouldBePrivate AND !IsGeneratedByCompiler AND !IsSpecialName AND !HasAttribute "MemBus.Support.ApiAttribute"]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Afferent (incoming) coupling method level</Name>
+WARN IF Count > 0 IN SELECT METHODS
+OUT OF NAMESPACES "MemBus.Tests.*"
+WHERE MethodCa > 30]]></Query>
+      </Group>
+      <Group Name="Fields" Active="True" ShownInReport="False">
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Fields should be marked as ReadOnly when possible</Name>
+WARN IF Count > 0 IN SELECT FIELDS OUT OF NAMESPACES "MemBus.Tests","MemBus.Tests.Help" WHERE 
+  IsImmutable AND 
+  !IsInitOnly AND
+  !IsGeneratedByCompiler AND 
+  !IsEventDelegateObject  ]]></Query>
+        <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Fields should be declared as private</Name>
+WARN IF Count > 0 IN SELECT FIELDS OUT OF NAMESPACES "MemBus.Tests.*" WHERE 
+ !IsPrivate AND 
+
+ // These conditions filter cases where fields 
+ // doesn't represent state that should be encapsulated. 
+ !IsInFrameworkAssembly AND 
+ !IsGeneratedByCompiler AND 
+ !IsSpecialName AND 
+ !IsInitOnly AND 
+ !IsLiteral AND 
+ !IsEnumValue]]></Query>
+      </Group>
+    </Group>
+    <Group Name="Stats" Active="False" ShownInReport="False">
+      <Query Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Most used types (TypeRank)</Name>
+SELECT TOP 50 TYPES ORDER BY TypeRank DESC
+
+// TypeRank values are computed by applying 
+// the Google PageRank  algorithm on the 
+// graph of types' dependencies. Types with 
+// high Rank are the most used ones.
+// See the definition of the TypeRank metric here: 
+// http://www.ndepend.com/Metrics.aspx#TypeRank]]></Query>
+      <Query Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Most used namespaces (NamespaceCa)</Name>
+SELECT TOP 50 NAMESPACES ORDER BY NamespaceCa DESC
+
+// The Afferent Coupling for a particular namespace 
+// is the number of namespaces that depends directly 
+// on it. Namespaces with high Ca are the most 
+// used ones. 
+// See the definition of the NamespaceCa metric here:
+// http://www.ndepend.com/Metrics.aspx#NamespaceCa]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Afferent (incoming) Coupling</Name>
+SELECT TOP 30 TYPES ORDER BY TypeCa DESC
+]]></Query>
+      <Query Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Most used methods (MethodRank)</Name>
+SELECT TOP 50 METHODS ORDER BY MethodRank DESC
+
+// MethodRank values are computed by applying 
+// the Google PageRank  algorithm on the graph of 
+// methods' dependencies. Methods with high Rank 
+// are the most used ones. See the definition of 
+// the MethodRank metric here:
+// http://www.ndepend.com/Metrics.aspx#MethodRank]]></Query>
+      <Query Active="True" DisplayList="False" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods that use many other methods (MethodCe)</Name>
+SELECT TOP 50 METHODS ORDER BY MethodCe DESC
+
+// The Efferent Coupling for a particular method 
+// is the number of methods it directly depends on.
+// Methods declared in Framework assemblies are 
+// taken account.
+// See the definition of the MethodCe metric here http://www.ndepend.com/Metrics.aspx#MethodCe]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods not generated by compiler and without properties</Name>
+SELECT METHODS WHERE ! IsGeneratedByCompiler AND !IsPropertySetter AND !IsPropertyGetter]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Types not generated by compiler</Name>
+SELECT TYPES WHERE !IsGeneratedByCompiler]]></Query>
+    </Group>
+  </Queries>
+</NDepend>
