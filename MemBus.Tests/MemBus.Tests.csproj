@@ -66,11 +66,11 @@
     <Compile Include="Help\MessageA.cs" />
     <Compile Include="Help\SomeCrazyHandler.cs" />
     <Compile Include="Help\SomeHandler.cs" />
-    <Compile Include="Integration_scenario_interaction_with_subscriber.cs" />
+    <Compile Include="Integration\Integration_scenario_interaction_with_subscriber.cs" />
     <Compile Include="Help\RxBasedFooObservable.cs" />
     <Compile Include="Using_SubscriptionAdapter_Service.cs" />
     <Compile Include="Rx\When_MemBus_is_used_as_Observable.cs" />
-    <Compile Include="When_using_ioc_support.cs" />
+    <Compile Include="Integration\When_using_ioc_support.cs" />
     <Compile Include="When_using_standard_resolver.cs" />
     <Compile Include="Documentation_tests.cs" />
     <Compile Include="Frame\PublishPipelineTester.cs" />
@@ -95,8 +95,8 @@
     <Compile Include="Using_subscription_shapes.cs" />
     <Compile Include="When_Resolving_Subscriptions.cs" />
     <Compile Include="When_using_dynamics.cs" />
-    <Compile Include="When_using_the_bus.cs" />
-    <Compile Include="When_using_the_bus_with_flexible_subscriptions.cs" />
+    <Compile Include="Integration\When_using_the_bus.cs" />
+    <Compile Include="Integration\When_using_the_bus_with_flexible_subscriptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MemBus.Addons\MemBus.Addons.csproj">

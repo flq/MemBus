@@ -4,7 +4,7 @@ using MemBus.Configurators;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Integration
 {
     internal class TestAdapter : IocAdapter
     {

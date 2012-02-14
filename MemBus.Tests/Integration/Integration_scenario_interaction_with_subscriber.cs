@@ -6,7 +6,7 @@ using NUnit.Framework;
 using MemBus.Support;
 using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Integration
 {
     [TestFixture]
     public class Integration_scenario_interaction_with_subscriber
