@@ -75,10 +75,35 @@ namespace MemBus.Tests
             handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
+        [Test]
+        public void method_with_return_type_can_be_treated_as_subscription()
+        {
+            var b = ConstructBusForHandle();
+            var handler = new SomeHandler();
+            b.Subscribe(handler);
+            b.Publish(new MessageB());
+
+            handler.MsgBCalls.ShouldBeEqualTo(1, "MsgB was not received");
+        }
+        
+        [Test]
+        public void return_type_of_a_subscription_is_treated_as_message()
+        {
+            MessageC msgC = null;
+            var b = ConstructBusForHandle();
+            var handler = new SomeHandler();
+            b.Subscribe(handler);
+            b.Subscribe((MessageC msg) => msgC = msg);
+            b.Publish(new MessageB());
+
+            msgC.ShouldNotBeNull();
+            msgC.ShouldBeEqualTo(handler.MsgC);
+        }
+
         private static IBus ConstructBusForHandle()
         {
             return BusSetup.StartWith<Conservative>()
-                .Apply<FlexibleSubscribeAdapter>(c => c.ByMethodName("Handle")).Construct();
+                .Apply<FlexibleSubscribeAdapter>(c => c.ByMethodName("Handle").PublishMethods("Route")).Construct();
         }
     }
 }

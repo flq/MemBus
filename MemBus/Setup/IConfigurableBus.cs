@@ -12,8 +12,6 @@ namespace MemBus.Setup
     public interface IConfigurableBus : IConfigurableSubscriber
     {
         void ConfigurePublishing(Action<IConfigurablePublishing> configure);
-        [Obsolete("This method will be removed in the near future")]
-        void AddAutomaton(object automaton);
         void AddService<T>(T service);
     }
 }

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    public class MethodBasedBuilder : ISubscriptionBuilder
+    public class VoidMethodBasedBuilder : ISubscriptionBuilder
     {
         private readonly string methodName;
 
-        public MethodBasedBuilder(string methodName)
+        public VoidMethodBasedBuilder(string methodName)
         {
             this.methodName = methodName;
         }
@@ -18,19 +18,35 @@ namespace MemBus.Subscribing
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
 
-            var candidates =
-                (from mi in targetToAdapt.GetType().GetMethods()
-                where 
-                  mi.Name == methodName && 
-                  !mi.IsGenericMethod &&
-                  mi.GetParameters().Length == 1 && 
-                  mi.ReturnType.Equals(typeof (void))
-                select mi).ToList();
+            var candidates = targetToAdapt.GetType().VoidMethodCandidatesForSubscriptionBuilders(methodName).ToList();
 
-            if (candidates.Count == 0)
-                return new ISubscription[0];
+            return candidates.Count == 0 ? new ISubscription[0] : candidates.ConstructSubscriptions(targetToAdapt);
+        }
+    }
 
-            return candidates.ConstructSubscriptions(targetToAdapt);
+    public class ReturningMethodBasedBuilder : ISubscriptionBuilder
+    {
+        private readonly string methodName;
+        private IPublisher _publisher;
+
+        public ReturningMethodBasedBuilder(string methodName)
+        {
+            this.methodName = methodName;
+        }
+
+        // Note: dynamically invoked by FlexibleSubscribeAdapter
+        public void SetPublisher(IPublisher publisher)
+        {   
+            _publisher = publisher;
+        }
+
+        public IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt)
+        {
+            if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
+
+            var candidates = targetToAdapt.GetType().ReturningMethodCandidatesForSubscriptionBuilders(methodName).ToList();
+
+            return candidates.Count == 0 ? new ISubscription[0] : candidates.ConstructPublishingSubscriptions(targetToAdapt, _publisher);
         }
     }
 }

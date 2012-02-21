@@ -50,7 +50,7 @@ namespace MemBus.Tests
         [Test]
         public void Adapter_subscriptions_can_also_be_disposed()
         {
-            var b = new MethodBasedBuilder("Handle");
+            var b = new VoidMethodBasedBuilder("Handle");
             var disposableSub = new DisposableSubscription(b.BuildSubscriptions(new SomeHandler()).First());
             var resolver = new StandardResolver();
             resolver.Add(disposableSub);

@@ -63,7 +63,7 @@ namespace MemBus.Tests
         [Test]
         public void Subscriptions_are_built_for_object_method_based()
         {
-            var builder = new MethodBasedBuilder("Handle");
+            var builder = new VoidMethodBasedBuilder("Handle");
             var subs = builder.BuildSubscriptions(new SomeHandler());
             subs.ShouldNotBeNull();
             subs.ShouldHaveCount(1);
@@ -72,13 +72,29 @@ namespace MemBus.Tests
         [Test]
         public void Subscriptions_for_object_method_based_work_correctly()
         {
-            var builder = new MethodBasedBuilder("Handle");
+            var builder = new VoidMethodBasedBuilder("Handle");
             var handler = new SomeHandler();
             var subs = builder.BuildSubscriptions(handler);
             var subscription = subs.First();
             subscription.Handles(typeof(MessageA)).ShouldBeTrue();
             subscription.Push(new MessageA());
             handler.MsgACalls.ShouldBeEqualTo(1);
+        }
+
+        [Test]
+        public void Subscriptions_for_publishing_method_based_work_correctly()
+        {
+            var publisher = new Mock<IPublisher>();
+            var builder = new ReturningMethodBasedBuilder("Route");
+            builder.SetPublisher(publisher.Object);
+            var handler = new SomeHandler();
+            var subs = builder.BuildSubscriptions(handler);
+            var subscription = subs.First();
+            subscription.Handles(typeof(MessageB)).ShouldBeTrue();
+            subscription.Push(new MessageB());
+
+            handler.MsgBCalls.ShouldBeEqualTo(1);
+            publisher.Verify(p => p.Publish(It.IsAny<MessageC>()));
         }
 
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseNoParameter))]

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
@@ -9,28 +8,22 @@ namespace MemBus
 {
     internal class Bus : IConfigurableBus, IBus
     {
-        private readonly BusSetup busSetup;
         private readonly PublishChainCasing _publishChainCasing;
         private readonly Subscriber subscriber;
-        private readonly List<object> automatons = new List<object>();
-        private readonly IServices services = new StandardServices();
+        private readonly IServices _services = new StandardServices();
 
         private readonly DisposeContainer disposer;
 
-        private volatile bool isDisposed;
+        private volatile bool _isDisposed;
+        private bool _isDisposing;
 
         internal Bus()
         {
+            _services.Add<IPublisher>(this);
             _publishChainCasing = new PublishChainCasing(this);
-            subscriber = new Subscriber(services);
-            disposer = new DisposeContainer { _publishChainCasing, subscriber, (IDisposable)services };
+            subscriber = new Subscriber(_services);
+            disposer = new DisposeContainer { _publishChainCasing, subscriber, (IDisposable)_services };
         }
-
-        public Bus(BusSetup busSetup) : this()
-        {
-            this.busSetup = busSetup;
-        }
-
 
         void IConfigurableBus.ConfigurePublishing(Action<IConfigurablePublishing> configurePipeline)
         {
@@ -53,18 +46,10 @@ namespace MemBus
             ((IConfigurableSubscriber)subscriber).AddSubscription(subscription);
         }
 
-        void IConfigurableBus.AddAutomaton(object automaton)
-        {
-            checkDisposed();
-            automatons.Add(automaton);
-            automaton.TryInvoke(a => a.Bus = this);
-            automaton.TryInvoke(a => a.Services = services);
-        }
-
         void IConfigurableBus.AddService<T>(T service)
         {
             checkDisposed();
-            services.Add(service);
+            _services.Add(service);
         }
 
         public void Publish(object message)
@@ -103,13 +88,27 @@ namespace MemBus
 
         public void Dispose()
         {
-            disposer.Dispose();
-            isDisposed = true;
+            if (_isDisposing)
+                return;
+
+            try
+            {
+                _isDisposing = true;
+                disposer.Dispose();
+                
+            }
+            finally
+            {
+                _isDisposing = false;
+            }
+            _isDisposed = true;
         }
+
+        internal IServices Services { get { return _services; }}
 
         private void checkDisposed()
         {
-            if (isDisposed)
+            if (_isDisposed)
                 throw new ObjectDisposedException("Bus");
         }
     }

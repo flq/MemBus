@@ -26,6 +26,11 @@ namespace MemBus.Subscribing
             if (!configurationAvailable)
                 throw new InvalidOperationException("No adapter rules were set up.");
             setup.AddService<IAdapterServices>(this);
+
+            var bus = setup as IPublisher;
+
+            foreach (var b in builders)
+                b.TryInvoke(obj => obj.SetPublisher(bus));
         }
 
         /// <summary>
@@ -34,7 +39,17 @@ namespace MemBus.Subscribing
         /// </summary>
         public FlexibleSubscribeAdapter ByMethodName(string methodName)
         {
-            AddToBuilders(new MethodBasedBuilder(methodName));
+            AddToBuilders(new VoidMethodBasedBuilder(methodName));
+            return this;
+        }
+
+        /// <summary>
+        /// Look at an object and look for methods with the provided name. The method must NOT be void
+        /// and accept a single parameter. The returning object will be treated as a message and subsequently be published
+        /// </summary>
+        public FlexibleSubscribeAdapter PublishMethods(string methodName)
+        {
+            AddToBuilders(new ReturningMethodBasedBuilder(methodName));
             return this;
         }
 

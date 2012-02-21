@@ -85,5 +85,28 @@ namespace MemBus.Support
                          mi.ReturnType.Equals(typeof(void))
                    select mi;
         }
+
+        public static IEnumerable<MethodInfo> VoidMethodCandidatesForSubscriptionBuilders(this Type reflectedType, string methodName)
+        {
+            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodName, t => t.Equals(typeof(void)));
+        }
+
+        public static IEnumerable<MethodInfo> ReturningMethodCandidatesForSubscriptionBuilders(this Type reflectedType, string methodName)
+        {
+            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodName, t => !t.Equals(typeof(void)));
+        }
+
+        private static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(this Type reflectedType, string methodName, Func<Type,bool> returntypePredicate)
+        {
+            var candidates =
+                (from mi in reflectedType.GetMethods()
+                 where
+                   mi.Name == methodName &&
+                   !mi.IsGenericMethod &&
+                   mi.GetParameters().Length == 1 &&
+                   returntypePredicate(mi.ReturnType)
+                 select mi);
+            return candidates;
+        }
     }
 }

@@ -207,6 +207,9 @@
     <Compile Include="..\MemBus\Subscribing\MethodInvocation.cs">
       <Link>Subscribing\MethodInvocation.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Subscribing\PublishingMethodInvocation.cs">
+      <Link>Subscribing\PublishingMethodInvocation.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Subscribing\ShapeToDispose.cs">
       <Link>Subscribing\ShapeToDispose.cs</Link>
     </Compile>
