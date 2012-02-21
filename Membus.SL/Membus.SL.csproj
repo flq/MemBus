@@ -132,11 +132,11 @@
     <Compile Include="..\MemBus\Publishing\ParallelNonBlockingPublisher.cs">
       <Link>Publishing\ParallelNonBlockingPublisher.cs</Link>
     </Compile>
-    <Compile Include="..\MemBus\Publishing\PipelineProvider.cs">
-      <Link>Publishing\PipelineProvider.cs</Link>
+    <Compile Include="..\MemBus\Publishing\PublishChain.cs">
+      <Link>Publishing\PublishChain.cs</Link>
     </Compile>
-    <Compile Include="..\MemBus\Publishing\PublishPipeline.cs">
-      <Link>Publishing\PublishPipeline.cs</Link>
+    <Compile Include="..\MemBus\Publishing\PublishChainCasing.cs">
+      <Link>Publishing\PublishChainCasing.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Publishing\PublishToken.cs">
       <Link>Publishing\PublishToken.cs</Link>

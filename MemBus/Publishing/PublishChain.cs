@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace MemBus.Publishing
 {
-    internal class PipelineProvider
+    internal class PublishChain
     {
         private readonly Func<MessageInfo, bool> match;
         private readonly List<IPublishPipelineMember> pipelineMembers = new List<IPublishPipelineMember>();
 
-        public PipelineProvider(Func<MessageInfo, bool> match) : this(match, new IPublishPipelineMember[] {}) {}
+        public PublishChain(Func<MessageInfo, bool> match) : this(match, new IPublishPipelineMember[] {}) {}
 
-        public PipelineProvider(Func<MessageInfo, bool> match, IEnumerable<IPublishPipelineMember> members)
+        public PublishChain(Func<MessageInfo, bool> match, IEnumerable<IPublishPipelineMember> members)
         {
             this.match = match;
             pipelineMembers.AddRange(members);

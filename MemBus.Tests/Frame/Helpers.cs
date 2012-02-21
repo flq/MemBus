@@ -7,7 +7,7 @@ using Moq;
 
 namespace MemBus.Tests.Frame
 {
-    public static class Helpers
+    internal static class Helpers
     {
         public static Mock<ISubscription> MockSubscriptionThatHandles<T>()
         {
@@ -27,7 +27,7 @@ namespace MemBus.Tests.Frame
                 new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
         }
 
-        public static PublishPipeline Configure(this PublishPipeline pipeline, Action<IConfigurablePublishing> configure)
+        public static PublishChainCasing Configure(this PublishChainCasing pipeline, Action<IConfigurablePublishing> configure)
         {
             configure((IConfigurablePublishing) pipeline);
             return pipeline;

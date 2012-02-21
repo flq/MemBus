@@ -10,7 +10,7 @@ namespace MemBus
     internal class Bus : IConfigurableBus, IBus
     {
         private readonly BusSetup busSetup;
-        private readonly PublishPipeline publishPipeline;
+        private readonly PublishChainCasing _publishChainCasing;
         private readonly Subscriber subscriber;
         private readonly List<object> automatons = new List<object>();
         private readonly IServices services = new StandardServices();
@@ -21,9 +21,9 @@ namespace MemBus
 
         internal Bus()
         {
-            publishPipeline = new PublishPipeline(this);
+            _publishChainCasing = new PublishChainCasing(this);
             subscriber = new Subscriber(services);
-            disposer = new DisposeContainer { publishPipeline, subscriber, (IDisposable)services };
+            disposer = new DisposeContainer { _publishChainCasing, subscriber, (IDisposable)services };
         }
 
         public Bus(BusSetup busSetup) : this()
@@ -35,7 +35,7 @@ namespace MemBus
         void IConfigurableBus.ConfigurePublishing(Action<IConfigurablePublishing> configurePipeline)
         {
             checkDisposed();
-            configurePipeline(publishPipeline);
+            configurePipeline(_publishChainCasing);
         }
 
         public void ConfigureSubscribing(Action<IConfigurableSubscribing> configure)
@@ -72,7 +72,7 @@ namespace MemBus
             checkDisposed();
             var subs = subscriber.GetSubscriptionsFor(message);
             var t = new PublishToken(message, subs);
-            publishPipeline.LookAt(t);
+            _publishChainCasing.LookAt(t);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription)

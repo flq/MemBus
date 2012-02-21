@@ -5,12 +5,12 @@ using MemBus.Support;
 
 namespace MemBus.Publishing
 {
-    public class PublishPipeline : IConfigurablePublishing, IDisposable
+    internal class PublishChainCasing : IConfigurablePublishing, IDisposable
     {
-        private readonly List<PipelineProvider> pipelines = new List<PipelineProvider>();
+        private readonly List<PublishChain> pipelines = new List<PublishChain>();
         private readonly IBus bus;
 
-        public PublishPipeline(IBus bus)
+        public PublishChainCasing(IBus bus)
         {
             this.bus = bus;
         }
@@ -31,7 +31,7 @@ namespace MemBus.Publishing
         {
             foreach (var m in publishPipelineMembers)
               m.TryInvoke(p => p.Bus = bus);
-            pipelines.Insert(0, new PipelineProvider(info=>true, publishPipelineMembers));
+            pipelines.Insert(0, new PublishChain(info=>true, publishPipelineMembers));
         }
 
         IConfigurePipeline IConfigurablePublishing.MessageMatch(Func<MessageInfo, bool> match)
@@ -49,18 +49,16 @@ namespace MemBus.Publishing
 
         private class ConfigurePipeline : IConfigurePipeline
         {
-            private readonly Func<MessageInfo, bool> match;
             private readonly IBus bus;
-            private readonly PipelineProvider pipelineProvider;
+            private readonly PublishChain _publishChain;
 
             public ConfigurePipeline(Func<MessageInfo, bool> match, IBus bus)
             {
-                this.match = match;
                 this.bus = bus;
-                pipelineProvider = new PipelineProvider(match);
+                _publishChain = new PublishChain(match);
             }
 
-            public PipelineProvider Provider { get { return pipelineProvider; } }
+            public PublishChain Provider { get { return _publishChain; } }
 
             public void ConfigureWith<T>() where T : ISetup<IConfigurePipeline>, new()
             {

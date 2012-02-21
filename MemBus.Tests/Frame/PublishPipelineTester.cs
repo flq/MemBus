@@ -31,7 +31,7 @@ namespace MemBus.Tests.Frame
 
         private static PublishToken pipelineSkeleton(object message, Action<IConfigurablePublishing> configuration)
         {
-            var p = new PublishPipeline(null).Configure(configuration);
+            var p = new PublishChainCasing(null).Configure(configuration);
             var token = new PublishToken(message, new ISubscription[] { });
             p.LookAt(token);
             return token;
