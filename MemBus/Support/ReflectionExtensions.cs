@@ -40,20 +40,6 @@ namespace MemBus.Support
         }
 
         /// <summary>
-        /// Do some work for every attribute of a desaired type
-        /// </summary>
-        /// <typeparam name="T">The desired attribute type</typeparam>
-        /// <param name="provider">Target</param>
-        /// <param name="action">An action to perform on a found attribute</param>
-        [Api]
-        [Obsolete("This helper will be removed in the near future")]
-        public static void ForAttributesOf<T>(this ICustomAttributeProvider provider, Action<T> action) where T : Attribute
-        {
-            foreach (T attribute in provider.GetCustomAttributes(typeof(T), true))
-                action(attribute);
-        }
-
-        /// <summary>
         /// Ask some class whether it implements a certain interface
         /// </summary>
         /// <typeparam name="T">The interface you are looking for</typeparam>

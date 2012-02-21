@@ -84,14 +84,8 @@
     <Compile Include="..\MemBus\Configurators\RichClientFrontend.cs">
       <Link>Configurators\RichClientFrontend.cs</Link>
     </Compile>
-    <Compile Include="..\MemBus\Handles.cs">
-      <Link>Handles.cs</Link>
-    </Compile>
     <Compile Include="..\MemBus\IBus.cs">
       <Link>IBus.cs</Link>
-    </Compile>
-    <Compile Include="..\MemBus\IHandles.cs">
-      <Link>IHandles.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\IocAdapter.cs">
       <Link>IocAdapter.cs</Link>

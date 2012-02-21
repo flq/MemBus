@@ -71,6 +71,11 @@ namespace MemBus.Tests.Frame
       Assert.IsTrue(target);
     }
 
+    public static void ShouldBeTrue(this bool target, string message)
+    {
+        Assert.IsTrue(target, message);
+    }
+
     public static void ShouldBeFalse(this bool target)
     {
       Assert.IsFalse(target);

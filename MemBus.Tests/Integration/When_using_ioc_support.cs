@@ -68,15 +68,6 @@ namespace MemBus.Tests.Integration
         }
 
         [Test]
-        public void obsolete_ctor_works()
-        {
-            BusSetup
-                .StartWith<Conservative>()
-                .Apply(new IoCSupport(new TestAdapter()))
-                .Construct();
-        }
-
-        [Test]
         [TestCase(typeof(NotOpenGeneric))]
         [TestCase(typeof(TooManyGenericTypes<,>))]
         [TestCase(typeof(NoSuitableMethod<>))]

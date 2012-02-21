@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 
 namespace MemBus.Subscribing
@@ -35,7 +36,11 @@ namespace MemBus.Subscribing
         public void Push(object message)
         {
             var obj = _action((T)message);
-            _publisher.Publish(obj);
+            if (obj is IEnumerable)
+                foreach (var msg in (IEnumerable) obj)
+                    _publisher.Publish(msg);
+            else
+                _publisher.Publish(obj);
         }
 
         /// <summary>

@@ -47,9 +47,7 @@
     <Compile Include="CompositeSubscription.cs" />
     <Compile Include="Configurators\Fast.cs" />
     <Compile Include="Configurators\IoCSupport.cs" />
-    <Compile Include="Handles.cs" />
     <Compile Include="IBus.cs" />
-    <Compile Include="IHandles.cs" />
     <Compile Include="IocAdapter.cs" />
     <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\ExceptionOccurred.cs" />

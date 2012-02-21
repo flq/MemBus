@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using MemBus.Subscribing;
 
 namespace MemBus.Tests.Help
@@ -32,6 +33,15 @@ namespace MemBus.Tests.Help
         public void Accept(IDisposable disposeToken)
         {
             _disposeToken = disposeToken;
+        }
+    }
+
+    public class EnumeratingHandler
+    {
+        public IEnumerable Route(MessageA msg)
+        {
+            yield return new MessageB();
+            yield return new MessageC();
         }
     }
 }

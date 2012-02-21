@@ -130,7 +130,8 @@ WARN IF Count > 0 IN SELECT METHODS OUT OF NAMESPACES "MemBus.Tests","MemBus.Tes
  !IsEntryPoint AND
  !IsExplicitInterfaceImpl AND 
  !IsClassConstructor AND
-!IsGeneratedByCompiler AND
+ !IsGeneratedByCompiler AND
+ !IsPropertyGetter AND
  !IsFinalizer
 ]]></Query>
         <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods that could be declared as 'private'</Name>
