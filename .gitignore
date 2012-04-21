@@ -10,6 +10,8 @@ _ReSharper.*
 *.suo
 *.cache
 *.~
+*.pidb
+*.userprefs
 MemBus_mm_cache.bin
 packages
 Nuget/MemBus/lib
