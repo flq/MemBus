@@ -12,6 +12,8 @@ _ReSharper.*
 *.~
 *.pidb
 *.userprefs
+TestResults
+test-results
 MemBus_mm_cache.bin
 packages
 Nuget/MemBus/lib
