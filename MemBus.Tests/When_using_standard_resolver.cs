@@ -7,6 +7,7 @@ using MemBus.Tests.Frame;
 
 namespace MemBus.Tests
 {
+    [TestFixture(TypeArgs = new [] { typeof(StandardResolver) })]
     internal class Resolver_test_context<T> where T : ISubscriptionResolver
     {
         protected virtual T GetResolver()

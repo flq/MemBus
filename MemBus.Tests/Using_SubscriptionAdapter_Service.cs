@@ -126,5 +126,13 @@ namespace MemBus.Tests
             var subs = builder.BuildSubscriptions(new SomeCrazyHandler());
             subs.ShouldHaveCount(2);
         }
+
+        [Test]
+        public void explicit_implementation_of_interfaces_is_supported()
+        {
+            var builder = new InterfaceBasedBuilder(typeof(IClassicIHandleStuffI<>));
+            var subs = builder.BuildSubscriptions(new HandlerWithExplicitImpl());
+            subs.ShouldHaveCount(1);
+        }
     }
 }

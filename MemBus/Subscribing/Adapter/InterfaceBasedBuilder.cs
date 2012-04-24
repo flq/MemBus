@@ -70,7 +70,7 @@ namespace MemBus.Subscribing
 
                 var itfMi = interfaceType.MethodsSuitableForSubscription().First();
 
-                var candidates = from mi in targetToAdapt.GetType().GetMethods()
+                var candidates = from mi in targetToAdapt.GetType().GetInterfaceMap(interfaceType).InterfaceMethods
                                  where mi.Name == itfMi.Name &&
                                        mi.GetParameters().Length == 1 &&
                                        mi.GetParameters()[0].ParameterType == itfMi.GetParameters()[0].ParameterType &&

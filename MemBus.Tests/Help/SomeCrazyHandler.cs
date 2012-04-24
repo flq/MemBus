@@ -34,4 +34,15 @@ namespace MemBus.Tests.Help
             MsgSpecialACount++;
         }
     }
+
+    public class HandlerWithExplicitImpl : IClassicIHandleStuffI<MessageC>
+    {
+        public int MessageCount;
+
+        void IClassicIHandleStuffI<MessageC>.Gimme(MessageC theThing)
+        {
+            MessageCount++;
+        }
+    }
+
 }
