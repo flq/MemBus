@@ -63,6 +63,7 @@
     <Compile Include="Integration\Integration_scenario_interaction_with_subscriber.cs" />
     <Compile Include="Help\RxBasedFooObservable.cs" />
     <Compile Include="Integration\Unexpected_disposal_of_subscriptions.cs" />
+    <Compile Include="Using_publishing_methods.cs" />
     <Compile Include="Using_SubscriptionAdapter_Service.cs" />
     <Compile Include="Rx\When_MemBus_is_used_as_Observable.cs" />
     <Compile Include="Integration\When_using_ioc_support.cs" />

@@ -22,12 +22,16 @@ namespace MemBus.Subscribing
             return (ISubscription)sub;
         }
 
-        public static ISubscription ConstructPublishingSubscription(this MethodInfo info, object target, IPublisher publisher)
+        public static ISubscription ConstructPublishingSubscription(this MethodInfo targetMethod, object target, IPublisher publisher)
         {
-            var parameterType = info.GetParameters()[0].ParameterType;
+            var parameterType = targetMethod.GetParameters()[0].ParameterType;
             var fittingDelegateType = typeof(Func<,>).MakeGenericType(parameterType,typeof(object));
             var p = Expression.Parameter(parameterType);
-            var call = Expression.Call(Expression.Constant(target), info, p);
+            Expression call = Expression.Call(Expression.Constant(target), targetMethod, p);
+            if (!targetMethod.ReturnType.IsClass)
+            {
+                call = Expression.Convert(call, typeof(object));
+            }
             var @delegate = Expression.Lambda(fittingDelegateType, call, p);
 
             var fittingMethodSubscription = typeof(PublishingMethodInvocation<>).MakeGenericType(parameterType);

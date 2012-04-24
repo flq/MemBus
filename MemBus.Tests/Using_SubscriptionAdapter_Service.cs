@@ -81,22 +81,6 @@ namespace MemBus.Tests
             handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
-        public void Subscriptions_for_publishing_method_based_work_correctly()
-        {
-            var publisher = new Mock<IPublisher>();
-            var builder = new ReturningMethodBasedBuilder("Route");
-            builder.SetPublisher(publisher.Object);
-            var handler = new SomeHandler();
-            var subs = builder.BuildSubscriptions(handler);
-            var subscription = subs.First();
-            subscription.Handles(typeof(MessageB)).ShouldBeTrue();
-            subscription.Push(new MessageB());
-
-            handler.MsgBCalls.ShouldBeEqualTo(1);
-            publisher.Verify(p => p.Publish(It.IsAny<MessageC>()));
-        }
-
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseNoParameter))]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseTwoMethodsOfrequestedPattern))]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseReturnType))]
