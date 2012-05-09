@@ -9,10 +9,10 @@ namespace MemBus
     internal class Bus : IConfigurableBus, IBus
     {
         private readonly PublishChainCasing _publishChainCasing;
-        private readonly Subscriber subscriber;
+        private readonly Subscriber _subscriber;
         private readonly IServices _services = new StandardServices();
 
-        private readonly DisposeContainer disposer;
+        private readonly DisposeContainer _disposer;
 
         private volatile bool _isDisposed;
         private bool _isDisposing;
@@ -21,69 +21,69 @@ namespace MemBus
         {
             _services.Add<IPublisher>(this);
             _publishChainCasing = new PublishChainCasing(this);
-            subscriber = new Subscriber(_services);
-            disposer = new DisposeContainer { _publishChainCasing, subscriber, (IDisposable)_services };
+            _subscriber = new Subscriber(_services);
+            _disposer = new DisposeContainer { _publishChainCasing, _subscriber, (IDisposable)_services };
         }
 
         void IConfigurableBus.ConfigurePublishing(Action<IConfigurablePublishing> configurePipeline)
         {
-            checkDisposed();
+            CheckDisposed();
             configurePipeline(_publishChainCasing);
         }
 
         public void ConfigureSubscribing(Action<IConfigurableSubscribing> configure)
         {
-           ((IConfigurableSubscriber)subscriber).ConfigureSubscribing(configure);
+           ((IConfigurableSubscriber)_subscriber).ConfigureSubscribing(configure);
         }
 
         void IConfigurableSubscriber.AddResolver(ISubscriptionResolver resolver)
         {
-            ((IConfigurableSubscriber)subscriber).AddResolver(resolver);
+            ((IConfigurableSubscriber)_subscriber).AddResolver(resolver);
         }
 
         void IConfigurableSubscriber.AddSubscription(ISubscription subscription)
         {
-            ((IConfigurableSubscriber)subscriber).AddSubscription(subscription);
+            ((IConfigurableSubscriber)_subscriber).AddSubscription(subscription);
         }
 
         void IConfigurableBus.AddService<T>(T service)
         {
-            checkDisposed();
+            CheckDisposed();
             _services.Add(service);
         }
 
         public void Publish(object message)
         {
-            checkDisposed();
-            var subs = subscriber.GetSubscriptionsFor(message);
+            CheckDisposed();
+            var subs = _subscriber.GetSubscriptionsFor(message);
             var t = new PublishToken(message, subs);
             _publishChainCasing.LookAt(t);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription)
         {
-            return subscriber.Subscribe(subscription);
+            return _subscriber.Subscribe(subscription);
         }
 
         public IDisposable Subscribe(object subscriber)
         {
-            return this.subscriber.Subscribe(subscriber);
+            return _subscriber.Subscribe(subscriber);
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization)
         {
-            return subscriber.Subscribe(subscription, customization);
+            return _subscriber.Subscribe(subscription, customization);
         }
 
 
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization)
         {
-            return subscriber.Subscribe(subscription, customization);
+            return _subscriber.Subscribe(subscription, customization);
         }
 
         public IObservable<M> Observe<M>()
         {
-            return subscriber.Observe<M>();
+            return _subscriber.Observe<M>();
         }
 
         public void Dispose()
@@ -94,7 +94,7 @@ namespace MemBus
             try
             {
                 _isDisposing = true;
-                disposer.Dispose();
+                _disposer.Dispose();
                 
             }
             finally
@@ -106,7 +106,7 @@ namespace MemBus
 
         internal IServices Services { get { return _services; }}
 
-        private void checkDisposed()
+        private void CheckDisposed()
         {
             if (_isDisposed)
                 throw new ObjectDisposedException("Bus");
