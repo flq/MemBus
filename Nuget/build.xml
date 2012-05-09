@@ -4,7 +4,7 @@
     <Configuration>Release</Configuration>
 	<SlnDir>..\</SlnDir>
     <NugetDir>MemBus</NugetDir>
-    <NetDir>$(NugetDir)\lib\net40</NetDir>
+    <NetDir>$(NugetDir)\lib\net40-client</NetDir>
 	<SlDir>$(NugetDir)\lib\sl5</SlDir>
   </PropertyGroup>
   
