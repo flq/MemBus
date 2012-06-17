@@ -47,6 +47,17 @@ namespace MemBus.Tests.Help
         }
     }
 
+    public class HandlerReturningNull
+    {
+        public int MsgCall;
+
+        public object Route(string msg)
+        {
+            MsgCall++;
+            return null;
+        }
+    }
+
     public class EnumeratingHandler
     {
         public IEnumerable Route(MessageA msg)

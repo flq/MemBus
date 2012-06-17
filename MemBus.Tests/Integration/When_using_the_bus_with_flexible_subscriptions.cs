@@ -92,6 +92,18 @@ namespace MemBus.Tests.Integration
             msgC.ShouldBeEqualTo(_handler.MsgC);
         }
 
+
+        [Test]
+        public void returning_null_is_tolerated()
+        {
+            var h = new HandlerReturningNull();
+            using (_bus.Subscribe(h))
+            {
+                Assert.DoesNotThrow(()=>_bus.Publish("Causing a null being returned from a route"));
+                h.MsgCall.ShouldBeEqualTo(1);
+            }
+        }
+
         [Test]
         public void return_type_enumerable_publishes_every_item_as_message()
         {

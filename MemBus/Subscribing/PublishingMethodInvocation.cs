@@ -36,6 +36,8 @@ namespace MemBus.Subscribing
         public void Push(object message)
         {
             var obj = _action((T)message);
+            if (obj == null)
+                return;
             if (obj is IEnumerable)
                 foreach (var msg in (IEnumerable) obj)
                     _publisher.Publish(msg);
