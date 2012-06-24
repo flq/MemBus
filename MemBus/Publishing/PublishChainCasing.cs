@@ -7,22 +7,22 @@ namespace MemBus.Publishing
 {
     internal class PublishChainCasing : IConfigurablePublishing, IDisposable
     {
-        private readonly List<PublishChain> pipelines = new List<PublishChain>();
-        private readonly IBus bus;
+        private readonly List<PublishChain> _pipelines = new List<PublishChain>();
+        private readonly IBus _bus;
 
         public PublishChainCasing(IBus bus)
         {
-            this.bus = bus;
+            _bus = bus;
         }
 
         public void LookAt(PublishToken token)
         {
             var info = new MessageInfo(token.Message);
-            for (int i = pipelines.Count - 1; i >= 0; i--) //Backwards as we keep the default at index 0
+            for (int i = _pipelines.Count - 1; i >= 0; i--) //Backwards as we keep the default at index 0
             {
-                if (!pipelines[i].Handles(info))
+                if (!_pipelines[i].Handles(info))
                     continue;
-                pipelines[i].LookAt(token);
+                _pipelines[i].LookAt(token);
                 break;
             }
         }
@@ -30,14 +30,14 @@ namespace MemBus.Publishing
         void IConfigurablePublishing.DefaultPublishPipeline(params IPublishPipelineMember[] publishPipelineMembers)
         {
             foreach (var m in publishPipelineMembers)
-              m.TryInvoke(p => p.Bus = bus);
-            pipelines.Insert(0, new PublishChain(info=>true, publishPipelineMembers));
+              m.TryInvoke(p => p.Bus = _bus);
+            _pipelines.Insert(0, new PublishChain(info=>true, publishPipelineMembers));
         }
 
         IConfigurePipeline IConfigurablePublishing.MessageMatch(Func<MessageInfo, bool> match)
         {
-            var cP = new ConfigurePipeline(match, bus);
-            pipelines.Add(cP.Provider);
+            var cP = new ConfigurePipeline(match, _bus);
+            _pipelines.Add(cP.Provider);
             return cP;
         }
 
@@ -49,12 +49,12 @@ namespace MemBus.Publishing
 
         private class ConfigurePipeline : IConfigurePipeline
         {
-            private readonly IBus bus;
+            private readonly IBus _bus;
             private readonly PublishChain _publishChain;
 
             public ConfigurePipeline(Func<MessageInfo, bool> match, IBus bus)
             {
-                this.bus = bus;
+                _bus = bus;
                 _publishChain = new PublishChain(match);
             }
 
@@ -70,7 +70,7 @@ namespace MemBus.Publishing
             {
                 foreach (var m in publishPipelineMembers)
                 {
-                    m.TryInvoke(p => p.Bus = bus);
+                    m.TryInvoke(p => p.Bus = _bus);
                     Provider.Add(m);
                 }
             }
@@ -78,7 +78,7 @@ namespace MemBus.Publishing
 
         public void Dispose()
         {
-            pipelines.Clear();
+            _pipelines.Clear();
         }
     }
 }
