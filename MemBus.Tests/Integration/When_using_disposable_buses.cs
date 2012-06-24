@@ -2,9 +2,8 @@ using System;
 using MemBus.Configurators;
 using MemBus.Tests.Help;
 using NUnit.Framework;
-using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Integration
 {
     [TestFixture]
     public class When_using_disposable_buses

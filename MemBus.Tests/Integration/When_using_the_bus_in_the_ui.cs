@@ -1,15 +1,11 @@
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 using MemBus.Configurators;
-using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using Moq;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Integration
 {
     [TestFixture]
     public class When_using_the_bus_in_the_ui

@@ -1,13 +1,10 @@
-using System;
-using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using Moq;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
 using System.Linq;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Subscribing
 {
     [TestFixture]
     public class Using_disposable_method_subscription

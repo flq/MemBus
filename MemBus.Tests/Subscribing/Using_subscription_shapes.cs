@@ -3,7 +3,7 @@ using MemBus.Tests.Help;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Subscribing
 {
     [TestFixture]
     public class Using_subscription_shapes

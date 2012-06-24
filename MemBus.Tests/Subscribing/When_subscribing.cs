@@ -1,11 +1,12 @@
 using System.Text;
 using MemBus.Configurators;
+using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using NUnit.Framework;
 using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Subscribing
 {
     [TestFixture]
     public class When_subscribing
@@ -59,5 +60,64 @@ namespace MemBus.Tests
 
         public void Sub(object msg) { }
         public static void Substatic(object msg) {}
+    }
+
+    public class BusSetupWithTestShapers : ISetup<IConfigurableBus>
+    {
+        private readonly StringBuilder _sb;
+
+        public BusSetupWithTestShapers(StringBuilder sb)
+        {
+            _sb = sb;
+        }
+
+        public void Accept(IConfigurableBus setup)
+        {
+            setup.ConfigureSubscribing(
+                s => s.MessageMatch(mi => mi.IsType<MessageB>(),
+                sc => sc.ShapeOutwards(
+                                        new TestShaper("B", () => _sb.Append("B")),
+                                        new TestShaper("A", () => _sb.Append("A"))
+                                       )));
+        }
+    }
+
+    public class BusSetupWithDefaultShape : ISetup<IConfigurableBus>
+    {
+        private readonly StringBuilder _sb;
+
+        public BusSetupWithDefaultShape(StringBuilder sb)
+        {
+            _sb = sb;
+        }
+
+        public void Accept(IConfigurableBus setup)
+        {
+            setup.ConfigureSubscribing(
+                s =>
+                    {
+                        s.DefaultShapeOutwards(new TestShaper("Bar", () => _sb.Append("Bar")));
+                        s.MessageMatch(mi => mi.IsType<MessageB>(),
+                                       sc => sc.ShapeOutwards(new TestShaper("Foo", () => _sb.Append("Foo"))));
+                    });
+        }
+    }
+
+    public class BusSetupPutShapeOnMsgA : ISetup<IConfigurableBus>
+    {
+        private readonly TestShaper _shaper;
+
+
+        public BusSetupPutShapeOnMsgA(TestShaper shaper)
+        {
+            _shaper = shaper;
+        }
+
+        public void Accept(IConfigurableBus setup)
+        {
+            setup.AddService(new StringBuilder());
+            setup.ConfigureSubscribing(
+                s => s.MessageMatch(mi => mi.IsType<MessageA>(), c => c.ShapeOutwards(_shaper)));
+        }
     }
 }

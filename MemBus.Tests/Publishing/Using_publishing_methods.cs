@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MemBus.Subscribing;
 using MemBus.Tests.Frame;
 using MemBus.Tests.Help;
 using Moq;
 using NUnit.Framework;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Publishing
 {
     [TestFixture]
     internal class Using_publishing_methods

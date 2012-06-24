@@ -8,7 +8,7 @@ using NUnit.Framework;
 using MemBus.Tests.Frame;
 using MemBus.Support;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Subscribing
 {
     [TestFixture]
     public class Using_SubscriptionAdapter_Service

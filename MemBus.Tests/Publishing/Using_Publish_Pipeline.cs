@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using MemBus.Configurators;
 using MemBus.Publishing;
@@ -9,7 +8,7 @@ using NUnit.Framework;
 using System.Linq;
 using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Publishing
 {
     [TestFixture]
     public class Using_Publish_Pipeline
@@ -18,17 +17,17 @@ namespace MemBus.Tests
         public void publishes_message_parallel()
         {
             var p = new ParallelBlockingPublisher();
-            publisherCheck(p);
+            PublisherCheck(p);
         }
 
         [Test]
         public void publishes_message_sequentially()
         {
             var p = new SequentialPublisher();
-            publisherCheck(p);
+            PublisherCheck(p);
         }
 
-        private static void publisherCheck(IPublishPipelineMember p)
+        private static void PublisherCheck(IPublishPipelineMember p)
         {
             var token = new PublishToken(new MessageA(), new[] { new MockSubscription<MessageA>(), new MockSubscription<MessageA>() });
             p.LookAt(token);

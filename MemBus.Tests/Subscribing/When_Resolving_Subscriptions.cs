@@ -1,10 +1,9 @@
 using MemBus.Tests.Help;
-using Moq;
 using NUnit.Framework;
 using System.Linq;
 using MemBus.Tests.Frame;
 
-namespace MemBus.Tests
+namespace MemBus.Tests.Subscribing
 {
     [TestFixture]
     public class When_Resolving_Subscriptions
