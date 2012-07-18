@@ -39,7 +39,7 @@ namespace MemBus.Subscribing
         /// </summary>
         public FlexibleSubscribeAdapter ByMethodName(string methodName)
         {
-            AddToBuilders(new VoidMethodBasedBuilder(methodName));
+            AddToScanners(MethodScanner.ForVoidMethods(methodName));
             return this;
         }
 
@@ -49,20 +49,23 @@ namespace MemBus.Subscribing
         /// </summary>
         public FlexibleSubscribeAdapter PublishMethods(string methodName)
         {
-            AddToBuilders(new ReturningMethodBasedBuilder(methodName));
+            AddToScanners(MethodScanner.ForNonVoidMethods(methodName));
             return this;
         }
 
         /// <summary>
-        /// Look at an object and scan the available methods. FOr those where the methodSelector returntrs true,
+        /// Look at an object and scan the available methods. For those where the methodSelector returns true,
         /// subscriptions will be created and registered in MemBus. The methods are already pre-filtered for those
-        /// accepting a single parameter. This function does not make a difference between void methods and methods returning a value.
+        /// accepting a single parameter, being public, as well as allowing only the METHODS DECLARED ON THE TYPE OF THE INSPECTED OBJECT.
+        /// Additionally, if your subscribing object implements <see cref="IAcceptDisposeToken"/>, any method that looks like the implementation
+        /// of said interface will be ignored
+        /// This function does not make a difference between void methods and methods returning a value.
         /// These will be registered as publishing methods or simple subscriptions.
-        /// 
         /// </summary>
         /// <param name="methodSelector">the method selector predicate</param>
         public FlexibleSubscribeAdapter PickUpMethods(Func<MethodInfo,bool> methodSelector)
         {
+            AddToScanners(new MethodScanner(methodSelector, returnType => true, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly));
             return this;
         }
 
@@ -73,7 +76,7 @@ namespace MemBus.Subscribing
         /// </summary>
         public FlexibleSubscribeAdapter ByInterface(Type interfaceType)
         {
-            AddToBuilders(new InterfaceBasedBuilder(interfaceType));
+            AddToScanners(new InterfaceBasedBuilder(interfaceType));
             return this;
         }
 
@@ -97,7 +100,7 @@ namespace MemBus.Subscribing
             return disposeContainer;
         }
 
-        private void AddToBuilders(IMethodInfoScanner builder)
+        private void AddToScanners(IMethodInfoScanner builder)
         {
             _builder.AddScanner(builder);
             _configurationAvailable = true;

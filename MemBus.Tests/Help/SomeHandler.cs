@@ -8,6 +8,7 @@ namespace MemBus.Tests.Help
     {
         public int MsgACalls;
         public int MsgBCalls;
+        public int MsgCCalls;
 
         public readonly MessageC MsgC = new MessageC();
 
@@ -22,6 +23,11 @@ namespace MemBus.Tests.Help
         {
             MsgBCalls++;
             return MsgC;
+        }
+
+        public void SomeOtherMethod(MessageC msg)
+        {
+            MsgCCalls++;
         }
 
         public void InvokeDisposeToken()

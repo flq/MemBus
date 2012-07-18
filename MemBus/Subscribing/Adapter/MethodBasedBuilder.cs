@@ -6,16 +6,21 @@ using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    internal class VoidMethodBasedBuilder : IMethodInfoScanner
+    internal class MethodScanner : IMethodInfoScanner
     {
         private readonly Func<MethodInfo,bool> _methodSelector;
+        private readonly Func<Type, bool> _returnTypeSpecifier;
+        private readonly BindingFlags _methodBindingFlags;
 
-        public VoidMethodBasedBuilder(Func<MethodInfo,bool> methodSelector)
+        public MethodScanner(Func<MethodInfo, bool> methodSelector, Func<Type, bool> returnTypeSpecifier, BindingFlags methodBindingFlags)
         {
             _methodSelector = methodSelector;
+            _returnTypeSpecifier = returnTypeSpecifier;
+            _methodBindingFlags = methodBindingFlags;
         }
 
-        public VoidMethodBasedBuilder(string methodName) : this(mi => mi.Name == methodName)
+        public MethodScanner(string methodName, Func<Type, bool> returnTypeSpecifier)
+            : this(mi => mi.Name == methodName, returnTypeSpecifier, BindingFlags.Public | BindingFlags.Instance)
         {
         }
 
@@ -23,34 +28,19 @@ namespace MemBus.Subscribing
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
 
-            var candidates = targetToAdapt.GetType().VoidMethodCandidatesForSubscriptionBuilders(_methodSelector).ToList();
+            var candidates = targetToAdapt.GetType().MethodCandidatesForSubscriptionBuilders(_methodSelector, _returnTypeSpecifier, _methodBindingFlags).ToList();
 
             return candidates;
         }
-    }
 
-    internal class ReturningMethodBasedBuilder : IMethodInfoScanner
-    {
-        private readonly Func<MethodInfo, bool> _methodSelector;
-
-        public ReturningMethodBasedBuilder(Func<MethodInfo, bool> methodSelector)
+        public static IMethodInfoScanner ForNonVoidMethods(string methodName)
         {
-            _methodSelector = methodSelector;
+            return new MethodScanner(methodName, type => type != typeof(void));
         }
 
-        public ReturningMethodBasedBuilder(string methodName)
-            : this(mi => mi.Name == methodName)
+        public static IMethodInfoScanner ForVoidMethods(string methodName)
         {
-            
-        }
-
-        public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
-        {
-            if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
-
-            var candidates = targetToAdapt.GetType().ReturningMethodCandidatesForSubscriptionBuilders(_methodSelector).ToList();
-
-            return candidates;
+            return new MethodScanner(methodName, type => type == typeof(void));
         }
     }
 }

@@ -5,6 +5,7 @@ using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using Moq;
+using MemBus.Support;
 
 namespace MemBus.Tests.Frame
 {
@@ -38,6 +39,13 @@ namespace MemBus.Tests.Frame
         {
             var b = new SubscriptionBuilder();
             b.AddScanner(scanner);
+            return b;
+        }
+
+        public static SubscriptionBuilder MakeBuilder(IMethodInfoScanner[] scanner)
+        {
+            var b = new SubscriptionBuilder();
+            scanner.Each(b.AddScanner);
             return b;
         }
     }

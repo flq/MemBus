@@ -63,7 +63,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Subscriptions_are_built_for_object_method_based()
         {
-            var builder = new VoidMethodBasedBuilder("Handle").MakeBuilder();
+            var builder = MethodScanner.ForVoidMethods("Handle").MakeBuilder();
             var subs = builder.BuildSubscriptions(new SomeHandler());
             subs.ShouldNotBeNull();
             subs.ShouldHaveCount(1);
@@ -72,7 +72,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Subscriptions_for_object_method_based_work_correctly()
         {
-            var builder = new VoidMethodBasedBuilder("Handle").MakeBuilder();
+            var builder = MethodScanner.ForVoidMethods("Handle").MakeBuilder();
             var handler = new SomeHandler();
             var subs = builder.BuildSubscriptions(handler);
             var subscription = subs.First();

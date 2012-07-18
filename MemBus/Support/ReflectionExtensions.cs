@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using MemBus.Subscribing;
 
 namespace MemBus.Support
 {
@@ -72,23 +73,24 @@ namespace MemBus.Support
                    select mi;
         }
 
-        public static IEnumerable<MethodInfo> VoidMethodCandidatesForSubscriptionBuilders(this Type reflectedType, Func<MethodInfo, bool> methodSelector)
+        public static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(
+            this Type reflectedType, 
+            Func<MethodInfo, bool> methodSelector, 
+            Func<Type, bool> returntypePredicate, 
+            BindingFlags methodBindingFlags)
         {
-            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodSelector, t => t.Equals(typeof(void)));
-        }
+            var disposeTokenMethod = reflectedType.ImplementsInterface<IAcceptDisposeToken>()
+                                         ? (mi =>
+                                            mi.Name == "Accept" && mi.GetParameters().Length == 1 &&
+                                            mi.GetParameters()[0].ParameterType == typeof (IDisposable))
+                                         : new Func<MethodInfo, bool>(mi => false);
 
-        public static IEnumerable<MethodInfo> ReturningMethodCandidatesForSubscriptionBuilders(this Type reflectedType, Func<MethodInfo, bool> methodSelector)
-        {
-            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodSelector, t => !t.Equals(typeof(void)));
-        }
-
-        private static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(this Type reflectedType, Func<MethodInfo,bool> methodSelector, Func<Type,bool> returntypePredicate)
-        {
             var candidates =
-                (from mi in reflectedType.GetMethods()
+                (from mi in reflectedType.GetMethods(methodBindingFlags)
                  where
                  !mi.IsGenericMethod &&
                    mi.GetParameters().Length == 1 &&
+                   !disposeTokenMethod(mi) &&
                    returntypePredicate(mi.ReturnType) &&
                    methodSelector(mi)
                  select mi);

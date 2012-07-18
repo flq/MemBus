@@ -18,7 +18,7 @@ namespace MemBus.Tests.Subscribing
 
         
         [Test]
-        public void handle_type_derived_from_Action()
+        public void Handle_type_derived_from_action()
         {
             int callCount = 0;
             var sub = new DisposableSubscription(new MethodInvocation<MessageA>(msg => callCount++));
@@ -47,7 +47,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Adapter_subscriptions_can_also_be_disposed()
         {
-            var b = new VoidMethodBasedBuilder("Handle").MakeBuilder();
+            var b = MethodScanner.ForVoidMethods("Handle").MakeBuilder();
             var disposableSub = new DisposableSubscription(b.BuildSubscriptions(new SomeHandler()).First());
             var resolver = new StandardResolver();
             resolver.Add(disposableSub);
