@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    public class InterfaceBasedBuilder : ISubscriptionBuilder
+    public class InterfaceBasedBuilder : IMethodInfoScanner
     {
-        private readonly ISubscriptionBuilder innerBuilder;
+        private readonly IMethodInfoScanner _innerBuilder;
 
         public InterfaceBasedBuilder(Type interfaceType)
         {
@@ -17,66 +18,66 @@ namespace MemBus.Subscribing
                 throw new InvalidOperationException("Membus cannot handle Interface {0} as subscription. Interface should define only one void method with one parameter. Interface may be generic and can be implemented multiple times.".Fmt(interfaceType.Name));
 
             if (interfaceType.IsGenericTypeDefinition)
-                innerBuilder = new OpenInterfaceBuilder(interfaceType);
+                _innerBuilder = new OpenInterfaceBuilder(interfaceType);
             else
-                innerBuilder = new ClosedInterfaceBuilder(interfaceType);
+                _innerBuilder = new ClosedInterfaceBuilder(interfaceType);
             
         }
 
-        public IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt)
+        public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
-            return innerBuilder.BuildSubscriptions(targetToAdapt);
+            return _innerBuilder.GetMethodInfos(targetToAdapt);
         }
 
-        private class OpenInterfaceBuilder : ISubscriptionBuilder
+        private class OpenInterfaceBuilder : IMethodInfoScanner
         {
-            private readonly Type interfaceType;
+            private readonly Type _interfaceType;
 
             public OpenInterfaceBuilder(Type interfaceType)
             {
-                this.interfaceType = interfaceType;
+                _interfaceType = interfaceType;
             }
 
-            public IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt)
+            public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
             {
-                var foundItfs = from itf in targetToAdapt.GetType().GetInterfaces()
-                                where itf.IsGenericType && itf.GetGenericTypeDefinition().Equals(interfaceType)
-                                select itf;
-                if (foundItfs.Count() == 0)
-                    return new ISubscription[0];
+                var foundItfs = (from itf in targetToAdapt.GetType().GetInterfaces()
+                                where itf.IsGenericType && itf.GetGenericTypeDefinition().Equals(_interfaceType)
+                                select itf).ToList();
+                if (!foundItfs.Any())
+                    return Enumerable.Empty<MethodInfo>();
 
                 return
                     foundItfs
                     .Select(itf => new ClosedInterfaceBuilder(itf))
-                    .SelectMany(b => b.BuildSubscriptions(targetToAdapt));
+                    .SelectMany(b => b.GetMethodInfos(targetToAdapt));
             }
         }
 
-        private class ClosedInterfaceBuilder : ISubscriptionBuilder
+        private class ClosedInterfaceBuilder : IMethodInfoScanner
         {
-            private readonly Type interfaceType;
+            private readonly Type _interfaceType;
 
             public ClosedInterfaceBuilder(Type interfaceType)
             {
-                this.interfaceType = interfaceType;
+                _interfaceType = interfaceType;
             }
 
-            public IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt)
+            public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
             {
-                var hasInterface = targetToAdapt.GetType().GetInterfaces().Any(t => t.Equals(interfaceType));
+                var hasInterface = targetToAdapt.GetType().GetInterfaces().Any(t => t.Equals(_interfaceType));
                 if (!hasInterface)
-                    return new ISubscription[0];
+                    return Enumerable.Empty<MethodInfo>();
 
-                var itfMi = interfaceType.MethodsSuitableForSubscription().First();
+                var itfMi = _interfaceType.MethodsSuitableForSubscription().First();
 
-                var candidates = from mi in targetToAdapt.GetType().GetInterfaceMap(interfaceType).InterfaceMethods
+                var candidates = from mi in targetToAdapt.GetType().GetInterfaceMap(_interfaceType).InterfaceMethods
                                  where mi.Name == itfMi.Name &&
                                        mi.GetParameters().Length == 1 &&
                                        mi.GetParameters()[0].ParameterType == itfMi.GetParameters()[0].ParameterType &&
                                        mi.ReturnType == itfMi.ReturnType
                                  select mi;
-                return candidates.ConstructSubscriptions(targetToAdapt);
+                return candidates;
             }
         }
     }

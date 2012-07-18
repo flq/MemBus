@@ -20,4 +20,5 @@ Nuget/MemBus/lib
 Nuget/MemBus/readme.md
 *.swp
 *.nupkg
+*.Dotsettings
 readme.html

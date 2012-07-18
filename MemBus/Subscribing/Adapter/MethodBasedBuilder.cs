@@ -6,7 +6,7 @@ using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
-    internal class VoidMethodBasedBuilder : ISubscriptionBuilder
+    internal class VoidMethodBasedBuilder : IMethodInfoScanner
     {
         private readonly Func<MethodInfo,bool> _methodSelector;
 
@@ -19,20 +19,19 @@ namespace MemBus.Subscribing
         {
         }
 
-        public IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt)
+        public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
 
             var candidates = targetToAdapt.GetType().VoidMethodCandidatesForSubscriptionBuilders(_methodSelector).ToList();
 
-            return candidates.Count == 0 ? new ISubscription[0] : candidates.ConstructSubscriptions(targetToAdapt);
+            return candidates;
         }
     }
 
-    internal class ReturningMethodBasedBuilder : ISubscriptionBuilder
+    internal class ReturningMethodBasedBuilder : IMethodInfoScanner
     {
         private readonly Func<MethodInfo, bool> _methodSelector;
-        private IPublisher _publisher;
 
         public ReturningMethodBasedBuilder(Func<MethodInfo, bool> methodSelector)
         {
@@ -45,19 +44,13 @@ namespace MemBus.Subscribing
             
         }
 
-        // Note: dynamically invoked by FlexibleSubscribeAdapter
-        public void SetPublisher(IPublisher publisher)
-        {   
-            _publisher = publisher;
-        }
-
-        public IEnumerable<ISubscription> BuildSubscriptions(object targetToAdapt)
+        public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
 
             var candidates = targetToAdapt.GetType().ReturningMethodCandidatesForSubscriptionBuilders(_methodSelector).ToList();
 
-            return candidates.Count == 0 ? new ISubscription[0] : candidates.ConstructPublishingSubscriptions(targetToAdapt, _publisher);
+            return candidates;
         }
     }
 }

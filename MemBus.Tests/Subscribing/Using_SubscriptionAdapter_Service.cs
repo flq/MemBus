@@ -63,7 +63,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Subscriptions_are_built_for_object_method_based()
         {
-            var builder = new VoidMethodBasedBuilder("Handle");
+            var builder = new VoidMethodBasedBuilder("Handle").MakeBuilder();
             var subs = builder.BuildSubscriptions(new SomeHandler());
             subs.ShouldNotBeNull();
             subs.ShouldHaveCount(1);
@@ -72,7 +72,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Subscriptions_for_object_method_based_work_correctly()
         {
-            var builder = new VoidMethodBasedBuilder("Handle");
+            var builder = new VoidMethodBasedBuilder("Handle").MakeBuilder();
             var handler = new SomeHandler();
             var subs = builder.BuildSubscriptions(handler);
             var subscription = subs.First();
@@ -93,7 +93,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Non_generic_interface_is_properly_handled()
         {
-            var builder = new InterfaceBasedBuilder(typeof(ItfNonGenericForHandles));
+            var builder = new InterfaceBasedBuilder(typeof(ItfNonGenericForHandles)).MakeBuilder();
             var targetToAdapt = new AHandlerThroughSimpleInterface();
             var subs = builder.BuildSubscriptions(targetToAdapt);
             subs.ShouldHaveCount(1);
@@ -106,7 +106,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Two_subscriptions_expected_from_aquainting_crazy_handler()
         {
-            var builder = new InterfaceBasedBuilder(typeof (IClassicIHandleStuffI<>));
+            var builder = new InterfaceBasedBuilder(typeof (IClassicIHandleStuffI<>)).MakeBuilder();
             var subs = builder.BuildSubscriptions(new SomeCrazyHandler());
             subs.ShouldHaveCount(2);
         }
@@ -114,7 +114,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void explicit_implementation_of_interfaces_is_supported()
         {
-            var builder = new InterfaceBasedBuilder(typeof(IClassicIHandleStuffI<>));
+            var builder = new InterfaceBasedBuilder(typeof(IClassicIHandleStuffI<>)).MakeBuilder();
             var subs = builder.BuildSubscriptions(new HandlerWithExplicitImpl());
             subs.ShouldHaveCount(1);
         }

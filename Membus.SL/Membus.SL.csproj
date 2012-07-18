@@ -171,14 +171,17 @@
     <Compile Include="..\MemBus\Subscribing\Adapter\FlexibleSubscribeAdapter.cs">
       <Link>Subscribing\Adapter\FlexibleSubscribeAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\IMethodInfoScanner.cs">
+      <Link>Subscribing\Adapter\IMethodInfoScanner.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Subscribing\Adapter\InterfaceBasedBuilder.cs">
       <Link>Subscribing\Adapter\InterfaceBasedBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\MemBus\Subscribing\Adapter\ISubscriptionBuilder.cs">
-      <Link>Subscribing\Adapter\ISubscriptionBuilder.cs</Link>
-    </Compile>
     <Compile Include="..\MemBus\Subscribing\Adapter\MethodBasedBuilder.cs">
       <Link>Subscribing\Adapter\MethodBasedBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\SubscriptionBuilder.cs">
+      <Link>Subscribing\Adapter\SubscriptionBuilder.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Subscribing\DisposableSubscription.cs">
       <Link>Subscribing\DisposableSubscription.cs</Link>

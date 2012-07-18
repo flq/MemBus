@@ -18,20 +18,19 @@ namespace MemBus.Subscribing
     /// </summary>
     public class FlexibleSubscribeAdapter : ISetup<IConfigurableBus>, IAdapterServices
     {
-        private bool configurationAvailable;
-        private readonly List<ISubscriptionBuilder> builders = new List<ISubscriptionBuilder>();
+        private bool _configurationAvailable;
+        private readonly SubscriptionBuilder _builder = new SubscriptionBuilder();
 
 
         void ISetup<IConfigurableBus>.Accept(IConfigurableBus setup)
         {
-            if (!configurationAvailable)
+            if (!_configurationAvailable)
                 throw new InvalidOperationException("No adapter rules were set up.");
             setup.AddService<IAdapterServices>(this);
 
             var bus = setup as IPublisher;
 
-            foreach (var b in builders)
-                b.TryInvoke(obj => obj.SetPublisher(bus));
+            _builder.SetPublisher(bus);
         }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace MemBus.Subscribing
 
         private IEnumerable<ISubscription> SubscriptionsFor(object subscriber)
         {
-            return builders.SelectMany(b => b.BuildSubscriptions(subscriber));
+            return _builder.BuildSubscriptions(subscriber);
         }
 
 
@@ -98,10 +97,10 @@ namespace MemBus.Subscribing
             return disposeContainer;
         }
 
-        private void AddToBuilders(ISubscriptionBuilder builder)
+        private void AddToBuilders(IMethodInfoScanner builder)
         {
-            builders.Add(builder);
-            configurationAvailable = true;
+            _builder.AddScanner(builder);
+            _configurationAvailable = true;
         }
 
         private static void PushDisposerToSubscriberIfPossible(object subscriber, DisposeContainer disposeContainer)

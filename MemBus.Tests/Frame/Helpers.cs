@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows.Threading;
 using MemBus.Publishing;
 using MemBus.Setup;
+using MemBus.Subscribing;
 using Moq;
 
 namespace MemBus.Tests.Frame
@@ -31,6 +32,13 @@ namespace MemBus.Tests.Frame
         {
             configure((IConfigurablePublishing) pipeline);
             return pipeline;
+        }
+
+        public static SubscriptionBuilder MakeBuilder(this IMethodInfoScanner scanner)
+        {
+            var b = new SubscriptionBuilder();
+            b.AddScanner(scanner);
+            return b;
         }
     }
 }
