@@ -2,11 +2,11 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>MemBus</id>
-    <version>1.5.3</version>
+    <version>1.5.4</version>
     <authors>Frank Quednau</authors>
     <owners>Frank Quednau</owners>
     <description>In-memory publish-subscribe bus with pluggable subscription and publishing pipeline, first-class support of Observables, contravariant messaging and resolution of handlers through pluggable IOC.</description> 
-    <releaseNotes>A publishing method may now return null without causing an exception in a subsequent publishing attempt</releaseNotes>
+    <releaseNotes>Extension of FlexibleSubscribeAdapter: Register subscribing methods based on a predicate</releaseNotes>
     <projectUrl>http://github.com/flq/MemBus</projectUrl>
     <licenseUrl>http://www.opensource.org/licenses/apache2.0</licenseUrl>
     <iconUrl>http://realfiction.net/files/bus.png</iconUrl>
