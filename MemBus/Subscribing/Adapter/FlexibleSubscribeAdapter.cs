@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using MemBus.Setup;
 using System.Linq;
 using MemBus.Support;
@@ -50,6 +51,19 @@ namespace MemBus.Subscribing
         public FlexibleSubscribeAdapter PublishMethods(string methodName)
         {
             AddToBuilders(new ReturningMethodBasedBuilder(methodName));
+            return this;
+        }
+
+        /// <summary>
+        /// Look at an object and scan the available methods. FOr those where the methodSelector returntrs true,
+        /// subscriptions will be created and registered in MemBus. The methods are already pre-filtered for those
+        /// accepting a single parameter. This function does not make a difference between void methods and methods returning a value.
+        /// These will be registered as publishing methods or simple subscriptions.
+        /// 
+        /// </summary>
+        /// <param name="methodSelector">the method selector predicate</param>
+        public FlexibleSubscribeAdapter PickUpMethods(Func<MethodInfo,bool> methodSelector)
+        {
             return this;
         }
 

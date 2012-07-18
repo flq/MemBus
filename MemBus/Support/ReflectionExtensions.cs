@@ -72,25 +72,25 @@ namespace MemBus.Support
                    select mi;
         }
 
-        public static IEnumerable<MethodInfo> VoidMethodCandidatesForSubscriptionBuilders(this Type reflectedType, string methodName)
+        public static IEnumerable<MethodInfo> VoidMethodCandidatesForSubscriptionBuilders(this Type reflectedType, Func<MethodInfo, bool> methodSelector)
         {
-            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodName, t => t.Equals(typeof(void)));
+            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodSelector, t => t.Equals(typeof(void)));
         }
 
-        public static IEnumerable<MethodInfo> ReturningMethodCandidatesForSubscriptionBuilders(this Type reflectedType, string methodName)
+        public static IEnumerable<MethodInfo> ReturningMethodCandidatesForSubscriptionBuilders(this Type reflectedType, Func<MethodInfo, bool> methodSelector)
         {
-            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodName, t => !t.Equals(typeof(void)));
+            return reflectedType.MethodCandidatesForSubscriptionBuilders(methodSelector, t => !t.Equals(typeof(void)));
         }
 
-        private static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(this Type reflectedType, string methodName, Func<Type,bool> returntypePredicate)
+        private static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(this Type reflectedType, Func<MethodInfo,bool> methodSelector, Func<Type,bool> returntypePredicate)
         {
             var candidates =
                 (from mi in reflectedType.GetMethods()
                  where
-                   mi.Name == methodName &&
-                   !mi.IsGenericMethod &&
+                 !mi.IsGenericMethod &&
                    mi.GetParameters().Length == 1 &&
-                   returntypePredicate(mi.ReturnType)
+                   returntypePredicate(mi.ReturnType) &&
+                   methodSelector(mi)
                  select mi);
             return candidates;
         }
