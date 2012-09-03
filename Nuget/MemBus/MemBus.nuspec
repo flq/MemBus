@@ -10,10 +10,7 @@
     <projectUrl>http://github.com/flq/MemBus</projectUrl>
     <licenseUrl>http://www.opensource.org/licenses/apache2.0</licenseUrl>
     <iconUrl>http://realfiction.net/files/bus.png</iconUrl>
-    <tags>event-aggregator messaging bus .net40 sl5</tags>
+    <tags>event-aggregator messaging bus .net40</tags>
     <language>en-us</language>
-    <frameworkAssemblies>
-      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="sl5" />
-    </frameworkAssemblies>
   </metadata>
 </package>
