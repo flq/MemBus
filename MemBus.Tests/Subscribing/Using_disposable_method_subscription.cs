@@ -1,8 +1,16 @@
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
 using System.Linq;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+#else
+using NUnit.Framework;
+#endif
+
 
 namespace MemBus.Tests.Subscribing
 {
@@ -44,6 +52,7 @@ namespace MemBus.Tests.Subscribing
             disposeCalled.ShouldBeTrue();
         }
 
+        
         [Test]
         public void Adapter_subscriptions_can_also_be_disposed()
         {

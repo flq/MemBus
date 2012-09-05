@@ -1,16 +1,22 @@
 using System;
 using System.Threading;
+
+using MemBus.Subscribing;
+using MemBus.Support;
+
+#if !WINRT
 using System.Windows.Threading;
+using Moq;
+
 using MemBus.Publishing;
 using MemBus.Setup;
-using MemBus.Subscribing;
-using Moq;
-using MemBus.Support;
+#endif
 
 namespace MemBus.Tests.Frame
 {
     internal static class Helpers
     {
+        #if !WINRT
         public static Mock<ISubscription> MockSubscriptionThatHandles<T>()
         {
             var mock = new Mock<ISubscription>();
@@ -34,6 +40,7 @@ namespace MemBus.Tests.Frame
             configure((IConfigurablePublishing) pipeline);
             return pipeline;
         }
+        #endif
 
         public static SubscriptionBuilder MakeBuilder(this IMethodInfoScanner scanner)
         {

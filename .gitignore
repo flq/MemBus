@@ -21,4 +21,5 @@ Nuget/MemBus/readme.md
 *.swp
 *.nupkg
 *.Dotsettings
+*.pfx
 readme.html

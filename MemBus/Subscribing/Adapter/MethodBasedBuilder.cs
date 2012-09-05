@@ -10,8 +10,11 @@ namespace MemBus.Subscribing
     {
         private readonly Func<MethodInfo,bool> _methodSelector;
         private readonly Func<Type, bool> _returnTypeSpecifier;
+        #if!WINRT
         private readonly BindingFlags _methodBindingFlags;
+        #endif
 
+        #if!WINRT
         public MethodScanner(Func<MethodInfo, bool> methodSelector, Func<Type, bool> returnTypeSpecifier, BindingFlags methodBindingFlags)
         {
             _methodSelector = methodSelector;
@@ -23,13 +26,28 @@ namespace MemBus.Subscribing
             : this(mi => mi.Name == methodName, returnTypeSpecifier, BindingFlags.Public | BindingFlags.Instance)
         {
         }
+        #else
+        public MethodScanner(Func<MethodInfo, bool> methodSelector, Func<Type, bool> returnTypeSpecifier)
+        {
+            _methodSelector = methodSelector;
+            _returnTypeSpecifier = returnTypeSpecifier;
+        }
+
+        public MethodScanner(string methodName, Func<Type, bool> returnTypeSpecifier)
+            : this(mi => mi.Name == methodName, returnTypeSpecifier)
+        {
+        }
+        #endif
+
 
         public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
-
+            #if !WINRT
             var candidates = targetToAdapt.GetType().MethodCandidatesForSubscriptionBuilders(_methodSelector, _returnTypeSpecifier, _methodBindingFlags).ToList();
-
+            #else
+            var candidates = targetToAdapt.GetType().MethodCandidatesForSubscriptionBuilders(_methodSelector, _returnTypeSpecifier).ToList();
+            #endif
             return candidates;
         }
 

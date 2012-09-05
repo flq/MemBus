@@ -28,7 +28,11 @@ namespace MemBus.Subscribing
             var fittingDelegateType = typeof(Func<,>).MakeGenericType(parameterType,typeof(object));
             var p = Expression.Parameter(parameterType);
             Expression call = Expression.Call(Expression.Constant(target), targetMethod, p);
+            #if WINRT
+            if (!targetMethod.ReturnType.GetTypeInfo().IsClass)
+            #else
             if (!targetMethod.ReturnType.IsClass)
+            #endif
             {
                 call = Expression.Convert(call, typeof(object));
             }

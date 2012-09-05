@@ -30,6 +30,7 @@ namespace MemBus
         /// </summary>
         IDisposable Subscribe(object subscriber);
 
+        #if !WINRT
         /// <summary>
         /// Subscribe and additionally specify customizations to be applied to the subscription
         /// </summary>
@@ -39,6 +40,7 @@ namespace MemBus
         /// Subscribe and use some predefined customizations available through MemBus
         /// </summary>
         IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization);
+        #endif
 
         /// <summary>
         /// Obtain an <see cref="IObservable{T}"/> instance to observe any incoming objects of te desired types

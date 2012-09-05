@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 [assembly:InternalsVisibleTo("MemBus.Tests")]
+[assembly: InternalsVisibleTo("MemBus.WinRT.Tests")]
 
 [assembly: AssemblyVersion("1.5.4")]
 [assembly: AssemblyFileVersion("1.5.4")]

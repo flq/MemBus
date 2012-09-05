@@ -47,10 +47,13 @@ namespace MemBus.Subscribing
         {
             get
             {
+                //TODO: This was some issue with the way a delegate was constructed
+                #if !WINRT
                 if (action.Target is Closure)
                 {
                     return ((Closure)action.Target).Constants[0];
                 }
+                #endif
                 return action.Target;
             }
         }
