@@ -118,11 +118,29 @@
     <Compile Include="..\MemBus.Tests\Help\Messages.cs">
       <Link>Help\Messages.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Help\MockSubscription.cs">
+      <Link>Help\MockSubscription.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Help\SimpleResolver.cs">
+      <Link>Help\SimpleResolver.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Help\SomeHandler.cs">
       <Link>Help\SomeHandler.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Help\SubscriptionThatFakesHandles.cs">
+      <Link>Help\SubscriptionThatFakesHandles.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Subscribing\Using_Composite_Subscription.cs">
+      <Link>Subscribing\Using_Composite_Subscription.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Subscribing\Using_disposable_method_subscription.cs">
       <Link>Subscribing\Using_disposable_method_subscription.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Subscribing\When_Resolving_Subscriptions.cs">
+      <Link>Subscribing\When_Resolving_Subscriptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\When_using_standard_resolver.cs">
+      <Link>When_using_standard_resolver.cs</Link>
     </Compile>
     <Compile Include="Frame\AssertExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

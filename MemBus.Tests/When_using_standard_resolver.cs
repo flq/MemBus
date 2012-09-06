@@ -1,18 +1,25 @@
 using System;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using System.Linq;
 using MemBus.Tests.Frame;
 
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+#else
+using NUnit.Framework;
+#endif
+
 namespace MemBus.Tests
 {
-    [TestFixture(TypeArgs = new [] { typeof(StandardResolver) })]
-    internal class Resolver_test_context<T> where T : ISubscriptionResolver
+    [TestFixture]
+    public class Resolver_test_context
     {
-        protected virtual T GetResolver()
+        protected virtual ISubscriptionResolver GetResolver()
         {
-            return Activator.CreateInstance<T>();
+            return new StandardResolver();
         }
 
         [Test]
@@ -20,7 +27,7 @@ namespace MemBus.Tests
         {
             var sub = Helpers.MockSubscriptionThatHandles<MessageA>();
             var r = new StandardResolver();
-            r.Add(sub.Object);
+            r.Add(sub);
             var subs = r.GetSubscriptionsFor(new MessageA()).ToList();
             subs.ShouldHaveCount(1);
         }
@@ -95,11 +102,6 @@ namespace MemBus.Tests
             r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
             r.GetSubscriptionsFor(new Clong()).ShouldHaveCount(1);
         }
-    }
-
-    [TestFixture]
-    internal class When_using_standard_resolver : Resolver_test_context<StandardResolver>
-    {
     }
 
     public class Clong {}

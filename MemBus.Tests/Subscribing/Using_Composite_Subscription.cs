@@ -1,7 +1,14 @@
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
 using System.Linq;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Subscribing
 {
@@ -19,7 +26,7 @@ namespace MemBus.Tests.Subscribing
         public void push_message_on_empty_composite_is_legal()
         {
             var c = new CompositeSubscription();
-            Assert.DoesNotThrow(()=>(c as ISubscription).Push(new MessageA()));
+            (new System.Action(()=>(c as ISubscription).Push(new MessageA()))).DoesNotThrow();
         }
 
         [Test]

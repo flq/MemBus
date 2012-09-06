@@ -17,7 +17,7 @@ namespace MemBus.Subscribing
             if (!suitableMethodsFound)
                 throw new InvalidOperationException("Membus cannot handle Interface {0} as subscription. Interface should define only one void method with one parameter. Interface may be generic and can be implemented multiple times.".Fmt(interfaceType.Name));
 
-            if (interfaceType.IsGenericTypeDefinition)
+            if (interfaceType.GetTypeInfo().IsGenericTypeDefinition)
                 _innerBuilder = new OpenInterfaceBuilder(interfaceType);
             else
                 _innerBuilder = new ClosedInterfaceBuilder(interfaceType);
@@ -41,8 +41,13 @@ namespace MemBus.Subscribing
 
             public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
             {
-                var foundItfs = (from itf in targetToAdapt.GetType().GetInterfaces()
-                                where itf.IsGenericType && itf.GetGenericTypeDefinition().Equals(_interfaceType)
+                #if !WINRT
+                var interfaces = targetToAdapt.GetType().GetInterfaces();
+                #else
+                var interfaces = targetToAdapt.GetType().GetTypeInfo().ImplementedInterfaces;
+                #endif
+                var foundItfs = (from itf in interfaces
+                                where itf.IsGenericType() && itf.GetGenericTypeDefinition().Equals(_interfaceType)
                                 select itf).ToList();
                 if (!foundItfs.Any())
                     return Enumerable.Empty<MethodInfo>();
@@ -71,7 +76,7 @@ namespace MemBus.Subscribing
 
                 var itfMi = _interfaceType.MethodsSuitableForSubscription().First();
 
-                var candidates = from mi in targetToAdapt.GetType().GetInterfaceMap(_interfaceType).InterfaceMethods
+                var candidates = from mi in targetToAdapt.GetType().GetTypeInfo().GetRuntimeInterfaceMap(_interfaceType).InterfaceMethods
                                  where mi.Name == itfMi.Name &&
                                        mi.GetParameters().Length == 1 &&
                                        mi.GetParameters()[0].ParameterType == itfMi.GetParameters()[0].ParameterType &&

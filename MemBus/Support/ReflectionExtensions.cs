@@ -26,6 +26,27 @@ namespace MemBus.Support
             return atts.Length > 0;
         }
 
+        /// <summary>
+        /// Route-through method for compatibility to WinRT
+        /// </summary>
+        public static Type GetTypeInfo(this Type type)
+        {
+            return type;
+        }
+
+        /// <summary>
+        /// Normalization method
+        /// </summary>
+        public static bool IsGenericType(this Type type)
+        {
+            return type.IsGenericType;
+        }
+
+        public static InterfaceMapping GetRuntimeInterfaceMap(this Type type, Type interfaceType)
+        {
+            return type.GetInterfaceMap(interfaceType);
+        }
+
 
         /// <summary>
         /// Get a specific attribute from your target

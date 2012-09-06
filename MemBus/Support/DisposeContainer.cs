@@ -42,7 +42,7 @@ namespace MemBus.Support
             lock (disposeLock)
             {
                 if (disposed) return;
-                disposables.ForEach(d => d.Dispose());
+                disposables.Each(d => d.Dispose());
                 disposables.Clear();
                 disposed = true;
             }

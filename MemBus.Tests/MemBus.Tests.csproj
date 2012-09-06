@@ -60,6 +60,7 @@
     <Compile Include="Help\MessageA.cs" />
     <Compile Include="Help\SomeCrazyHandler.cs" />
     <Compile Include="Help\SomeHandler.cs" />
+    <Compile Include="Help\SubscriptionThatFakesHandles.cs" />
     <Compile Include="Integration\Integration_scenario_interaction_with_subscriber.cs" />
     <Compile Include="Help\RxBasedFooObservable.cs" />
     <Compile Include="Integration\Unexpected_disposal_of_subscriptions.cs" />

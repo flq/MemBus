@@ -65,7 +65,11 @@ namespace MemBus.Subscribing
         /// <param name="methodSelector">the method selector predicate</param>
         public FlexibleSubscribeAdapter PickUpMethods(Func<MethodInfo,bool> methodSelector)
         {
+            #if WINRT
+            AddToScanners(new MethodScanner(methodSelector, returnType => true));
+            #else
             AddToScanners(new MethodScanner(methodSelector, returnType => true, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly));
+            #endif
             return this;
         }
 

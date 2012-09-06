@@ -3,6 +3,7 @@ using System.Threading;
 
 using MemBus.Subscribing;
 using MemBus.Support;
+using Membus.Tests.Help;
 
 #if !WINRT
 using System.Windows.Threading;
@@ -16,14 +17,13 @@ namespace MemBus.Tests.Frame
 {
     internal static class Helpers
     {
-        #if !WINRT
-        public static Mock<ISubscription> MockSubscriptionThatHandles<T>()
+        
+        public static ISubscription MockSubscriptionThatHandles<T>()
         {
-            var mock = new Mock<ISubscription>();
-            mock.Setup(m => m.Handles(typeof(T))).Returns(true);
-            return mock;
+            return new SubscriptionThatFakesHandles<T>();
         }
 
+        #if !WINRT
         public static Mock<T> MockOf<T>() where T : class
         {
             return new Mock<T>(MockBehavior.Loose);

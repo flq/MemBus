@@ -102,11 +102,17 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MemBus\CompositeResolver.cs">
+      <Link>CompositeResolver.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\CompositeSubscription.cs">
       <Link>CompositeSubscription.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\ISubscriptionResolver.cs">
       <Link>ISubscriptionResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\MessageInfo.cs">
+      <Link>MessageInfo.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
@@ -120,14 +126,38 @@
     <Compile Include="..\MemBus\Messages\ExceptionOccurred.cs">
       <Link>Messages\ExceptionOccurred.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Publishing\IPublishPipelineMember.cs">
+      <Link>Publishing\IPublishPipelineMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\PublishToken.cs">
+      <Link>Publishing\PublishToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\IConfigurableBus.cs">
+      <Link>Setup\IConfigurableBus.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\IConfigurablePublishing.cs">
+      <Link>Setup\IConfigurablePublishing.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\IConfigurableSubscribing.cs">
+      <Link>Setup\IConfigurableSubscribing.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\ISetup.cs">
+      <Link>Setup\ISetup.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\StandardResolver.cs">
       <Link>StandardResolver.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Subscribing\Adapter\ConstructSubscriptionExtension.cs">
       <Link>Subscribing\Adapter\ConstructSubscriptionExtension.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\FlexibleSubscribeAdapter.cs">
+      <Link>Subscribing\Adapter\FlexibleSubscribeAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Subscribing\Adapter\IMethodInfoScanner.cs">
       <Link>Subscribing\Adapter\IMethodInfoScanner.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\Adapter\InterfaceBasedBuilder.cs">
+      <Link>Subscribing\Adapter\InterfaceBasedBuilder.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Subscribing\Adapter\MethodBasedBuilder.cs">
       <Link>Subscribing\Adapter\MethodBasedBuilder.cs</Link>
@@ -147,11 +177,26 @@
     <Compile Include="..\MemBus\Subscribing\IKnowsSubscribedInstance.cs">
       <Link>Subscribing\IKnowsSubscribedInstance.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Subscribing\ISubscriptionShaper.cs">
+      <Link>Subscribing\ISubscriptionShaper.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Subscribing\MethodInvocation.cs">
       <Link>Subscribing\MethodInvocation.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Subscribing\PublishingMethodInvocation.cs">
       <Link>Subscribing\PublishingMethodInvocation.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\ShapeToDispose.cs">
+      <Link>Subscribing\ShapeToDispose.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\APIAttribute.cs">
+      <Link>Support\APIAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\DisposeContainer.cs">
+      <Link>Support\DisposeContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\IServices.cs">
+      <Link>Support\IServices.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Support\UsefulExtensions.cs">
       <Link>Support\UsefulExtensions.cs</Link>

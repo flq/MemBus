@@ -55,5 +55,28 @@ namespace MemBus
                  select mi);
             return candidates;
         }
+
+        public static bool InterfaceIsSuitableAsHandlerType(this Type interfaceType)
+        {
+            return interfaceType.MethodsSuitableForSubscription().Count() == 1;
+        }
+
+        public static bool IsGenericType(this Type type)
+        {
+            return type.GetTypeInfo().IsGenericType;
+        }
+
+        public static IEnumerable<Type> GetInterfaces(this Type type)
+        {
+            return type.GetTypeInfo().ImplementedInterfaces;
+        }
+
+        public static IEnumerable<MethodInfo> MethodsSuitableForSubscription(this Type interfaceType)
+        {
+            return from mi in interfaceType.GetTypeInfo().DeclaredMethods
+                   where mi.GetParameters().Length == 1 &&
+                         mi.ReturnType.Equals(typeof(void))
+                   select mi;
+        }
     }
 }
