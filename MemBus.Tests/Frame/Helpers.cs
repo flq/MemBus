@@ -8,10 +8,11 @@ using Membus.Tests.Help;
 #if !WINRT
 using System.Windows.Threading;
 using Moq;
+#endif
 
 using MemBus.Publishing;
 using MemBus.Setup;
-#endif
+
 
 namespace MemBus.Tests.Frame
 {
@@ -34,13 +35,13 @@ namespace MemBus.Tests.Frame
             SynchronizationContext.SetSynchronizationContext(
                 new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
         }
-
+        #endif
         public static PublishChainCasing Configure(this PublishChainCasing pipeline, Action<IConfigurablePublishing> configure)
         {
             configure((IConfigurablePublishing) pipeline);
             return pipeline;
         }
-        #endif
+        
 
         public static SubscriptionBuilder MakeBuilder(this IMethodInfoScanner scanner)
         {

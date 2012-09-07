@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membus.WinRT.Tests", "Membu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemBus.RT", "MemBus.RT\MemBus.RT.csproj", "{5AD03087-8282-492B-872C-1454920521BB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B523FA20-8177-472B-AC02-2AC5C79C3BB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1EC6C146-3F52-4BFB-8123-999743BEC991} = {B523FA20-8177-472B-AC02-2AC5C79C3BB2}
+		{F3A4F168-8958-430A-94DD-7689EB12553F} = {B523FA20-8177-472B-AC02-2AC5C79C3BB2}
+		{517D04BE-C44B-4DA3-A40D-53F5D29B1E5E} = {B523FA20-8177-472B-AC02-2AC5C79C3BB2}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\MemBus.ndproj"

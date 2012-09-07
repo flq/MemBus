@@ -102,17 +102,26 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MemBus\Bus.cs">
+      <Link>Bus.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\CompositeResolver.cs">
       <Link>CompositeResolver.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\CompositeSubscription.cs">
       <Link>CompositeSubscription.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Configurators\Conservative.cs">
+      <Link>Configurators\Conservative.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\ISubscriptionResolver.cs">
       <Link>ISubscriptionResolver.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\MessageInfo.cs">
       <Link>MessageInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\MessageObservable.cs">
+      <Link>MessageObservable.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
@@ -126,11 +135,38 @@
     <Compile Include="..\MemBus\Messages\ExceptionOccurred.cs">
       <Link>Messages\ExceptionOccurred.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Publishing\DeferredPublishPipelineMember.cs">
+      <Link>Publishing\DeferredPublishPipelineMember.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\FireAndForgetPublisher.cs">
+      <Link>Publishing\FireAndForgetPublisher.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Publishing\IPublishPipelineMember.cs">
       <Link>Publishing\IPublishPipelineMember.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Publishing\ParallelBlockingPublisher.cs">
+      <Link>Publishing\ParallelBlockingPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\ParallelNonBlockingPublisher.cs">
+      <Link>Publishing\ParallelNonBlockingPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\PublishChain.cs">
+      <Link>Publishing\PublishChain.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\PublishChainCasing.cs">
+      <Link>Publishing\PublishChainCasing.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Publishing\PublishToken.cs">
       <Link>Publishing\PublishToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Publishing\SequentialPublisher.cs">
+      <Link>Publishing\SequentialPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\AdHocConfigurator.cs">
+      <Link>Setup\AdHocConfigurator.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Setup\BusSetup.cs">
+      <Link>Setup\BusSetup.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Setup\IConfigurableBus.cs">
       <Link>Setup\IConfigurableBus.cs</Link>
@@ -146,6 +182,9 @@
     </Compile>
     <Compile Include="..\MemBus\StandardResolver.cs">
       <Link>StandardResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscriber.cs">
+      <Link>Subscriber.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Subscribing\Adapter\ConstructSubscriptionExtension.cs">
       <Link>Subscribing\Adapter\ConstructSubscriptionExtension.cs</Link>
@@ -189,6 +228,18 @@
     <Compile Include="..\MemBus\Subscribing\ShapeToDispose.cs">
       <Link>Subscribing\ShapeToDispose.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Subscribing\ShapeToPassthrough.cs">
+      <Link>Subscribing\ShapeToPassthrough.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\SubscriptionPipeline.cs">
+      <Link>Subscribing\SubscriptionPipeline.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\SubscriptionShaperAggregate.cs">
+      <Link>Subscribing\SubscriptionShaperAggregate.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\AbstractServices.cs">
+      <Link>Support\AbstractServices.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Support\APIAttribute.cs">
       <Link>Support\APIAttribute.cs</Link>
     </Compile>
@@ -197,6 +248,18 @@
     </Compile>
     <Compile Include="..\MemBus\Support\IServices.cs">
       <Link>Support\IServices.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\MemBusException.cs">
+      <Link>Support\MemBusException.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\MustBePublicAttribute.cs">
+      <Link>Support\MustBePublicAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\Publish.cs">
+      <Link>Support\Publish.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Support\RespondExtension.cs">
+      <Link>Support\RespondExtension.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Support\UsefulExtensions.cs">
       <Link>Support\UsefulExtensions.cs</Link>

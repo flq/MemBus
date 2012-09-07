@@ -53,7 +53,7 @@ namespace MemBus.Support
                     let parms = mi.GetParameters()
                     where parms.Length == args.Length
                     let correlates = parms.Zip(args, 
-                      (pi, o) => (o == null && pi.ParameterType.IsClass) || 
+                      (pi, o) => (o == null && pi.ParameterType.GetTypeInfo().IsClass) || 
                                  ( o != null && pi.ParameterType.IsAssignableFrom(o.GetType())))
                                  .All(truth => truth)
                     where correlates
@@ -75,7 +75,7 @@ namespace MemBus.Support
 
             public override bool TryGetMember(GetMemberBinder binder, out object result)
             {
-                var possibleMembers = instance.GetType().GetMember(binder.Name);
+                var possibleMembers = instance.GetType().GetMember(binder.Name).ToArray();
                 OperationExists = possibleMembers.Length > 0;
                 if (OperationExists && possibleMembers[0] is EventInfo)
                 {
@@ -97,7 +97,7 @@ namespace MemBus.Support
                                        var possibleMembers = from pi in instance.GetType().GetMember(binder.Name).OfType<PropertyInfo>()
                                                              where pi.GetSetMethod() != null &&
                                                                    (
-                                                                       (pi.PropertyType.IsClass && value == null) ||
+                                                                       (pi.PropertyType.GetTypeInfo().IsClass && value == null) ||
                                                                        (value != null && pi.PropertyType.IsAssignableFrom(value.GetType()))
                                                                    )
                                                              select pi;

@@ -78,5 +78,15 @@ namespace MemBus
                          mi.ReturnType.Equals(typeof(void))
                    select mi;
         }
+
+        public static IEnumerable<MemberInfo> GetMember(this Type type, string name)
+        {
+            return type.GetTypeInfo().DeclaredMembers.Where(mi => mi.Name == name);
+        }
+
+        public static MethodInfo GetSetMethod(this PropertyInfo info) 
+        {
+            return info.GetMethod;
+        }
     }
 }

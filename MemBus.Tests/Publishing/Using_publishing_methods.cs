@@ -2,8 +2,15 @@
 using MemBus.Subscribing;
 using MemBus.Tests.Frame;
 using MemBus.Tests.Help;
-using Moq;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+using TestFixtureSetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+#else
 using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Publishing
 {
@@ -11,14 +18,14 @@ namespace MemBus.Tests.Publishing
     internal class Using_publishing_methods
     {
         private SubscriptionBuilder _builder;
-        private Mock<IPublisher> _publisher;
+        private FakePublisher _publisher;
 
         [TestFixtureSetUp]
         public void Given()
         {
-            _publisher = new Mock<IPublisher>();
+            _publisher = new FakePublisher();
             _builder = MethodScanner.ForNonVoidMethods("Route").MakeBuilder();
-            _builder.SetPublisher(_publisher.Object);
+            _builder.SetPublisher(_publisher);
         }
 
         [Test]
@@ -30,7 +37,7 @@ namespace MemBus.Tests.Publishing
 
             subscription.Handles(typeof(MessageB)).ShouldBeTrue();
             handler.MsgBCalls.ShouldBeEqualTo(1);
-            _publisher.Verify(p => p.Publish(It.IsAny<MessageC>()));
+            _publisher.VerifyMessageIsOfType<MessageC>();
         }
 
         [Test]
@@ -43,7 +50,7 @@ namespace MemBus.Tests.Publishing
 
             subscription.Handles(typeof(string)).ShouldBeTrue();
             handler.MsgCall.ShouldBeEqualTo(1);
-            _publisher.Verify(p => p.Publish(It.IsAny<int>()));
+            _publisher.VerifyMessageIsOfType<int>();
         }
     }
 }

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Frame\AssertExtensions.cs" />
+    <Compile Include="Help\FakePublisher.cs" />
     <Compile Include="Help\IClassicIHandleStuffI.cs" />
     <Compile Include="Help\ItfNonGenericForHandles.cs" />
     <Compile Include="Help\MessageA.cs" />

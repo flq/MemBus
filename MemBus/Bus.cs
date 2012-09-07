@@ -70,10 +70,12 @@ namespace MemBus
             return _subscriber.Subscribe(subscriber);
         }
 
+        #if !WINRT
         public IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization)
         {
             return _subscriber.Subscribe(subscription, customization);
         }
+        #endif
 
 
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization)

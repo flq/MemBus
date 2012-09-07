@@ -36,12 +36,14 @@ namespace MemBus
 
         }
 
+        #if !WINRT
         public IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization)
         {
             var subC = new SubscriptionCustomizer<M>(_subscriptionPipeline.GetIntroductionShape(), _services);
             customization(subC);
             return Subscribe(subscription, subC);
         }
+        #endif
 
 
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization)

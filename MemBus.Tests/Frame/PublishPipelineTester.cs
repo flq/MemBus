@@ -1,7 +1,6 @@
 using System;
 using MemBus.Publishing;
 using MemBus.Setup;
-using Moq;
 
 namespace MemBus.Tests.Frame
 {
@@ -9,18 +8,18 @@ namespace MemBus.Tests.Frame
     {
         private PublishToken token;
 
-        public Mock<IPublishPipelineMember> Mock1 { get; private set; }
-        public IPublishPipelineMember Mock1Object { get { return Mock1.Object; } }
-        public Mock<IPublishPipelineMember> Mock2 { get; private set; }
-        public IPublishPipelineMember Mock2Object { get { return Mock2.Object; } }
-        public Mock<IPublishPipelineMember> Mock3 { get; private set; }
-        public IPublishPipelineMember Mock3Object { get { return Mock3.Object; } }
+        public FakePublishPipelineMember Mock1 { get; private set; }
+        public IPublishPipelineMember Mock1Object { get { return Mock1; } }
+        public FakePublishPipelineMember Mock2 { get; private set; }
+        public IPublishPipelineMember Mock2Object { get { return Mock2; } }
+        public FakePublishPipelineMember Mock3 { get; private set; }
+        public IPublishPipelineMember Mock3Object { get { return Mock3; } }
 
         public PublishPipelineTester()
         {
-            Mock1 = Helpers.MockOf<IPublishPipelineMember>();
-            Mock2 = Helpers.MockOf<IPublishPipelineMember>();
-            Mock3 = Helpers.MockOf<IPublishPipelineMember>();
+            Mock1 = new FakePublishPipelineMember();
+            Mock2 = new FakePublishPipelineMember();
+            Mock3 = new FakePublishPipelineMember();
         }
 
         public PublishPipelineTester<T> TestWith(Action<IConfigurablePublishing> configuration)
@@ -37,14 +36,34 @@ namespace MemBus.Tests.Frame
             return token;
         }
 
-        public void VerifyNotCalled(Mock<IPublishPipelineMember> mock)
+    }
+
+    public class FakePublishPipelineMember : IPublishPipelineMember
+    {
+        private bool _cancelToken;
+
+        public void LookAt(PublishToken token)
         {
-            mock.Verify(m => m.LookAt(token), Times.Never());
+            Token = token;
+            if (_cancelToken)
+                Token.Cancel = true;
         }
 
-        public void VerifyCalled(Mock<IPublishPipelineMember> mock)
+        public void VerifyNotCalled()
         {
-            mock.Verify(m => m.LookAt(token));
+            Token.ShouldBeNull();
+        }
+
+        public void VerifyCalled()
+        {
+            Token.ShouldNotBeNull();
+        }
+
+        public PublishToken Token { get; set; }
+
+        internal void CancelTokenWhenSeen()
+        {
+            _cancelToken = true;
         }
     }
 }

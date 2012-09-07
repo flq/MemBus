@@ -3,10 +3,16 @@ using MemBus.Configurators;
 using MemBus.Publishing;
 using MemBus.Support;
 using MemBus.Tests.Help;
-using Moq;
-using NUnit.Framework;
 using System.Linq;
 using MemBus.Tests.Frame;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Publishing
 {
@@ -60,8 +66,8 @@ namespace MemBus.Tests.Publishing
             var t = new PublishPipelineTester<MessageB>();
             t.TestWith(pp => pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object));
 
-            t.VerifyCalled(t.Mock1);
-            t.VerifyCalled(t.Mock2);
+            t.Mock1.VerifyCalled();
+            t.Mock2.VerifyCalled();
         }
 
         [Test]
@@ -76,18 +82,18 @@ namespace MemBus.Tests.Publishing
                     });
 
 
-            t.VerifyNotCalled(t.Mock1);
-            t.VerifyCalled(t.Mock2);
+            t.Mock1.VerifyNotCalled();
+            t.Mock2.VerifyCalled();
         }
 
         [Test]
         public void Execution_of_pipeline_is_cancellable_by_member()
         {
             var t = new PublishPipelineTester<MessageA>();
-            t.Mock1.Setup(pm => pm.LookAt(It.IsAny<PublishToken>())).Callback((PublishToken token) => token.Cancel = true);
+            t.Mock1.CancelTokenWhenSeen();
             t.TestWith(pp => pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object));
-            t.VerifyCalled(t.Mock1);
-            t.VerifyNotCalled(t.Mock2);
+            t.Mock1.VerifyCalled();
+            t.Mock2.VerifyNotCalled();
         }
 
         [Test]
@@ -101,9 +107,9 @@ namespace MemBus.Tests.Publishing
                            });
 
 
-            t.VerifyCalled(t.Mock1);
-            t.VerifyNotCalled(t.Mock2);
-            t.VerifyCalled(t.Mock3);
+            t.Mock1.VerifyCalled();
+            t.Mock2.VerifyNotCalled();
+            t.Mock3.VerifyCalled();
         }
 
         [Test]

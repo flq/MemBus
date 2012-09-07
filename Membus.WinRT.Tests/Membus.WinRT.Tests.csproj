@@ -112,6 +112,12 @@
     <Compile Include="..\MemBus.Tests\Frame\Helpers.cs">
       <Link>Frame\Helpers.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Frame\PublishPipelineTester.cs">
+      <Link>Frame\PublishPipelineTester.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Help\FakePublisher.cs">
+      <Link>Help\FakePublisher.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Help\MessageA.cs">
       <Link>Help\MessageA.cs</Link>
     </Compile>
@@ -129,6 +135,12 @@
     </Compile>
     <Compile Include="..\MemBus.Tests\Help\SubscriptionThatFakesHandles.cs">
       <Link>Help\SubscriptionThatFakesHandles.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Publishing\Using_publishing_methods.cs">
+      <Link>Publishing\Using_publishing_methods.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Publishing\Using_Publish_Pipeline.cs">
+      <Link>Publishing\Using_Publish_Pipeline.cs</Link>
     </Compile>
     <Compile Include="..\MemBus.Tests\Subscribing\Using_Composite_Subscription.cs">
       <Link>Subscribing\Using_Composite_Subscription.cs</Link>
