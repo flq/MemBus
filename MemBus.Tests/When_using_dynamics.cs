@@ -1,9 +1,16 @@
 using System;
 using MemBus.Support;
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using MemBus;
 using MemBus.Tests.Frame;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests
 {
@@ -84,10 +91,15 @@ namespace MemBus.Tests
         }
 
         [Test]
-        public void Try_Invoke_ForProperties()
+        public void Try_Invoke_existing_setter()
         {
-            s.TryInvoke(d => d.Name = "Jones");
+            s.TryInvoke(d => d.Name = "Jones").ShouldBeTrue();
             s.Name.ShouldBeEqualTo("Jones");
+        }
+
+        [Test]
+        public void Try_invoke_no_setter()
+        {
             s.TryInvoke(d => d.Birthdate = DateTime.Now).ShouldBeFalse();
         }
 

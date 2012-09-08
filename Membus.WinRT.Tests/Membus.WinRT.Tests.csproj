@@ -127,6 +127,9 @@
     <Compile Include="..\MemBus.Tests\Help\MockSubscription.cs">
       <Link>Help\MockSubscription.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Help\SampleClass.cs">
+      <Link>Help\SampleClass.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Help\SimpleResolver.cs">
       <Link>Help\SimpleResolver.cs</Link>
     </Compile>
@@ -150,6 +153,9 @@
     </Compile>
     <Compile Include="..\MemBus.Tests\Subscribing\When_Resolving_Subscriptions.cs">
       <Link>Subscribing\When_Resolving_Subscriptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\When_using_dynamics.cs">
+      <Link>When_using_dynamics.cs</Link>
     </Compile>
     <Compile Include="..\MemBus.Tests\When_using_standard_resolver.cs">
       <Link>When_using_standard_resolver.cs</Link>

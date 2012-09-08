@@ -86,7 +86,7 @@ namespace MemBus
 
         public static MethodInfo GetSetMethod(this PropertyInfo info) 
         {
-            return info.GetMethod;
+            return info.SetMethod;
         }
     }
 }

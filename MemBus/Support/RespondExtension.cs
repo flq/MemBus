@@ -95,7 +95,7 @@ namespace MemBus.Support
                                _ =>
                                    {
                                        var possibleMembers = from pi in instance.GetType().GetMember(binder.Name).OfType<PropertyInfo>()
-                                                             where pi.GetSetMethod() != null &&
+                                                             where pi.GetSetMethod() != null && pi.GetSetMethod().IsPublic &&
                                                                    (
                                                                        (pi.PropertyType.GetTypeInfo().IsClass && value == null) ||
                                                                        (value != null && pi.PropertyType.IsAssignableFrom(value.GetType()))
