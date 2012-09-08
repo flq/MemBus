@@ -3,10 +3,17 @@ using System.Linq;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using Moq;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
 using MemBus.Support;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+#else
+using NUnit.Framework;
+using Moq;
+#endif
 
 namespace MemBus.Tests.Subscribing
 {
@@ -17,9 +24,10 @@ namespace MemBus.Tests.Subscribing
         public void Unconfigured_setup_will_throw_invalid_op()
         {
             var setup = new FlexibleSubscribeAdapter();
-            Assert.Throws<InvalidOperationException>(() => ((ISetup<IConfigurableBus>)setup).Accept(null));
+            (new Action(() => ((ISetup<IConfigurableBus>)setup).Accept(null))).Throws<InvalidOperationException>();
         }
 
+        #if !WINRT
         [Test]
         public void When_having_some_configuration_adapter_adds_itself_as_service()
         {
@@ -31,6 +39,7 @@ namespace MemBus.Tests.Subscribing
 
             bus.Verify(c=>c.AddService<IAdapterServices>(setup));
         }
+        #endif
 
         [Test]
         public void Integrative_test_of_finding_all_handlers_in_complex_scenario()
@@ -81,6 +90,8 @@ namespace MemBus.Tests.Subscribing
             handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
+        #if !WINRT
+        //MSTest is just too sucky to port this test.
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseNoParameter))]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseTwoMethodsOfrequestedPattern))]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseReturnType))]
@@ -89,6 +100,7 @@ namespace MemBus.Tests.Subscribing
         {
             Assert.Throws<InvalidOperationException>(() => { new InterfaceBasedBuilder(interfaceType); });
         }
+        #endif
 
         [Test]
         public void Non_generic_interface_is_properly_handled()

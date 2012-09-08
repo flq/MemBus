@@ -207,6 +207,9 @@
     <Compile Include="..\MemBus\Subscribing\DisposableSubscription.cs">
       <Link>Subscribing\DisposableSubscription.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Subscribing\FilteredSubscription.cs">
+      <Link>Subscribing\FilteredSubscription.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Subscribing\IAcceptDisposeToken.cs">
       <Link>Subscribing\IAcceptDisposeToken.cs</Link>
     </Compile>
@@ -236,6 +239,9 @@
     </Compile>
     <Compile Include="..\MemBus\Subscribing\SubscriptionShaperAggregate.cs">
       <Link>Subscribing\SubscriptionShaperAggregate.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Subscribing\UiDispatchingSubscription.cs">
+      <Link>Subscribing\UiDispatchingSubscription.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\Support\AbstractServices.cs">
       <Link>Support\AbstractServices.cs</Link>

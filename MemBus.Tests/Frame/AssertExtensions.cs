@@ -122,5 +122,24 @@ namespace MemBus.Tests.Frame
                 Assert.Fail("Exception of type " + x.GetType().Name + " was thrown: " + x.Message);
             }
         }
+
+        public static T Throws<T>(this Action action) where T : Exception
+        {
+            try
+            {
+                action();
+                Assert.Fail("Expected exception of type " + typeof(T).Name + " but nothing was thrown.");
+            }
+            catch (T x)
+            {
+                //Cool
+                return x;
+            }
+            catch (Exception x)
+            {
+                Assert.Fail("Expected exception of type " + typeof(T).Name + " but caught " + x.GetType().Name + " with: " + x.Message);
+            }
+            return null;
+        }
     }
 }

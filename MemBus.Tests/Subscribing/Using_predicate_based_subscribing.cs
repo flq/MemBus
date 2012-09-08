@@ -1,8 +1,16 @@
 ﻿using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+using TestFixtureSetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Subscribing
 {

@@ -118,6 +118,12 @@
     <Compile Include="..\MemBus.Tests\Help\FakePublisher.cs">
       <Link>Help\FakePublisher.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Help\IClassicIHandleStuffI.cs">
+      <Link>Help\IClassicIHandleStuffI.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Help\ItfNonGenericForHandles.cs">
+      <Link>Help\ItfNonGenericForHandles.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Help\MessageA.cs">
       <Link>Help\MessageA.cs</Link>
     </Compile>
@@ -127,17 +133,26 @@
     <Compile Include="..\MemBus.Tests\Help\MockSubscription.cs">
       <Link>Help\MockSubscription.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Help\NamedSubscription.cs">
+      <Link>Help\NamedSubscription.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Help\SampleClass.cs">
       <Link>Help\SampleClass.cs</Link>
     </Compile>
     <Compile Include="..\MemBus.Tests\Help\SimpleResolver.cs">
       <Link>Help\SimpleResolver.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Help\SomeCrazyHandler.cs">
+      <Link>Help\SomeCrazyHandler.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Help\SomeHandler.cs">
       <Link>Help\SomeHandler.cs</Link>
     </Compile>
     <Compile Include="..\MemBus.Tests\Help\SubscriptionThatFakesHandles.cs">
       <Link>Help\SubscriptionThatFakesHandles.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Help\TestShaper.cs">
+      <Link>Help\TestShaper.cs</Link>
     </Compile>
     <Compile Include="..\MemBus.Tests\Publishing\Using_publishing_methods.cs">
       <Link>Publishing\Using_publishing_methods.cs</Link>
@@ -151,8 +166,20 @@
     <Compile Include="..\MemBus.Tests\Subscribing\Using_disposable_method_subscription.cs">
       <Link>Subscribing\Using_disposable_method_subscription.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Subscribing\Using_predicate_based_subscribing.cs">
+      <Link>Subscribing\Using_predicate_based_subscribing.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Subscribing\Using_SubscriptionAdapter_Service.cs">
+      <Link>Subscribing\Using_SubscriptionAdapter_Service.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Subscribing\Using_subscription_shapes.cs">
+      <Link>Subscribing\Using_subscription_shapes.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Subscribing\When_Resolving_Subscriptions.cs">
       <Link>Subscribing\When_Resolving_Subscriptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Subscribing\When_subscribing.cs">
+      <Link>Subscribing\When_subscribing.cs</Link>
     </Compile>
     <Compile Include="..\MemBus.Tests\When_using_dynamics.cs">
       <Link>When_using_dynamics.cs</Link>

@@ -111,6 +111,26 @@ namespace MemBus.Tests.Frame
             Assert.IsInstanceOfType(target, typeof(T));
         }
 
+        public static T Throws<T>(this Action action) where T : Exception
+        {
+            try
+            {
+                action();
+                Assert.Fail("Expected exception of type " + typeof(T).Name + " but nothing was thrown.");
+            }
+            catch (T x)
+            {
+                //Cool
+                return x;
+            }
+            catch (Exception x)
+            {
+                Assert.Fail("Expected exception of type " + typeof(T).Name + " but caught " + x.GetType().Name + " with: " + x.Message);
+            }
+            return null;
+        }
+
+
         public static void DoesNotThrow(this Action action)
         {
             try
