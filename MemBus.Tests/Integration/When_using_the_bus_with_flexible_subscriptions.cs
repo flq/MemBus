@@ -2,9 +2,17 @@ using System;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
 using System.Linq;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+using SetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Integration
 {
@@ -27,7 +35,8 @@ namespace MemBus.Tests.Integration
         public void Without_flexibility_setup_subscribing_instance_throws()
         {
             var b = BusSetup.StartWith<Conservative>().Construct();
-            Assert.Throws<InvalidOperationException>(() => b.Subscribe(new SomeHandler()));
+            new Action(() => b.Subscribe(new SomeHandler())).Throws<InvalidOperationException>();
+            
         }
 
         [Test]
@@ -99,7 +108,7 @@ namespace MemBus.Tests.Integration
             var h = new HandlerReturningNull();
             using (_bus.Subscribe(h))
             {
-                Assert.DoesNotThrow(()=>_bus.Publish("Causing a null being returned from a route"));
+                new Action(()=>_bus.Publish("Causing a null being returned from a route")).DoesNotThrow();
                 h.MsgCall.ShouldBeEqualTo(1);
             }
         }

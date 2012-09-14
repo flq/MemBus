@@ -111,8 +111,20 @@
     <Compile Include="..\MemBus\CompositeSubscription.cs">
       <Link>CompositeSubscription.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\Configurators\AsyncConfiguration.cs">
+      <Link>Configurators\AsyncConfiguration.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Configurators\Conservative.cs">
       <Link>Configurators\Conservative.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\Configurators\IoCSupport.cs">
+      <Link>Configurators\IoCSupport.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\IocAdapter.cs">
+      <Link>IocAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus\IoCBasedResolver.cs">
+      <Link>IoCBasedResolver.cs</Link>
     </Compile>
     <Compile Include="..\MemBus\ISubscriptionResolver.cs">
       <Link>ISubscriptionResolver.cs</Link>

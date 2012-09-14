@@ -47,13 +47,20 @@ namespace MemBus.Subscribing
         {
             get
             {
-                //TODO: This was some issue with the way a delegate was constructed
                 #if !WINRT
                 if (action.Target is Closure)
                 {
                     return ((Closure)action.Target).Constants[0];
                 }
+                #else
+                // Disgusting fact: WinRT uses the same Closure type, but we cannot reach it...
+                if (action.Target.GetType().Name == "Closure") 
+                {
+                    dynamic z = action.Target;
+                    return z.Constants[0];
+                }
                 #endif
+
                 return action.Target;
             }
         }

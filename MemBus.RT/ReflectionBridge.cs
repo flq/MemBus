@@ -33,6 +33,11 @@ namespace MemBus
             return type.GetTypeInfo().ImplementedInterfaces.Any(t => t == typeof(T));
         }
 
+        public static Type[] GetGenericArguments(this Type type)
+        {
+            return type.GetTypeInfo().GenericTypeArguments;
+        }
+
         public static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(
             this Type reflectedType,
             Func<MethodInfo, bool> methodSelector,
@@ -87,6 +92,11 @@ namespace MemBus
         public static MethodInfo GetSetMethod(this PropertyInfo info) 
         {
             return info.SetMethod;
+        }
+
+        public static MethodInfo[] GetMethods(this Type type)
+        {
+            return type.GetTypeInfo().DeclaredMethods.ToArray();
         }
     }
 }

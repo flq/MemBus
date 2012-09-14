@@ -2,8 +2,16 @@ using System.Threading;
 using System.Windows.Threading;
 using MemBus.Configurators;
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+using SetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Integration
 {

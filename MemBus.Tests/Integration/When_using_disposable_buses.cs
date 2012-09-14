@@ -1,7 +1,16 @@
 using System;
 using MemBus.Configurators;
 using MemBus.Tests.Help;
+using MemBus.Tests.Frame;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+using TestFixtureSetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+#else
 using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Integration
 {
@@ -13,9 +22,9 @@ namespace MemBus.Tests.Integration
         {
             var bus = BusSetup.StartWith<Conservative>().Construct();
             bus.Dispose();
-            Assert.Throws<ObjectDisposedException>(() => bus.Publish(new MessageA()));
-            Assert.Throws<ObjectDisposedException>(() => bus.Subscribe<MessageA>(msg=>{}));
-            Assert.Throws<ObjectDisposedException>(() => bus.Observe<MessageA>());
+            (new Action(() => bus.Publish(new MessageA()))).Throws<ObjectDisposedException>();
+            (new Action(() => bus.Subscribe<MessageA>(msg=>{}))).Throws<ObjectDisposedException>();
+            (new Action(() => bus.Observe<MessageA>())).Throws<ObjectDisposedException>();
         }
        
     }

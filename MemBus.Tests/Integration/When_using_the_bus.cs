@@ -3,9 +3,16 @@ using System.Threading;
 using MemBus.Configurators;
 using MemBus.Messages;
 using MemBus.Tests.Help;
-using Moq;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
+using Membus.Tests.Help;
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+using TestFixtureSetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Integration
 {
@@ -15,14 +22,14 @@ namespace MemBus.Tests.Integration
         [Test]
         public void Default_setup_routes_the_message_correctly()
         {
-            var sub = new Mock<ISubscription>();
-            sub.Setup(s => s.Handles(typeof(MessageA))).Returns(true);
+            var sub = new SubscriptionThatFakesHandles<MessageA>();
+            
             var b = BusSetup
-                .StartWith<Conservative>(cb => cb.AddSubscription(sub.Object))
+                .StartWith<Conservative>(cb => cb.AddSubscription(sub))
                 .Construct();
             var messageA = new MessageA();
             b.Publish(messageA);
-            sub.Verify(s=>s.Push(messageA));
+            sub.PushCalls.ShouldBeEqualTo(1);
         }
 
         [Test]
@@ -43,6 +50,7 @@ namespace MemBus.Tests.Integration
             simpleResolver.Services.ShouldNotBeNull();
         }
 
+        #if !WINRT
         [Test]
         public void Subscription_with_filtering_works()
         {
@@ -53,6 +61,7 @@ namespace MemBus.Tests.Integration
             b.Publish(new MessageB { Id = "B" });
             received.ShouldBeEqualTo(1);
         }
+        #endif
 
         [Test]
         public void Exceptions_are_made_available_as_messages()

@@ -65,6 +65,9 @@
     <Compile Include="Integration\Integration_scenario_interaction_with_subscriber.cs" />
     <Compile Include="Help\RxBasedFooObservable.cs" />
     <Compile Include="Integration\Unexpected_disposal_of_subscriptions.cs" />
+    <Compile Include="Integration\When_using_the_bus_in_the_ui.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Publishing\Using_publishing_methods.cs" />
     <Compile Include="Subscribing\Using_predicate_based_subscribing.cs" />
     <Compile Include="Subscribing\Using_SubscriptionAdapter_Service.cs" />
@@ -76,7 +79,6 @@
     <Compile Include="Frame\PublishPipelineTester.cs" />
     <Compile Include="Subscribing\When_subscribing.cs" />
     <Compile Include="Integration\When_using_disposable_buses.cs" />
-    <Compile Include="Integration\When_using_the_bus_in_the_ui.cs" />
     <Compile Include="Frame\Helpers.cs" />
     <Compile Include="Help\Messages.cs" />
     <Compile Include="Help\MockSubscription.cs" />

@@ -1,8 +1,17 @@
 using System;
 using System.Collections.Generic;
+using MemBus;
 using MemBus.Configurators;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+using TestFixtureSetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Integration
 {
@@ -56,17 +65,20 @@ namespace MemBus.Tests.Integration
         [Test]
         public void fail_if_no_adapter_was_specified()
         {
-            var x = Assert.Throws<ArgumentException>(()=>BusSetup.StartWith<Conservative>().Apply<IoCSupport>().Construct());
-            x.Message.ShouldContain("IocAdapter");
+            (new Action(() => BusSetup.StartWith<Conservative>().Apply<IoCSupport>().Construct()))
+                .Throws<ArgumentException>()
+                .Message.ShouldContain("IocAdapter");
         }
 
         [Test]
         public void fail_if_no_handler_type_has_been_specified()
         {
-            var x = Assert.Throws<ArgumentException>(() => BusSetup.StartWith<Conservative>().Apply<IoCSupport>(s => s.SetAdapter(_testAdapter)).Construct());
-            x.Message.ShouldContain("handler type");
+            (new Action(() => BusSetup.StartWith<Conservative>().Apply<IoCSupport>(s => s.SetAdapter(_testAdapter)).Construct()))
+                .Throws<ArgumentException>()
+                .Message.ShouldContain("handler type");
         }
 
+        #if !WINRT
         [Test]
         [TestCase(typeof(NotOpenGeneric))]
         [TestCase(typeof(TooManyGenericTypes<,>))]
@@ -81,6 +93,7 @@ namespace MemBus.Tests.Integration
                     .SetHandlerInterface(handlerType))
                 .Construct());
         }
+        #endif
 
         [Test]
         public void ioc_asked_for_the_right_type()

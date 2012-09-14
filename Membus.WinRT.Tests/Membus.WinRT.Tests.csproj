@@ -154,6 +154,24 @@
     <Compile Include="..\MemBus.Tests\Help\TestShaper.cs">
       <Link>Help\TestShaper.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Integration\Integration_scenario_interaction_with_subscriber.cs">
+      <Link>Integration\Integration_scenario_interaction_with_subscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Integration\Unexpected_disposal_of_subscriptions.cs">
+      <Link>Integration\Unexpected_disposal_of_subscriptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Integration\When_using_disposable_buses.cs">
+      <Link>Integration\When_using_disposable_buses.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Integration\When_using_ioc_support.cs">
+      <Link>Integration\When_using_ioc_support.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Integration\When_using_the_bus.cs">
+      <Link>Integration\When_using_the_bus.cs</Link>
+    </Compile>
+    <Compile Include="..\MemBus.Tests\Integration\When_using_the_bus_with_flexible_subscriptions.cs">
+      <Link>Integration\When_using_the_bus_with_flexible_subscriptions.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Publishing\Using_publishing_methods.cs">
       <Link>Publishing\Using_publishing_methods.cs</Link>
     </Compile>

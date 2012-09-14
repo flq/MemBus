@@ -1,6 +1,11 @@
 using System;
+using System.Reflection;
 using MemBus.Setup;
 using MemBus.Support;
+
+#if WINRT
+using MemBus;
+#endif
 
 namespace MemBus.Configurators
 {
@@ -46,7 +51,7 @@ namespace MemBus.Configurators
                 throw new ArgumentException("The IocAdapter has not been specified on the Ioc support.");
             if (_handlerType == null)
                 throw new ArgumentException("No handler type has been specified.");
-            if (!_handlerType.IsGenericTypeDefinition)
+            if (!_handlerType.GetTypeInfo().IsGenericTypeDefinition)
                 throw new ArgumentException("An open generic should be specified as handler type");
             if (_handlerType.GetGenericArguments().Length != 1)
                 throw new ArgumentException("An open generic should be specified that has only one type argument");
