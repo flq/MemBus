@@ -35,7 +35,7 @@ namespace MemBus
 
         public static Type[] GetGenericArguments(this Type type)
         {
-            return type.GetTypeInfo().GenericTypeArguments;
+            return type.GetTypeInfo().GenericTypeParameters;
         }
 
         public static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(

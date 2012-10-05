@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using MemBus.Messages;
 using MemBus.Subscribing;
 
+#if !WINRT
+using System.Runtime.CompilerServices;
+#endif
+
 namespace MemBus.Support
 {
     /// <summary>
@@ -65,6 +69,30 @@ namespace MemBus.Support
         {
             return sub is IDisposableSubscription ? ((IDisposableSubscription)sub).GetDisposer() : null;
         }
+
+        public static object ExtractTarget(this Delegate action)
+        {
+            if (action.Target == null)
+                return null;
+
+            #if !WINRT
+            if (action.Target is Closure)
+            {
+                return ((Closure)action.Target).Constants[0];
+            }
+            #else
+            // Disgusting fact: WinRT uses the same Closure type, but we cannot reach it...
+            if (action.Target.GetType().Name == "Closure") 
+            {
+                dynamic z = action.Target;
+                return z.Constants[0];
+            }
+            #endif
+
+            return action.Target;
+        }
+
+
 
     }
 }

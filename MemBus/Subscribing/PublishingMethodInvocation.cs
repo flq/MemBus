@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
+using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
@@ -57,13 +58,7 @@ namespace MemBus.Subscribing
         {
             get
             {
-                #if !WINRT
-                if (_action.Target is Closure)
-                {
-                    return ((Closure)_action.Target).Constants[0];
-                } 
-                #endif
-                return _action.Target;
+                return _action.ExtractTarget();
             }
         }
     }

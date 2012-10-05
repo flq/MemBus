@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using MemBus.Support;
 
 namespace MemBus.Subscribing
 {
@@ -47,21 +48,7 @@ namespace MemBus.Subscribing
         {
             get
             {
-                #if !WINRT
-                if (action.Target is Closure)
-                {
-                    return ((Closure)action.Target).Constants[0];
-                }
-                #else
-                // Disgusting fact: WinRT uses the same Closure type, but we cannot reach it...
-                if (action.Target.GetType().Name == "Closure") 
-                {
-                    dynamic z = action.Target;
-                    return z.Constants[0];
-                }
-                #endif
-
-                return action.Target;
+                return action.ExtractTarget();
             }
         }
     }
