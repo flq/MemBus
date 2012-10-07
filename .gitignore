@@ -22,4 +22,5 @@ Nuget/MemBus/readme.md
 *.nupkg
 *.Dotsettings
 *.pfx
+AppPackages
 readme.html

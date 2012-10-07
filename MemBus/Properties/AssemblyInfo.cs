@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Frank Quednau")]
 [assembly: AssemblyProduct("MemBus")]
-[assembly: AssemblyCopyright("Apache 2.0 licensed 2010 realfiction (F Quednau)")]
+[assembly: AssemblyCopyright("Apache 2.0 licensed 2012 realfiction (F Quednau)")]
 
 
 [assembly: ComVisible(false)]
@@ -15,5 +15,5 @@ using System.Runtime.InteropServices;
 [assembly:InternalsVisibleTo("MemBus.Tests")]
 [assembly: InternalsVisibleTo("MemBus.WinRT.Tests")]
 
-[assembly: AssemblyVersion("1.5.4")]
-[assembly: AssemblyFileVersion("1.5.4")]
+[assembly: AssemblyVersion("2.0.0")]
+[assembly: AssemblyFileVersion("2.0.0")]

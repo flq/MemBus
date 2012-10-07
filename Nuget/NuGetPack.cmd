@@ -1,2 +1,2 @@
-nuget pack MemBus\MemBus.nuspec
+..\.nuget\nuget.exe pack MemBus\MemBus.nuspec
 pause

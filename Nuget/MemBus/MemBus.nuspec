@@ -2,11 +2,11 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>MemBus</id>
-    <version>1.5.4</version>
+    <version>2.0.0</version>
     <authors>Frank Quednau</authors>
     <owners>Frank Quednau</owners>
     <description>In-memory publish-subscribe bus with pluggable subscription and publishing pipeline, first-class support of Observables, contravariant messaging and resolution of handlers through pluggable IOC.</description> 
-    <releaseNotes>Extension of FlexibleSubscribeAdapter: Register subscribing methods based on a predicate</releaseNotes>
+    <releaseNotes>Bump up to version 2.0 due to drop of SL5 support and inclusion of WinRT support.</releaseNotes>
     <projectUrl>http://github.com/flq/MemBus</projectUrl>
     <licenseUrl>http://www.opensource.org/licenses/apache2.0</licenseUrl>
     <iconUrl>http://realfiction.net/files/bus.png</iconUrl>
