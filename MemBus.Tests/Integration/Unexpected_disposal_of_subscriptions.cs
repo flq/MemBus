@@ -7,7 +7,7 @@ using MemBus.Tests.Frame;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
 using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
-using TestFixtureSetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+using SetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
 #else
 using NUnit.Framework;
 #endif
@@ -52,7 +52,7 @@ namespace MemBus.Tests.Integration
         private Subscriber _partnerInCrime1;
         private Subscriber _partnerInCrime2;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void Given()
         {
             _bus = BusSetup.StartWith<Conservative>()
@@ -82,6 +82,7 @@ namespace MemBus.Tests.Integration
         [Test]
         public void one_subscription_got_the_message()
         {
+            _bus.Publish("Boo!");
             (_partnerInCrime1.GotMessage || _partnerInCrime2.GotMessage).ShouldBeTrue();
         }
     }

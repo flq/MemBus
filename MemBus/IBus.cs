@@ -34,11 +34,13 @@ namespace MemBus
         /// <summary>
         /// Subscribe and additionally specify customizations to be applied to the subscription
         /// </summary>
+        [Obsolete("Apply customization conventionally by setting up the bus accordingly")]
         IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization);
 
         /// <summary>
         /// Subscribe and use some predefined customizations available through MemBus
         /// </summary>
+        [Obsolete("Apply customization conventionally by setting up the bus accordingly")]
         IDisposable Subscribe<M>(Action<M> subscription, Action<SubscriptionCustomizer<M>> customization);
         #endif
 
