@@ -1,11 +1,20 @@
 ﻿using System;
-using System.Reactive.Linq;
+
 using System.Text;
 using MemBus.Configurators;
 using MemBus.Tests.Help;
-using NUnit.Framework;
 using MemBus.Tests.Frame;
+using System.Reactive.Linq;
+
 using MessageA = Membus.Reactive.Tests.Help.MessageA;
+
+#if WINRT
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
+using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
+#else
+using NUnit.Framework;
+#endif
 
 namespace MemBus.Tests.Rx
 {

@@ -15,6 +15,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Membus.WinRT.Tests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -136,6 +138,9 @@
     <Compile Include="..\MemBus.Tests\Help\NamedSubscription.cs">
       <Link>Help\NamedSubscription.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Help\RxBasedFooObservable.cs">
+      <Link>Help\RxBasedFooObservable.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Help\SampleClass.cs">
       <Link>Help\SampleClass.cs</Link>
     </Compile>
@@ -178,6 +183,9 @@
     <Compile Include="..\MemBus.Tests\Publishing\Using_Publish_Pipeline.cs">
       <Link>Publishing\Using_Publish_Pipeline.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus.Tests\Rx\When_MemBus_is_used_as_Observable.cs">
+      <Link>Rx\When_MemBus_is_used_as_Observable.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus.Tests\Subscribing\Using_Composite_Subscription.cs">
       <Link>Subscribing\Using_Composite_Subscription.cs</Link>
     </Compile>
@@ -213,6 +221,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Membus.WinRT.Tests_TemporaryKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MemBus.RT\MemBus.RT.csproj">
@@ -226,10 +235,25 @@
     <Content Include="Images\UnitTestSplashScreen.png" />
     <Content Include="Images\UnitTestStoreLogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.0.20823\lib\WinRT45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.0.20823\lib\WinRT45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.0.20823\lib\WinRT45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.0.20823\lib\WinRT45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

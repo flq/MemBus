@@ -174,6 +174,9 @@
     <Compile Include="..\MemBus\Publishing\SequentialPublisher.cs">
       <Link>Publishing\SequentialPublisher.cs</Link>
     </Compile>
+    <Compile Include="..\MemBus\RxEnabledObservable.cs">
+      <Link>RxEnabledObservable.cs</Link>
+    </Compile>
     <Compile Include="..\MemBus\Setup\AdHocConfigurator.cs">
       <Link>Setup\AdHocConfigurator.cs</Link>
     </Compile>
