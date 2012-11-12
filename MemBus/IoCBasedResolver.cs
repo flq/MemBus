@@ -8,18 +8,18 @@ namespace MemBus
 {
     internal class IoCBasedResolver : ISubscriptionResolver
     {
-
         private readonly IocAdapter adapter;
         private readonly Type _handlerType;
+        private readonly Func<Type, Type> _messageTypeResolver;
 
         private readonly ConcurrentDictionary<Type, Type> typeCache = new ConcurrentDictionary<Type, Type>();
 
-        public IoCBasedResolver(IocAdapter adapter, Type handlerType)
+        public IoCBasedResolver(IocAdapter adapter, Type handlerType, Func<Type, Type> messageTypeResolver)
         {
             this.adapter = adapter;
             _handlerType = handlerType;
+            _messageTypeResolver = messageTypeResolver;
         }
-
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
@@ -31,7 +31,7 @@ namespace MemBus
 
         private Type constructHandlesType(Type messageType)
         {
-            return typeCache.GetOrAdd(messageType, msgT => _handlerType.MakeGenericType(messageType));
+            return typeCache.GetOrAdd(messageType, msgT => _handlerType.MakeGenericType(_messageTypeResolver(msgT)));
         }
 
         public bool Add(ISubscription subscription)

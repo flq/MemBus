@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
 using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
 using TestFixtureSetUp = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestInitializeAttribute;
+using System.Reflection;
 #else
 using NUnit.Framework;
 #endif
@@ -20,12 +21,15 @@ namespace MemBus.Tests.Integration
         public Type TypePassedIn;
 
         public IocSubscribed TheSubscribed = new IocSubscribed();
+        public IocSubscribedTypeResolver TheSubscribedTypeResolver = new IocSubscribedTypeResolver();
 
         public IEnumerable<object> GetAllInstances(Type desiredType)
         {
             TypePassedIn = desiredType;
             if (TypePassedIn.Equals(typeof(GimmeMsg<string>)))
-              yield return TheSubscribed;
+                yield return TheSubscribed;
+            if (TypePassedIn.Equals(typeof(GimmeMsgTypeResolver<string>)))
+                yield return TheSubscribedTypeResolver;
         }
     }
 
@@ -45,6 +49,42 @@ namespace MemBus.Tests.Integration
         }
     }
 
+    public interface IEnvelope<out T>
+    {
+        T Body { get; }
+    }
+
+    public class Envelope<T> : IEnvelope<T>
+    {
+        public Envelope(T body)
+        {
+            this.Body = body;
+        }
+
+        public T Body { get; private set; }
+
+        //public static implicit operator Envelope<T>(T body)
+        //{
+        //    return new Envelope<T>(body);
+        //}
+
+        public override string ToString()
+        {
+            return Convert.ToString(this.Body) + " in envelope";
+        }
+    }
+
+    public interface GimmeMsgTypeResolver<T> { void Gimme(IEnvelope<T> msg); }
+
+    public class IocSubscribedTypeResolver : GimmeMsgTypeResolver<string>
+    {
+        public string CapturedMessage;
+
+        public void Gimme(IEnvelope<string> msg)
+        {
+            CapturedMessage = msg.ToString();
+        }
+    }
 
     [TestFixture]
     public class When_using_ioc_support
@@ -107,6 +147,43 @@ namespace MemBus.Tests.Integration
         {
             _bus.Publish("Foo");
             _testAdapter.TheSubscribed.CapturedMessage.ShouldBeEqualTo("Foo");
+        }
+    }
+
+    [TestFixture]
+    public class When_using_ioc_support_with_type_resolver
+    {
+        private IBus _bus;
+        private TestAdapter _testAdapter;
+
+        [TestFixtureSetUp]
+        public void Given()
+        {
+            _testAdapter = new TestAdapter();
+            _bus = BusSetup
+                .StartWith<Conservative>()
+                .Apply<IoCSupport>(s => s.SetAdapter(_testAdapter).SetHandlerInterface(typeof(GimmeMsgTypeResolver<>))
+#if WINRT
+                    .SetMessageTypeResolver(msgT => msgT.GetTypeInfo().GenericTypeArguments[0]) // unwrap from envelope
+#else
+                    .SetMessageTypeResolver(msgT => msgT.GetGenericArguments()[0]) // unwrap from envelope
+#endif
+                )
+                .Construct();
+        }
+
+        [Test]
+        public void ioc_asked_for_the_right_type()
+        {
+            _bus.Publish(new Envelope<int>(1));
+            _testAdapter.TypePassedIn.ShouldBeEqualTo(typeof(GimmeMsgTypeResolver<int>));
+        }
+
+        [Test]
+        public void ioc_handler_is_being_used()
+        {
+            _bus.Publish(new Envelope<string>("Foo"));
+            _testAdapter.TheSubscribedTypeResolver.CapturedMessage.ShouldBeEqualTo("Foo in envelope");
         }
     }
 }

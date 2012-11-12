@@ -16,6 +16,7 @@ namespace MemBus.Configurators
     {
         private IocAdapter _adapter;
         private Type _handlerType;
+        private Func<Type, Type> _messageTypeResolver = msgT => msgT;
 
         /// <summary>
         /// Add an IoCadapter that will be used to resolve subscriptions. subscriptions will be resolved based on the interface you provide
@@ -38,11 +39,21 @@ namespace MemBus.Configurators
             return this;
         }
 
+        /// <summary>
+        /// Set the function that will be used to resolve the type of message that will be used when resolving handler type.
+        /// It may be useful if the generic type of the open generic handler interface is not exactly matching the type of the messages passed.
+        /// </summary>
+        public IoCSupport SetMessageTypeResolver(Func<Type, Type> messageTypeResolver)
+        {
+            _messageTypeResolver = messageTypeResolver;
+            return this;
+        }
+
         void ISetup<IConfigurableBus>.Accept(IConfigurableBus setup)
         {
             ThrowIfBadPreconditions();
             setup.AddService(_adapter);
-            setup.AddResolver(new IoCBasedResolver(_adapter, _handlerType));
+            setup.AddResolver(new IoCBasedResolver(_adapter, _handlerType, _messageTypeResolver));
         }
 
         private void ThrowIfBadPreconditions()
