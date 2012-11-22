@@ -63,11 +63,6 @@ namespace MemBus.Tests.Integration
 
         public T Body { get; private set; }
 
-        //public static implicit operator Envelope<T>(T body)
-        //{
-        //    return new Envelope<T>(body);
-        //}
-
         public override string ToString()
         {
             return Convert.ToString(this.Body) + " in envelope";
