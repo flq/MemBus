@@ -8,19 +8,27 @@ namespace MemBus.Subscribing
         private ISubscription action;
 
         public DisposableSubscription(ISubscription action)
-        {
+       { 
             this.action = action;
         }
 
         public void Push(object message)
         {
-            if (!IsDisposed)
-              action.Push(message);
+            // To prevent a possible race condition in which the subscription is disposed and set to null
+            // and somebody else looks up this subscription for usage, we check for null.
+            var a = action;
+            if (a != null)
+              a.Push(message);
         }
 
         public bool Handles(Type messageType)
         {
-            return action.Handles(messageType);
+            // To prevent a possible race condition in which the subscription is disposed and set to null
+            // and somebody else looks up this subscription for usage, we check for null.
+            var a = action; 
+            if (a != null)
+              return a.Handles(messageType);
+            return false;
         }
 
         public IDisposable GetDisposer()

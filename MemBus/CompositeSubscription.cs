@@ -39,6 +39,8 @@ namespace MemBus
 
         public void Add(ISubscription subscription)
         {
+            if (subscription == null)
+                throw new ArgumentNullException("subscription", "Attempt to add a Null Reference to Composite subscription.");
             IDisposableSubscription disposableSub = getDisposableSub(subscription);
             disposableSub.Disposed += onSubscriptionDisposed;
             subscriptions.AddOrUpdate(disposableSub.GetHashCode(), _ => disposableSub, (_,__) => disposableSub);

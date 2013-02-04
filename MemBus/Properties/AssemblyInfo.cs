@@ -15,5 +15,5 @@ using System.Runtime.InteropServices;
 [assembly:InternalsVisibleTo("MemBus.Tests")]
 [assembly: InternalsVisibleTo("MemBus.WinRT.Tests")]
 
-[assembly: AssemblyVersion("2.0.1")]
-[assembly: AssemblyFileVersion("2.0.1")]
+[assembly: AssemblyVersion("2.0.2")]
+[assembly: AssemblyFileVersion("2.0.2")]
