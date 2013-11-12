@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9657A125-569E-4F7E-9370-1BF581C7FA0C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MemBus</RootNamespace>
+    <AssemblyName>MemBus.Pcl</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bus.cs" />
+    <Compile Include="CompositeResolver.cs" />
+    <Compile Include="CompositeSubscription.cs" />
+    <Compile Include="Configurators\AsyncConfiguration.cs" />
+    <Compile Include="Configurators\Conservative.cs" />
+    <Compile Include="Configurators\Fast.cs" />
+    <Compile Include="Configurators\IoCSupport.cs" />
+    <Compile Include="Configurators\RichClientFrontend.cs" />
+    <Compile Include="IBus.cs" />
+    <Compile Include="IocAdapter.cs" />
+    <Compile Include="IoCBasedResolver.cs" />
+    <Compile Include="ISubscription.cs" />
+    <Compile Include="ISubscriptionResolver.cs" />
+    <Compile Include="MessageInfo.cs" />
+    <Compile Include="MessageObservable.cs" />
+    <Compile Include="Messages\ExceptionOccurred.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publishing\DeferredPublishPipelineMember.cs" />
+    <Compile Include="Publishing\FireAndForgetPublisher.cs" />
+    <Compile Include="Publishing\IPublishPipelineMember.cs" />
+    <Compile Include="Publishing\ParallelBlockingPublisher.cs" />
+    <Compile Include="Publishing\ParallelNonBlockingPublisher.cs" />
+    <Compile Include="Publishing\PublishChain.cs" />
+    <Compile Include="Publishing\PublishChainCasing.cs" />
+    <Compile Include="Publishing\PublishToken.cs" />
+    <Compile Include="Publishing\SequentialPublisher.cs" />
+    <Compile Include="RxEnabledObservable.cs" />
+    <Compile Include="Setup\AdHocConfigurator.cs" />
+    <Compile Include="Setup\BusSetup.cs" />
+    <Compile Include="Setup\IConfigurableBus.cs" />
+    <Compile Include="Setup\IConfigurablePublishing.cs" />
+    <Compile Include="Setup\IConfigurableSubscribing.cs" />
+    <Compile Include="Setup\ISetup.cs" />
+    <Compile Include="StandardResolver.cs" />
+    <Compile Include="Subscriber.cs" />
+    <Compile Include="Subscribing\Adapter\ConstructSubscriptionExtension.cs" />
+    <Compile Include="Subscribing\Adapter\FlexibleSubscribeAdapter.cs" />
+    <Compile Include="Subscribing\Adapter\IMethodInfoScanner.cs" />
+    <Compile Include="Subscribing\Adapter\InterfaceBasedBuilder.cs" />
+    <Compile Include="Subscribing\Adapter\MethodBasedBuilder.cs" />
+    <Compile Include="Subscribing\Adapter\SubscriptionBuilder.cs" />
+    <Compile Include="Subscribing\DisposableSubscription.cs" />
+    <Compile Include="Subscribing\FilteredSubscription.cs" />
+    <Compile Include="Subscribing\IAcceptDisposeToken.cs" />
+    <Compile Include="Subscribing\IDenyShaper.cs" />
+    <Compile Include="Subscribing\IKnowsSubscribedInstance.cs" />
+    <Compile Include="Subscribing\ISubscriptionShaper.cs" />
+    <Compile Include="Subscribing\MethodInvocation.cs" />
+    <Compile Include="Subscribing\PublishingMethodInvocation.cs" />
+    <Compile Include="Subscribing\ShapeToDispose.cs" />
+    <Compile Include="Subscribing\ShapeToFilter.cs" />
+    <Compile Include="Subscribing\ShapeToPassthrough.cs" />
+    <Compile Include="Subscribing\ShapeToUIDispatch.cs" />
+    <Compile Include="Subscribing\SubscriptionCustomizer.cs" />
+    <Compile Include="Subscribing\SubscriptionPipeline.cs" />
+    <Compile Include="Subscribing\SubscriptionShaperAggregate.cs" />
+    <Compile Include="Subscribing\UiDispatchingSubscription.cs" />
+    <Compile Include="Support\AbstractServices.cs" />
+    <Compile Include="Support\APIAttribute.cs" />
+    <Compile Include="Support\DisposeContainer.cs" />
+    <Compile Include="Support\IServices.cs" />
+    <Compile Include="Support\MemBusException.cs" />
+    <Compile Include="Support\MustBePublicAttribute.cs" />
+    <Compile Include="Support\Publish.cs" />
+    <Compile Include="Support\ReflectionExtensions.cs" />
+    <Compile Include="Support\RespondExtension.cs" />
+    <Compile Include="Support\UsefulExtensions.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
