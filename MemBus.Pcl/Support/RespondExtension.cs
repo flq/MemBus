@@ -77,11 +77,13 @@ namespace MemBus.Support
                 var runtimeEvent = _instance.GetType().GetRuntimeEvent(binder.Name);
                 if (runtimeEvent != null)
                 {
+                    OperationExists = true;
                     result = runtimeEvent;
                     _workingWithEvent = true;
                 }
                 else
                 {
+                    OperationExists = _instance.GetType().GetRuntimeProperty(binder.Name) != null;
                     result = 1; //The int will support a possible += operator of an event that was searched but not found.
                 }
                 return true; // We always "find" a member
@@ -93,7 +95,7 @@ namespace MemBus.Support
                                _ =>
                                    {
                                        var possibleMembers = from pi in _instance.GetType().GetRuntimeProperties()
-                                                             where pi.SetMethod != null && pi.SetMethod.IsPublic &&
+                                                             where pi.Name == binder.Name && pi.SetMethod != null && pi.SetMethod.IsPublic &&
                                                                    (
                                                                        (pi.PropertyType.GetTypeInfo().IsClass && value == null) ||
                                                                        (value != null && value.GetType().CanBeCastTo(pi.PropertyType))

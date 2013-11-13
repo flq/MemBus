@@ -91,6 +91,7 @@ namespace MemBus.Support
                         !mi.IsGenericMethod &&
                         !mi.IsStatic &&
                         mi.IsPublic &&
+                        mi.DeclaringType == reflectedType &&
                         mi.GetParameters().Length == 1 &&
                         !disposeTokenMethod(mi) &&
                         returntypePredicate(mi.ReturnType) &&
