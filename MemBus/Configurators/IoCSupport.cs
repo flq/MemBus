@@ -1,11 +1,6 @@
 using System;
-using System.Reflection;
 using MemBus.Setup;
 using MemBus.Support;
-
-#if WINRT
-using MemBus;
-#endif
 
 namespace MemBus.Configurators
 {

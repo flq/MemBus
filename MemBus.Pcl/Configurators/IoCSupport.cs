@@ -3,9 +3,6 @@ using System.Reflection;
 using MemBus.Setup;
 using MemBus.Support;
 
-#if WINRT
-using MemBus;
-#endif
 
 namespace MemBus.Configurators
 {
@@ -64,7 +61,7 @@ namespace MemBus.Configurators
                 throw new ArgumentException("No handler type has been specified.");
             if (!_handlerType.GetTypeInfo().IsGenericTypeDefinition)
                 throw new ArgumentException("An open generic should be specified as handler type");
-            if (_handlerType.GetTypeInfo().GenericTypeArguments.Length != 1)
+            if (_handlerType.GetTypeInfo().GenericTypeParameters.Length != 1)
                 throw new ArgumentException("An open generic should be specified that has only one type argument");
             if (!_handlerType.InterfaceIsSuitableAsHandlerType())
                 throw new ArgumentException("Type should contain a single method with one argument and void return");

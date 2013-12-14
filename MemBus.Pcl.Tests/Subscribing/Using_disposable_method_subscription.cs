@@ -1,21 +1,15 @@
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using MemBus.Tests.Frame;
 using System.Linq;
 
-#if WINRT
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
-using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
-#else
 using NUnit.Framework;
-#endif
+
 
 
 namespace MemBus.Tests.Subscribing
 {
     [TestFixture]
-    public class Using_disposable_method_subscription
+    public class Using_Disposable_Method_Subscription
     {
         [Test]
         public void the_basic_method_subscription_is_contravariant()

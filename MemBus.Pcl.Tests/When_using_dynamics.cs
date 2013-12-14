@@ -1,21 +1,13 @@
 using System;
 using MemBus.Support;
 using MemBus.Tests.Help;
-using MemBus;
-using MemBus.Tests.Frame;
 
-#if WINRT
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
-using Test = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestMethodAttribute;
-#else
 using NUnit.Framework;
-#endif
 
 namespace MemBus.Tests
 {
     [TestFixture]
-    public class When_using_dynamics
+    public class When_Using_Dynamics
     {
         private SampleClass s = new SampleClass();
 

@@ -1,15 +1,12 @@
 using System;
 using System.Threading;
-
-using MemBus.Subscribing;
-using MemBus.Support;
-using Membus.Tests.Help;
-
+using System.Windows.Threading;
 using MemBus.Publishing;
 using MemBus.Setup;
+using MemBus.Subscribing;
+using Membus.Tests.Help;
 
-
-namespace MemBus.Tests.Frame
+namespace MemBus.Tests.Help
 {
     internal static class Helpers
     {
@@ -19,16 +16,24 @@ namespace MemBus.Tests.Frame
             return new SubscriptionThatFakesHandles<T>();
         }
 
+        public static PublishChainCasing Configure(this PublishChainCasing pipeline, Action<IConfigurablePublishing> configure)
+        {
+            configure(pipeline);
+            return pipeline;
+        }
+
 //        public static Mock<T> MockOf<T>() where T : class
 //        {
 //            return new Mock<T>(MockBehavior.Loose);
 //        }
 //
-//        public static void CreateDispatchContext()
-//        {
-//            SynchronizationContext.SetSynchronizationContext(
-//                new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
-//        }
+        public static DispatcherSynchronizationContext CreateDispatchContext()
+        {
+            var syncContext = new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher);
+            SynchronizationContext.SetSynchronizationContext(syncContext);
+            return syncContext;
+        }
+
 //
 //        public static PublishChainCasing Configure(this PublishChainCasing pipeline, Action<IConfigurablePublishing> configure)
 //        {

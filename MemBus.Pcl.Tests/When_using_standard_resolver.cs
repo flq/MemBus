@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using MemBus.Tests.Frame;
 using Membus.Tests.Help;
 using NUnit.Framework;
 using Should;

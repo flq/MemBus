@@ -78,7 +78,12 @@ namespace MemBus.Support
         {
             if (action.Target == null)
                 return null;
-
+            // Disgusting fact: PClstuff uses the same Closure type, but we cannot reach it...
+            if (action.Target.GetType().Name == "Closure")
+            {
+                dynamic z = action.Target;
+                return z.Constants[0];
+            }
             return action.Target;
         }
 
