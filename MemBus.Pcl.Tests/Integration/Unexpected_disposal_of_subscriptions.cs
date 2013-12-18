@@ -48,7 +48,7 @@ namespace MemBus.Tests.Integration
         public void Given()
         {
             _bus = BusSetup.StartWith<Conservative>()
-                .Apply<FlexibleSubscribeAdapter>(adp => adp.ByMethodName("Handle"))
+                .Apply<FlexibleSubscribeAdapter>(adp => adp.RegisterMethods("Handle"))
                 .Construct();
             _bus.Subscribe(_partnerInCrime1 = new Subscriber());
             _bus.Subscribe(_partnerInCrime2 = new Subscriber());

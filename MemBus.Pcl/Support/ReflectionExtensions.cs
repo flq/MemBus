@@ -77,8 +77,7 @@ namespace MemBus.Support
 
         public static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(
             this Type reflectedType, 
-            Func<MethodInfo, bool> methodSelector, 
-            Func<Type, bool> returntypePredicate)
+            Func<MethodInfo, bool> methodSelector)
         {
             var disposeTokenMethod = reflectedType.ImplementsInterface<IAcceptDisposeToken>()
                                          ? (mi => mi.Name == "Accept" && mi.GetParameters().Length == 1 &&
@@ -94,7 +93,6 @@ namespace MemBus.Support
                         mi.DeclaringType == reflectedType &&
                         mi.GetParameters().Length == 1 &&
                         !disposeTokenMethod(mi) &&
-                        returntypePredicate(mi.ReturnType) &&
                         methodSelector(mi)
                     select mi);
             return candidates;

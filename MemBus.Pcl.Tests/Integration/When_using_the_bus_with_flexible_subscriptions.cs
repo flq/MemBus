@@ -123,7 +123,7 @@ namespace MemBus.Tests.Integration
         public void void_method_subscription_correct_returns_known_instance()
         {
             var h = new SomeHandler();
-            var sb = MethodScanner.ForVoidMethods("Handle").MakeBuilder();
+            var sb = new MethodScanner("Handle").MakeBuilder();
             var subs = sb.BuildSubscriptions(h).OfType<IKnowsSubscribedInstance>().ToList();
             subs.ShouldHaveCount(1);
             subs.All(s => s.Instance.Equals(h)).ShouldBeTrue("Not all known instances are the correct one");
@@ -133,7 +133,7 @@ namespace MemBus.Tests.Integration
         public void publishing_method_subscription_correct_returns_known_instance()
         {
             var h = new SomeHandler();
-            var sb = MethodScanner.ForNonVoidMethods("Route").MakeBuilder();
+            var sb = new MethodScanner("Route").MakeBuilder();
             var subs = sb.BuildSubscriptions(h).OfType<IKnowsSubscribedInstance>().ToList();
             subs.ShouldHaveCount(1);
             subs.All(s => s.Instance.Equals(h)).ShouldBeTrue("Not all known instances are the correct one");
@@ -142,7 +142,7 @@ namespace MemBus.Tests.Integration
         private static IBus ConstructBusForHandle()
         {
             return BusSetup.StartWith<Conservative>()
-                .Apply<FlexibleSubscribeAdapter>(c => c.ByMethodName("Handle").PublishMethods("Route")).Construct();
+                .Apply<FlexibleSubscribeAdapter>(c => c.RegisterMethods("Handle").RegisterMethods("Route")).Construct();
         }
     }
 }

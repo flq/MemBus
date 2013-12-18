@@ -16,7 +16,7 @@ namespace MemBus.Tests.Publishing
         public void Given()
         {
             _publisher = new FakePublisher();
-            _builder = MethodScanner.ForNonVoidMethods("Route").MakeBuilder();
+            _builder = new MethodScanner("Route").MakeBuilder();
             _builder.SetPublisher(_publisher);
         }
 

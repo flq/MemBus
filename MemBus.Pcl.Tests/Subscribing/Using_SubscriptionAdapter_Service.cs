@@ -24,7 +24,7 @@ namespace MemBus.Tests.Subscribing
         public void When_having_some_configuration_adapter_adds_itself_as_service()
         {
             var setup = new FlexibleSubscribeAdapter();
-            setup.ByMethodName("Handle");
+            setup.RegisterMethods("Handle");
 
             var bus = Substitute.For<IConfigurableBus>();
             ((ISetup<IConfigurableBus>)setup).Accept(bus);
@@ -39,8 +39,8 @@ namespace MemBus.Tests.Subscribing
             var setup = new FlexibleSubscribeAdapter();
             setup
                 .ByInterface(typeof(IClassicIHandleStuffI<>))
-                .ByMethodName("Handle")
-                .ByMethodName("Schmandle");
+                .RegisterMethods("Handle")
+                .RegisterMethods("Schmandle");
             
             var handler = new SomeCrazyHandler();
             var simpleResolver = new SimpleResolver();
@@ -64,7 +64,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Subscriptions_are_built_for_object_method_based()
         {
-            var builder = MethodScanner.ForVoidMethods("Handle").MakeBuilder();
+            var builder = new MethodScanner("Handle").MakeBuilder();
             var subs = builder.BuildSubscriptions(new SomeHandler());
             subs.ShouldNotBeNull();
             subs.ShouldHaveCount(1);
@@ -73,7 +73,7 @@ namespace MemBus.Tests.Subscribing
         [Test]
         public void Subscriptions_for_object_method_based_work_correctly()
         {
-            var builder = MethodScanner.ForVoidMethods("Handle").MakeBuilder();
+            var builder = new MethodScanner("Handle").MakeBuilder();
             var handler = new SomeHandler();
             var subs = builder.BuildSubscriptions(handler);
             var subscription = subs.First();

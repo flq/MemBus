@@ -17,7 +17,7 @@ namespace MemBus.Tests.Subscribing
         {
             _bus = BusSetup
                 .StartWith<Conservative>()
-                .Apply<FlexibleSubscribeAdapter>(adp => adp.ByMethodName("Handle").PickUpMethods(mi => true))
+                .Apply<FlexibleSubscribeAdapter>(adp => adp.RegisterMethods("Handle").RegisterMethods(mi => true))
                 .Construct();
             _bus.Subscribe(_handler);
             _bus.Publish(new MessageA());

@@ -34,22 +34,12 @@ namespace MemBus.Subscribing
         }
 
         /// <summary>
-        /// Look at an object and look for methods with the provided name. The method must be void
-        /// and accept a single parameter
-        /// </summary>
-        public FlexibleSubscribeAdapter ByMethodName(string methodName)
-        {
-            AddToScanners(MethodScanner.ForVoidMethods(methodName));
-            return this;
-        }
-
-        /// <summary>
         /// Look at an object and look for methods with the provided name. The method must NOT be void
         /// and accept a single parameter. The returning object will be treated as a message and subsequently be published
         /// </summary>
-        public FlexibleSubscribeAdapter PublishMethods(string methodName)
+        public FlexibleSubscribeAdapter RegisterMethods(string methodName)
         {
-            AddToScanners(MethodScanner.ForNonVoidMethods(methodName));
+            AddToScanners(new MethodScanner(methodName));
             return this;
         }
 
@@ -63,9 +53,9 @@ namespace MemBus.Subscribing
         /// These will be registered as publishing methods or simple subscriptions.
         /// </summary>
         /// <param name="methodSelector">the method selector predicate</param>
-        public FlexibleSubscribeAdapter PickUpMethods(Func<MethodInfo,bool> methodSelector)
+        public FlexibleSubscribeAdapter RegisterMethods(Func<MethodInfo,bool> methodSelector)
         {
-            AddToScanners(new MethodScanner(methodSelector, returnType => true));
+            AddToScanners(new MethodScanner(methodSelector));
             return this;
         }
 

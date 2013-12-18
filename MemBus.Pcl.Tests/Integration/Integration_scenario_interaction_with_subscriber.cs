@@ -17,7 +17,7 @@ namespace MemBus.Tests.Integration
         public void Given()
         {
             _bus = BusSetup.StartWith<Conservative>()
-                .Apply<FlexibleSubscribeAdapter>(a => a.ByMethodName("Handle"))
+                .Apply<FlexibleSubscribeAdapter>(a => a.RegisterMethods("Handle"))
                 .Apply<BlockSpecialsIfsuspended>()
                 .Construct();
         }
