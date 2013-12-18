@@ -52,10 +52,12 @@
     <Compile Include="MessageInfo.cs" />
     <Compile Include="MessageObservable.cs" />
     <Compile Include="Messages\ExceptionOccurred.cs" />
+    <Compile Include="Messages\MessageStreamCompleted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publishing\DeferredPublishPipelineMember.cs" />
     <Compile Include="Publishing\FireAndForgetPublisher.cs" />
     <Compile Include="Publishing\IPublishPipelineMember.cs" />
+    <Compile Include="Publishing\ObservableRelay.cs" />
     <Compile Include="Publishing\ParallelBlockingPublisher.cs" />
     <Compile Include="Publishing\ParallelNonBlockingPublisher.cs" />
     <Compile Include="Publishing\PublishChain.cs" />

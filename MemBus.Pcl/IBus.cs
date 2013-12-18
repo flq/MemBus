@@ -1,4 +1,5 @@
 using System;
+using MemBus.Messages;
 using MemBus.Subscribing;
 
 namespace MemBus
@@ -12,6 +13,14 @@ namespace MemBus
         /// Publish a message
         /// </summary>
         void Publish(object message);
+
+        /// <summary>
+        /// Publishes an observable that provides objects of type M. 
+        /// Once the observer that MemBus attaches to this observable receives the call to "OnCompleted", the message <see cref="MessageStreamCompleted{M}"/> will be sent.
+        /// An exception will be mapped to a message of type <see cref="ExceptionOccurred"/>.
+        /// Disposing the returned IDisposable will remove the generated observer from the observable.
+        /// </summary>
+        IDisposable Publish<M>(IObservable<M> observable);
     }
 
     /// <summary>

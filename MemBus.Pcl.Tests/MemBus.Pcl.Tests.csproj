@@ -85,6 +85,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publishing\Using_publishing_methods.cs" />
     <Compile Include="Publishing\Using_Publish_Pipeline.cs" />
+    <Compile Include="Rx\Observable_As_Publish.cs" />
     <Compile Include="Rx\When_MemBus_is_used_as_Observable.cs" />
     <Compile Include="Subscribing\Using_Composite_Subscription.cs" />
     <Compile Include="Subscribing\Using_disposable_method_subscription.cs" />
