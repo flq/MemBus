@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace MemBus.Tests.Help
 {
@@ -12,6 +13,11 @@ namespace MemBus.Tests.Help
         public IDisposable Publish<M>(IObservable<M> observable)
         {
             return this;
+        }
+
+        public Task PublishAsync(object message)
+        {
+            return new Task(() => Message = message);
         }
 
         public object Message { get; set; }

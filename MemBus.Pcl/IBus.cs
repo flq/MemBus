@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using MemBus.Messages;
+using MemBus.Publishing;
 using MemBus.Subscribing;
 
 namespace MemBus
@@ -21,6 +23,14 @@ namespace MemBus
         /// Disposing the returned IDisposable will remove the generated observer from the observable.
         /// </summary>
         IDisposable Publish<M>(IObservable<M> observable);
+
+        /// <summary>
+        /// Publish a message in an awaitable fashion. This will short-circuit the conventional
+        /// publishing and subscribing components and uses an awaitable version of the 
+        /// <see cref="SequentialPublisher"/>
+        /// </summary>
+        Task PublishAsync(object message);
+
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
@@ -59,6 +60,14 @@ namespace MemBus
             var subs = _subscriber.GetSubscriptionsFor(message);
             var t = new PublishToken(message, subs);
             _publishChainCasing.LookAt(t);
+        }
+
+        public async Task PublishAsync(object message)
+        {
+            CheckDisposed();
+            var subs = _subscriber.GetSubscriptionsFor(message);
+            var t = new PublishToken(message, subs);
+            await _publishChainCasing.LookAtAsync(t);
         }
 
         public IDisposable Publish<M>(IObservable<M> observable)
