@@ -89,6 +89,7 @@
     <Compile Include="Rx\Observable_As_Publish.cs" />
     <Compile Include="Rx\When_MemBus_is_used_as_Observable.cs" />
     <Compile Include="Subscribing\FlexibleSubscribingIntegrationContext.cs" />
+    <Compile Include="Subscribing\FSA_Consuming_Observables.cs" />
     <Compile Include="Subscribing\FSA_Reacting_To_Messages_And_Sending.cs" />
     <Compile Include="Subscribing\Using_Composite_Subscription.cs" />
     <Compile Include="Subscribing\Using_disposable_method_subscription.cs" />

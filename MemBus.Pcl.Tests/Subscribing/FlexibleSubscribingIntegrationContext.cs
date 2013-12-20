@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MemBus.Configurators;
 using MemBus.Subscribing;
+using MemBus.Tests.Help;
 using NUnit.Framework;
 
 namespace MemBus.Tests.Subscribing
@@ -17,6 +19,11 @@ namespace MemBus.Tests.Subscribing
         public void Add(object msg)
         {
             Messages.Add(msg);
+        }
+
+        public void AssertContainsMessageOfType<T>(int count = 1)
+        {
+            Messages.OfType<T>().ShouldHaveCount(count);
         }
     }
 

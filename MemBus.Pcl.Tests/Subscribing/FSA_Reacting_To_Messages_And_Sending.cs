@@ -35,11 +35,6 @@ namespace MemBus.Tests.Subscribing
             {
                 Messages.Add(message);
             }
-
-            public void AssertContainsMessageOfType<T>(int count = 1)
-            {
-                Messages.OfType<T>().ShouldHaveCount(count);
-            }
         }
 
         protected override IEnumerable<object> GetEndpoints()

@@ -83,7 +83,7 @@ namespace MemBus.Tests.Help
 
         public static void ShouldContain<T>(this IEnumerable<T> target, Func<T, bool> predicate)
         {
-            Assert.IsTrue(target.Any(predicate));
+            Assert.IsTrue(target.Any(predicate), "No element of the enumeration matched the condition.");
         }
 
         public static void ShouldContain(this string target, string piece)
