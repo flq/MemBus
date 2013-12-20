@@ -78,7 +78,7 @@
     <Compile Include="Subscribing\Adapter\IMethodInfoScanner.cs" />
     <Compile Include="Subscribing\Adapter\InterfaceBasedBuilder.cs" />
     <Compile Include="Subscribing\Adapter\MethodBasedBuilder.cs" />
-    <Compile Include="Subscribing\Adapter\SubscriptionBuilder.cs" />
+    <Compile Include="Subscribing\Adapter\MessageEndpointsBuilder.cs" />
     <Compile Include="Subscribing\DisposableSubscription.cs" />
     <Compile Include="Subscribing\FilteredSubscription.cs" />
     <Compile Include="Subscribing\IAcceptDisposeToken.cs" />
@@ -104,6 +104,7 @@
     <Compile Include="Support\Publish.cs" />
     <Compile Include="Support\ReflectionExtensions.cs" />
     <Compile Include="Support\RespondExtension.cs" />
+    <Compile Include="Support\SubscriptionCandidatesExtensions.cs" />
     <Compile Include="Support\UsefulExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

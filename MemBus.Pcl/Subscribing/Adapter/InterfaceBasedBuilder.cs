@@ -12,11 +12,6 @@ namespace MemBus.Subscribing
 
         public InterfaceBasedBuilder(Type interfaceType)
         {
-            var suitableMethodsFound = interfaceType.InterfaceIsSuitableAsHandlerType();
-
-            if (!suitableMethodsFound)
-                throw new InvalidOperationException("Membus cannot handle Interface {0} as subscription. Interface should define only one void method with one parameter. Interface may be generic and can be implemented multiple times.".Fmt(interfaceType.Name));
-
             if (interfaceType.GetTypeInfo().IsGenericTypeDefinition)
                 _innerBuilder = new OpenInterfaceBuilder(interfaceType);
             else
@@ -24,7 +19,7 @@ namespace MemBus.Subscribing
             
         }
 
-        public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
+        public IEnumerable<ClassifiedMethodInfo> GetMethodInfos(object targetToAdapt)
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
             return _innerBuilder.GetMethodInfos(targetToAdapt);
@@ -39,14 +34,14 @@ namespace MemBus.Subscribing
                 _interfaceType = interfaceType;
             }
 
-            public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
+            public IEnumerable<ClassifiedMethodInfo> GetMethodInfos(object targetToAdapt)
             {
                 var interfaces = targetToAdapt.GetType().GetTypeInfo().ImplementedInterfaces;
                 var foundItfs = (from itf in interfaces
                                 where itf.IsGenericType() && itf.GetGenericTypeDefinition() == _interfaceType
                                 select itf).ToList();
                 if (!foundItfs.Any())
-                    return Enumerable.Empty<MethodInfo>();
+                    return Enumerable.Empty<ClassifiedMethodInfo>();
 
                 return
                     foundItfs
@@ -64,21 +59,15 @@ namespace MemBus.Subscribing
                 _interfaceType = interfaceType;
             }
 
-            public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
+            public IEnumerable<ClassifiedMethodInfo> GetMethodInfos(object targetToAdapt)
             {
                 var hasInterface = targetToAdapt.GetType().GetTypeInfo().ImplementedInterfaces.Any(t => t == _interfaceType);
                 if (!hasInterface)
-                    return Enumerable.Empty<MethodInfo>();
+                    return Enumerable.Empty<ClassifiedMethodInfo>();
 
-                var itfMi = _interfaceType.MethodsSuitableForSubscription().First();
-
-                var candidates = from mi in targetToAdapt.GetType().GetTypeInfo().GetRuntimeInterfaceMap(_interfaceType).InterfaceMethods
-                                 where mi.Name == itfMi.Name &&
-                                       mi.GetParameters().Length == 1 &&
-                                       mi.GetParameters()[0].ParameterType == itfMi.GetParameters()[0].ParameterType &&
-                                       mi.ReturnType == itfMi.ReturnType
-                                 select mi;
-                return candidates;
+                var runtimeInterfaceMap = targetToAdapt.GetType().GetTypeInfo().GetRuntimeInterfaceMap(_interfaceType);
+                var candidates = runtimeInterfaceMap.InterfaceMethods.ReduceToValidMessageEndpoints();
+                return candidates.Select(ClassifiedMethodInfo.New);
             }
         }
     }

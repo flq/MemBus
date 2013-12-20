@@ -20,11 +20,11 @@ namespace MemBus.Subscribing
         {
         }
 
-        public IEnumerable<MethodInfo> GetMethodInfos(object targetToAdapt)
+        public IEnumerable<ClassifiedMethodInfo> GetMethodInfos(object targetToAdapt)
         {
             if (targetToAdapt == null) throw new ArgumentNullException("targetToAdapt");
             var candidates = targetToAdapt.GetType().MethodCandidatesForSubscriptionBuilders(_methodSelector).ToList();
-            return candidates;
+            return candidates.Select(ClassifiedMethodInfo.New);
         }
     }
 }

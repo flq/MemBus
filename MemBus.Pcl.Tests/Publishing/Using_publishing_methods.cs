@@ -9,15 +9,15 @@ namespace MemBus.Tests.Publishing
     [TestFixture]
     internal class Using_Publishing_Methods
     {
-        private SubscriptionBuilder _builder;
-        private FakePublisher _publisher;
+        private MessageEndpointsBuilder _builder;
+        private FakeBus _bus;
 
         [TestFixtureSetUp]
         public void Given()
         {
-            _publisher = new FakePublisher();
+            _bus = new FakeBus();
             _builder = new MethodScanner("Route").MakeBuilder();
-            _builder.SetPublisher(_publisher);
+            _builder.SetPublisher(_bus);
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace MemBus.Tests.Publishing
 
             subscription.Handles(typeof(MessageB)).ShouldBeTrue();
             handler.MsgBCalls.ShouldBeEqualTo(1);
-            _publisher.VerifyMessageIsOfType<MessageC>();
+            _bus.VerifyMessageIsOfType<MessageC>();
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace MemBus.Tests.Publishing
 
             subscription.Handles(typeof(string)).ShouldBeTrue();
             handler.MsgCall.ShouldBeEqualTo(1);
-            _publisher.VerifyMessageIsOfType<int>();
+            _bus.VerifyMessageIsOfType<int>();
         }
     }
 }

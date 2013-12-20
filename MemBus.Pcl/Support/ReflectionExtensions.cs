@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
-using MemBus.Subscribing;
 
 namespace MemBus.Support
 {
@@ -38,6 +36,10 @@ namespace MemBus.Support
             return type.GetTypeInfo().GetRuntimeInterfaceMap(interfaceType);
         }
 
+        public static bool IsConcreteObservable(this Type type)
+        {
+            return type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof (IObservable<>);
+        }
 
         /// <summary>
         /// Get a specific attribute from your target
@@ -61,43 +63,6 @@ namespace MemBus.Support
         {
             return type.GetTypeInfo().ImplementedInterfaces.Any(t => t == typeof(T));
         }
-
-        public static bool InterfaceIsSuitableAsHandlerType(this Type interfaceType)
-        {
-            return interfaceType.MethodsSuitableForSubscription().Count() == 1;
-        }
-
-        public static IEnumerable<MethodInfo> MethodsSuitableForSubscription(this Type interfaceType)
-        {
-            return from mi in interfaceType.GetRuntimeMethods()
-                   where mi.GetParameters().Length == 1 &&
-                         mi.ReturnType == typeof(void)
-                   select mi;
-        }
-
-        public static IEnumerable<MethodInfo> MethodCandidatesForSubscriptionBuilders(
-            this Type reflectedType, 
-            Func<MethodInfo, bool> methodSelector)
-        {
-            var disposeTokenMethod = reflectedType.ImplementsInterface<IAcceptDisposeToken>()
-                                         ? (mi => mi.Name == "Accept" && mi.GetParameters().Length == 1 &&
-                                            mi.GetParameters()[0].ParameterType == typeof (IDisposable))
-                                         : new Func<MethodInfo, bool>(mi => false);
-
-            var candidates =
-                (from mi in reflectedType.GetRuntimeMethods()
-                    where
-                        !mi.IsGenericMethod &&
-                        !mi.IsStatic &&
-                        mi.IsPublic &&
-                        mi.DeclaringType == reflectedType &&
-                        mi.GetParameters().Length == 1 &&
-                        !disposeTokenMethod(mi) &&
-                        methodSelector(mi)
-                    select mi);
-            return candidates;
-        }
-
         
         public static bool CanBeCastTo<T>(this Type type)
         {
@@ -108,5 +73,6 @@ namespace MemBus.Support
         {
             return otherType.GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
+
     }
 }

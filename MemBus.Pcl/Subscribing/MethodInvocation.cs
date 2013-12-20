@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using MemBus.Support;
 
 namespace MemBus.Subscribing
@@ -10,7 +9,7 @@ namespace MemBus.Subscribing
     /// </summary>
     public class MethodInvocation<T> : ISubscription, IKnowsSubscribedInstance
     {
-        private readonly Action<T> action;
+        private readonly Action<T> _action;
 
         /// <summary>
         /// ctor for any delegate. Can fail with <see cref="InvalidCastException"/>
@@ -24,7 +23,7 @@ namespace MemBus.Subscribing
         /// </summary>
         public MethodInvocation(Action<T> action)
         {
-            this.action = action;
+            _action = action;
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace MemBus.Subscribing
         /// <param name="message"></param>
         public void Push(object message)
         {
-            action((T)message);
+            _action((T)message);
         }
 
         /// <summary>
@@ -48,7 +47,7 @@ namespace MemBus.Subscribing
         {
             get
             {
-                return action.ExtractTarget();
+                return _action.ExtractTarget();
             }
         }
     }

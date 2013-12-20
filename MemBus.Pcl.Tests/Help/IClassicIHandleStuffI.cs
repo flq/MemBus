@@ -10,10 +10,22 @@ namespace MemBus.Tests.Help
         void Gimme();
     }
 
+    class InvalidHandlerInterfaceBecauseNoParameter : IInvalidHandlerInterfaceBecauseNoParameter
+    {
+        public void Gimme() { }
+    }
+
     public interface IInvalidHandlerInterfaceBecauseTwoMethodsOfrequestedPattern
     {
         void Gimme(object thing);
         void Gamme(object thang);
+    }
+
+    class InvalidHandlerInterfaceBecauseTwoMethodsOfrequestedPattern : IInvalidHandlerInterfaceBecauseTwoMethodsOfrequestedPattern
+    {
+        public void Gimme(object thing){ }
+
+        public void Gamme(object thang) { }
     }
 
     public interface IInvalidHandlerInterfaceBecauseTwoParams
@@ -21,8 +33,18 @@ namespace MemBus.Tests.Help
         void Gimme(object thing, object thang);
     }
 
+    class InvalidHandlerInterfaceBecauseTwoParams : IInvalidHandlerInterfaceBecauseTwoParams
+    {
+        public void Gimme(object thing, object thang) { }
+    }
+
     public interface IInvalidHandlerInterfaceBecauseReturnType
     {
         int Gimme(object thing);
+    }
+
+    class InvalidHandlerInterfaceBecauseReturnType : IInvalidHandlerInterfaceBecauseReturnType
+    {
+        public int Gimme(object thing) { return 0; }
     }
 }

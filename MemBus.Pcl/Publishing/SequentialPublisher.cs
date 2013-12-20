@@ -14,9 +14,10 @@ namespace MemBus.Publishing
                 s.Push(token.Message);
         }
 
+        #pragma warning disable 1998 //This is just a route through method, so it's OK if this part does run synchronously
         public async Task LookAtAsync(PublishToken token)
         {
-            LookAt(token);
+            await Task.Run(() => LookAt(token));
         }
     }
 }

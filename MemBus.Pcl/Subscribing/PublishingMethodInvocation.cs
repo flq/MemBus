@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using MemBus.Support;
 
 namespace MemBus.Subscribing
@@ -39,8 +38,9 @@ namespace MemBus.Subscribing
             var obj = _action((T)message);
             if (obj == null)
                 return;
-            if (obj is IEnumerable)
-                foreach (var msg in (IEnumerable) obj)
+            var msgs = obj as IEnumerable;
+            if (msgs != null)
+                foreach (var msg in msgs)
                     _publisher.Publish(msg);
             else
                 _publisher.Publish(obj);

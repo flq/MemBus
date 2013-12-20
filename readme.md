@@ -32,31 +32,19 @@ There are no other rules apart from the following:
 * There are no other rules apart from the previous
 
 ## Subscription overloads
-If you look at the Subscribe signature, there are a couple of overloads that help you in your messaging needs:
 
-<pre>
-// Only get messages of type MessageB where the Id is "A"
-b.Subscribe<MessageB>(msg => received++, c=>c.SetFilter(msg=>msg.Id == "A"));
-// Receive MessageB on the DispatcherThread
-b.Subscribe<MessageB>(msg => received++, c=>c.DispatchOnUiThread());
-</pre>
+There are three ways to subscribe handlers in MemBus
 
-However, much of that functionality can be obtained more elegantly via IObservable instances.
-
-## Using Message reception via IObservable interface
-It can be quite useful to obtain an `IObservable<T>` from your bus. There are 2 ways to do so:
-
-    var observable = bus.Observe<FooMessage>();
-    var observable = new MessageObservable<T>(bus);
-
-This allows you to bring the Rx tastiness on top of messaging.
+* Through an Action - this is the straightforward way as seen in the intro
+* By observing the bus via `Observe<M>` - returns an observable of type M. If you take a reference on Rx-* packages, you can set up all sorts of goodness on top of it, like filtering, merging, joining, handling messages on a synchronization context, etc, etc.
+* Passing any object instance - this functionality is based on the **FlexibleSubscribeAdapter** and is described next.
 
 ## Subscribing based on Convention.
 
 You may notice that one Subscribe overload accepts any object. This works when you setup MemBus with the **FlexibleSubscribeAdapter**:
 
     bus = BusSetup.StartWith<Conservative>()
-           .Apply<FlexibleSubscribeAdapter>(a => a.ByMethodName("Handle"))
+           .Apply<FlexibleSubscribeAdapter>(a => a.RegisterMethods("Handle"))
            .Construct()
     
     class Subscriber {
@@ -64,7 +52,7 @@ You may notice that one Subscribe overload accepts any object. This works when y
     }
     var disposabble = _bus.Subscribe(new Subscriber());
 
-The FlexibleSubscribeAdapter allows you to set up the convention by which subscibing methods are picked up. The configuration allows wiring up **"ByMethodName(string)"** or **"ByInterface(Type)"**. The interface may be generic, in that case you specify the open generic. The one rule of subscribing also applies in this scenario: Your subscriptions must match the `Action<T>` signature.
+The FlexibleSubscribeAdapter allows you to set up the convention by which subscibing methods are picked up. The configuration allows wiring up through **"RegisterMethods"** or **"ByInterface(Type)"**. The interface may be generic, in that case you specify the open generic. The one rule of subscribing also applies in this scenario: Your subscriptions must match the `Action<T>` signature.
 
 The **IDisposable** returned by the **Subcribe(object)** disposes of all subscriptions that were found on said object.
 
@@ -72,7 +60,11 @@ If your object implements **IAcceptsDisposeToken**, the disposable that is retur
 
 ## Publishing
 
-There isn't a lot one can say about Publishing. You may pass any object instance into the __"Publish"__ method.
+There isn't a lot one can say about Publishing. You may pass 
+
+* any object instance into the __"Publish"__ method.
+* An Observable - in this case MemBus will dispatch any observed messages to the MemBus infrastructure. If the Observable raises an exception, the **ExceptionOccurred** messagewill be sent. Once the observale completes, the **MessageStreamCompleted** message will be dispatched.
+* Publish in an awaitable fashion - in this case, any configuration with regard to handling the message will be short-circuited an an awaitable version of a **SequentialPublisher** will be used.
 
 ##Publishing to a DI Container
 
@@ -97,42 +89,9 @@ Secondly, you declare the interface that will be requested from the IoCContainer
 * It needs to be generic with one type argument
 * It provides a single void method with one argument. The argument type typically corresponds with the generic type argument.
 
-<hr>
-
-## Release History
-
-### 1.3.0
-
-MemBus now also comes with support for Silverlight 5. __Caution__: 
-Only the Silverlight version has a dependency on Rx.Main, if you use the silverlight version, __manually add a dependency to Rx.Main__
-
-### 1.2.0
-
-Removed cloning feature from Bus, as it was only partially implemented and does not seem very useful in real life.
-Added documentation xml.
-
-### 1.1.2
-
-Fixed bug related to removing and adding subscription where under certain conditions
-the subscription will not be picked up for handling a message
-
-### 1.1.0
-
-PublishToken now has a Cancel property. 
-If a publish pipeline member sets this to true, all subsequent pipeline members will not be called anymore
-
-### 1.0.4
-
-Added Infrastructure class "DeferredPublishPipelineMember" to separate the time-wise coupling of setting up the bus and being able
-to construct an instance of "IPublishpipelineMember"
-
-### 1.0.3
-
-Removal of classes from MemBus that have no direct relationship to the core function of MemBus.
-
 ## Licensing ##
 
-Copyright 2010 Frank-Leonardo Quednau ([realfiction.net](http://realfiction.net)) 
+Copyright 2014 Frank-Leonardo Quednau ([realfiction.net](http://realfiction.net)) 
 Licensed under the Apache License, Version 2.0 (the "License"); 
 you may not use this solution except in compliance with the License. 
 You may obtain a copy of the License at 

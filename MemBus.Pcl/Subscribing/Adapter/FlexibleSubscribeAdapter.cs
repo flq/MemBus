@@ -19,7 +19,7 @@ namespace MemBus.Subscribing
     public class FlexibleSubscribeAdapter : ISetup<IConfigurableBus>, IAdapterServices
     {
         private bool _configurationAvailable;
-        private readonly SubscriptionBuilder _builder = new SubscriptionBuilder();
+        private readonly MessageEndpointsBuilder _builder = new MessageEndpointsBuilder();
 
 
         void ISetup<IConfigurableBus>.Accept(IConfigurableBus setup)
@@ -28,9 +28,7 @@ namespace MemBus.Subscribing
                 throw new InvalidOperationException("No adapter rules were set up.");
             setup.AddService<IAdapterServices>(this);
 
-            var bus = setup as IPublisher;
-
-            _builder.SetPublisher(bus);
+            _builder.SetPublisher((IBus)setup);
         }
 
         /// <summary>

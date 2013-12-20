@@ -26,7 +26,7 @@ namespace MemBus.Tests.Subscribing
             var setup = new FlexibleSubscribeAdapter();
             setup.RegisterMethods("Handle");
 
-            var bus = Substitute.For<IConfigurableBus>();
+            var bus = (IConfigurableBus)Substitute.For(new[] { typeof(IConfigurableBus), typeof(IBus) }, new object[0]);
             ((ISetup<IConfigurableBus>)setup).Accept(bus);
 
             bus.Received().AddService<IAdapterServices>(setup);
@@ -83,13 +83,27 @@ namespace MemBus.Tests.Subscribing
         }
 
         
+        [TestCase(typeof(InvalidHandlerInterfaceBecauseNoParameter), 0)]
+        [TestCase(typeof(InvalidHandlerInterfaceBecauseTwoMethodsOfrequestedPattern), 2)]
+        [TestCase(typeof(InvalidHandlerInterfaceBecauseReturnType), 1)]
+        [TestCase(typeof(InvalidHandlerInterfaceBecauseTwoParams), 0)]
+        public void These_handler_interfaces_will_return_zero_endpoints(Type implementation, int expectedCandidateCount)
+        {
+            var interfaceType = implementation.GetInterfaces().First();
+            var obj = Activator.CreateInstance(implementation);
+            var bld = new InterfaceBasedBuilder(interfaceType);
+            var meths = bld.GetMethodInfos(obj).ToList();
+            meths.ShouldHaveCount(expectedCandidateCount);
+        }
+
+        [Test]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseNoParameter))]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseTwoMethodsOfrequestedPattern))]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseReturnType))]
         [TestCase(typeof(IInvalidHandlerInterfaceBecauseTwoParams))]
-        public void These_handler_interfaces_are_invalid_for_usage(Type interfaceType)
+        public void interfaces_are_unsuable_in_ioc_scenario(Type @interface)
         {
-            Assert.Throws<InvalidOperationException>(() => { new InterfaceBasedBuilder(interfaceType); });
+            @interface.InterfaceIsSuitableAsIoCHandler().ShouldBeFalse();
         }
 
         [Test]

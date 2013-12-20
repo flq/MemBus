@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Reactive;
 using System.Threading.Tasks;
 
 namespace MemBus.Tests.Help
 {
-    public class FakePublisher : IPublisher, IDisposable
+    public class FakeBus : IBus, IDisposable
     {
         public void Publish(object message)
         {
@@ -31,6 +32,21 @@ namespace MemBus.Tests.Help
         void IDisposable.Dispose()
         {
             
+        }
+
+        public IDisposable Subscribe<M>(Action<M> subscription)
+        {
+            return this;
+        }
+
+        public IDisposable Subscribe(object subscriber)
+        {
+            return this;
+        }
+
+        public IObservable<M> Observe<M>()
+        {
+            return new AnonymousObservable<M>(observer => this);
         }
     }
 }

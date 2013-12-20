@@ -42,16 +42,16 @@ namespace MemBus.Tests.Help
 //        }
 //        
 //
-        public static SubscriptionBuilder MakeBuilder(this IMethodInfoScanner scanner)
+        public static MessageEndpointsBuilder MakeBuilder(this IMethodInfoScanner scanner)
         {
-            var b = new SubscriptionBuilder();
+            var b = new MessageEndpointsBuilder();
             b.AddScanner(scanner);
             return b;
         }
 //
-//        public static SubscriptionBuilder MakeBuilder(IMethodInfoScanner[] scanner)
+//        public static MessageEndpointsBuilder MakeBuilder(IMethodInfoScanner[] scanner)
 //        {
-//            var b = new SubscriptionBuilder();
+//            var b = new MessageEndpointsBuilder();
 //            scanner.Each(b.AddScanner);
 //            return b;
 //        }
