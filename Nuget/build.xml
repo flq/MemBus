@@ -4,28 +4,22 @@
     <Configuration>Release</Configuration>
 	  <SlnDir>..\</SlnDir>
     <NugetDir>MemBus</NugetDir>
-    <NetDir>$(NugetDir)\lib\Net40-Client</NetDir>
-    <WinRTDir>$(NugetDir)\lib\NetCore45</WinRTDir>
+    <LibDir>$(NugetDir)\lib\portable-windows8+net45</LibDir>
   </PropertyGroup>
   
   <Target Name="Prepare">
-    <MakeDir Directories="$(NetDir);$(WinRTDir)" />
-    <MSBuild Projects="$(SlnDir)\MemBus\MemBus.csproj" Properties="Configuration=$(Configuration)" />
-    <MSBuild Projects="$(SlnDir)\MemBus.RT\MemBus.RT.csproj" Properties="Configuration=$(Configuration)" />
+    <MakeDir Directories="$(LibDir)" />
+    <MSBuild Projects="$(SlnDir)\MemBus.Pcl\MemBus.Pcl.csproj" Properties="Configuration=$(Configuration)" />
   </Target>
 
   <Target Name="BuildApp">
   	<ItemGroup>
-  	  <NetAssemblies Include="$(SlnDir)MemBus\bin\$(Configuration)\MemBus.dll" />
-      <WinRTAssemblies Include="$(SlnDir)MemBus.RT\bin\$(Configuration)\MemBus.dll" />
-  	  <NetDocs Include="$(SlnDir)MemBus\bin\$(Configuration)\MemBus.xml" />
-      <WinRTDocs Include="$(SlnDir)MemBus.RT\bin\$(Configuration)\MemBus.xml" />
+  	  <NetAssemblies Include="$(SlnDir)MemBus.Pcl\bin\$(Configuration)\MemBus.dll" />
+  	  <NetDocs Include="$(SlnDir)MemBus.Pcl\bin\$(Configuration)\MemBus.xml" />
   	</ItemGroup>
   	
-    <Copy SourceFiles="@(NetAssemblies)" DestinationFolder="$(NetDir)" />
-  	<Copy SourceFiles="@(NetDocs)" DestinationFolder="$(NetDir)" />
-    <Copy SourceFiles="@(WinRTAssemblies)" DestinationFolder="$(WinRTDir)" />
-    <Copy SourceFiles="@(WinRTDocs)" DestinationFolder="$(WinRTDir)" />
+    <Copy SourceFiles="@(NetAssemblies)" DestinationFolder="$(LibDir)" />
+  	<Copy SourceFiles="@(NetDocs)" DestinationFolder="$(LibDir)" />
     <Copy SourceFiles="$(SlnDir)\readme.md" DestinationFiles="$(NugetDir)\readme.md" />
   </Target>
 

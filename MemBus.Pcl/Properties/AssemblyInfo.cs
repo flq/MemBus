@@ -10,5 +10,5 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MemBus.Pcl.Tests")]
 
-[assembly: AssemblyVersion("2.1.0")]
-[assembly: AssemblyFileVersion("2.1.0")]
+[assembly: AssemblyVersion("3.0.0")]
+[assembly: AssemblyFileVersion("3.0.0")]

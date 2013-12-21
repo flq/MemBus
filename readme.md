@@ -50,13 +50,21 @@ You may notice that one Subscribe overload accepts any object. This works when y
     class Subscriber {
       public void Handle(Foo msg) {}
     }
-    var disposabble = _bus.Subscribe(new Subscriber());
+    var disposable = _bus.Subscribe(new Subscriber());
 
-The FlexibleSubscribeAdapter allows you to set up the convention by which subscibing methods are picked up. The configuration allows wiring up through **"RegisterMethods"** or **"ByInterface(Type)"**. The interface may be generic, in that case you specify the open generic. The one rule of subscribing also applies in this scenario: Your subscriptions must match the `Action<T>` signature.
+The FlexibleSubscribeAdapter allows you to set up the convention by which subscribing methods are picked up. The configuration allows wiring up through **"RegisterMethods"** or **"ByInterface(Type)"**. The interface may be generic, in that case you specify the open generic. The one rule of subscribing also applies in this scenario: Your subscriptions must match the `Action<T>` signature.
 
 The **IDisposable** returned by the **Subcribe(object)** disposes of all subscriptions that were found on said object.
 
 If your object implements **IAcceptsDisposeToken**, the disposable that is returned by the subscribe call will be passed into the object being subscribed. That way objects have a way to take themselves out of the messaging, e.g. when they handle a couple of messages only relevant in a limited time of your App.
+
+Your subscribing objects can also work with **IObservable**. This means they can either accept IObservable instance, return an instance, or both. These methods will also be picked up and hooked into MemBus. That way you can write instances that do not have any dependency on MemBus but can 
+
+* Receive messages
+* Send messages upon reception of one (Also multiple ones by returning something *enumerable*).
+* Receive Observables so you can use Rx tastiness on it
+* Publish Observables
+* The two above together for Rx-transformation tastiness.
 
 ## Publishing
 
