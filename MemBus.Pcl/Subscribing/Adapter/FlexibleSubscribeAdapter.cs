@@ -77,11 +77,12 @@ namespace MemBus.Subscribing
         IDisposable IAdapterServices.WireUpSubscriber(ISubscriptionResolver subscriptionResolver, object subscriber)
         {
             var disposeShape = new ShapeToDispose();
-            var subs = SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription).ToList();
-            foreach (var s in subs)
-                subscriptionResolver.Add(s);
-
-            var disposeContainer = new DisposeContainer(subs.Select(s => ((IDisposableSubscription)s).GetDisposer()));
+            var disposeContainer = new DisposeContainer();
+            foreach (var disposable in SubscriptionsFor(subscriber).Select(disposeShape.EnhanceSubscription))
+            {
+                subscriptionResolver.Add(disposable);
+                disposeContainer.Add(((IDisposableSubscription) disposable).GetDisposer());
+            }
 
             PushDisposerToSubscriberIfPossible(subscriber, disposeContainer);
 

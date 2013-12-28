@@ -26,7 +26,8 @@ namespace MemBus.Subscribing
             var groups = _scanner
                 .SelectMany(s => s.GetMethodInfos(targetToAdapt))
                 .Distinct()
-                .GroupBy(mi => mi.Classifier).ToList();
+                .GroupBy(mi => mi.Classifier).OrderBy(g => g.Key).ToList();
+            // Ordering to ensure that generated subscriptions can already listen to generated message producers.
 
             foreach (var group in groups)
             {

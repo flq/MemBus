@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Reactive.Linq;
 using MemBus.Subscribing;
 
 namespace MemBus.Tests.Help
 {
-    public class SomeHandler : IAcceptDisposeToken
+    public class SomeHandler : IAcceptDisposeToken, IWeirdHandler<MessageA>
     {
         public int MsgACalls;
         public int MsgBCalls;
@@ -17,6 +18,11 @@ namespace MemBus.Tests.Help
         public void Handle(MessageA msg)
         {
             MsgACalls++;
+        }
+
+        IObservable<MessageA> IWeirdHandler<MessageA>.Producer()
+        {
+            return Observable.Return(new MessageA());
         }
 
         public MessageC Route(MessageB msg)

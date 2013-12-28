@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace MemBus
 {
     internal class StandardResolver : ISubscriptionResolver
     {
-        private static class ImpossibleMessage { }
-        private readonly ConcurrentDictionary<Type, CompositeSubscription> cachedSubscriptions = new ConcurrentDictionary<Type, CompositeSubscription>();
+        private readonly CompositeSubscription _cS;
 
         public StandardResolver()
         {
-            cachedSubscriptions.TryAdd(typeof(ImpossibleMessage), new CompositeSubscription());
+            _cS = new CompositeSubscription();
         }
 
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
-            var lookAtThis =
-                cachedSubscriptions[typeof(ImpossibleMessage)].Where(s => s.Handles(message.GetType())).ToArray();
+            var lookAtThis = _cS.Where(s => s.Handles(message.GetType())).ToArray();
             return lookAtThis;
         }
 
         public bool Add(ISubscription subscription)
         {
-            cachedSubscriptions[typeof(ImpossibleMessage)].Add(subscription);
+            _cS.Add(subscription);
             return true;
         }
     }

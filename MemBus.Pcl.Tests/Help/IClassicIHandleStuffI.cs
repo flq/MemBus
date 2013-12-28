@@ -1,8 +1,16 @@
+using System;
+
 namespace MemBus.Tests.Help
 {
     public interface IClassicIHandleStuffI<in T>
     {
         void Gimme(T theThing);
+    }
+
+    public interface IWeirdHandler<T>
+    {
+        void Handle(T msg);
+        IObservable<T> Producer();
     }
 
     public interface IInvalidHandlerInterfaceBecauseNoParameter

@@ -95,6 +95,7 @@
     <Compile Include="Subscribing\FlexibleSubscribingIntegrationContext.cs" />
     <Compile Include="Subscribing\FSA_Consuming_Observables.cs" />
     <Compile Include="Subscribing\FSA_Reacting_To_Messages_And_Sending.cs" />
+    <Compile Include="Subscribing\FSA_Using_Interface_Based_Subscribing.cs" />
     <Compile Include="Subscribing\Using_Composite_Subscription.cs" />
     <Compile Include="Subscribing\Using_disposable_method_subscription.cs" />
     <Compile Include="Subscribing\FSA_Using_Predicate_Based_Subscribing.cs" />

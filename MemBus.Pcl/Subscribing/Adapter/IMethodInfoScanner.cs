@@ -114,15 +114,15 @@ namespace MemBus.Subscribing
         /// </summary>
         Unusable = 0,
         /// <summary>
-        /// The method accepts messages but returns nothing in response.
-        /// </summary>
-        MessageSink,
-        /// <summary>
         /// The method accepts messages and also returns something which should be interpreted as message.
         /// Note that if the return value implements IEnumerable, the return value will be enumerated and each element will be published as message.
         /// This is not recursive.
         /// </summary>
         MessageMap,
+        /// <summary>
+        /// The method accepts messages but returns nothing in response.
+        /// </summary>
+        MessageSink,
         /// <summary>
         /// The method accepts an observable and returns nothing.
         /// </summary>

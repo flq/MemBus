@@ -10,6 +10,7 @@ namespace MemBus
 {
     internal class CompositeSubscription : ISubscription, IEnumerable<ISubscription>
     {
+        // this would have to be replace to target WP8 - http://stackoverflow.com/questions/18367839/alternative-to-concurrentdictionary-for-portable-class-library
         private readonly ConcurrentDictionary<int,IDisposableSubscription> _subscriptions = new ConcurrentDictionary<int,IDisposableSubscription>();
 
         public CompositeSubscription() { }
