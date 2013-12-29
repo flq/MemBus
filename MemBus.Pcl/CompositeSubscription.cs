@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace MemBus
 {
-    internal class CompositeSubscription : ISubscription, IEnumerable<ISubscription>
+    internal class CompositeSubscription : ISubscription, IEnumerable<ISubscription>, ISubscriptionResolver
     {
         // this would have to be replace to target WP8 - http://stackoverflow.com/questions/18367839/alternative-to-concurrentdictionary-for-portable-class-library
         private readonly ConcurrentDictionary<int,IDisposableSubscription> _subscriptions = new ConcurrentDictionary<int,IDisposableSubscription>();
@@ -38,32 +38,40 @@ namespace MemBus
 
         public event EventHandler Disposed;
 
-        public void Add(ISubscription subscription)
+        public IEnumerator<ISubscription> GetEnumerator()
         {
-            if (subscription == null)
-                throw new ArgumentNullException("subscription", "Attempt to add a Null Reference to Composite subscription.");
-            IDisposableSubscription disposableSub = getDisposableSub(subscription);
-            disposableSub.Disposed += onSubscriptionDisposed;
-            _subscriptions.AddOrUpdate(disposableSub.GetHashCode(), _ => disposableSub, (_,__) => disposableSub);
+            return _subscriptions.Values.GetEnumerator();
         }
 
-        private static IDisposableSubscription getDisposableSub(ISubscription subscription)
+        private static IDisposableSubscription GetDisposableSub(ISubscription subscription)
         {
             return subscription is IDisposableSubscription ? 
                    (IDisposableSubscription)subscription : new DisposableSubscription(subscription);
         }
 
-        private void onSubscriptionDisposed(object sender, EventArgs e)
+        private void OnSubscriptionDisposed(object sender, EventArgs e)
         {
             IDisposableSubscription value;
             _subscriptions.TryRemove(sender.GetHashCode(), out value);
             Disposed.Raise(sender);
         }
 
-        public IEnumerator<ISubscription> GetEnumerator()
+        IEnumerable<ISubscription> ISubscriptionResolver.GetSubscriptionsFor(object message)
         {
-            return _subscriptions.Values.GetEnumerator();
+           return _subscriptions.Values.Where(s => s.Handles(message.GetType())).ToArray();
         }
+
+        public bool Add(ISubscription subscription)
+        {
+            if (subscription == null)
+                throw new ArgumentNullException("subscription", "Attempt to add a Null Reference to Composite subscription.");
+            IDisposableSubscription disposableSub = GetDisposableSub(subscription);
+            disposableSub.Disposed += OnSubscriptionDisposed;
+            _subscriptions.AddOrUpdate(disposableSub.GetHashCode(), _ => disposableSub, (_, __) => disposableSub);
+            return true;
+        }
+
+       
 
         IEnumerator IEnumerable.GetEnumerator()
         {

@@ -52,7 +52,7 @@ namespace MemBus.Tests.Subscribing
         {
             var b = new MethodScanner("Handle").MakeBuilder();
             var disposableSub = new DisposableSubscription(b.BuildSubscriptions(new SomeHandler()).First());
-            var resolver = new StandardResolver();
+            ISubscriptionResolver resolver = new CompositeSubscription();
             resolver.Add(disposableSub);
 
             var subs = resolver.GetSubscriptionsFor(new MessageA());

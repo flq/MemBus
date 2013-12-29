@@ -13,14 +13,14 @@ namespace MemBus.Tests
     {
         protected virtual ISubscriptionResolver GetResolver()
         {
-            return new StandardResolver();
+            return new CompositeSubscription();
         }
 
         [Test]
         public void Caching_resolver_accepts_and_returns_subscriptions()
         {
             var sub = Helpers.MockSubscriptionThatHandles<MessageA>();
-            var r = new StandardResolver();
+            var r = (ISubscriptionResolver)new CompositeSubscription();
             r.Add(sub);
             var subs = r.GetSubscriptionsFor(new MessageA()).ToList();
             subs.ShouldHaveCount(1);

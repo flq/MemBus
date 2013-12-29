@@ -13,7 +13,7 @@ namespace MemBus.Configurators
         void ISetup<IConfigurableBus>.Accept(IConfigurableBus setup)
         {
             setup.ConfigurePublishing(p => p.DefaultPublishPipeline(new SequentialPublisher()));
-            setup.AddResolver(new StandardResolver());
+            setup.AddResolver(new CompositeSubscription());
             setup.ConfigureSubscribing(cs => cs.ApplyOnNewSubscription(new ShapeToDispose()));
         }
     }
