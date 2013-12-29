@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeSubscriptionPerformanceTest.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IScenario.cs" />
     <Compile Include="Program.cs" />

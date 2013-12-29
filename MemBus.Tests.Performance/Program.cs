@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using MemBus.Configurators;
 
@@ -6,61 +7,22 @@ namespace MemBus.Tests.Performance
 {
     class Program
     {
-        static void Main()
+        private static void Main()
         {
-            while (true)
-            {
-                var bus = BusSetup.StartWith<Fast>().Construct();
-                var s = new Simple();
-                s.Run(bus, Console.Out);
-                Console.ReadLine();
-                s.Reset();
-            }
-        }        
-    }
-
-    class MessageA
-    {
-        public static int Count;
-
-        public static void Reset()
-        {
-            Count = 0;
+            var bus = BusSetup.StartWith<Fast>().Construct();
+            var s = new CompositeSubscriptionPerformanceTest();
+            for (var i = 0; i < 10;i++)
+              Run(s, bus);
+            Console.ReadLine();
         }
 
-        public MessageA()
+        private static void Run(IScenario s, IBus bus)
         {
-            Interlocked.Increment(ref Count);
-        }
-    }
-
-    class MessageB
-    {
-        public static int Count;
-
-        public static void Reset()
-        {
-            Count = 0;
-        }
-
-        public MessageB()
-        {
-            Interlocked.Increment(ref Count);
-        }
-    }
-
-    class MessageC
-    {
-        public static int Count;
-
-        public static void Reset()
-        {
-            Count = 0;
-        }
-
-        public MessageC()
-        {
-            Interlocked.Increment(ref Count);
+            var sw = Stopwatch.StartNew();
+            s.Run(bus, Console.Out);
+            Console.WriteLine("Done in " + sw.Elapsed.TotalSeconds + " seconds");
+            Console.WriteLine("--");
+            s.Reset();
         }
     }
     
