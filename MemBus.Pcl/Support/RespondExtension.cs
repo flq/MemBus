@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace MemBus.Support
 {
@@ -35,7 +35,8 @@ namespace MemBus.Support
 
         private class DynamicExists : DynamicObject
         {
-            private static readonly ConcurrentDictionary<string,bool> Cache = new ConcurrentDictionary<string, bool>();
+            private static readonly Dictionary<string,bool> Cache = new Dictionary<string, bool>();
+            private static readonly ReaderWriterLockSlim RwLock = new ReaderWriterLockSlim();
             private readonly object _instance;
             private bool _workingWithEvent;
 
@@ -67,7 +68,7 @@ namespace MemBus.Support
             public override bool TrySetMember(SetMemberBinder binder, object value)
             {
                 if (!_workingWithEvent) //TryGetMember is called before set when working with an event
-                    workWithSetter(binder, value);
+                    WorkWithSetter(binder, value);
                 return true; // We always "find" a member
             }
 
@@ -89,21 +90,36 @@ namespace MemBus.Support
                 return true; // We always "find" a member
             }
 
-            private void workWithSetter(SetMemberBinder binder, object value)
+            private void WorkWithSetter(SetMemberBinder binder, object value)
             {
-                OperationExists = Cache.GetOrAdd(_instance.GetType().FullName + binder.Name + (value != null ? value.GetType().FullName : "null"),
-                               _ =>
-                                   {
-                                       var possibleMembers = from pi in _instance.GetType().GetRuntimeProperties()
-                                                             where pi.Name == binder.Name && pi.SetMethod != null && pi.SetMethod.IsPublic &&
-                                                                   (
-                                                                       (pi.PropertyType.GetTypeInfo().IsClass && value == null) ||
-                                                                       (value != null && value.GetType().CanBeCastTo(pi.PropertyType))
-                                                                   )
-                                                             select pi;
-                                       return possibleMembers.Count() == 1;
-                                   });
-                
+                try
+                {
+                    var key = _instance.GetType().FullName + binder.Name + (value != null ? value.GetType().FullName : "null");
+                    RwLock.EnterUpgradeableReadLock();
+                    if (!Cache.ContainsKey(key))
+                    {
+                        try
+                        {
+                            var exists = (from pi in _instance.GetType().GetRuntimeProperties()
+                                            where pi.Name == binder.Name && pi.SetMethod != null && pi.SetMethod.IsPublic &&
+                                                (
+                                                    (pi.PropertyType.GetTypeInfo().IsClass && value == null) ||
+                                                    (value != null && value.GetType().CanBeCastTo(pi.PropertyType))
+                                                ) select pi).Count() == 1;
+                            RwLock.EnterWriteLock();
+                            Cache[key] = exists;
+                        }
+                        finally
+                        {
+                            RwLock.ExitWriteLock();
+                        }
+                    }
+                    OperationExists = Cache[key];
+                }
+                finally
+                {
+                    RwLock.ExitUpgradeableReadLock();
+                }                
             }
 
             private IEnumerable<MethodInfo> FindByName(string  name)

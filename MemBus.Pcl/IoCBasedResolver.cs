@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using MemBus.Subscribing;
 
 namespace MemBus
@@ -12,7 +13,8 @@ namespace MemBus
         private readonly IocAdapter _adapter;
         private readonly Type _handlerType;
         private readonly Func<Type, Type> _messageTypeResolver;
-        private readonly ConcurrentDictionary<Type, Type> _typeCache = new ConcurrentDictionary<Type, Type>();
+        private readonly Dictionary<Type, Type> _typeCache = new Dictionary<Type, Type>();
+        private readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
 
         public IoCBasedResolver(IocAdapter adapter, Type handlerType, Func<Type, Type> messageTypeResolver)
         {
@@ -31,7 +33,27 @@ namespace MemBus
 
         private Type ConstructHandlesType(Type messageType)
         {
-            return _typeCache.GetOrAdd(messageType, msgT => _handlerType.MakeGenericType(_messageTypeResolver(msgT)));
+            try
+            {
+                _rwLock.EnterUpgradeableReadLock();
+                if (!_typeCache.ContainsKey(messageType))
+                {
+                    try
+                    {
+                        _rwLock.EnterWriteLock();
+                        _typeCache[messageType] = _handlerType.MakeGenericType(_messageTypeResolver(messageType));
+                    }
+                    finally
+                    {
+                        _rwLock.ExitWriteLock();
+                    }
+                }
+                return _typeCache[messageType];
+            }
+            finally
+            {
+                _rwLock.ExitUpgradeableReadLock();
+            }
         }
 
         public bool Add(ISubscription subscription)
