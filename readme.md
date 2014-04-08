@@ -9,7 +9,7 @@ The provided way to start a MemBus instance is going through the BusSetup.
 
     var _bus = BusSetup.StartWith<Conservative>().Construct();
 
-**Conservative** is one of the already available Configurators contained in the ["Configurators"](https://github.com/flq/MemBus/tree/master/MemBus/Configurators) namespace.
+**Conservative** is one of the already available Configurators contained in the ["Configurators"](MemBus.Pcl/Configurators) namespace.
 
 As you can see from such a setup, what MemBus needs as a minimum is a default publish pipeline, a default subscriptionresolver, and a default strategy what to do with new subscriptions.
 
