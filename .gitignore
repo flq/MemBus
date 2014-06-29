@@ -22,5 +22,6 @@ Nuget/MemBus/readme.md
 *.nupkg
 *.Dotsettings
 *.pfx
+*.DS_Store
 AppPackages
 readme.html

@@ -1,20 +1,23 @@
 ﻿using System.Threading.Tasks;
 using MemBus.Configurators;
 using NUnit.Framework;
+using Nito.AsyncEx;
 
 namespace MemBus.Tests.Publishing
 {
     [TestFixture]
     public class Awaitable_Publish
     {
-        [Test,Ignore("Test runner behaving badly...")]
-        public async Task using_the_awaitable_publish()
+        [Test]
+		public void using_the_awaitable_publish()
         {
-            var b = BusSetup.StartWith<Conservative>().Construct();
-            var messageReceived = false;
-            b.Subscribe((string h) => messageReceived = true);
-            await b.PublishAsync("Hello");
-            Assert.IsTrue(messageReceived);
+			AsyncContext.Run (async () => {
+				var b = BusSetup.StartWith<Conservative>().Construct();
+				var messageReceived = false;
+				b.Subscribe((string h) => messageReceived = true);
+				await b.PublishAsync("Hello");
+				Assert.IsTrue(messageReceived);
+			});
         }
 
 

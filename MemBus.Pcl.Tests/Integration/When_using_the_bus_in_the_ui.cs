@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace MemBus.Tests.Integration
 {
-    [TestFixture]
+	[TestFixture, Ignore("Ignored while working on mono")]
     public class When_Using_The_Bus_In_The_Ui
     {
 
