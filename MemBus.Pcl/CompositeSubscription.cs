@@ -9,9 +9,13 @@ using System.Linq;
 
 namespace MemBus
 {
-    internal class CompositeSubscription : ISubscription, IEnumerable<ISubscription>, ISubscriptionResolver
+	/// <summary>
+	/// The composite subscription wraps a number of subscriptions and treats them as one.
+	/// This class is not associated with any message type and will accept any kind of class implementing
+	/// <see cref="ISubscription"/>. This class also acts as <see cref="ISubscriptionResolver"/>.
+	/// </summary>
+    public class CompositeSubscription : ISubscription, IEnumerable<ISubscription>, ISubscriptionResolver
     {
-        // this would have to be replace to target WP8 - http://stackoverflow.com/questions/18367839/alternative-to-concurrentdictionary-for-portable-class-library
         private readonly Dictionary<int,IDisposableSubscription> _subscriptions = new Dictionary<int,IDisposableSubscription>();
         private readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
 
@@ -22,17 +26,26 @@ namespace MemBus
             AddRange(subscriptions);
         }
 
+		/// <summary>
+		/// returns true if no subscriptions are contained
+		/// </summary>
         public bool IsEmpty
         {
             get { return _subscriptions.Count == 0; }
         }
 
+		/// <summary>
+		/// Pushes the message to the contained subscriptions.
+		/// </summary>
         public void Push(object message)
         {
             foreach (var s in Snapshot)
                 s.Push(message);
         }
 
+		/// <summary>
+		/// This event is raised if any of the contained subscriptions is Disposed.
+		/// </summary>
         public event EventHandler Disposed;
 
         bool ISubscription.Handles(Type messageType)
@@ -50,6 +63,7 @@ namespace MemBus
            return Snapshot.Where(s => s.Handles(message.GetType())).ToArray();
         }
 
+		/// <inheritdoc/>
         public bool Add(ISubscription subscription)
         {
             if (subscription == null)
