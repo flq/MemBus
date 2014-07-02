@@ -52,6 +52,15 @@ namespace MemBus
         }
 
         /// <summary>
+        /// Directly access the configuration interface of the bus.
+        /// </summary>
+        public BusSetup Apply(Action<IConfigurableBus> adHocConfig)
+        {
+            var t = new AdHocConfigurator<IConfigurableBus>(adHocConfig);        
+            return Apply(t);
+        }
+
+        /// <summary>
         /// Once you have applied a number of customizations, call this to obtain the <see cref="IBus"/> instance to be used by your App.
         /// </summary>
         public IBus Construct()

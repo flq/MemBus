@@ -63,6 +63,20 @@ namespace MemBus.Tests.Publishing
             t.Mock2.VerifyCalled();
         }
 
+		[Test]
+		public void default_pubish_pipeline_is_replaceable() 
+		{
+			var t = new PublishPipelineTester<MessageB>();
+			var b = BusSetup.StartWith<Conservative>()
+				.Apply(cb => cb.ConfigurePublishing(cp => cp.DefaultPublishPipeline(t.Mock1Object)))
+				.Construct();
+
+			b.Publish(new MessageB());
+
+			t.Mock1.VerifyCalled();
+
+		}
+
         [Test]
         public void non_default_publish_pipeline_takes_precedence()
         {

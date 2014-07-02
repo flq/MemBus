@@ -39,7 +39,9 @@ namespace MemBus.Publishing
         {
             foreach (var m in publishPipelineMembers)
               m.TryInvoke(p => p.Bus = _bus);
-            _pipelines.Insert(0, new PublishChain(info=>true, publishPipelineMembers));
+            if (_pipelines.Count > 0 && _pipelines[0] is DefaultPublishChain)
+                _pipelines.RemoveAt(0);
+            _pipelines.Insert(0, new DefaultPublishChain(publishPipelineMembers));
         }
 
         IConfigurePipeline IConfigurablePublishing.MessageMatch(Func<MessageInfo, bool> match)

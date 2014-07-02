@@ -101,6 +101,11 @@ namespace MemBus.Tests.Help
             Assert.IsNotNull(target);
         }
 
+        public static void ShouldNotBeNull<T>(this T target, string message) where T : class
+        {
+            Assert.IsNotNull(target, message);
+        }
+
         public static void ShouldBeNull<T>(this T target) where T : class
         {
             Assert.IsNull(target);

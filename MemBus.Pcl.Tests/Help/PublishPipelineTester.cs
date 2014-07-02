@@ -56,7 +56,7 @@ namespace MemBus.Tests.Help
 
         public void VerifyCalled()
         {
-            Token.ShouldNotBeNull();
+            Token.ShouldNotBeNull("Publish member was not called");
         }
 
         public PublishToken Token { get; set; }

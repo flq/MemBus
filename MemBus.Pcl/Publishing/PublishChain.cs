@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace MemBus.Publishing
 {
+    internal class DefaultPublishChain : PublishChain
+    {
+        public DefaultPublishChain(IEnumerable<IPublishPipelineMember> members) : base(_ => true, members)
+        {
+        }
+    }
+
     internal class PublishChain
     {
         private readonly Func<MessageInfo, bool> _match;
