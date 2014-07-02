@@ -6,7 +6,6 @@ namespace MemBus.Tests.Help
 {
     public class PublishPipelineTester<T> where T : new()
     {
-        private PublishToken _token;
 
         public FakePublishPipelineMember Mock1 { get; private set; }
         public IPublishPipelineMember Mock1Object { get { return Mock1; } }
@@ -24,16 +23,15 @@ namespace MemBus.Tests.Help
 
         public PublishPipelineTester<T> TestWith(Action<IConfigurablePublishing> configuration)
         {
-            _token = pipelineSkeleton(new T(), configuration);
+            pipelineSkeleton(new T(), configuration);
             return this;
         }
 
-        private static PublishToken pipelineSkeleton(object message, Action<IConfigurablePublishing> configuration)
+        private static void pipelineSkeleton(object message, Action<IConfigurablePublishing> configuration)
         {
             var p = new PublishChainCasing(null).Configure(configuration);
             var token = new PublishToken(message, new ISubscription[] { });
             p.LookAt(token);
-            return token;
         }
 
     }

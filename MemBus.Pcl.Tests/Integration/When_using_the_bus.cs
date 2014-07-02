@@ -31,17 +31,21 @@ namespace MemBus.Tests.Integration
         {
             var received = 0;
             var b = BusSetup.StartWith<Conservative>().Construct();
-            var d = b.Subscribe<MessageA>(msg => received++);
-            b.Publish(new MessageA());
-            received.ShouldBeEqualTo(1);
+            using (b.Subscribe<MessageA>(msg => received++))
+            {
+                b.Publish(new MessageA());
+                received.ShouldBeEqualTo(1);
+            }
         }
 
         [Test]
         public void Resolvers_will_get_access_to_services()
         {
             var simpleResolver = new SimpleResolver();
-            var b = BusSetup.StartWith<Conservative>(cb=> cb.AddResolver(simpleResolver)).Construct();
-            simpleResolver.Services.ShouldNotBeNull();
+            using (BusSetup.StartWith<Conservative>(cb => cb.AddResolver(simpleResolver)).Construct())
+            {
+                simpleResolver.Services.ShouldNotBeNull();
+            }
         }
 
         
