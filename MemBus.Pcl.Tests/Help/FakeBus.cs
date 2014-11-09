@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Threading.Tasks;
+using MemBus.Subscribing;
 
 namespace MemBus.Tests.Help
 {
@@ -35,6 +36,11 @@ namespace MemBus.Tests.Help
         }
 
         public IDisposable Subscribe<M>(Action<M> subscription)
+        {
+            return this;
+        }
+
+        public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper shaper)
         {
             return this;
         }

@@ -39,7 +39,9 @@ namespace MemBus
         public IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization)
         {
             CheckDisposed();
-            var sub = customization.EnhanceSubscription(new MethodInvocation<M>(subscription));
+            var sShapeAgg = new SubscriptionShaperAggregate() { customization };
+            sShapeAgg.Add(new ShapeToDispose());
+            var sub = sShapeAgg.EnhanceSubscription(new MethodInvocation<M>(subscription));
             _resolvers.Add(sub);
             return sub.TryReturnDisposerOfSubscription();
         }

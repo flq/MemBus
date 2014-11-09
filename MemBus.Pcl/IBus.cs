@@ -50,6 +50,12 @@ namespace MemBus
         IDisposable Subscribe(object subscriber);
 
         /// <summary>
+        /// Subscrive a given subscription and provide a customization to the generated subscription.
+        /// See <see cref="ISubsciptionShaper"/> for more information like available implementations. Note that regardless of your customization,
+        /// </summary>
+        IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization);
+
+        /// <summary>
         /// Obtain an <see cref="IObservable{T}"/> instance to observe any incoming objects of te desired types
         /// </summary>
         IObservable<M> Observe<M>();

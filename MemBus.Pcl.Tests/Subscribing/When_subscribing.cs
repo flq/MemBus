@@ -57,6 +57,19 @@ namespace MemBus.Tests.Subscribing
             ((IKnowsSubscribedInstance)sub).Instance.ShouldBeOfType<When_subscribing>();
         }
 
+        [Test]
+        public void Using_shape_overload_directly_works() {
+            var b = BusSetup.StartWith<Conservative>().Construct();
+            var counter = 0;
+            using (var d = b.Subscribe((string s) => counter++, new ShapeToFilter<string>(s => s == "A")))
+            {
+                d.ShouldNotBeNull();
+                b.Publish("A");
+                b.Publish("B");
+            }
+            counter.ShouldBeEqualTo(1);
+        }
+
         public void Sub(object msg) { }
         public static void Substatic(object msg) {}
     }

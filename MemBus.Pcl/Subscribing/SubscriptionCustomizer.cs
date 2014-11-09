@@ -8,7 +8,7 @@ namespace MemBus.Subscribing
     /// Used by <see cref="ISubscriber.Subscribe{M}(System.Action{M},System.Action{MemBus.Subscribing.SubscriptionCustomizer{M}})"/>
     /// to allow the subscriber to customize the way it obtains messages
     /// </summary>
-    /// <typeparam name="M"></typeparam>
+    /// <typeparam name="M">The message type</typeparam>
     public class SubscriptionCustomizer<M> : ISubscriptionShaper
     {
         private readonly SubscriptionShaperAggregate _subscriptionShaperAggregate;
@@ -23,12 +23,18 @@ namespace MemBus.Subscribing
             this._services = services;
         }
 
+        /// <summary>
+        /// Specify a filter to be put in front of the subscription.
+        /// </summary>
         public SubscriptionCustomizer<M> SetFilter(Func<M, bool> filter)
         {
             _filterShape = new ShapeToFilter<M>(filter);
             return this;
         }
 
+        /// <summary>
+        /// Say that this subscription must run on a UI thread
+        /// </summary>
         public SubscriptionCustomizer<M> DispatchOnUiThread()
         {
             if (_services.Get<TaskScheduler>() == null)

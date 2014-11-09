@@ -6,6 +6,7 @@ namespace MemBus.Subscribing
 {
     /// <summary>
     /// Use this shape to specify that the enclosed subscription works on the UI thread.
+    /// Please note that you will have to provide a TaskScheduler that will dispatch onto a given UI thread.
     /// </summary>
     public class ShapeToUiDispatch : ISubscriptionShaper
     {
