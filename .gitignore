@@ -25,3 +25,4 @@ Nuget/MemBus/readme.md
 *.DS_Store
 AppPackages
 readme.html
+project.lock.json
