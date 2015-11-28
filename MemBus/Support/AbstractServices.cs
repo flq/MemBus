@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
 
 namespace MemBus.Support
 {
@@ -19,7 +18,6 @@ namespace MemBus.Support
   /// However, you can keep ONLY ONE instance of every kind.
   /// </summary>
   /// <typeparam name="TARGET">The class that is inheriting from Context</typeparam>
-  [DebuggerDisplay("{WhatDoIHave}")]
   public abstract class AbstractServices<TARGET> 
     : IServices<TARGET>, IDisposable, IEnumerable<object> where TARGET : AbstractServices<TARGET>
   {
@@ -162,7 +160,7 @@ namespace MemBus.Support
         var strings =
           (from entry in _attachedObjects
            select string.Format("Access Type: {0}, Stored Object: {1}", entry.Key.FullName, entry.Value.TheObject)).ToArray();
-        return string.Join(Environment.NewLine, strings);
+        return string.Join("\n", strings);
       }
     }
 

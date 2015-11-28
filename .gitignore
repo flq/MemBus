@@ -23,6 +23,7 @@ Nuget/MemBus/readme.md
 *.Dotsettings
 *.pfx
 *.DS_Store
+.vs
 AppPackages
 readme.html
 project.lock.json

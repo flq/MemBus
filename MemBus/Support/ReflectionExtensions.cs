@@ -73,6 +73,5 @@ namespace MemBus.Support
         {
             return otherType.GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
-
     }
 }
