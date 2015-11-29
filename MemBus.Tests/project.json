@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "MemBus": { "target": "project" }
+  },
+  "frameworks": {
+    "net46": {
+      "compilationOptions": { "define": [ "XUNIT" ] },
+      "frameworkAssemblies": {
+        "System.Runtime": "4.0.20.0",
+        "System.Threading": "4.0.10.0",
+        "System.Threading.Tasks": "4.0.10.0",
+        "WindowsBase": "4.0.0.0"
+      },
+      "dependencies": {
+        "xunit": "2.1.0",
+        "Rx-Core": "2.2.5",
+        "Rx-Interfaces": "2.2.5",
+        "Rx-Linq": "2.2.5",
+        "NSubstitute": "1.9.2"
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("MemBus")]
 [assembly: AssemblyCopyright("Apache 2.0 licensed 2013 realfiction (F Quednau)")]
 
-[assembly: InternalsVisibleTo("MemBus.Pcl.Tests")]
+[assembly: InternalsVisibleTo("MemBus.Tests")]
 [assembly: InternalsVisibleTo("MemBus.Tests.Performance")]
 
 [assembly: AssemblyVersion("3.0.1")]
