@@ -5,8 +5,12 @@ using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using MemBus.Support;
 using NUnit.Framework;
-using NSubstitute;
 using Xunit;
+using System.Reflection;
+
+#if !COREFX
+using NSubstitute;
+#endif
 
 namespace MemBus.Tests.Subscribing
 {
@@ -19,7 +23,7 @@ namespace MemBus.Tests.Subscribing
             (new Action(() => ((ISetup<IConfigurableBus>)setup).Accept(null))).Throws<InvalidOperationException>();
         }
 
-        
+#if !COREFX
         [Test]
         public void When_having_some_configuration_adapter_adds_itself_as_service()
         {
@@ -31,7 +35,7 @@ namespace MemBus.Tests.Subscribing
 
             bus.Received().AddService<IAdapterServices>(setup);
         }
-        
+        #endif
 
         [Test]
         public void Integrative_test_of_finding_all_handlers_in_complex_scenario()

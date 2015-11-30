@@ -33,7 +33,7 @@ namespace MemBus.Tests.Help
 
         public bool Handles(Type messageType)
         {
-            return typeof(T).IsAssignableFrom(messageType);
+            return messageType.CanBeCastTo<T>();
         }
 
         public IDisposable GetDisposer()

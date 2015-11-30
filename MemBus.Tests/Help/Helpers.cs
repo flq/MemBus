@@ -1,6 +1,4 @@
 using System;
-using System.Threading;
-using System.Windows.Threading;
 using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
@@ -22,38 +20,21 @@ namespace MemBus.Tests.Help
             return pipeline;
         }
 
-//        public static Mock<T> MockOf<T>() where T : class
-//        {
-//            return new Mock<T>(MockBehavior.Loose);
-//        }
-//
-        public static DispatcherSynchronizationContext CreateDispatchContext()
+#if !COREFX
+        public static System.Windows.Threading.DispatcherSynchronizationContext CreateDispatchContext()
         {
-            var syncContext = new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher);
-            SynchronizationContext.SetSynchronizationContext(syncContext);
+            var syncContext = new System.Windows.Threading.DispatcherSynchronizationContext(
+                System.Windows.Threading.Dispatcher.CurrentDispatcher);
+            System.Threading.SynchronizationContext.SetSynchronizationContext(syncContext);
             return syncContext;
         }
+#endif
 
-//
-//        public static PublishChainCasing Configure(this PublishChainCasing pipeline, Action<IConfigurablePublishing> configure)
-//        {
-//            configure((IConfigurablePublishing) pipeline);
-//            return pipeline;
-//        }
-//        
-//
         public static MessageEndpointsBuilder MakeBuilder(this IMethodInfoScanner scanner)
         {
             var b = new MessageEndpointsBuilder();
             b.AddScanner(scanner);
             return b;
         }
-//
-//        public static MessageEndpointsBuilder MakeBuilder(IMethodInfoScanner[] scanner)
-//        {
-//            var b = new MessageEndpointsBuilder();
-//            scanner.Each(b.AddScanner);
-//            return b;
-//        }
     }
 }

@@ -6,11 +6,10 @@ using System.Threading;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Rx
 {
-    [TestFixture]
     public class Observable_As_Timer
     {
         readonly IBus _bus = BusSetup
@@ -18,7 +17,7 @@ namespace MemBus.Tests.Rx
             .Apply<FlexibleSubscribeAdapter>(cfg => cfg.RegisterMethods(info => true))
             .Construct();
 
-        [Test]
+        [Fact]
         public void Timer_from_observable_functionality()
         {
             var cd = new CountdownEvent(5);
@@ -28,12 +27,14 @@ namespace MemBus.Tests.Rx
             using (_bus.Subscribe((MessageA _) => cd.Signal()))
             {
                 var sw = Stopwatch.StartNew();
-                var result = cd.Wait(TimeSpan.FromMilliseconds(600));
+                var result = cd.Wait(TimeSpan.FromMilliseconds(700));
                 if (!result)
-                    Assert.Fail("Timer did not complete");
+                    throw new ArgumentException("TImer did not complete");
                 var elapsed = sw.ElapsedMilliseconds;
-                Math.Abs(elapsed - 410).ShouldBeLessThan(70);
-                Debug.WriteLine(elapsed);
+                var diff = Math.Abs(elapsed - 410);
+                Console.WriteLine(diff);
+                Assert.True(diff < 70);
+                Console.WriteLine(elapsed);
             }
         }
 

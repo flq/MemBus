@@ -150,7 +150,7 @@ namespace MemBus.Tests.Integration
             _bus = BusSetup
                 .StartWith<Conservative>()
                 .Apply<IoCSupport>(s => s.SetAdapter(_testAdapter).SetHandlerInterface(typeof(GimmeMsgTypeResolver<>))
-                    .SetMessageTypeResolver(msgT => msgT.GetGenericArguments()[0]) // unwrap from envelope
+                    .SetMessageTypeResolver(msgT => msgT.GenericTypeArguments[0]) // unwrap from envelope
                 )
                 .Construct();
         }

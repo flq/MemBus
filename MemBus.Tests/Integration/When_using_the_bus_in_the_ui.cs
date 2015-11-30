@@ -1,3 +1,4 @@
+#if !COREFX
 using System.Reactive.Linq;
 using System;
 using System.Threading;
@@ -65,3 +66,4 @@ namespace MemBus.Tests.Integration
 
     }
 }
+#endif

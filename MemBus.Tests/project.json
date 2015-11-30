@@ -1,6 +1,10 @@
 {
   "dependencies": {
-    "MemBus": { "target": "project" }
+    "MemBus": { "target": "project" },
+    "System.Reflection": "4.1.0-beta-23516"
+  },
+  "commands": {
+    "test": "xunit.runner.dnx"
   },
   "frameworks": {
     "net46": {
@@ -17,6 +21,33 @@
         "Rx-Interfaces": "2.2.5",
         "Rx-Linq": "2.2.5",
         "NSubstitute": "1.9.2"
+      }
+    },
+    "dnx451": {
+      "compilationOptions": { "define": [ "XUNIT", "COREFX" ] },
+      "frameworkAssemblies": {
+        "System.Reflection": "4.0.0.0"
+      },
+      "dependencies": {
+        "xunit": "2.1.0",
+        "xunit.runner.dnx": "2.1.0-*",
+        "Rx-Interfaces": "2.2.5",
+        "Rx-Core": "2.2.5",
+        "Rx-Linq": "2.2.5"
+      }
+    },
+    "dnxcore50": {
+      "compilationOptions": { "define": [ "XUNIT", "COREFX" ] },
+      "dependencies": {
+        "System.Runtime": "4.0.21-*",
+        "System.Reflection.TypeExtensions": "4.1.0-*",
+        "System.Console": "4.0.0-*",
+        "System.Threading.Tasks": "4.0.11-*",
+        "xunit": "2.1.0",
+        "xunit.runner.dnx": "2.1.0-*",
+        "Rx-Interfaces": "2.2.5",
+        "Rx-Core": "2.2.5",
+        "Rx-Linq": "2.2.5"
       }
     }
   }
