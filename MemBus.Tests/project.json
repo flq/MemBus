@@ -23,19 +23,6 @@
         "NSubstitute": "1.9.2"
       }
     },
-    "dnx451": {
-      "compilationOptions": { "define": [ "XUNIT", "COREFX" ] },
-      "frameworkAssemblies": {
-        "System.Reflection": "4.0.0.0"
-      },
-      "dependencies": {
-        "xunit": "2.1.0",
-        "xunit.runner.dnx": "2.1.0-*",
-        "Rx-Interfaces": "2.2.5",
-        "Rx-Core": "2.2.5",
-        "Rx-Linq": "2.2.5"
-      }
-    },
     "dnxcore50": {
       "compilationOptions": { "define": [ "XUNIT", "COREFX" ] },
       "dependencies": {
