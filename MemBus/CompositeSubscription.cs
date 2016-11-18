@@ -16,7 +16,7 @@ namespace MemBus
 	/// </summary>
     public class CompositeSubscription : ISubscription, IEnumerable<ISubscription>, ISubscriptionResolver
     {
-        private readonly Dictionary<int,IDisposableSubscription> _subscriptions = new Dictionary<int,IDisposableSubscription>();
+        private readonly HashSet<IDisposableSubscription> _subscriptions = new HashSet<IDisposableSubscription>();
         private readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
 
         public CompositeSubscription() { }
@@ -96,7 +96,7 @@ namespace MemBus
         {
             var disposableSub = GetDisposableSub(subscription);
             disposableSub.Disposed += OnSubscriptionDisposed;
-            _subscriptions.Add(disposableSub.GetHashCode(), disposableSub);
+            _subscriptions.Add(disposableSub);
         }
 
         private void OnSubscriptionDisposed(object sender, EventArgs e)
@@ -105,7 +105,7 @@ namespace MemBus
             try
             {
                 _rwLock.EnterWriteLock();
-                _subscriptions.Remove(sender.GetHashCode());
+                _subscriptions.Remove(sender as IDisposableSubscription);
                 Disposed.Raise(sender);
             }
             finally
@@ -127,7 +127,7 @@ namespace MemBus
                 try
                 {
                     _rwLock.EnterReadLock();
-                    var disposableSubscriptions = _subscriptions.Values.ToArray();
+                    var disposableSubscriptions = _subscriptions.ToArray();
                     return disposableSubscriptions;
                 }
                 finally
