@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using MemBus.Configurators;
 using MemBus.Setup;
@@ -58,7 +59,8 @@ namespace MemBus.Tests.Subscribing
         }
 
         [Test]
-        public void Using_shape_overload_directly_works() {
+        public void Using_shape_overload_directly_works()
+        {
             var b = BusSetup.StartWith<Conservative>().Construct();
             var counter = 0;
             using (var d = b.Subscribe((string s) => counter++, new ShapeToFilter<string>(s => s == "A")))
@@ -70,7 +72,19 @@ namespace MemBus.Tests.Subscribing
             counter.ShouldBeEqualTo(1);
         }
 
-        public void Sub(object msg) { }
+        [Test]
+        // Test for https://github.com/flq/MemBus/issues/17
+        public void Large_number_of_subscribers()
+        {
+            var b = BusSetup.StartWith<AsyncConfiguration>().Construct();
+
+            for (var i = 0; i < 100000; i++)
+            {
+                b.Subscribe((int x) => Console.WriteLine(x));
+            }
+        }
+
+    public void Sub(object msg) { }
         public static void Substatic(object msg) {}
     }
 
