@@ -68,7 +68,7 @@ namespace MemBus
         void IConfigurableSubscriber.AddResolver(ISubscriptionResolver resolver)
         {
             CheckDisposed();
-            resolver.TryInvoke(r => r.Services = _services);
+            resolver.Being<IRequireServices>(_ => _.AddServices(_services));
             _resolvers.Add(resolver);
         }
 

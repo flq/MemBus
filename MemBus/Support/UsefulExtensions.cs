@@ -57,6 +57,16 @@ namespace MemBus.Support
         }
 
         /// <summary>
+        /// Perform an action if o is also of type T
+        /// </summary>
+        public static void Being<T>(this object o, Action<T> action) where T : class
+        {
+            var t = o as T;
+            if (t != null)
+                action(t);
+        }
+
+        /// <summary>
         /// Return the value accessesd by selector or the default(O) if the input is null
         /// </summary>
         public static O IfNotNull<I,O>(this I input, Func<I,O> selector) where I : class
@@ -81,8 +91,10 @@ namespace MemBus.Support
             // Disgusting fact: PClstuff uses the same Closure type, but we cannot reach it...
             if (action.Target.GetType().Name == "Closure")
             {
-                dynamic z = action.Target;
-                return z.Constants[0];
+                //TODO
+                //dynamic z = action.Target;
+                //return z.Constants[0];
+                throw new InvalidOperationException("Stuff to do");
             }
             return action.Target;
         }

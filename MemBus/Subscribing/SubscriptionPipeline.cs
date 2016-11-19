@@ -76,8 +76,7 @@ namespace MemBus
 
         public ShapeProvider(Func<MessageInfo,bool> match, IServices services)
         {
-            if (match == null) throw new ArgumentNullException("match");
-            _match = match;
+            _match = match ?? throw new ArgumentNullException("match");
             _services = services;
         }
 
@@ -90,7 +89,7 @@ namespace MemBus
         {
             foreach (var s in shapers)
             {
-                s.TryInvoke(d => d.Services = _services);
+                s.Being<IRequireServices>(d => d.AddServices(_services));
                 _shaperAggregate.Add(s);
             }
         }

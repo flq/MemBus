@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MemBus.Setup;
 using MemBus.Support;
+using System.Linq;
 
 namespace MemBus.Publishing
 {
@@ -37,8 +38,8 @@ namespace MemBus.Publishing
 
         void IConfigurablePublishing.DefaultPublishPipeline(params IPublishPipelineMember[] publishPipelineMembers)
         {
-            foreach (var m in publishPipelineMembers)
-              m.TryInvoke(p => p.Bus = _bus);
+            foreach (var m in publishPipelineMembers.OfType<IRequireBus>())
+              m.AddBus(_bus);
             if (_pipelines.Count > 0 && _pipelines[0] is DefaultPublishChain)
                 _pipelines.RemoveAt(0);
             _pipelines.Insert(0, new DefaultPublishChain(publishPipelineMembers));
@@ -80,7 +81,7 @@ namespace MemBus.Publishing
             {
                 foreach (var m in publishPipelineMembers)
                 {
-                    m.TryInvoke(p => p.Bus = _bus);
+                    m.Being<IRequireBus>(_ => _.AddBus(_bus));
                     Provider.Add(m);
                 }
             }

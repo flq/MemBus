@@ -8,7 +8,7 @@ namespace MemBus.Subscribing
     /// Use this shape to specify that the enclosed subscription works on the UI thread.
     /// Please note that you will have to provide a TaskScheduler that will dispatch onto a given UI thread.
     /// </summary>
-    public class ShapeToUiDispatch : ISubscriptionShaper
+    public class ShapeToUiDispatch : ISubscriptionShaper, IRequireServices
     {
         private TaskScheduler _taskScheduler;
 
@@ -25,19 +25,16 @@ namespace MemBus.Subscribing
             
         }
 
-        public IServices Services
-        {
-            set
-            {
-                _taskScheduler = _taskScheduler ?? value.Get<TaskScheduler>();
-                if (_taskScheduler == null)
-                    throw new InvalidOperationException("No knowledge of a UI thread is available.");
-            }
-        }
-
         public ISubscription EnhanceSubscription(ISubscription subscription)
         {
             return new UiDispatchingSubscription(_taskScheduler, subscription);
+        }
+
+        void IRequireServices.AddServices(IServices svc)
+        {
+            _taskScheduler = _taskScheduler ?? svc.Get<TaskScheduler>();
+            if (_taskScheduler == null)
+                throw new InvalidOperationException("No knowledge of a UI thread is available.");
         }
     }
 }
