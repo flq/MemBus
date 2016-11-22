@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0A8D510F-DE98-4C6B-BEE0-EAF842429DE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MemBus.Testing</RootNamespace>
+    <AssemblyName>MemBus.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Help\AssertExtensions.cs" />
+    <Compile Include="Help\FakeBus.cs" />
+    <Compile Include="Help\Helpers.cs" />
+    <Compile Include="Help\IClassicIHandleStuffI.cs" />
+    <Compile Include="Help\ItfNonGenericForHandles.cs" />
+    <Compile Include="Help\MessageA.cs" />
+    <Compile Include="Help\Messages.cs" />
+    <Compile Include="Help\MockSubscription.cs" />
+    <Compile Include="Help\NamedSubscription.cs" />
+    <Compile Include="Help\PublishPipelineTester.cs" />
+    <Compile Include="Help\RxBasedFooObservable.cs" />
+    <Compile Include="Help\SampleClass.cs" />
+    <Compile Include="Help\SimpleResolver.cs" />
+    <Compile Include="Help\SomeCrazyHandler.cs" />
+    <Compile Include="Help\SomeHandler.cs" />
+    <Compile Include="Help\SubscriptionThatFakesHandles.cs" />
+    <Compile Include="Help\TestShaper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MemBus\MemBus.csproj">
+      <Project>{a6acf0f2-00c2-4a13-b2a5-8c017ffdb7ef}</Project>
+      <Name>MemBus</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
