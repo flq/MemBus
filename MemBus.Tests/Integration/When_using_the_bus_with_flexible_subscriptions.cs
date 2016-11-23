@@ -4,7 +4,7 @@ using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using System.Linq;
 
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Integration
 {
@@ -22,21 +22,21 @@ namespace MemBus.Tests.Integration
             _handlerDisposer = _bus.Subscribe(_handler);
         }
 
-        [Test]
+        [Fact]
         public void Without_flexibility_setup_subscribing_instance_throws()
         {
             var b = BusSetup.StartWith<Conservative>().Construct();
             new Action(() => b.Subscribe(new SomeHandler())).Throws<InvalidOperationException>();
         }
 
-        [Test]
+        [Fact]
         public void Basic_publishing_reaches_the_flexible_subscription()
         {
             _bus.Publish(new MessageA());
             _handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Disposal_also_works_on_flexible_subscriptions()
         {            
             _bus.Publish(new MessageA());
@@ -45,7 +45,7 @@ namespace MemBus.Tests.Integration
             _handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Handler_may_accept_its_own_dispose_token()
         {
             _bus.Publish(new MessageA());
@@ -55,7 +55,7 @@ namespace MemBus.Tests.Integration
             _handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Related_to_caching_resolver_failed_publish()
         {
             _bus.Publish(new MessageA());
@@ -72,14 +72,14 @@ namespace MemBus.Tests.Integration
             _handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void method_with_return_type_can_be_treated_as_subscription()
         {
             _bus.Publish(new MessageB());
             _handler.MsgBCalls.ShouldBeEqualTo(1);
         }
         
-        [Test]
+        [Fact]
         public void return_type_of_a_subscription_is_treated_as_message()
         {
             MessageC msgC = null;
@@ -91,7 +91,7 @@ namespace MemBus.Tests.Integration
         }
 
 
-        [Test]
+        [Fact]
         public void returning_null_is_tolerated()
         {
             var h = new HandlerReturningNull();
@@ -102,7 +102,7 @@ namespace MemBus.Tests.Integration
             }
         }
 
-        [Test]
+        [Fact]
         public void return_type_enumerable_publishes_every_item_as_message()
         {
             var msgB = 0;
@@ -116,7 +116,7 @@ namespace MemBus.Tests.Integration
             msgC.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void void_method_subscription_correct_returns_known_instance()
         {
             var h = new SomeHandler();
@@ -126,7 +126,7 @@ namespace MemBus.Tests.Integration
             subs.All(s => s.Instance.Equals(h)).ShouldBeTrue("Not all known instances are the correct one");
         }
 
-        [Test]
+        [Fact]
         public void publishing_method_subscription_correct_returns_known_instance()
         {
             var h = new SomeHandler();

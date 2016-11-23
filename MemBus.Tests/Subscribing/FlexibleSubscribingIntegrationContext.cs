@@ -3,7 +3,7 @@ using System.Linq;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {

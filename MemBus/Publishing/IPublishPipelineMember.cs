@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 namespace MemBus.Publishing
 {
     /// <summary>
-    /// Defines a single member of a publishing pipeline
+    /// Defines a single member of a publishing pipeline.
+    /// If you introduce a new publish pipeline member,
+    /// you can additionally implement <see cref="IRequireBus" />
+    /// to get access to the <see cref="IBus" /> instance.
     /// </summary>
     public interface IPublishPipelineMember
     {

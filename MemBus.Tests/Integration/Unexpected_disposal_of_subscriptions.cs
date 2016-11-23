@@ -2,7 +2,7 @@ using System;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Integration
 {
@@ -56,13 +56,13 @@ namespace MemBus.Tests.Integration
             _partnerInCrime2.Aquaint(_partnerInCrime1);
         }
 
-        [Test]
+        [Fact]
         public void disposal_of_subscription_does_not_cause_exception_in_message_handling()
         {
             _bus.Publish("Boo!");
         }
 
-        [Test]
+        [Fact]
         public void one_subscription_got_the_message()
         {
             _bus.Publish("Boo!");

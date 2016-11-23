@@ -4,11 +4,10 @@ using System.Linq;
 using System.Reactive.Linq;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
-    [TestFixture]
     public class FSA_Consuming_Observables : FlexibleSubscribingIntegrationContext
     {
         private readonly Tester _tester = new Tester();
@@ -31,7 +30,7 @@ namespace MemBus.Tests.Subscribing
             adp.RegisterMethods(mi => mi.Name.StartsWith("E"));
         }
 
-        [Test]
+        [Fact]
         public void string_msg_received()
         {
             Bus.Publish("Hello");
@@ -40,7 +39,7 @@ namespace MemBus.Tests.Subscribing
         }
     }
 
-    [TestFixture]
+    
     public class FSA_Producing_Observables : FlexibleSubscribingIntegrationContext
     {
         private readonly Tester _tester = new Tester();
@@ -63,14 +62,14 @@ namespace MemBus.Tests.Subscribing
             adp.RegisterMethods(mi => mi.Name.StartsWith("E"));
         }
 
-        [Test]
+        [Fact]
         public void string_msg_received()
         {
             Messages.OfType<string>().ShouldContain(o => o == "Hello from EOne");
         }
     }
 
-    [TestFixture]
+    
     public class FSA_Mapping_Observables : FlexibleSubscribingIntegrationContext
     {
         private readonly Tester _tester = new Tester();
@@ -93,7 +92,7 @@ namespace MemBus.Tests.Subscribing
             adp.RegisterMethods(mi => mi.Name.StartsWith("E"));
         }
 
-        [Test]
+        [Fact]
         public void observable_mapping_working()
         {
             Bus.Publish(new MessageA {Name = "My sweet message"});

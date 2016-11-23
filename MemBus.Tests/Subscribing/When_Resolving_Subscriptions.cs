@@ -1,11 +1,10 @@
 using MemBus.Tests.Help;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 
 
 namespace MemBus.Tests.Subscribing
 {
-    [TestFixture]
     public class When_Resolving_Subscriptions
     {
         private CompositeResolver _resolver;
@@ -16,7 +15,7 @@ namespace MemBus.Tests.Subscribing
                                              new SimpleResolver { new MockSubscription<MessageA>(), new MockSubscription<MessageB>()});
         }
 
-        [Test]
+        [Fact]
         public void returns_single_subscription_for_msg_b()
         {
             var subs = _resolver.GetSubscriptionsFor(new MessageB());
@@ -24,14 +23,14 @@ namespace MemBus.Tests.Subscribing
             subs.Single().Handles(typeof(MessageB)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void returns_none_for_msg_c()
         {
             var subs = _resolver.GetSubscriptionsFor(new MessageC());
             subs.ShouldHaveCount(0);
         }
 
-        [Test]
+        [Fact]
         public void returns_both_msg_a_subscriptions()
         {
             var subs = _resolver.GetSubscriptionsFor(new MessageA());

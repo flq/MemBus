@@ -2,16 +2,16 @@ using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using System.Linq;
 
-using NUnit.Framework;
+using Xunit;
 
 
 
 namespace MemBus.Tests.Subscribing
 {
-    [TestFixture]
+    
     public class Using_Disposable_Method_Subscription
     {
-        [Test]
+        [Fact]
         public void the_basic_method_subscription_is_contravariant()
         {
             var sub = new MethodInvocation<MessageA>(msg => { });
@@ -19,7 +19,7 @@ namespace MemBus.Tests.Subscribing
         }
 
         
-        [Test]
+        [Fact]
         public void Handle_type_derived_from_action()
         {
             int callCount = 0;
@@ -27,7 +27,7 @@ namespace MemBus.Tests.Subscribing
             sub.Handles(typeof(MessageA)).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void passed_in_action_is_called()
         {
             int callCount = 0;
@@ -36,7 +36,7 @@ namespace MemBus.Tests.Subscribing
             callCount.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void calling_disposer_raises_disposed_evt()
         {
             var disposeCalled = false;
@@ -47,7 +47,7 @@ namespace MemBus.Tests.Subscribing
         }
 
         
-        [Test]
+        [Fact]
         public void Adapter_subscriptions_can_also_be_disposed()
         {
             var b = new MethodScanner("Handle").MakeBuilder();

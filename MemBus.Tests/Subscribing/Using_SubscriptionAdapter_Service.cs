@@ -4,7 +4,6 @@ using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using MemBus.Support;
-using NUnit.Framework;
 using Xunit;
 using System.Reflection;
 
@@ -16,7 +15,7 @@ namespace MemBus.Tests.Subscribing
 {
     public class Using_SubscriptionAdapter_Service
     {
-        [Test]
+        [Fact]
         public void Unconfigured_setup_will_throw_invalid_op()
         {
             var setup = new FlexibleSubscribeAdapter();
@@ -24,7 +23,7 @@ namespace MemBus.Tests.Subscribing
         }
 
         #if !NETCORE
-        [Test]
+        [Fact]
         public void When_having_some_configuration_adapter_adds_itself_as_service()
         {
             var setup = new FlexibleSubscribeAdapter();
@@ -37,7 +36,7 @@ namespace MemBus.Tests.Subscribing
         }
         #endif
 
-        [Test]
+        [Fact]
         public void Integrative_test_of_finding_all_handlers_in_complex_scenario()
         {
             var setup = new FlexibleSubscribeAdapter();
@@ -65,7 +64,7 @@ namespace MemBus.Tests.Subscribing
             handler.MessageCCount.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Subscriptions_are_built_for_object_method_based()
         {
             var builder = new MethodScanner("Handle").MakeBuilder();
@@ -74,7 +73,7 @@ namespace MemBus.Tests.Subscribing
             subs.ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void Subscriptions_for_object_method_based_work_correctly()
         {
             var builder = new MethodScanner("Handle").MakeBuilder();
@@ -111,7 +110,7 @@ namespace MemBus.Tests.Subscribing
             @interface.InterfaceIsSuitableAsIoCHandler().ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void Non_generic_interface_is_properly_handled()
         {
             var builder = new InterfaceBasedBuilder(typeof(ItfNonGenericForHandles)).MakeBuilder();
@@ -124,7 +123,7 @@ namespace MemBus.Tests.Subscribing
             targetToAdapt.MsgCount.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Two_subscriptions_expected_from_aquainting_crazy_handler()
         {
             var builder = new InterfaceBasedBuilder(typeof (IClassicIHandleStuffI<>)).MakeBuilder();
@@ -132,7 +131,7 @@ namespace MemBus.Tests.Subscribing
             subs.ShouldHaveCount(2);
         }
 
-        [Test]
+        [Fact]
         public void explicit_implementation_of_interfaces_is_supported()
         {
             var builder = new InterfaceBasedBuilder(typeof(IClassicIHandleStuffI<>)).MakeBuilder();

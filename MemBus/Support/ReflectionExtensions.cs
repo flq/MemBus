@@ -17,7 +17,6 @@ namespace MemBus.Support
         /// <typeparam name="T">The type of the attribute you are looking for</typeparam>
         /// <param name="provider">Target</param>
         /// <returns>True if this attribute is defined on this target</returns>
-        [Api]
         public static bool HasAttribute<T>(this MemberInfo provider) where T : Attribute
         {
             return provider.GetCustomAttributes<T>().Any();
@@ -47,7 +46,6 @@ namespace MemBus.Support
         /// <typeparam name="T">The type of the attribute you are looking for</typeparam>
         /// <param name="provider">Target</param>
         /// <returns>The first attribute on the target that is of the desired type</returns>
-        [Api]
         public static T GetAttribute<T>(this MemberInfo provider) where T : Attribute
         {
             return provider.GetCustomAttributes<T>().FirstOrDefault();

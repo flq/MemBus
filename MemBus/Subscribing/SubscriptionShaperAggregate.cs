@@ -33,7 +33,6 @@ namespace MemBus.Subscribing
               addAsFirst(shaper);
         }
 
-
         public ISubscription EnhanceSubscription(ISubscription subscription)
         {
             var aggregatedSubscription = 

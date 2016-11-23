@@ -1,7 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using MemBus.Messages;
-using MemBus.Publishing;
 using MemBus.Subscribing;
 
 namespace MemBus

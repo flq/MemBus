@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
-
-    [TestFixture]
     public class FSA_Using_Interface_Based_Subscribing : FlexibleSubscribingIntegrationContext
     {
         private readonly SomeHandler _handler = new SomeHandler();
@@ -21,7 +19,7 @@ namespace MemBus.Tests.Subscribing
             yield return _handler;
         }
 
-        [Test]
+        [Fact]
         public void Msg_A_was_received_as_produced_by_observable()
         {
             _handler.MsgACalls.ShouldBeEqualTo(1);

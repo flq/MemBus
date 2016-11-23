@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using MemBus.Subscribing;
@@ -29,10 +28,7 @@ namespace MemBus
 		/// <summary>
 		/// returns true if no subscriptions are contained
 		/// </summary>
-        public bool IsEmpty
-        {
-            get { return _subscriptions.Count == 0; }
-        }
+        public bool IsEmpty => _subscriptions.Count == 0;
 
 		/// <summary>
 		/// Pushes the message to the contained subscriptions.
@@ -101,7 +97,6 @@ namespace MemBus
 
         private void OnSubscriptionDisposed(object sender, EventArgs e)
         {
-            
             try
             {
                 _rwLock.EnterWriteLock();

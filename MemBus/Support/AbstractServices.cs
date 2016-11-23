@@ -89,13 +89,10 @@ namespace MemBus.Support
     ///<summary>
     /// Add.
     ///</summary>
-    ///<param name="object"></param>
-    ///<param name="disposable"></param>
-    ///<typeparam name="T"></typeparam>
     public virtual void Add<T>(T @object, bool disposable)
     {
       if (_attachedObjects.ContainsKey(typeof(T)))
-        throw new ArgumentException(string.Format("An object of Type {0} is already attached to this context", typeof(T).Name));
+        throw new ArgumentException($"An object of Type {typeof(T).Name} is already attached to this context");
       _attachedObjects.Add(typeof(T), new AttachedObject<T>(disposable, @object));
     }
 

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
 
-    [TestFixture]
+    
     public class FSA_Using_Predicate_Based_Subscribing : FlexibleSubscribingIntegrationContext
     {
         private readonly SomeHandler _handler = new SomeHandler();
@@ -28,19 +28,19 @@ namespace MemBus.Tests.Subscribing
             Bus.Publish(new MessageC());
         }
 
-        [Test]
+        [Fact]
         public void Handle_was_found()
         {
             _handler.MsgACalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Route_was_found()
         {
             _handler.MsgBCalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Any_method_from_the_route_and_explicit()
         {
             _handler.MsgCCalls.ShouldBeEqualTo(2);

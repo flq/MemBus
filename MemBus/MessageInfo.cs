@@ -1,6 +1,4 @@
 ﻿using System;
-using MemBus.Setup;
-using MemBus.Support;
 
 namespace MemBus
 {
@@ -21,15 +19,11 @@ namespace MemBus
         /// <summary>
         /// True if the message associated with this info is asssignable to T
         /// </summary>
-        public bool IsType<T>()
-        {
-            return _message is T;
-        }
+        public bool IsType<T>() => _message is T;
 
         /// <summary>
         /// Like IsType but allows you ti supply additional matching
         /// </summary>
-        [Api]
         public bool IsType<T>(Func<T,bool> additionalMatch)
         {
             if (additionalMatch == null) throw new ArgumentNullException("additionalMatch");
@@ -41,7 +35,7 @@ namespace MemBus
         /// <summary>
         /// The Name of this message's type
         /// </summary>
-        public string Name { get { return _message.GetType().Name; } }
+        public string Name => _message.GetType().Name;
 
     }
 }

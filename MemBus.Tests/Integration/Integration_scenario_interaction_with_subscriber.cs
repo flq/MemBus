@@ -4,7 +4,7 @@ using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Support;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Integration
 {
@@ -20,7 +20,7 @@ namespace MemBus.Tests.Integration
                 .Construct();
         }
 
-        [Test]
+        [Fact]
         public void Basic_functionality_works()
         {
             var sub = new TheSubscriber();
@@ -31,7 +31,7 @@ namespace MemBus.Tests.Integration
             sub.SpecialMsgCount.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Dispose_works()
         {
             var sub = new TheSubscriber();
@@ -43,7 +43,7 @@ namespace MemBus.Tests.Integration
             sub.SpecialMsgCount.ShouldBeEqualTo(0);
         }
 
-        [Test]
+        [Fact]
         public void The_special_shape_is_applied()
         {
             var sub = new TheSubscriber();

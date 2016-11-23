@@ -6,14 +6,14 @@ using MemBus.Messages;
 using MemBus.Tests.Help;
 using Membus.Tests.Help;
 
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Integration
 {
-    [TestFixture]
+    
     public class When_Using_The_Bus
     {
-        [Test]
+        [Fact]
         public void Default_setup_routes_the_message_correctly()
         {
             var sub = new SubscriptionThatFakesHandles<MessageA>();
@@ -26,7 +26,7 @@ namespace MemBus.Tests.Integration
             sub.PushCalls.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void Default_setup_provides_subscription_shape()
         {
             var received = 0;
@@ -38,7 +38,7 @@ namespace MemBus.Tests.Integration
             }
         }
 
-        [Test]
+        [Fact]
         public void Resolvers_will_get_access_to_services()
         {
             var simpleResolver = new SimpleResolver();
@@ -49,7 +49,7 @@ namespace MemBus.Tests.Integration
         }
 
         
-        [Test]
+        [Fact]
         public void Subscription_with_filtering_works()
         {
             var received = 0;
@@ -63,7 +63,7 @@ namespace MemBus.Tests.Integration
         }
        
 
-        [Test]
+        [Fact]
         public void Exceptions_are_made_available_as_messages()
         {
             var evt = new ManualResetEvent(false);
@@ -82,7 +82,7 @@ namespace MemBus.Tests.Integration
             bus.Publish(new MessageB());
             var signaled = evt.WaitOne(TimeSpan.FromSeconds(2));
             if (!signaled)
-                Assert.Fail("Exception was never captured!");
+                Assert.True(false, "Exception was never captured!");
 
             capturedMessage.Exception.ShouldBeOfType<AggregateException>();
             var xes = ((AggregateException) capturedMessage.Exception).InnerExceptions;
@@ -90,7 +90,7 @@ namespace MemBus.Tests.Integration
             xes[0].Message.ShouldBeEqualTo("Bad message");
         }
 
-        [Test]
+        [Fact]
         public void A_disposed_subscription_is_gone()
         {
             int received = 0;

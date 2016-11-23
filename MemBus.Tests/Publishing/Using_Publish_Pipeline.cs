@@ -5,21 +5,20 @@ using MemBus.Support;
 using MemBus.Tests.Help;
 using System.Linq;
 
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Publishing
 {
-    [TestFixture]
     public class Using_Publish_Pipeline
     {
-        [Test]
+        [Fact]
         public void publishes_message_parallel()
         {
             var p = new ParallelBlockingPublisher();
             PublisherCheck(p);
         }
 
-        [Test]
+        [Fact]
         public void publishes_message_sequentially()
         {
             var p = new SequentialPublisher();
@@ -33,7 +32,7 @@ namespace MemBus.Tests.Publishing
             token.Subscriptions.OfType<MockSubscription<MessageA>>().All(s=>s.Received == 1).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void publishes_message_fire_and_forget()
         {
             var p = new ParallelNonBlockingPublisher();
@@ -53,7 +52,7 @@ namespace MemBus.Tests.Publishing
             lockingSub.Received.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void publish_pipeline_is_extensible()
         {
             var t = new PublishPipelineTester<MessageB>();
@@ -63,7 +62,7 @@ namespace MemBus.Tests.Publishing
             t.Mock2.VerifyCalled();
         }
 
-		[Test]
+		[Fact]
 		public void default_pubish_pipeline_is_replaceable() 
 		{
 			var t = new PublishPipelineTester<MessageB>();
@@ -77,7 +76,7 @@ namespace MemBus.Tests.Publishing
 
 		}
 
-        [Test]
+        [Fact]
         public void non_default_publish_pipeline_takes_precedence()
         {
             var t = new PublishPipelineTester<MessageA>();
@@ -93,7 +92,7 @@ namespace MemBus.Tests.Publishing
             t.Mock2.VerifyCalled();
         }
 
-        [Test]
+        [Fact]
         public void Execution_of_pipeline_is_cancellable_by_member()
         {
             var t = new PublishPipelineTester<MessageA>();
@@ -103,7 +102,7 @@ namespace MemBus.Tests.Publishing
             t.Mock2.VerifyNotCalled();
         }
 
-        [Test]
+        [Fact]
         public void default_publish_pipeline_is_fallback()
         {
             var t = new PublishPipelineTester<MessageA>();
@@ -119,7 +118,7 @@ namespace MemBus.Tests.Publishing
             t.Mock3.VerifyCalled();
         }
 
-        [Test]
+        [Fact]
         public void use_send_this_to_send_message_while_publishing()
         {
             var b = BusSetup.StartWith<Conservative>(cb=> cb.ConfigurePublishing(
@@ -136,7 +135,7 @@ namespace MemBus.Tests.Publishing
             aCount.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void MessageInfo_isType_supports_variance()
         {
             var info = new MessageInfo(new Foo());

@@ -4,14 +4,14 @@ using MemBus.Configurators;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
-    [TestFixture]
+    
     public class When_subscribing
     {
-        [Test]
+        [Fact]
         public void Conventions_allow_changing_the_shape()
         {
             var sb = new StringBuilder();
@@ -23,7 +23,7 @@ namespace MemBus.Tests.Subscribing
             sb.ToString().ShouldBeEqualTo("AB"); 
         }
 
-        [Test]
+        [Fact]
         public void The_default_is_applied_when_no_specials_apply()
         {
             var sb = new StringBuilder();
@@ -35,7 +35,7 @@ namespace MemBus.Tests.Subscribing
             sb.ToString().ShouldBeEqualTo("Bar"); 
         }
 
-        [Test]
+        [Fact]
         public void A_shape_gets_access_to_services()
         {
             var testShaper = new TestShaper("Test");
@@ -43,7 +43,7 @@ namespace MemBus.Tests.Subscribing
             testShaper.Services.ShouldNotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void The_instance_of_a_static_method_is_null()
         {
             var sub = new MethodInvocation<object>(Substatic);
@@ -51,14 +51,14 @@ namespace MemBus.Tests.Subscribing
             
         }
 
-        [Test]
+        [Fact]
         public void Meth_invocation_implements_knows_instance()
         {
             var sub = new MethodInvocation<object>(Sub);
             ((IKnowsSubscribedInstance)sub).Instance.ShouldBeOfType<When_subscribing>();
         }
 
-        [Test]
+        [Fact]
         public void Using_shape_overload_directly_works()
         {
             var b = BusSetup.StartWith<Conservative>().Construct();
@@ -72,7 +72,7 @@ namespace MemBus.Tests.Subscribing
             counter.ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         // Test for https://github.com/flq/MemBus/issues/17
         public void Large_number_of_subscribers()
         {

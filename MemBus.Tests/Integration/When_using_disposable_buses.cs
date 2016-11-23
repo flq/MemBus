@@ -1,14 +1,14 @@
 using System;
 using MemBus.Configurators;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Integration
 {
-    [TestFixture]
+    
     public class When_Using_Disposable_Buses
     {
-        [Test]
+        [Fact]
         public void A_disposed_bus_throws()
         {
             var bus = BusSetup.StartWith<Conservative>().Construct();

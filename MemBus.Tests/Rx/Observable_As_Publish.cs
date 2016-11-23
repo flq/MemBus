@@ -2,11 +2,11 @@
 using MemBus.Configurators;
 using MemBus.Tests.Help;
 using MemBus.Messages;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Rx
 {
-    [TestFixture]
+    
     public class Observable_As_Publish
     {
         private class DumbObservable<M> : IObservable<M>, IDisposable
@@ -51,7 +51,7 @@ namespace MemBus.Tests.Rx
             bus.Publish(_dumbo);
         }
 
-        [Test]
+        [Fact]
         public void Messages_emanating_from_observable_are_received()
         {
             var messageReceived = false;
@@ -62,7 +62,7 @@ namespace MemBus.Tests.Rx
             messageReceived.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void exception_is_mapped_to_correct_message()
         {
             var messageReceived = false;
@@ -73,7 +73,7 @@ namespace MemBus.Tests.Rx
             messageReceived.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void end_is_mapped_to_correct_message()
         {
             var messageReceived = false;

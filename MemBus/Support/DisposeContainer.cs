@@ -24,13 +24,11 @@ namespace MemBus.Support
             _disposables.AddRange(disposables.OfType<IDisposable>());
         }
 
-        [Api]
         public void Add(IDisposable disposable)
         {
             _disposables.Add(disposable);
         }
 
-        [Api]
         public void Add(params IDisposable[] disposables)
         {
             _disposables.AddRange(disposables);

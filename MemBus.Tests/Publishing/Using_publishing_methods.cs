@@ -2,12 +2,11 @@
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
 
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Publishing
 {
 
-    [TestFixture]
     internal class Using_Publishing_Methods
     {
         private MessageEndpointsBuilder _builder;
@@ -20,7 +19,7 @@ namespace MemBus.Tests.Publishing
             _builder.SetPublisher(_bus);
         }
 
-        [Test]
+        [Fact]
         public void Subscriptions_for_publishing_method_based_work_correctly()
         {
             var handler = new SomeHandler();
@@ -32,7 +31,7 @@ namespace MemBus.Tests.Publishing
             _bus.VerifyMessageIsOfType<MessageC>();
         }
 
-        [Test]
+        [Fact]
         public void primitive_type_is_used_as_return_value()
         {
             var handler = new HandlerWithRouteReturningPrimitive();

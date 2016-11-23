@@ -1,13 +1,12 @@
 ﻿using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MemBus.Tests.Subscribing
 {
-    [TestFixture]
     public class FSA_Reacting_To_Messages_And_Sending : FlexibleSubscribingIntegrationContext, IDisposable
     {
         private readonly Tester _tester = new Tester();
@@ -48,7 +47,7 @@ namespace MemBus.Tests.Subscribing
             adp.RegisterMethods(mi => mi.Name.StartsWith("E"));
         }
 
-        [Test]
+        [Fact]
         public void string_msg_received()
         {
             Bus.Publish("Hello");
@@ -56,7 +55,7 @@ namespace MemBus.Tests.Subscribing
             _tester.AssertContainsMessageOfType<string>();
         }
 
-        [Test]
+        [Fact]
         public void msg_a_reception_triggers_sending_msg_b()
         {
             Bus.Publish(new MessageA());
@@ -65,7 +64,7 @@ namespace MemBus.Tests.Subscribing
             Messages.OfType<MessageB>().Count().ShouldBeEqualTo(1);
         }
 
-        [Test]
+        [Fact]
         public void msg_a_reception_triggers_sending_c_messages()
         {
             Bus.Publish(new MessageA());

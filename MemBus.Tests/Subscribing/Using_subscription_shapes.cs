@@ -1,13 +1,13 @@
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
-    [TestFixture]
+    
     public class Using_subscription_shapes
     {
-        [Test]
+        [Fact]
         public void Correct_sequence_of_matroschka()
         {
             var m = new SubscriptionShaperAggregate {new TestShaper("A"), new TestShaper("B")};
@@ -16,7 +16,7 @@ namespace MemBus.Tests.Subscribing
             ((NamedSubscription)s.Inner).Name.ShouldBeEqualTo("A");
         }
 
-        [Test]
+        [Fact]
         public void Next_to_inner_produces_correct_sequence()
         {
             var m = new SubscriptionShaperAggregate { new TestShaper("A") };
@@ -26,7 +26,7 @@ namespace MemBus.Tests.Subscribing
             ((NamedSubscription)s.Inner).Name.ShouldBeEqualTo("B");
         }
 
-        [Test]
+        [Fact]
         public void Denial_of_shape_correctly_propagates()
         {
             var s =

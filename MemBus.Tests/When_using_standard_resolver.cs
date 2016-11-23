@@ -1,11 +1,11 @@
 using System.Linq;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests
 {
-    [TestFixture]
+    
     public class Resolver_test_context
     {
         protected virtual ISubscriptionResolver GetResolver()
@@ -13,7 +13,7 @@ namespace MemBus.Tests
             return new CompositeSubscription();
         }
 
-        [Test]
+        [Fact]
         public void Caching_resolver_accepts_and_returns_subscriptions()
         {
             var sub = Helpers.MockSubscriptionThatHandles<MessageA>();
@@ -23,7 +23,7 @@ namespace MemBus.Tests
             subs.ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void Sequence_of_addition_and_disposal_works_as_shown()
         {
             var sub1 = new MockSubscription<MessageA>();
@@ -45,7 +45,7 @@ namespace MemBus.Tests
 
         }
 
-        [Test]
+        [Fact]
         public void correct_behavior_of_resolver_with_regard_to_subscribe_dispose_subscribe_publish_twice()
         {
             var sub1 = new MockSubscription<MessageA>();
@@ -61,7 +61,7 @@ namespace MemBus.Tests
             r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void correct_behavior_subscribe_get_subscribe_new_then_get_old()
         {
             var sub1 = new MockSubscription<MessageA>();
@@ -74,7 +74,7 @@ namespace MemBus.Tests
             r.GetSubscriptionsFor(new MessageA()).ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void correct_behavior_regarding_contravariance()
         {
             var sub = new MethodInvocation<Clong>(f => {});
@@ -84,7 +84,7 @@ namespace MemBus.Tests
             r.GetSubscriptionsFor(new Clung()).ShouldHaveCount(1);
         }
 
-        [Test]
+        [Fact]
         public void correct_behavior_not_getting_message_twice()
         {
             var sub = new MethodInvocation<Clong>(f => { });

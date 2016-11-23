@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MemBus.Configurators;
 using MemBus.Setup;
-using MemBus.Subscribing;
-using MemBus.Support;
 
 // ReSharper disable CheckNamespace
 namespace MemBus
@@ -22,7 +19,6 @@ namespace MemBus
         /// Apply an arbitrary number of <see cref="ISetup{T}"/> of <see cref="IConfigurableBus"/> instances.
         /// Examples are <see cref="Conservative"/> or <see cref="AsyncConfiguration"/>
         /// </summary>
-        [Api]
         public BusSetup Apply(params ISetup<IConfigurableBus>[] configurators)
         {
             _configurators.AddRange(configurators);
@@ -33,7 +29,6 @@ namespace MemBus
         /// <summary>
         /// Apply variant where you specify a configurator as type, and others as instance
         /// </summary>
-        [Api]
         public BusSetup Apply<T>(params ISetup<IConfigurableBus>[] configurators) where T : ISetup<IConfigurableBus>, new()
         {
             _configurators.Add(new T());

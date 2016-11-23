@@ -1,19 +1,19 @@
 ﻿using System.Threading.Tasks;
 using MemBus.Configurators;
-using NUnit.Framework;
+using Xunit;
 
 namespace MemBus.Tests.Publishing
 {
     public class Awaitable_Publish
     {
-        [Test]
+        [Fact]
         public async Task using_the_awaitable_publish()
         {
             var b = BusSetup.StartWith<Conservative>().Construct();
             var messageReceived = false;
             b.Subscribe((string h) => messageReceived = true);
             await b.PublishAsync("Hello");
-            Assert.IsTrue(messageReceived);
+            Assert.True(messageReceived);
         }
     }
 
