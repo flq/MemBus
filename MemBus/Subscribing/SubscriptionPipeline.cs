@@ -76,7 +76,9 @@ namespace MemBus
 
         public ShapeProvider(Func<MessageInfo,bool> match, IServices services)
         {
-            _match = match ?? throw new ArgumentNullException("match");
+            if (match == null)
+              throw new ArgumentNullException("match");
+            _match = match; 
             _services = services;
         }
 

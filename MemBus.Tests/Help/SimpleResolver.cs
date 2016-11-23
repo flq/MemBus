@@ -6,12 +6,16 @@ using MemBus.Support;
 
 namespace MemBus.Tests.Help
 {
-    public class SimpleResolver : ISubscriptionResolver, IEnumerable<ISubscription>
+    public class SimpleResolver : ISubscriptionResolver, IRequireServices, IEnumerable<ISubscription>
     {
         private readonly List<ISubscription> _subscriptions = new List<ISubscription>();
 
-        public IServices Services { get; set; }
+        public IServices Services { get; private set; }
 
+        public void AddServices(IServices svc) 
+        {
+            Services = svc;
+        }
         public IEnumerable<ISubscription> GetSubscriptionsFor(object message)
         {
            if (message == null)

@@ -1,6 +1,4 @@
-﻿#if XUNIT
-
-// Taken from the FastMember project which was the template
+﻿// Taken from the FastMember project which was the template
 // for Marc Gravell's lovely introduction to DNX support.
 
 using System;
@@ -70,4 +68,3 @@ namespace NUnit.Framework
         }
     }
 }
-#endif

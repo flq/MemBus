@@ -8,7 +8,7 @@ using NUnit.Framework;
 using Xunit;
 using System.Reflection;
 
-#if !COREFX
+#if !NETCORE
 using NSubstitute;
 #endif
 
@@ -23,7 +23,7 @@ namespace MemBus.Tests.Subscribing
             (new Action(() => ((ISetup<IConfigurableBus>)setup).Accept(null))).Throws<InvalidOperationException>();
         }
 
-#if !COREFX
+        #if !NETCORE
         [Test]
         public void When_having_some_configuration_adapter_adds_itself_as_service()
         {

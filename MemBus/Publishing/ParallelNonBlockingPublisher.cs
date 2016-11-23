@@ -34,7 +34,9 @@ namespace MemBus.Publishing
 
         void IRequireBus.AddBus(IBus bus)
         {
-            _bus = bus ?? throw new InvalidOperationException("This publisher requires a bus for exception propagation");
+            if (bus == null)
+              throw new InvalidOperationException("This publisher requires a bus for exception propagation");
+            _bus = bus; 
         }
     }
 }

@@ -20,7 +20,7 @@ namespace MemBus.Tests.Help
             return pipeline;
         }
 
-#if !COREFX
+#if !NETCORE
         public static System.Windows.Threading.DispatcherSynchronizationContext CreateDispatchContext()
         {
             var syncContext = new System.Windows.Threading.DispatcherSynchronizationContext(

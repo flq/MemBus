@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using MemBus.Messages;
 using MemBus.Subscribing;
@@ -88,13 +89,12 @@ namespace MemBus.Support
         {
             if (action.Target == null)
                 return null;
-            // Disgusting fact: PClstuff uses the same Closure type, but we cannot reach it...
+            // Disgusting fact: The Closure Type is not public
             if (action.Target.GetType().Name == "Closure")
             {
-                //TODO
-                //dynamic z = action.Target;
-                //return z.Constants[0];
-                throw new InvalidOperationException("Stuff to do");
+                var rF = action.Target.GetType().GetRuntimeField("Constants");
+                var constants = (object[])rF.GetValue(action.Target);
+                return constants[0];
             }
             return action.Target;
         }

@@ -1,0 +1,6 @@
+{
+    "projects": [
+        "MemBus",
+        "MemBus.Tests"
+    ]
+}

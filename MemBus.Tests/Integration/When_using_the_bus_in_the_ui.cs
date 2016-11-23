@@ -1,4 +1,4 @@
-#if !COREFX
+#if !NETCORE
 using System.Reactive.Linq;
 using System;
 using System.Threading;
