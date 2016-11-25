@@ -8,6 +8,7 @@
     "summary": "Pub/Sub in-memory with all parts configurable.",
     "releaseNotes": "Updated to support netstandard1.6 ONLY. RC until I hear no complaints.",
     "projectUrl": "http://github.com/flq/MemBus",
+    "iconUrl": "http://realfiction.net/public/assets/bus.png",
     "licenseUrl": "http://www.opensource.org/licenses/apache2.0",
     "tags": [ "publish", "subscribe", "bus", "messaging" ]
   },
