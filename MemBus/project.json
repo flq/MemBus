@@ -1,12 +1,12 @@
 {
   "name": "MemBus",
-  "version": "4.0.0",
+  "version": "4.0.0-rc",
   "authors": [ "Frank Quednau" ],
   "description": "Pub/Sub in-memory with all parts configurable",
   "packOptions": {
     "owners": [ "Frank Quednau" ],
     "summary": "Pub/Sub in-memory with all parts configurable.",
-    "releaseNotes": "Updated to support netstandard1.6",
+    "releaseNotes": "Updated to support netstandard1.6 ONLY. RC until I hear no complaints.",
     "projectUrl": "http://github.com/flq/MemBus",
     "licenseUrl": "http://www.opensource.org/licenses/apache2.0",
     "tags": [ "publish", "subscribe", "bus", "messaging" ]
