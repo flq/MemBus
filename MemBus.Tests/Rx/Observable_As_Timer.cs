@@ -33,8 +33,6 @@ namespace MemBus.Tests.Rx
                 var result = cd.Wait(TimeSpan.FromMilliseconds(700));
                 if (!result)
                     throw new ArgumentException("Timer did not complete");
-                // 10 + 4 * 100 and some more
-                Assert.InRange(sw.ElapsedMilliseconds, 410, 550);
                 Assert.Equal(5, messages);
             }
         }
