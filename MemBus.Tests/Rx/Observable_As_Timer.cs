@@ -21,20 +21,21 @@ namespace MemBus.Tests.Rx
         public void Timer_from_observable_functionality()
         {
             var cd = new CountdownEvent(5);
-            
+            int messages = 0;
+            var sw = Stopwatch.StartNew();
             _bus.Subscribe(new Timers());
-
-            using (_bus.Subscribe((MessageA _) => cd.Signal()))
+            
+            using (_bus.Subscribe((MessageA _) => {
+                cd.Signal();
+                Interlocked.Increment(ref messages);
+            }))
             {
-                var sw = Stopwatch.StartNew();
                 var result = cd.Wait(TimeSpan.FromMilliseconds(700));
                 if (!result)
-                    throw new ArgumentException("TImer did not complete");
-                var elapsed = sw.ElapsedMilliseconds;
-                var diff = Math.Abs(elapsed - 410);
-                Console.WriteLine(diff);
-                Assert.True(diff < 70);
-                Console.WriteLine(elapsed);
+                    throw new ArgumentException("Timer did not complete");
+                // 10 + 4 * 100 and some more
+                Assert.InRange(sw.ElapsedMilliseconds, 410, 550);
+                Assert.Equal(5, messages);
             }
         }
 
