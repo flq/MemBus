@@ -30,7 +30,7 @@ namespace MemBus.Tests.Rx
                 Interlocked.Increment(ref messages);
             }))
             {
-                var result = cd.Wait(TimeSpan.FromMilliseconds(700));
+                var result = cd.Wait(TimeSpan.FromMilliseconds(1700));
                 if (!result)
                     throw new ArgumentException("Timer did not complete");
                 Assert.Equal(5, messages);
