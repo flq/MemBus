@@ -74,7 +74,7 @@ There isn't a lot one can say about Publishing. You may pass
 * An Observable - in this case MemBus will dispatch any observed messages to the MemBus infrastructure. If the Observable raises an exception, the **ExceptionOccurred** messagewill be sent. Once the observale completes, the **MessageStreamCompleted** message will be dispatched.
 * Publish in an awaitable fashion - in this case, any configuration with regard to handling the message will be short-circuited an an awaitable version of a **SequentialPublisher** will be used.
 
-##Publishing to a DI Container
+## Publishing to a DI Container
 
 One use case of using MemBus is to dispatch handling of a message to an IOC container. Given a message, the implementation of some type is looked up, instantiated by the container and the message is delivered to the handling method.
 
