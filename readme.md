@@ -1,4 +1,6 @@
-# README #
+# MemBus Readme #
+
+[![Build status](https://ci.appveyor.com/api/projects/status/81caaynficf9n79d?svg=true)](https://ci.appveyor.com/project/flq/membus)
 
 In-memory publish-subscribe bus with pluggable subscription and publishing pipeline, first-class support of Observables, contravariant messaging and resolution of handlers through pluggable IOC.
 Will cover your event aggregation needs and then more.
