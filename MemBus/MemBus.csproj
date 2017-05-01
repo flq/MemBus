@@ -8,7 +8,7 @@
     <AssemblyName>MemBus</AssemblyName>
     <PackageId>MemBus</PackageId>
     <PackageTags>publish;subscribe;bus;messaging</PackageTags>
-    <PackageReleaseNotes>Updated to support netstandard1.6 ONLY. RC until I hear no complaints.</PackageReleaseNotes>
+    <PackageReleaseNotes>netstandard + net46</PackageReleaseNotes>
     <PackageIconUrl>http://realfiction.net/public/assets/bus.png</PackageIconUrl>
     <PackageProjectUrl>http://github.com/flq/MemBus</PackageProjectUrl>
     <PackageLicenseUrl>http://www.opensource.org/licenses/apache2.0</PackageLicenseUrl>
@@ -23,6 +23,7 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>4.0.0</Version>
+    <DocumentationFile>bin\Debug\$(TargetFramework)\MemBus.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
