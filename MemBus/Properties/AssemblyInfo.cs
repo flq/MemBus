@@ -11,5 +11,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("MemBus.Tests")]
 [assembly: InternalsVisibleTo("MemBus.Tests.Performance")]
 
-[assembly: AssemblyVersion("4.0.0")]
-[assembly: AssemblyFileVersion("4.0.0")]
+[assembly: AssemblyVersion("4.0.1")]
+[assembly: AssemblyFileVersion("4.0.1")]

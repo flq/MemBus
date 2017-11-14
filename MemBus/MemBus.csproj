@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <Description>Pub/Sub in-memory with all parts configurable</Description>
-    <VersionPrefix>4.0.0-rc</VersionPrefix>
+    <VersionPrefix>4.0.1-rc</VersionPrefix>
     <Authors>Frank Quednau</Authors>
-    <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;net45;net46</TargetFrameworks>
     <AssemblyName>MemBus</AssemblyName>
     <PackageId>MemBus</PackageId>
     <PackageTags>publish;subscribe;bus;messaging</PackageTags>
-    <PackageReleaseNotes>netstandard + net46</PackageReleaseNotes>
+    <PackageReleaseNotes>netstandard +net45+ net46</PackageReleaseNotes>
     <PackageIconUrl>http://realfiction.net/public/assets/bus.png</PackageIconUrl>
     <PackageProjectUrl>http://github.com/flq/MemBus</PackageProjectUrl>
     <PackageLicenseUrl>http://www.opensource.org/licenses/apache2.0</PackageLicenseUrl>
@@ -22,7 +22,7 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.0.0</Version>
+    <Version>4.0.1</Version>
     <DocumentationFile>bin\Debug\$(TargetFramework)\MemBus.xml</DocumentationFile>
   </PropertyGroup>
 
