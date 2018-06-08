@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
+using JetBrains.Annotations;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
@@ -10,7 +10,7 @@ using Xunit;
 
 namespace MemBus.Tests.Rx
 {
-    public class Observable_As_Timer
+    public class ObservableAsTimer
     {
         readonly IBus _bus = BusSetup
             .StartWith<Conservative>()
@@ -22,7 +22,6 @@ namespace MemBus.Tests.Rx
         {
             var cd = new CountdownEvent(5);
             int messages = 0;
-            var sw = Stopwatch.StartNew();
             _bus.Subscribe(new Timers());
             
             using (_bus.Subscribe((MessageA _) => {
@@ -39,6 +38,7 @@ namespace MemBus.Tests.Rx
 
         private class Timers
         {
+            [UsedImplicitly]
             public IObservable<MessageA> ASignal()
             {
                 return Observable

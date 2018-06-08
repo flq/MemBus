@@ -7,7 +7,7 @@ using Xunit;
 namespace MemBus.Tests.Rx
 {
     
-    public class Observable_As_Publish
+    public class ObservableAsPublish
     {
         private class DumbObservable<M> : IObservable<M>, IDisposable
         {
@@ -21,8 +21,7 @@ namespace MemBus.Tests.Rx
 
             public void Message(M msg)
             {
-                if (_observer != null)
-                    _observer.OnNext(msg);
+                _observer?.OnNext(msg);
             }
 
             public void Throw(Exception x)
@@ -45,7 +44,7 @@ namespace MemBus.Tests.Rx
         readonly IBus bus = BusSetup.StartWith<Conservative>().Construct();
         private DumbObservable<string> _dumbo;
 
-        public Observable_As_Publish()
+        public ObservableAsPublish()
         {
             _dumbo = new DumbObservable<string>();
             bus.Publish(_dumbo);

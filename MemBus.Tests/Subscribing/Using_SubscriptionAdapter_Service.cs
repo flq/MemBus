@@ -1,19 +1,17 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using MemBus.Setup;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using MemBus.Support;
 using Xunit;
-using System.Reflection;
-
-#if !NETCORE
 using NSubstitute;
-#endif
+
 
 namespace MemBus.Tests.Subscribing
 {
-    public class Using_SubscriptionAdapter_Service
+    public class UsingSubscriptionAdapterService
     {
         [Fact]
         public void Unconfigured_setup_will_throw_invalid_op()
@@ -22,7 +20,7 @@ namespace MemBus.Tests.Subscribing
             (new Action(() => ((ISetup<IConfigurableBus>)setup).Accept(null))).Throws<InvalidOperationException>();
         }
 
-        #if !NETCORE
+        
         [Fact]
         public void When_having_some_configuration_adapter_adds_itself_as_service()
         {
@@ -34,7 +32,6 @@ namespace MemBus.Tests.Subscribing
 
             bus.Received().AddService<IAdapterServices>(setup);
         }
-        #endif
 
         [Fact]
         public void Integrative_test_of_finding_all_handlers_in_complex_scenario()

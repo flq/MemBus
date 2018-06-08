@@ -8,8 +8,7 @@ using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
-    
-    public class When_subscribing
+    public class WhenSubscribing
     {
         [Fact]
         public void Conventions_allow_changing_the_shape()
@@ -19,8 +18,8 @@ namespace MemBus.Tests.Subscribing
 
             using (bus.Subscribe<MessageB>(msg => { }))
                 bus.Publish(new MessageB());
-            
-            sb.ToString().ShouldBeEqualTo("AB"); 
+
+            sb.ToString().ShouldBeEqualTo("AB");
         }
 
         [Fact]
@@ -32,7 +31,7 @@ namespace MemBus.Tests.Subscribing
             using (bus.Subscribe<MessageA>(msg => { }))
                 bus.Publish(new MessageA());
 
-            sb.ToString().ShouldBeEqualTo("Bar"); 
+            sb.ToString().ShouldBeEqualTo("Bar");
         }
 
         [Fact]
@@ -47,15 +46,14 @@ namespace MemBus.Tests.Subscribing
         public void The_instance_of_a_static_method_is_null()
         {
             var sub = new MethodInvocation<object>(Substatic);
-            ((IKnowsSubscribedInstance)sub).Instance.ShouldBeNull();
-            
+            ((IKnowsSubscribedInstance) sub).Instance.ShouldBeNull();
         }
 
         [Fact]
         public void Meth_invocation_implements_knows_instance()
         {
             var sub = new MethodInvocation<object>(Sub);
-            ((IKnowsSubscribedInstance)sub).Instance.ShouldBeOfType<When_subscribing>();
+            ((IKnowsSubscribedInstance) sub).Instance.ShouldBeOfType<WhenSubscribing>();
         }
 
         [Fact]
@@ -69,6 +67,7 @@ namespace MemBus.Tests.Subscribing
                 b.Publish("A");
                 b.Publish("B");
             }
+
             counter.ShouldBeEqualTo(1);
         }
 
@@ -84,8 +83,13 @@ namespace MemBus.Tests.Subscribing
             }
         }
 
-    public void Sub(object msg) { }
-        public static void Substatic(object msg) {}
+        public void Sub(object msg)
+        {
+        }
+
+        public static void Substatic(object msg)
+        {
+        }
     }
 
     public class BusSetupWithTestShapers : ISetup<IConfigurableBus>
@@ -101,10 +105,10 @@ namespace MemBus.Tests.Subscribing
         {
             setup.ConfigureSubscribing(
                 s => s.MessageMatch(mi => mi.IsType<MessageB>(),
-                sc => sc.ShapeOutwards(
-                                        new TestShaper("B", () => _sb.Append("B")),
-                                        new TestShaper("A", () => _sb.Append("A"))
-                                       )));
+                    sc => sc.ShapeOutwards(
+                        new TestShaper("B", () => _sb.Append("B")),
+                        new TestShaper("A", () => _sb.Append("A"))
+                    )));
         }
     }
 
@@ -121,11 +125,11 @@ namespace MemBus.Tests.Subscribing
         {
             setup.ConfigureSubscribing(
                 s =>
-                    {
-                        s.DefaultShapeOutwards(new TestShaper("Bar", () => _sb.Append("Bar")));
-                        s.MessageMatch(mi => mi.IsType<MessageB>(),
-                                       sc => sc.ShapeOutwards(new TestShaper("Foo", () => _sb.Append("Foo"))));
-                    });
+                {
+                    s.DefaultShapeOutwards(new TestShaper("Bar", () => _sb.Append("Bar")));
+                    s.MessageMatch(mi => mi.IsType<MessageB>(),
+                        sc => sc.ShapeOutwards(new TestShaper("Foo", () => _sb.Append("Foo"))));
+                });
         }
     }
 

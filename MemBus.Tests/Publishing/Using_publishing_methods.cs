@@ -6,13 +6,12 @@ using Xunit;
 
 namespace MemBus.Tests.Publishing
 {
-
-    internal class Using_Publishing_Methods
+    public class UsingPublishingMethods
     {
         private MessageEndpointsBuilder _builder;
         private FakeBus _bus;
 
-        public Using_Publishing_Methods()
+        public UsingPublishingMethods()
         {
             _bus = new FakeBus();
             _builder = new MethodScanner("Route").MakeBuilder();

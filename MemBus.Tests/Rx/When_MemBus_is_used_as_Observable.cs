@@ -10,7 +10,7 @@ using Xunit;
 namespace MemBus.Tests.Rx
 {
     
-    public class When_MemBus_Is_Used_As_Observable
+    public class WhenMemBusIsUsedAsObservable
     {
         readonly IBus _bus = BusSetup.StartWith<Conservative>().Construct();
 

@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using JetBrains.Annotations;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
 using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
-    public class FSA_Consuming_Observables : FlexibleSubscribingIntegrationContext
+    public class FsaConsumingObservables : FlexibleSubscribingIntegrationContext
     {
         private readonly Tester _tester = new Tester();
 
         private class Tester : MessageReceiver
         {
+            [UsedImplicitly]
             public void EOne(IObservable<string> messages)
             {
                 messages.Subscribe(Add);
@@ -40,12 +42,13 @@ namespace MemBus.Tests.Subscribing
     }
 
     
-    public class FSA_Producing_Observables : FlexibleSubscribingIntegrationContext
+    public class FsaProducingObservables : FlexibleSubscribingIntegrationContext
     {
         private readonly Tester _tester = new Tester();
 
         private class Tester
         {
+            [UsedImplicitly]
             public IObservable<string> EOne()
             {
                 return Observable.Return("Hello from EOne");
@@ -70,12 +73,13 @@ namespace MemBus.Tests.Subscribing
     }
 
     
-    public class FSA_Mapping_Observables : FlexibleSubscribingIntegrationContext
+    public class FsaMappingObservables : FlexibleSubscribingIntegrationContext
     {
         private readonly Tester _tester = new Tester();
 
         private class Tester
         {
+            [UsedImplicitly]
             public IObservable<MessageB> EOne(IObservable<MessageA> aMessages)
             {
                 return aMessages.Select(a=> new MessageB {Id = a.Name});

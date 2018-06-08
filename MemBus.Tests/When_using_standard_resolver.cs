@@ -6,7 +6,7 @@ using Xunit;
 namespace MemBus.Tests
 {
     
-    public class Resolver_test_context
+    public class ResolverTestContext
     {
         protected virtual ISubscriptionResolver GetResolver()
         {

@@ -6,7 +6,7 @@ using System.Windows.Threading;
 using MemBus.Configurators;
 using MemBus.Tests.Help;
 
-using Xunit;;
+using Xunit;
 
 namespace MemBus.Tests.Integration
 {

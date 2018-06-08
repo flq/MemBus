@@ -3,7 +3,6 @@ using System.Linq;
 using MemBus.Configurators;
 using MemBus.Subscribing;
 using MemBus.Tests.Help;
-using Xunit;
 
 namespace MemBus.Tests.Subscribing
 {
@@ -29,26 +28,28 @@ namespace MemBus.Tests.Subscribing
 
     public class FlexibleSubscribingIntegrationContext
     {
-        protected IBus Bus;
-        protected List<object> Messages = new List<object>();
+        protected readonly IBus Bus;
+        protected readonly List<object> Messages = new List<object>();
 
-        public FlexibleSubscribingIntegrationContext()
+        protected FlexibleSubscribingIntegrationContext()
         {
             Bus = BusSetup
                 .StartWith<Conservative>()
                 .Apply<FlexibleSubscribeAdapter>(ConfigureAdapter)
                 .Construct();
             Bus.Subscribe<object>(MessageCapturing);
+            // ReSharper disable VirtualMemberCallInConstructor
             foreach (var endpoints in GetEndpoints())
             {
                 Bus.Subscribe(endpoints);
             }
+
             AdditionalSetup();
+            // ReSharper restore VirtualMemberCallInConstructor
         }
 
         protected virtual void AdditionalSetup()
         {
-            
         }
 
         protected virtual IEnumerable<object> GetEndpoints()
