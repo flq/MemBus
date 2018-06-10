@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    
     <Description>Pub/Sub in-memory with all parts configurable</Description>
-    <VersionPrefix>4.0.1-rc</VersionPrefix>
     <Authors>Frank Quednau</Authors>
     <TargetFrameworks>net45;net46;netstandard1.6;netstandard2.0</TargetFrameworks>
     <AssemblyName>MemBus</AssemblyName>
@@ -22,6 +22,7 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>4.0.1</Version>
+    <VersionPrefix>4.0.1</VersionPrefix>
     <DocumentationFile>bin\Debug\$(TargetFramework)\MemBus.xml</DocumentationFile>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
