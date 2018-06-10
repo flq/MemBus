@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MemBus.Configurators;
 
 namespace MemBus
 {

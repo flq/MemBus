@@ -24,12 +24,10 @@
     <Version>4.0.1</Version>
     <VersionPrefix>4.0.1</VersionPrefix>
     <DocumentationFile>bin\Debug\$(TargetFramework)\MemBus.xml</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_6</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
-  </ItemGroup>
 </Project>

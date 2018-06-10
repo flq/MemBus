@@ -147,19 +147,11 @@ namespace MemBus.Support
       return obj;
     }
 
-    /// <summary>
-    /// <see cref="IServices{TARGET}.WhatDoIHave()"/>
-    /// </summary>
-    public string WhatDoIHave
-    {
-      get
-      {
-        var strings =
-          (from entry in _attachedObjects
-           select string.Format("Access Type: {0}, Stored Object: {1}", entry.Key.FullName, entry.Value.TheObject)).ToArray();
-        return string.Join("\n", strings);
-      }
-    }
+
+    /// <inheritdoc />
+    public string WhatDoIHave => 
+      string.Join("\n", _attachedObjects.Select(
+        entry => $"Access Type: {entry.Key.FullName}, Stored Object: {entry.Value.TheObject}"));
 
     ///<summary>
     /// If an added object is an extension, Unattach will be called, if the object implements Dispose,

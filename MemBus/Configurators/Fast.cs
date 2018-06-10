@@ -5,7 +5,7 @@ using MemBus.Subscribing;
 namespace MemBus.Configurators
 {
     /// <summary>
-    /// A fire and forget publisher is used that publishes messages in parallel. With this setup <see cref="IBus.Publish"/> does NOT block.
+    /// A fire and forget publisher is used that publishes messages in parallel. With this setup <see cref="IPublisher.Publish"/> does NOT block.
     /// </summary>
     public class Fast : ISetup<IConfigurableBus>
     {

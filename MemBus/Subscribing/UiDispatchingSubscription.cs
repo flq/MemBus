@@ -12,8 +12,8 @@ namespace MemBus.Subscribing
 
         public UiDispatchingSubscription(TaskScheduler taskScheduler, ISubscription subscription)
         {
-            this._taskScheduler = taskScheduler;
-            this._subscription = subscription;
+            _taskScheduler = taskScheduler;
+            _subscription = subscription;
         }
 
         public void Push(object message)

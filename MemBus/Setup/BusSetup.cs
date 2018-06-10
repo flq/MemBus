@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using MemBus.Configurators;
 using MemBus.Setup;
+using MemBus.Subscribing;
 
 // ReSharper disable CheckNamespace
 namespace MemBus

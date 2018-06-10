@@ -14,46 +14,10 @@ namespace MemBus.Tests.Help
             Assert.Equal(expectedCount, actual);
         }
 
-        public static void ShouldHaveMoreItemsThan(this ICollection collection, int smallestCount)
-        {
-            Assert.True(collection.Count > smallestCount);
-        }
-
-        public static void ShouldBeGreaterThan<T>(this T target, T other) where T : IComparable<T>
-        {
-            Assert.True(target.CompareTo(other) > 0);
-        }
-
-        public static void ShouldBeLessThan<T>(this T target, T other) where T : IComparable<T>
-        {
-            Assert.True(target.CompareTo(other) < 0);
-        }
-
-        public static void ShouldHaveLength(this Array array, int expectedCount)
-        {
-            Assert.Equal(expectedCount,array.Length);
-        }
-
         public static void ShouldBeEqualTo<T>(this T target, T expectedValue)
         {
             Assert.Equal(expectedValue, target);
         }
-
-        public static void ShouldAllBeEqualTo<T>(this IEnumerable<T> target, T value)
-        {
-            Assert.Collection(target, item => item.Equals(value));
-        }
-
-        public static void ShouldBeASubsetOf<T>(this IEnumerable<T> target, IEnumerable<T> expectedSet)
-        {
-            Assert.ProperSubset(new HashSet<T>(expectedSet), new HashSet<T>(target));
-        }
-
-        public static void ShouldBeTheSameAs<T>(this T target, T expectedValue)
-        {
-            Assert.Same(expectedValue, target);
-        }
-
 
         public static void ShouldBeTrue(this bool target)
         {
@@ -78,11 +42,6 @@ namespace MemBus.Tests.Help
         public static void ShouldContain(this string target, string piece)
         {
             target.Contains(piece).ShouldBeTrue();
-        }
-
-        public static void ShouldNotContain<T>(this IEnumerable<T> target, Func<T, bool> predicate)
-        {
-            Assert.False(target.Any(predicate), "The checked element does contain what is looked for");
         }
 
         public static void ShouldNotBeNull<T>(this T target) where T : class

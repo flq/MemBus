@@ -1,4 +1,7 @@
-﻿namespace MemBus.Support
+﻿using MemBus.Publishing;
+using MemBus.Subscribing;
+
+namespace MemBus.Support
 {
     /// <summary>
     /// Specify that you want access to the <see cref="IServices"/> instance of MemBus.

@@ -83,6 +83,7 @@ namespace MemBus.Tests.Subscribing
             }
         }
 
+        #pragma warning disable xUnit1013
         public void Sub(object msg)
         {
         }
@@ -90,6 +91,7 @@ namespace MemBus.Tests.Subscribing
         public static void Substatic(object msg)
         {
         }
+        #pragma warning restore xUnit1013
     }
 
     public class BusSetupWithTestShapers : ISetup<IConfigurableBus>

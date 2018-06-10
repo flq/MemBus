@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MemBus.Messages;
 using MemBus.Publishing;
 using MemBus.Setup;
 using MemBus.Subscribing;
@@ -24,8 +25,8 @@ namespace MemBus.Configurators
 
     /// <summary>
     /// Setup the Bus with this on the UI thread (Important!).
-    /// A parallel publisher is used that publishes messages in parallel. With this setup <see cref="IBus.Publish"/> does NOT block.
-    /// Exceptions will become available once all subscriptions are done processing the message as <see cref="ExceptionOccurred"/> message.
+    /// A parallel publisher is used that publishes messages in parallel. With this setup <see cref="IBus"/>
+    /// publishing does NOT block. Exceptions will become available once all subscriptions are done processing the message as <see cref="ExceptionOccurred"/> message.
     /// This setup allows you to call <see cref="SubscriptionCustomizer{M}.DispatchOnUiThread"/> when doing a subscription.
     /// </summary>
     public class AsyncRichClientFrontend : AsyncConfiguration

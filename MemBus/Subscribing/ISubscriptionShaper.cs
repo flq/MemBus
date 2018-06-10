@@ -6,9 +6,9 @@ namespace MemBus.Subscribing
     /// This interface describes some type that typically wraps a given <see cref="ISubscription"/>-instance with some new behaviour.
     /// Implementations readily available are:
     /// - <see cref="ShapeToDispose"/>
-    /// - <see cref="ShapeToFilter"/>
-    /// - <see cref="ShapeToUIDispatch"/>
-    /// - <see cref="SubscriptionCustomizer"/>
+    /// - <see cref="ShapeToFilter{M}"/>
+    /// - <see cref="ShapeToUiDispatch"/>
+    /// - <see cref="SubscriptionCustomizer{M}"/>
     /// </summary>
     public interface ISubscriptionShaper
     {

@@ -5,6 +5,9 @@ namespace MemBus.Support
     void Add<T>(T @object);
     void Remove<T>();
     T Get<T>();
+    /// <summary>
+    /// Gives you a summary of contained services
+    /// </summary>
     string WhatDoIHave { get; }
   }
 

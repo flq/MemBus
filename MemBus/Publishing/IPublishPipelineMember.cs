@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using MemBus.Support;
 
 namespace MemBus.Publishing
 {

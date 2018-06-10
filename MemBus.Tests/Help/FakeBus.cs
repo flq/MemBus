@@ -5,7 +5,7 @@ using MemBus.Subscribing;
 
 namespace MemBus.Tests.Help
 {
-    public class FakeBus : IBus, IDisposable
+    public class FakeBus : IBus
     {
         public void Publish(object message)
         {

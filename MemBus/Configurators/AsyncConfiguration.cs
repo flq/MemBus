@@ -6,7 +6,7 @@ using MemBus.Subscribing;
 namespace MemBus.Configurators
 {
     /// <summary>
-    /// A parallel publisher is used that publishes messages in parallel. With this setup <see cref="IBus.Publish"/> does NOT block.
+    /// A parallel publisher is used that publishes messages in parallel. With this setup <see cref="IPublisher.Publish"/> does NOT block.
     /// Exceptions will become available once all subscriptions are done processing the message as <see cref="ExceptionOccurred"/> message.
     /// </summary>
     public class AsyncConfiguration : ISetup<IConfigurableBus>

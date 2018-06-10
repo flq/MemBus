@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using MemBus.Subscribing;
+using MemBus.Messages;
+using MemBus.Publishing;
 
 namespace MemBus
 {
@@ -49,7 +51,7 @@ namespace MemBus
 
         /// <summary>
         /// Subscrive a given subscription and provide a customization to the generated subscription.
-        /// See <see cref="ISubsciptionShaper"/> for more information like available implementations. Note that regardless of your customization,
+        /// See <see cref="ISubscriptionShaper"/> for more information like available implementations. Note that regardless of your customization,
         /// </summary>
         IDisposable Subscribe<M>(Action<M> subscription, ISubscriptionShaper customization);
 
