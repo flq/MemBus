@@ -33,15 +33,15 @@ namespace MemBus.Messages
             {
                 var ax = (AggregateException) Exception;
                 foreach (var x in ax.InnerExceptions)
-                    printException(b, x);
+                    PrintException(b, x);
             }
             else
-                printException(b, Exception);
+                PrintException(b, Exception);
             
             return b.ToString();
         }
 
-        private static void printException(StringBuilder b, Exception x)
+        private static void PrintException(StringBuilder b, Exception x)
         {
             b.AppendFormat("Type of Exception: {0}", x.GetType().Name);
             b.AppendFormat("Message: {0}", x.Message);

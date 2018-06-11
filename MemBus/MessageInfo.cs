@@ -13,8 +13,7 @@ namespace MemBus
 
         internal MessageInfo(object message)
         {
-            if (message == null) throw new ArgumentNullException("message");
-            this._message = message;
+            _message = message ?? throw new ArgumentNullException(nameof(message));
         }
 
         /// <summary>
@@ -27,10 +26,8 @@ namespace MemBus
         /// </summary>
         public bool IsType<T>(Func<T,bool> additionalMatch)
         {
-            if (additionalMatch == null) throw new ArgumentNullException("additionalMatch");
-            if (IsType<T>())
-                return additionalMatch((T) _message);
-            return false;
+            if (additionalMatch == null) throw new ArgumentNullException(nameof(additionalMatch));
+            return IsType<T>() && additionalMatch((T) _message);
         }
 
         /// <summary>

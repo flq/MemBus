@@ -13,7 +13,7 @@ namespace MemBus
 
         public IDisposable Subscribe(IObserver<M> observer)
         {
-            if (observer == null) throw new ArgumentNullException("observer");
+            if (observer == null) throw new ArgumentNullException(nameof(observer));
             return subscriber.Subscribe<M>(observer.OnNext);
         }
 

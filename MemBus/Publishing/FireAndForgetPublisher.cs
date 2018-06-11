@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 namespace MemBus.Publishing
@@ -13,7 +12,9 @@ namespace MemBus.Publishing
         
         public void LookAt(PublishToken token)
         {
-            token.Subscriptions.Select(s => _taskMaker.StartNew(() => s.Push(token.Message))).ToArray();
+            token.Subscriptions
+                .Select(s => _taskMaker.StartNew(() => s.Push(token.Message)))
+                .ToArray();
         }
     }
 }
