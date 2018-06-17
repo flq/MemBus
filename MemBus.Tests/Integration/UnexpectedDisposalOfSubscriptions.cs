@@ -37,13 +37,13 @@ namespace MemBus.Tests.Integration
         void IAcceptDisposeToken.Accept(IDisposable disposeToken) { _disposeToken = disposeToken; }
     }
 
-    public class Unexpected_Disposal_Of_Subscriptions
+    public class UnexpectedDisposalOfSubscriptions
     {
-        private IBus _bus;
-        private Subscriber _partnerInCrime1;
-        private Subscriber _partnerInCrime2;
+        private readonly IBus _bus;
+        private readonly Subscriber _partnerInCrime1;
+        private readonly Subscriber _partnerInCrime2;
 
-        public Unexpected_Disposal_Of_Subscriptions()
+        public UnexpectedDisposalOfSubscriptions()
         {
             _bus = BusSetup.StartWith<Conservative>()
                 .Apply<FlexibleSubscribeAdapter>(adp => adp.RegisterMethods("Handle"))

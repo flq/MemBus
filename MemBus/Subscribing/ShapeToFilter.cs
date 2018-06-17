@@ -9,7 +9,7 @@ namespace MemBus.Subscribing
     public class ShapeToFilter<M> : ISubscriptionShaper
     {
         private readonly Func<M, bool> filter;
-
+    
         public ShapeToFilter(Func<M,bool> filter)
         {
             this.filter = filter;

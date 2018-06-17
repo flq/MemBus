@@ -8,11 +8,11 @@ using Xunit;
 
 namespace MemBus.Tests.Integration
 {
-    public class Integration_Scenario_Interaction_With_Subscriber
+    public class IntegrationScenarioInteractionWithSubscriber
     {
-        private IBus _bus;
+        private readonly IBus _bus;
 
-        public Integration_Scenario_Interaction_With_Subscriber()
+        public IntegrationScenarioInteractionWithSubscriber()
         {
             _bus = BusSetup.StartWith<Conservative>()
                 .Apply<FlexibleSubscribeAdapter>(a => a.RegisterMethods("Handle"))
