@@ -2,17 +2,17 @@
 
 namespace MemBus.Publishing
 {
-    public class PublishToken
+    public class AsyncPublishToken
     {
         public object Message { get; }
-        public IEnumerable<ISubscription> Subscriptions { get; }
+        public IEnumerable<IAsyncSubscription> Subscriptions { get; }
 
         /// <summary>
         /// When set to true, the subsequent members in the publish pipeline will not be called anymore
         /// </summary>
         public bool Cancel { get; set; }
 
-        public PublishToken(object message, IEnumerable<ISubscription> subscriptions)
+        public AsyncPublishToken(object message, IEnumerable<IAsyncSubscription> subscriptions)
         {
             Message = message;
             Subscriptions = subscriptions;

@@ -5,7 +5,7 @@ using Xunit;
 namespace MemBus.Tests.Subscribing
 {
     
-    public class Using_Composite_Subscription
+    public class UsingCompositeSubscription
     {
         [Fact]
         public void empty_composite_would_handle_any_message()

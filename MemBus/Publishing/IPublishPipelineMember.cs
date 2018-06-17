@@ -23,7 +23,7 @@ namespace MemBus.Publishing
         /// <summary>
         /// Inspect the publish token
         /// </summary>
-        Task LookAtAsync(PublishToken token);
+        Task LookAtAsync(AsyncPublishToken token);
     }
 
 }

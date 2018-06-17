@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MemBus.Support
 {
@@ -15,23 +14,9 @@ namespace MemBus.Support
         private readonly object _disposeLock = new object();
         private volatile bool _disposed;
 
-        public DisposeContainer(params object[] disposables) : this(disposables.AsEnumerable())
-        {    
-        }
-
-        public DisposeContainer(IEnumerable<object> disposables)
-        {
-            _disposables.AddRange(disposables.OfType<IDisposable>());
-        }
-
         public void Add(IDisposable disposable)
         {
             _disposables.Add(disposable);
-        }
-
-        public void Add(params IDisposable[] disposables)
-        {
-            _disposables.AddRange(disposables);
         }
 
         public void Dispose()

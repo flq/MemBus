@@ -62,12 +62,11 @@ namespace MemBus
             _publishChainCasing.LookAt(t);
         }
 
-        public async Task PublishAsync(object message)
+        public Task PublishAsync(object message)
         {
             CheckDisposed();
-            var subs = _subscriber.GetSubscriptionsFor(message);
-            var t = new PublishToken(message, subs);
-            await _publishChainCasing.LookAtAsync(t);
+            //TODO: Currently not implemented
+            throw new NotImplementedException("Working on this");
         }
 
         public IDisposable Publish<M>(IObservable<M> observable)

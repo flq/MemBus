@@ -7,7 +7,7 @@ namespace MemBus.Tests.Subscribing
 {
     public class When_Resolving_Subscriptions
     {
-        private CompositeResolver _resolver;
+        private readonly CompositeResolver _resolver;
 
         public When_Resolving_Subscriptions()
         {

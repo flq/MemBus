@@ -9,7 +9,7 @@ using Xunit;
 
 namespace MemBus.Tests.Publishing
 {
-    public class Using_Publish_Pipeline
+    public class UsingPublishPipeline
     {
         [Fact]
         public void publishes_message_parallel()
@@ -82,10 +82,10 @@ namespace MemBus.Tests.Publishing
             var t = new PublishPipelineTester<MessageA>();
             t.TestWith(
                 pp =>
-                    {
-                        pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object);
-                        pp.MessageMatch(mi => mi.IsType<MessageA>()).PublishPipeline(t.Mock2Object);
-                    });
+                {
+                    pp.DefaultPublishPipeline(t.Mock1Object, t.Mock2Object);
+                    pp.MessageMatch(mi => mi.IsType<MessageA>()).PublishPipeline(t.Mock2Object);
+                });
 
 
             t.Mock1.VerifyNotCalled();
@@ -107,10 +107,10 @@ namespace MemBus.Tests.Publishing
         {
             var t = new PublishPipelineTester<MessageA>();
             t.TestWith(pp =>
-                           {
-                               pp.DefaultPublishPipeline(t.Mock1Object, t.Mock3Object);
-                               pp.MessageMatch(mi => mi.IsType<MessageB>()).PublishPipeline(t.Mock2Object);
-                           });
+            {
+                pp.DefaultPublishPipeline(t.Mock1Object, t.Mock3Object);
+                pp.MessageMatch(mi => mi.IsType<MessageB>()).PublishPipeline(t.Mock2Object);
+            });
 
 
             t.Mock1.VerifyCalled();

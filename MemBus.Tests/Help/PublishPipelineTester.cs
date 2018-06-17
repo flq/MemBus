@@ -1,18 +1,33 @@
 using System;
+using System.Threading.Tasks;
 using MemBus.Publishing;
 using MemBus.Setup;
 
 namespace MemBus.Tests.Help
 {
+    public class AsyncPublishPipelineTester
+    {
+        public Task TestWith(Action<IConfigurablePublishing> configuration, object message)
+        {
+            return PipelineSkeleton(message, configuration);
+        }
+        
+        private static Task PipelineSkeleton(object message, Action<IConfigurablePublishing> configuration)
+        {
+            var p = new PublishChainCasing(null).Configure(configuration);
+            var token = new AsyncPublishToken(message, new IAsyncSubscription[] { });
+            return p.LookAtAsync(token);
+        }
+    }
+    
     public class PublishPipelineTester<T> where T : new()
     {
-
-        public FakePublishPipelineMember Mock1 { get; private set; }
-        public IPublishPipelineMember Mock1Object { get { return Mock1; } }
-        public FakePublishPipelineMember Mock2 { get; private set; }
-        public IPublishPipelineMember Mock2Object { get { return Mock2; } }
-        public FakePublishPipelineMember Mock3 { get; private set; }
-        public IPublishPipelineMember Mock3Object { get { return Mock3; } }
+        public FakePublishPipelineMember Mock1 { get; }
+        public IPublishPipelineMember Mock1Object => Mock1;
+        public FakePublishPipelineMember Mock2 { get; }
+        public IPublishPipelineMember Mock2Object => Mock2;
+        public FakePublishPipelineMember Mock3 { get; }
+        public IPublishPipelineMember Mock3Object => Mock3;
 
         public PublishPipelineTester()
         {
@@ -21,13 +36,12 @@ namespace MemBus.Tests.Help
             Mock3 = new FakePublishPipelineMember();
         }
 
-        public PublishPipelineTester<T> TestWith(Action<IConfigurablePublishing> configuration)
+        public void TestWith(Action<IConfigurablePublishing> configuration)
         {
-            pipelineSkeleton(new T(), configuration);
-            return this;
+            PipelineSkeleton(new T(), configuration);
         }
 
-        private static void pipelineSkeleton(object message, Action<IConfigurablePublishing> configuration)
+        private static void PipelineSkeleton(object message, Action<IConfigurablePublishing> configuration)
         {
             var p = new PublishChainCasing(null).Configure(configuration);
             var token = new PublishToken(message, new ISubscription[] { });

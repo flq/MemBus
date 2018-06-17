@@ -22,11 +22,11 @@ namespace MemBus
         /// An exception will be mapped to a message of type <see cref="ExceptionOccurred"/>.
         /// Disposing the returned IDisposable will remove the generated observer from the observable.
         /// </summary>
+        // ReSharper disable once UnusedMethodReturnValue.Global
         IDisposable Publish<M>(IObservable<M> observable);
 
         /// <summary>
-        /// Publish a message in an awaitable fashion. This will short-circuit the conventional
-        /// publishing and subscribing components and uses an awaitable version of the 
+        /// Publish a message in an awaitable fashion. Check out the ways to configure the async pipeline. 
         /// <see cref="SequentialPublisher"/>
         /// </summary>
         Task PublishAsync(object message);

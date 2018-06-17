@@ -10,6 +10,7 @@ namespace MemBus.Publishing
     internal class PublishChainCasing : IConfigurablePublishing, IDisposable
     {
         private readonly List<PublishChain> _pipelines = new List<PublishChain>();
+        private readonly List<PublishChain> _asyncPipelines = new List<PublishChain>();
         private readonly IBus _bus;
 
         public PublishChainCasing(IBus bus)
@@ -20,7 +21,8 @@ namespace MemBus.Publishing
         public void LookAt(PublishToken token)
         {
             var info = new MessageInfo(token.Message);
-            for (int i = _pipelines.Count - 1; i >= 0; i--) //Backwards as we keep the default at index 0
+            //Backwards as the default pipeline lives at index 0
+            for (int i = _pipelines.Count - 1; i >= 0; i--)
             {
                 if (!_pipelines[i].Handles(info))
                     continue;
@@ -29,26 +31,47 @@ namespace MemBus.Publishing
             }
         }
 
-        public async Task LookAtAsync(PublishToken token)
+        public async Task LookAtAsync(AsyncPublishToken token)
         {
-            IAsyncPublishPipelineMember publisher = new SequentialPublisher();
-            await publisher.LookAtAsync(token);
+            var info = new MessageInfo(token.Message);
+            //Backwards as the default pipeline lives at index 0
+            for (int i = _asyncPipelines.Count - 1; i >= 0; i--)
+            {
+                if (!_asyncPipelines[i].Handles(info))
+                    continue;
+                await _asyncPipelines[i].LookAtAsync(token);
+                break;
+            }
         }
 
 
-        void IConfigurablePublishing.DefaultPublishPipeline(params IPublishPipelineMember[] publishPipelineMembers)
+        IConfigurablePublishing IConfigurablePublishing.DefaultPublishPipeline(
+            params IPublishPipelineMember[] publishPipelineMembers)
         {
             foreach (var m in publishPipelineMembers.OfType<IRequireBus>())
-              m.AddBus(_bus);
+                m.AddBus(_bus);
             if (_pipelines.Count > 0 && _pipelines[0] is DefaultPublishChain)
                 _pipelines.RemoveAt(0);
             _pipelines.Insert(0, new DefaultPublishChain(publishPipelineMembers));
+            return this;
+        }
+
+        IConfigurablePublishing IConfigurablePublishing.DefaultAsyncPublishPipeline(
+            params IAsyncPublishPipelineMember[] publishPipelineMembers)
+        {
+            if (_asyncPipelines.Count > 0 && _asyncPipelines[0] is DefaultPublishChain)
+                _asyncPipelines.RemoveAt(0);
+            _asyncPipelines.Insert(0, new DefaultPublishChain(publishPipelineMembers));
+            return this;
         }
 
         IConfigurePipeline IConfigurablePublishing.MessageMatch(Func<MessageInfo, bool> match)
         {
-            var cP = new ConfigurePipeline(match, _bus);
-            _pipelines.Add(cP.Provider);
+            var cP = new ConfigurePipeline(
+                match, 
+                _bus,
+                chain => _pipelines.Add(chain),
+                chain => _asyncPipelines.Add(chain));
             return cP;
         }
 
@@ -60,16 +83,22 @@ namespace MemBus.Publishing
 
         private class ConfigurePipeline : IConfigurePipeline
         {
+            private readonly Func<MessageInfo, bool> _match;
             private readonly IBus _bus;
-            private readonly PublishChain _publishChain;
+            private readonly Action<PublishChain> _addSync;
+            private readonly Action<PublishChain> _addAsync;
 
-            public ConfigurePipeline(Func<MessageInfo, bool> match, IBus bus)
+            public ConfigurePipeline(
+                Func<MessageInfo, bool> match, 
+                IBus bus,
+                Action<PublishChain> addSync,
+                Action<PublishChain> addAsync)
             {
+                _match = match;
                 _bus = bus;
-                _publishChain = new PublishChain(match);
+                _addSync = addSync;
+                _addAsync = addAsync;   
             }
-
-            public PublishChain Provider { get { return _publishChain; } }
 
             public void ConfigureWith<T>() where T : ISetup<IConfigurePipeline>, new()
             {
@@ -82,8 +111,17 @@ namespace MemBus.Publishing
                 foreach (var m in publishPipelineMembers)
                 {
                     m.Being<IRequireBus>(_ => _.AddBus(_bus));
-                    Provider.Add(m);
                 }
+                _addSync(new PublishChain(_match, publishPipelineMembers));
+            }
+
+            public void AsyncPublishPipeline(params IAsyncPublishPipelineMember[] publishPipelineMembers)
+            {
+                foreach (var m in publishPipelineMembers)
+                {
+                    m.Being<IRequireBus>(_ => _.AddBus(_bus));
+                }
+                _addAsync(new PublishChain(_match, publishPipelineMembers));
             }
         }
 
